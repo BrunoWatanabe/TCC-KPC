@@ -1,0 +1,215 @@
+/**
+ * styles.css - Estilos globais para aplicação MVVM
+ * Baseado no Material Design e otimizado para arquitetura MVVM
+ */
+
+/* Reset e base */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f5f5f5;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Estilos para drag and drop */
+.dragging {
+  opacity: 0.5;
+  transform: rotate(5deg);
+  transition: all 0.2s ease;
+}
+
+.drop-zone {
+  border: 2px dashed #1976d2;
+  background-color: rgba(25, 118, 210, 0.04);
+  transition: all 0.2s ease;
+}
+
+.drop-zone:hover {
+  border-color: #1565c0;
+  background-color: rgba(25, 118, 210, 0.08);
+}
+
+.drop-zone.drag-over {
+  border-color: #0d47a1;
+  background-color: rgba(25, 118, 210, 0.12);
+  transform: scale(1.02);
+}
+
+/* Animações para feedback visual */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Classes utilitárias para animações */
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+.pulse {
+  animation: pulse 0.5s ease-in-out;
+}
+
+/* Estilos para loading states */
+.loading-overlay {
+  position: relative;
+}
+
+.loading-overlay::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(2px);
+  z-index: 1;
+  border-radius: inherit;
+}
+
+/* Estilos para chips de keyphrase */
+.keyphrase-chip {
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.keyphrase-chip:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.keyphrase-chip.selected {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+}
+
+/* Estilos para cluster cards */
+.cluster-card {
+  transition: all 0.2s ease;
+}
+
+.cluster-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.cluster-card.selected {
+  border-color: #1976d2;
+  box-shadow: 0 4px 16px rgba(25, 118, 210, 0.2);
+}
+
+/* Estilos responsivos para mobile */
+@media (max-width: 600px) {
+  .cluster-card {
+    margin: 0.5rem 0;
+  }
+  
+  .keyphrase-chip {
+    margin: 0.25rem;
+    font-size: 0.75rem;
+  }
+  
+  /* Ajustes para touch devices */
+  .keyphrase-chip,
+  .cluster-card {
+    min-height: 44px; /* Padrão de acessibilidade para touch */
+  }
+}
+
+/* Estilos para breadcrumbs customizados */
+.breadcrumb-link {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.2s ease;
+}
+
+.breadcrumb-link:hover {
+  color: #1976d2;
+  text-decoration: underline;
+}
+
+/* Estilos para progress bars customizadas */
+.progress-bar {
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-bar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  body {
+    background: white;
+  }
+  
+  .cluster-card,
+  .keyphrase-chip {
+    break-inside: avoid;
+  }
+}

@@ -1,0 +1,89 @@
+id	colected_from	keyphrase	cluster_a1	cluster_a2	clustered	selected_a1_k1	selected_a1_k2	selected_a2_k1	selected_a2_k2	selected	selected1	selected2	alias
+1	chatgpt_pro	Low carbon emissions	21	21	21					1	0	0	
+2	chatgpt_pro	Reliable	2	2	2					1	0	0	
+3	chatgpt_pro	High energy output	9	9	9					0	0	0	
+4	chatgpt_pro	Cost-effective	5	5	5					0	0	0	
+5	chatgpt_pro	Job creation	20	20	20					0	0	0	
+6	chatgpt_pro	Energy independence	15	15	15					0	0	0	
+7	chatgpt_pro	Reduced dependence on fossil fuels	4	4	4					1	0	0	
+8	chatgpt_pro	Base-load energy	25	25	25					0	0	0	
+9	chatgpt_pro	Technological innovation	13	13	13					0	0	0	
+10	chatgpt_pro	Reduced air pollution	1	1	1					0	0	0	
+11	chatgpt_pro	National security	2	2	2					1	0	0	
+12	chatgpt_pro	Economic growth	10	10	10					1	1	0	economy
+13	chatgpt_pro	Energy efficiency	9	9	9					0	0	0	
+14	chatgpt_pro	Reduced land use	16	16	16					0	0	0	
+15	chatgpt_pro	Climate change mitigation	21	21	21					1	0	0	
+16	chatgpt_pro	Reduced water usage	16	16	16					0	0	0	
+17	chatgpt_pro	Waste disposal	6	6	6					1	0	0	
+18	chatgpt_pro	International cooperation	26	26	26					0	0	0	
+19	chatgpt_pro	Education and research	14	14	14					1	1	0	research_and_science
+20	chatgpt_pro	Disaster preparedness	3	3	3					1	0	0	
+21	chatgpt_against	Safety risks	2	2	2					1	0	0	
+22	chatgpt_against	Nuclear accidents	3	3	3					1	1	0	accident
+23	chatgpt_against	Radioactive waste	6	6	6					1	0	0	
+24	chatgpt_against	Nuclear weapons proliferation	7	7	7					1	0	0	
+25	chatgpt_against	High cost	5	5	5					0	0	0	
+26	chatgpt_against	Security threats	2	2	2					1	0	1	safety and security
+27	chatgpt_against	Public health concerns	8	8	8					1	1	0	health
+28	chatgpt_against	Environmental impacts	1	1	1					0	0	0	
+29	chatgpt_against	Resource depletion	16	16	16					0	0	0	
+30	chatgpt_against	Lack of renewable energy integration	4	4	4					1	0	0	
+31	chatgpt_against	Decommissioning challenges	27	27	27					1	0	0	
+32	chatgpt_against	Regulatory challenges	27	27	27					1	1	0	regulation
+33	chatgpt_against	Non-renewable energy source	4	4	4					1	0	0	
+34	chatgpt_against	Water usage	16	16	16					0	0	0	
+35	chatgpt_against	Dependence on uranium mining	11	11	11					1	0	0	
+36	chatgpt_against	Health effects of radiation exposure	8	8	8					1	0	0	
+37	chatgpt_against	Terrorist attacks	19	19	19					1	1	0	terrorism
+38	chatgpt_against	Nuclear energy subsidies	10	10	10					1	0	0	
+39	chatgpt_against	Mismanagement and corruption	12	12	12					1	0	0	
+40	chatgpt_against	Ethical and moral considerations	12	12	12					1	0	1	politics_and_ethics
+41	chatgpt_ne	Chernobyl	30	30	30					1	1	0	Chernobyl
+42	chatgpt_ne	Fukushima	29	29	29					1	1	0	Fukushima
+43	chatgpt_ne	Three Mile Island	32	32	32					0	0	0	
+44	chatgpt_ne	International Atomic Energy Agency (IAEA)	33	33	33					0	0	0	
+45	chatgpt_ne	Nuclear Regulatory Commission (NRC)	31	31	31					1	1	0	Nuclear_Regulatory_Commission
+46	chatgpt_ne	Nuclear Non-Proliferation Treaty (NPT)	33	33	33					0	0	0	
+47	chatgpt_ne	Uranium	28	28	28					0	0	0	
+48	chatgpt_ne	Plutonium	33	33	33					0	0	0	
+49	keybert	uranium	28	28	28					0	0	0	
+50	keybert	nuke	7	7	7					1	0	0	
+51	keybert	climate change	21	21	21					1	1	0	climate_change
+52	keybert	fission	22	22	22					0	0	0	
+53	keybert	mining	11	11	11					1	1	0	mining
+54	keybert	radioactivity	6	6	6					1	1	0	radioactive waste
+55	keybert	politics	12	12	12					1	1	0	politics and ethics
+56	keybert	geologic	17	17	17					0	0	0	
+57	keybert	safety	2	2	2					1	1	0	safety_and_security
+58	keybert	disarmament	7	7	7					1	0	0	
+59	keybert	reactor	24	24	24					0	0	0	
+60	keybert	labour	20	20	20					0	0	0	
+61	keybert	democratization	12	12	12					1	0	0	
+62	keybert	Chernobyl	30	30	30					1	0	0	
+63	keybert	Fukushima	29	29	29					1	0	0	
+64	keybert	anthropogenic	21	21	21					1	0	0	
+65	keybert	antiterrorism	19	19	19					1	0	0	
+66	keybert	activism	23	23	23					0	0	0	
+67	keybert	fision	22	22	22					0	0	0	
+68	keybert	coal	4	4	4					1	0	0	
+69	yake	power plant	24	24	24					0	0	0	
+70	yake	nuclear power	24	24	24					0	0	0	
+71	yake	nuclear waste	6	6	6					1	0	1	radioactive_waste
+72	yake	Nuclear Regulatory Commission	31	31	31					1	0	0	
+73	yake	Nuclear Energy Institute	33	33	33					0	0	0	
+74	yake	Chernobyl	30	30	30					1	0	0	
+75	yake	Fukushima	29	29	29					1	0	0	
+76	yake	technology	13	13	13					0	0	0	
+77	yake	nuclear reactor	24	24	24					0	0	0	
+78	yake	United States	33	33	33					0	0	0	
+79	yake	Nuclear Energy Agency	33	33	33					0	0	0	
+80	yake	World Nuclear Association	33	33	33					0	0	0	
+81	yake	industry	10	10	10					1	0	0	
+82	yake	nuclear power promotion	18	18	18					0	0	0	
+83	yake	nuclear weapons	7	7	7					1	1	0	weapon
+84	yake	renewable energy	4	4	4					1	1	0	renewable_energy
+85	yake	sustainability	21	21	21					1	0	0	
+86	yake	nuclear fuel	11	11	11					1	0	0	
+87	yake	nuclear energy production	9	9	9					0	0	0	
+88	yake	commercial nuclear power	18	18	18					0	0	0	

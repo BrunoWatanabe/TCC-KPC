@@ -1,0 +1,89 @@
+id,id.1,keyphrase,keyphrase.1,related_refs
+P1,P1,Low carbon emissions,carbon emission,A8
+P2,P2,Reliable,prevention and reliability,
+P3,P13,High energy output,,
+P4,A5,Cost-effective,,
+P5,K12,Job creation,,
+P6,P6,Energy independence,energy independence,
+P7,Y16,Reduced dependence on fossil fuels,,
+P8,P8,Base-load energy,baseload,
+P9,P9,Technological innovation,technology and innovation,Y8
+P10,P10,Reduced air pollution,pollution,A8
+P11,,National security,,
+P12,P12,Economic growth,economy,A18
+P13,P13,Energy efficiency,efficiency,"P3,Y19"
+P14,A9,Reduced land use,,
+P15,P15,Climate change mitigation,climate change,"K3,K16"
+P16,,Reduced water usage,,
+P17,A3,Waste disposal,,
+P18,P18,International cooperation,international cooperation,
+P19,P19,Education and research,research and science,
+P20,A2,Disaster preparedness,,
+A1,A1,Safety risks,safety and security,"A6,P11,K9"
+A2,A2,Nuclear accidents,accident,P20
+A3,A3,Radioactive waste,radioactive waste,"P17,Y3,K6"
+A4,Y15,Nuclear weapons proliferation,,
+A5,A5,High cost,cost,P4
+A6,A1,Security threats,,
+A7,A7,Public health concerns,health,A16
+A8,P10,Environmental impacts,,
+A9,A9,Resource depletion,natural resources,"P14,P16,A14"
+A10,,Lack of renewable energy integration,,
+A11,A11,Decommissioning challenges,decommissioning,
+A12,A12,Regulatory challenges,regulation,
+A13,,Non-renewable energy source,,
+A14,,Water usage,,
+A15,A15,Dependence on uranium mining,mining,"K5,Y18"
+A16,A7,Health effects of radiation exposure,,
+A17,A17,Terrorist attacks,terrorism,K17
+A18,P12,Nuclear energy subsidies,,
+A19,,Mismanagement and corruption,,
+A20,K7,Ethical and moral considerations,,
+N1,,Chernobyl,,"N1,K14,Y6"
+N2,,Fukushima,,"N2,K15,Y7"
+N3,,Three Mile Island,,N3
+N4,,International Atomic Energy Agency (IAEA),,
+N5,,Nuclear Regulatory Commission (NRC),,"N5,Y4"
+N6,,Nuclear Non-Proliferation Treaty (NPT),,N7
+N7,,Uranium,,"K1,N7"
+N8,,Plutonium,,
+K1,,uranium,,
+K2,Y15,nuke,,
+K3,P15,climate change,,
+K4,K19,fission,,
+K5,A15,mining,,
+K6,,radioactivity,,
+K7,K7,politics,politics and ethics,"A20,A19,K13"
+K8,K8,geologic,geologic,
+K9,,safety,,
+K10,,disarmament,,
+K11,K11,reactor,reactor,Y9
+K12,K12,labour,labour and jobs,P5
+K13,,democratization,,
+K14,,Chernobyl,,
+K15,,Fukushima,,
+K16,,anthropogenic,,
+K17,A17,antiterrorism,,
+K18,K18,activism,activism and education,
+K19,K19,fision,fission and fusion,K4
+K20,,coal,,
+Y1,Y1,power plant,power plant,
+Y2,Y2,nuclear power,nuclear power,
+Y3,,nuclear waste,,
+Y4,,Nuclear Regulatory Commission,,
+Y5,,Nuclear Energy Institute,,
+Y6,,Chernobyl,,
+Y7,,Fukushima,,
+Y8,P9,technology,,
+Y9,K11,nuclear reactor,,
+Y10,,United States,,
+Y11,,Nuclear Energy Agency,,
+Y12,,World Nuclear Association,,
+Y13,Y13,industry,industry,
+Y14,Y14,nuclear power promotion,promotion,Y20
+Y15,Y15,nuclear weapons,weapon,"A4	K2,K10"
+Y16,Y16,renewable energy,renewable energy,"P7,K20,A10,A13"
+Y17,Y17,sustainability,sustainability,
+Y18,,nuclear fuel,,
+Y19,,nuclear energy production,,
+Y20,Y14,commercial nuclear power,,

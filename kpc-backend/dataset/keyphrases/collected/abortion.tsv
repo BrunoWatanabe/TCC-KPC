@@ -1,0 +1,141 @@
+id	colected_from	keyphrase
+1	chatgpt_pro	Choice
+2	chatgpt_pro	Autonomy
+3	chatgpt_pro	Reproductive rights
+4	chatgpt_pro	Privacy
+5	chatgpt_pro	Bodily autonomy
+6	chatgpt_pro	Women's health
+7	chatgpt_pro	Pregnancy complications
+8	chatgpt_pro	Fetal abnormalities
+9	chatgpt_pro	Rape and incest
+10	chatgpt_pro	Overpopulation
+11	chatgpt_pro	Access to safe abortion
+12	chatgpt_pro	Gender equality
+13	chatgpt_pro	Freedom of religion
+14	chatgpt_pro	Separation of church and state
+15	chatgpt_pro	Mental health
+16	chatgpt_pro	Economic security
+17	chatgpt_pro	Education and career opportunities
+18	chatgpt_pro	Family planning
+19	chatgpt_pro	Preventing illegal abortions
+20	chatgpt_pro	Maternal mortality
+21	chatgpt_against	Sanctity of life
+22	chatgpt_against	Human rights
+23	chatgpt_against	Moral values
+24	chatgpt_against	Religious beliefs
+25	chatgpt_against	Murder
+26	chatgpt_against	Genocide
+27	chatgpt_against	Unborn child
+28	chatgpt_against	Personhood
+29	chatgpt_against	Responsibility
+30	chatgpt_against	Adoption
+31	chatgpt_against	Natural law
+32	chatgpt_against	Contraception
+33	chatgpt_against	Abstinence
+34	chatgpt_against	Social consequences
+35	chatgpt_against	Family stability
+36	chatgpt_against	Women's health risks
+37	chatgpt_against	Abortion regret
+38	chatgpt_against	Infertility
+39	chatgpt_against	Coercion and pressure
+40	chatgpt_against	Pain of the fetus
+41	chatgpt_ne	Roe v. Wade
+42	chatgpt_ne	Planned Parenthood
+43	chatgpt_ne	Supreme Court
+44	chatgpt_ne	Constitution
+45	chatgpt_ne	United Nations
+46	chatgpt_ne	Human Rights Watch
+47	chatgpt_ne	World Health Organization
+48	chatgpt_ne	American Medical Association
+49	chatgpt_ne	Catholic Church
+50	chatgpt_ne	Protestant denominations
+51	chatgpt_ne	Islamic Law
+52	chatgpt_ne	Jewish Law
+53	chatgpt_ne	The Bible
+54	chatgpt_ne	Science
+55	chatgpt_ne	Medical studies
+56	chatgpt_ne	Statistics
+57	chatgpt_ne	Feminist organizations
+58	chatgpt_ne	Pro-life organizations
+59	chatgpt_ne	Pro-choice organizations
+60	chatgpt_ne	Politicians and political parties
+61	keybert	abortionargument
+62	keybert	abortion
+63	keybert	birthright
+64	keybert	abortions
+65	keybert	freedoms
+66	keybert	abortion4
+67	keybert	fetus
+68	keybert	foetus
+69	keybert	constitutionality
+70	keybert	abortionist
+71	keybert	abortionists
+72	keybert	abortion14
+73	keybert	abortionfacts
+74	keybert	unborn
+75	keybert	abortionshould
+76	keybert	constitution
+77	keybert	foetuses
+78	keybert	fetuses
+79	keybert	unconstitutionally
+80	keybert	unconstitutional
+81	keybert	constitutional
+82	keybert	amniotic
+83	keybert	freedom
+84	keybert	womb
+85	keybert	fb_induced_abortion
+86	keybert	constitutionally
+87	keybert	liberties
+88	keybert	constitutions
+89	keybert	fetal
+90	keybert	aborted
+91	keybert	abstinence
+92	keybert	preborn
+93	keybert	roe
+94	keybert	wombs
+95	keybert	conception
+96	keybert	euthanasia
+97	keybert	abortificants
+98	keybert	wombless
+99	keybert	rights
+100	keybert	infanticide
+101	yake	abortion
+102	yake	abortions
+103	yake	Supreme Court
+104	yake	Women
+105	yake	life
+106	yake	Human Life
+107	yake	United States
+108	yake	abortion law
+109	yake	Abortion Ban Act
+110	yake	legal abortion
+111	yake	Texas abortion case
+112	yake	human
+113	yake	Court
+114	yake	make abortion illegal
+115	yake	human life amendment
+116	yake	make abortion
+117	yake	law
+118	yake	states
+119	yake	woman
+120	yake	Supreme Court justices
+121	yake	state
+122	yake	abortion bans
+123	yake	late term abortion
+124	yake	abortion debate
+125	yake	term abortion bans
+126	yake	Roe
+127	yake	health
+128	yake	Legal Abortion Arguments
+129	yake	abortion illegal
+130	yake	Child
+131	yake	Abortion Arguments Pro
+132	yake	abortion restrictions
+133	yake	Paul Ryan
+134	yake	Poland abortion laws
+135	yake	term abortions
+136	yake	illegal abortions
+137	yake	arguments
+138	yake	pregnancy
+139	yake	argument
+140	yake	health care

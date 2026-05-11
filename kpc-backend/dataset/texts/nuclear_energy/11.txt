@@ -1,0 +1,401 @@
+|
+||
+|
+Debate: Nuclear energy
+From Debatepedia
+|
+|
+[
+]
+[
+]
+[
+]
+[
+]
+Is nuclear energy justified and should it be expanded?
+|
+|
+Background and context
+Nuclear power is any nuclear technology designed to extract usable energy from atomic nuclei via controlled nuclear reactions. The most common method today is through nuclear fission, though other methods include nuclear fusion and radioactive decay. All current methods involve heating a working fluid such as water, which is then converted into mechanical work for the purpose of generating electricity or propulsion. Today, more than 15% of the world's electricity comes from nuclear power, over 150 nuclear-powered naval vessels have been built, and a few radioisotope rockets have been produced. Some countries in the world currently use nuclear power. However, high construction costs have hindered the development of nuclear power in many countries. Yet, rising concerns regarding global warming and energy prices, however, nuclear energy has seen renewed attention as alternative form of energy. The world energy demand is projected to grow by 50% by 2030. To meet the short-term demand, the use of coal and other fossil fuels will increase. The main question and debate is whether nuclear energy should be included as a major component of 21st century plans to combat global warming and to help us meet the growing energy demand? Many questions frame this debate: Is nuclear power helpful in reducing greenhouse gas emissions? Can nuclear power scale to become a serious energy replacement to coal electric power (the main source of electricity globally)? Does the construction of nuclear plants contribute to global warming in any significant ways? What about the mining of Uranium, and what general environmental risks might this pose? What concerns surround nuclear waste? Can these concerns be addressed? How long can we expect supplies of Uranium and nuclear energy to last? Centuries? Even if it will run out in the future and is not "renewable", is it still worth pursuing now (particularly in the face of global warming)? Do nuclear plants pose a risk of "melting down", or have modern nuclear plants eliminated the risk of another Chernobyl or Three Mile Island disaster? Are there any radiation risks to local communities and to workers at nuclear plants? What about the threat of terrorist attacks on nuclear plants? What weapons proliferation risks surround nuclear energy? Should this prevent the further development of nuclear energy, particularly if it is believed that nuclear energy is part of the solution to the global warming crisis?
+See Wikipedia's article on nuclear power for more background.
+|
+|
+[
+]
+[
+]
+[
+]
+[
+]
+Vs. renewables: Can nuclear energy co-exist succesfully with renewables?
+|
+|
+[
+]
+Pro
+- Fossil fuels, not nuclear, are the real enemies of renewables. While it is true that nuclear energy does compete with renewables, it should be noted that fossil fuels are equally competitors. In so far as fossil fuels contribute to global warming and nuclear energy does not, therefore, fossil fuels are the real enemy of renewables.
+- Nuclear energy competes, but so do renewables compete against each other. While it is true that nuclear energy competes with renewable energy sources to provide cheap carbon-free electricity, so do all renewable energy sources compete against each other. Nuclear energy should not, therefore, be seen as doing anything wrong by competing.
+|
+|
+[
+]
+Con
+- Nuclear energy will compete with and squeeze out renewable energy. Nuclear energy will compete with new and up-and-coming renewable energy resources. If the government supports nuclear energy (a well established and easily scalable industry), newer and less mature renewable energy start-ups will have difficulty growing. Ultimately, therefore, the world will be left without sufficient renewable energy sources to effectively combat climate change in the long-run.
+|
+|
+[
+]
+[
+]
+[
+]
+[
+]
+[
+]
+Climate change: Can nuclear energy help reduce emissions, fight climate change?
+|
+|
+[
+]
+Yes
+- Nuclear energy has a carbon footprint, but it is negligible. Fossil fuels are not inherently required in mining Uranium and building nuclear plants. It just so happens that all modern machinery and vehicles involved in this process are powered by fossil fuels. Yet, these fossil-fuel-based machinery can be replaced by electric vehicles and machinery, possibly supplied by nuclear power plants themselves. In sum, nuclear energy is inherently clean. It is only the processes surrounding it that are dirty. This can and will change.
+|
+|
+[
+]
+No
+- Entire nuclear cycle may emit substantial greenhouse gases "The case against nuclear power". Greenpeace. January 8, 2008: "nuclear plants threaten our ability to solve climate change. The nuclear industry would like us to believe that nuclear power offers a much better option for generating electricity without releasing significant amounts of greenhouse gases or toxic pollution. However, nuclear power plants are not much of an improvement over conventional coal-burning power plants despite claims that nuclear is the ‘clean air energy.’ Uranium mining, milling, leeching, plant construction and decommissioning all produce substantial amounts of GHG. Taking into account the carbon-equivalent emissions associated with the entire nuclear life cycle, nuclear plants contribute significantly to climate change and will contribute even more as stockpiles of highgrade uranium are depleted."
+|
+|
+[
+]
+[
+]
+[
+]
+[
+]
+[
+]
+Energy needs: Is nuclear needed to meet energy needs after fossil fuels?
+|
+|
+[
+]
+Pro
+- Nuclear is only clean energy source that can replace fossil fuels "The future is green, the future is nuclear." Times Online. October 4, 2009: "Professor David MacKay, the government’s chief scientific adviser on climate change, has said what many people have long believed. You cannot meet Britain’s future energy needs and reduced carbon emissions without a big expansion of nuclear power. [...] As we report today, he believes we should aim to be producing four times the amount of electricity from nuclear as now. Alternative energy sources such as wind, solar and wavepower will never provide more than a fraction of the country’s energy needs. Relying on gas, coal and oil, with an increasing proportion imported, does not square with Britain’s international climate commitments."
+- Nuclear energy is needed to meet growing electricity demands Pascal Zachary. "The case for nuclear power". SFGate. February 5, 2006: "Electricity demand is rising -- some say by as much as 50 percent during the next 30 to 50 years. Demand might even increase more with the spread of electric cars. Without a crash program to expand nuclear power, America's new electricity needs will be satisfied chiefly by new coal-burning plants. Coal is a remarkably democratic resource, spread fairly evenly around the globe. Scores of new coal plants are planned for the United States, where they already generate about half of the nation's electricity. Many hundreds are likely to be constructed around the world before the end of the decade."
+|
+|
+[
+]
+Con
+- "Clean coal" makes nuclear energy an unnecessary "replacement". "Clean coal" involves burning coal, but sequestering all or most of the subsequently emitted carbon. This makes nuclear energy, as a clean alternative to coal, unnecessary.
+|
+|
+[
+]
+[
+]
+[
+]
+[
+]
+[
+]
+Safety/meltdown: Are nuclear plants safe from risk of nuclear meltdown/explosion?
+|
+|
+[
+]
+Yes
+- Nuclear-powered ships demonstrate safety of nuclear energy US Senator Pete Domenici writes in his book "A Brighter Tomorrow: Fulfilling the Promise of Nuclear Energ": "nuclear power plants roam the world daily without any significant problems. He says, "Nuclear power is safe and sure. Every week, one or two nuclear power plants dock at a major port in America or somewhere else in the world. And these power plants have been doing so for half a century now. ... No accidents of any kind have ever marred these dockings, no leaks have cleared blocks of cities; no emergencies have been declared."[1]
+|
+|
+[
+]
+No
+- Any risk of another Chernobyl or Mile High is intolerable "The case against nuclear power". Greenpeace. January 8, 2008: "The Three mile Island and Chernobyl accidents should never be downplayed. The Chernobyl disaster is perhaps one of the worst in human history. Serious radioactive contamination spread over 150,000 square kilometers in Byelorussia, Ukraine and Russia. Radioactive clouds deposited radiation thousands of kilometers away. Hundreds of thousands people had to be evacuated, and millions more were left to live in areas that were dangerous to their health and lives. Moreover, scientific studies have shown that the full consequences of the Chernobyl disaster could top a quarter of a million cancer cases and nearly 100,000 fatal cancers. [...] Renewable energy, on the other hand, is the cleanest, safest and most reliable form of power generation."
+- Nuclear plants are being closed due to safety; this should continue. Some argue that nuclear energy is fine, or else nuclear plants would be shut down. However, they are being shut down. The following nuclear power plants have been shut down due to being unsafe or past their operating life in the US: Big Rock Point, Bonus, Dresdent-1, Elk Rivers, Enrico Fermi-1, Frt St. Vrain, GE Vallecitos, Haddam Neck, Hallam, Humboldt Bay, Indian Point-1, Lacrosse, Maine Yankee, Millstone-1, Pathfinder, Peach Bottom-1, Piqua, and many others. Some reactors were shut down much sooner than their design lifetime.
+|
+|
+[
+]
+[
+]
+[
+]
+[
+]
+[
+]
+Sustainability: Is nuclear energy sustainable long-term? Is it "renewable"?
+|
+|
+[
+]
+Yes
+- Nuclear energy is highly efficient The efficient use of natural resources is a major criteria in determining the environmental friendliness of a source of energy. Nuclear energy extracts by far more energy from the natural resource Uranium than does the exploitation of oil or any other natural resource. It is the most efficient use of the Earth's resources. In fact, a gram of uranium can generate as much electricity as four tonnes of coal.
+- Nuclear energy has a smaller surface-area footprint on the land. From a facility "footprint" standpoint, less space is required for a nuclear electric generating facility than for a comparable-capacity wind or solar plant. In fact, to equal the electrical output of a single 3.000 megawatt-electric nuclear generating station, it would take roughly 2.000 wind turbines or 140 square kilometres of solar panels.
+- There are many novel sources of uranium Given that the ash from coal-burning power stations "when coal is burned contains radioactive elements, notably uranium and thorium", it can be used as a future source of nuclear fuel. Moreover, the costs are brought down due to the fact that this uranium does not have to be mined. Additionally, uranium can be found even in seawater, and "the element can be sucked out of it by ion exchange." "Rising from the ashes", The Economist, April 2010
+|
+|
+[
+]
+No
+- Nuclear power is efficient only once the uranium is in pellet form. Uranium mines don't contain fuel pellets. For uranium bearing rocks to even be called ore, they need to have at least 750 parts per million of uranium. It takes a lot of processing to make a fuel pellet. A large amount of uranium ore needs to be mined, milled, refined and enriched in order to produce that little tiny pellet that has the energy of many coal hopper cars. Although it takes about 20 times more mining for coal as it does for the same amount of uranium, one still has to consider the environmental damage from the radiaton gases being released into the atmosphere, the groundwater contamination and the radioactive dust in the air.
+- Nuclear energy requires substantial water to cool the reactor Nuclear power plants are only 35% thermally efficient. This means for every kilowatt of electricity produced, almost twice as much waste heat is generated. Nuclear plants require significant quantities of water to remove the waste heat - usually into the environment. Such demands on water resources are impractical, harm agriculture, and general raise water utility prices.
+|
+|
+[
+]
+[
+]
+[
+]
+[
+]
+[
+]
+Economics: Is nuclear energy economical?
+|
+|
+[
+]
+Yes
+- Building nuclear plants requires less capital than dams. The construction of a nuclear power plant requires much less investment than a hydroelectric one.
+- Nuclear power requires a very small area. Besides, it can be built anywhere, provided that there is water around to cool the reactors. The fuel necessary to generate energy is uranium and the power originated from the nuclear fission of its atoms produces an incredible amount of energy.
+- Concentration of power in nuclear is economical. As you have a massive concentration of power in very small quantities of uranium, the costs to produce energy decrease drastically.
+- Nuclear energy internationally demonstrates its viability John McCarthy. "Nuclear Energy is the Most Certain Source." Formal.standard: "Nuclear energy is uneconomical compared to other sources. I don't really have to answer this for the primary objective of showing the sustainability of progress, because I need only show that it is economical enough to sustain progress. It seems to me that the French, Japanese and American experience shows this. As to its relative economy, many countries are expanding and initiating programs of nuclear energy. China and Indonesia are recent examples." [And, why would nuclear energy be expanding internationally if it wasn't inherently economical?].
+- Nuclear energy needed to prevent future power outages Christine Todd Whitman. "The case in favor of nuclear power." Business Week. September 12, 2007: "The cost of failing to meet these needs will be steep. The global economy relies on world-class power grids to trade stocks, to communicate instantly, and to buy and sell around the clock. If anything points to the frustrating effect that a failed power grid can have on profits, it's the San Francisco power outage that took down Silicon Valley enterprises like Craigslist and Netflix (NFLX ) in July. Although it only cost them two hours of online business, that minor power blip illustrates how a lack of electricity [without sufficient nuclear power in the future] can render even a tech-savvy company impotent."
+|
+|
+[
+]
+No
+- Nuclear energy is too costly to be competitive Mark Hertsgaard. "The True Costs of Nuclear Power". Mother Earth News. April/May 2006: "The best case against nuclear power as a global warming remedy begins with the fact that nuclear-generated electricity is very expensive. Despite more than $150 billion in federal subsides over the past 60 years (roughly 30 times more than solar, wind and other renewable energy sources have received), nuclear power still costs substantially more than electricity made from wind, coal, oil or natural gas. This is mainly due to the cost of borrowing money for the decade or more it takes to get a nuclear plant up and running."
+- Nuclear plant construction runs over-time and over-budget "The case against nuclear power". Greenpeace. January 8, 2008 - "No nuclear power station anywhere in the world has ever been built on time and on budget with the average reactor costing three times as much and twice as long to build. [...] Worldwide, the cost of building a nuclear reactor is consistently two to three times higher than the nuclear industry estimates. In India, the country with the most recent experience of nuclear reactor construction, completion costs for the last 10 reactors have, on average, been 300% over budget. In Finland, the construction of a new reactor is already €1.5 billion over budget."
+- Nuclear energy relies too heavily on subsidies/taxpayers "The Case Against Nuclear Power". Public Citizen. January 24, 2008: "Despite its promise more than 50 years ago of energy “too cheap to meter,” the nuclear power industry continues to be dependent on taxpayer handouts to survive. Since its inception in 1948, this industry has received tens of billions of dollars in federal subsidies but remains unable to compete economically on its own.[1] On August 8, 2005, President Bush signed an energy bill that included over $13 billion in tax breaks and subsidies, as well as other incentives, for the nuclear industry."
+- Nuclear waste disposal is costly Digging massive holes in mountains, transporting nuclear waste to these designated waste areas, and monitoring the waste areas for radiation leakages are all significant costs associated with nuclear energy.
+- Centralized nuclear energy production is inefficient. Whenever electricity is transferred across wires, some of its electrical current is lost. The longer the distance, the more electricity loss occurs. Because there are few nuclear power plants, the average distance that the produced electricity has to travel is quite long. The result is an inefficient loss of electrical energy. More decentralized forms of renewable energy are superior.
+|
+|
+[
+]
+[
+]
+[
+]
+[
+]
+[
+]
+Waste: Can nuclear waste be dealt with adequately?
+|
+|
+[
+]
+Yes
+- Nuclear energy "waste" can be recycled Patrick Moore. "Going Nuclear A Green Makes the Case". Washington Post. April 16th, 2006: "[Claim:] Nuclear waste will be dangerous for thousands of years. [Response:] Within 40 years, used fuel has less than one-thousandth of the radioactivity it had when it was removed from the reactor. And it is incorrect to call it waste, because 95 percent of the potential energy is still contained in the used fuel after the first cycle. Now that the United States has removed the ban on recycling used fuel, it will be possible to use that energy and to greatly reduce the amount of waste that needs treatment and disposal. Last month, Japan joined France, Britain and Russia in the nuclear-fuel-recycling business. The United States will not be far behind."
+- Nuclear waste is minimal, solid, and manageable James Lovelock, Honorary Visiting Fellow, Green College, Oxford University. "Nuclear Energy: the safe choice for now." July 2005: "An outstanding advantage of nuclear over fossil fuel energy is how easy it is to deal with the waste it produces. Fossil fuel burning produces twenty seven thousand million tons of carbon dioxide yearly. This is enough if solidified to make a mountain nearly two kilometres high and with a base ten kilometres in circumference. The same quantity of energy if it came from nuclear reactions would make fourteen thousand tons of high level waste. A quantity that occupies a sixteen metre sided cube. The carbon dioxide waste is invisible but so deadly that if its emissions go unchecked it will kill nearly everyone. The nuclear waste buried in pits at the production sites is no threat to Gaia and dangerous only to those foolish enough to expose themselves to its radiation."
+- Nuclear waste radioactivity dissipates over time. Although the spent fuel is highly radioactive at the moment it is brought out of the reactor, this same characteristic means that it rapidly loses radioactivity. It has a limited time for which it is a significant threat.
+- Technologies for breaking-down radioactive waste are being developed. A plasma torch, hotter than the surface of the sun works on the principle of breaking down dangerous compounds to safer, basic elements. This is being developed with the prospect of being used to break-down radioactive nuclear waste.
+- Waste heat from nuclear reactors can be used "How nuclear power could fertilise fields." New Scientist. September 23, 2009: "WHO would have thought that nuclear power could be used to make fertiliser? It will if a new direction in US research proves a success. The Department of Energy (DOE) is expanding its development of nuclear reactors that churn out large amounts of waste heat, which could be used in a number of other industries. [...] On 18 September, the DOE announced that its Next Generation Nuclear Plant project will receive a $40 million boost in funding. The gas-cooled reactors involved will run at temperatures in excess of 800 °C, more than twice that of existing light water reactors. The heat is valuable for industrial processes that use thermal chemical reactions, such as fertiliser production and hydrogen generation, says Tom O'Connor of the DOE."
+|
+|
+[
+]
+No
+- Nuclear energy produces dangerous radioactive waste. "The Case Against Nuclear Power". Public Citizen. Retrieved 1.24.08: "Nuclear power is not a clean energy source. In fact, it produces both low and high-level radioactive waste that remains dangerous for several hundred thousand years. Generated throughout all parts of the fuel cycle, this waste poses a serious danger to human health. Currently, over 2,000 metric tons of high-level radioactive waste and 12 million cubic feet of low level radioactive waste are produced annually by the 103 operating reactors in the United States.4 No country in the world has found a solution for this waste. Building new nuclear plants would mean the production of much more of this dangerous waste with no where for it to go."
+- Reprocessing nuclear waste is not a viable environmental solution. Nuclear waste is not being reprocessed except in a very few countries. There is no closed cycle for it to be framed as "Recycling". It is cheaper to mine new Uranium than reprocess spent Uranium. Second, spent Uranium has to be disposed of and dealt with at one point even if it is reprocessed and the radioactivity of it remains.
+- Burying nuclear waste creates risks for future generations. Whenever nuclear waste is buried, risks are created for future generations, as there is no 100% reliable way to store radioactive materials.
+- Transporting nuclear waste is a public safety concern - Since the storage of nuclear waste often takes place in designated areas within a large territory, it becomes necessary to transport nuclear waste long distances to these locations. This presents risks to the populations that exist on the route to these waste areas.
+- Nuclear waste disposal is costly Digging massive holes in mountains, transporting nuclear waste to these designated waste areas, and monitoring the waste areas for radiation leakages are all significant costs associated with nuclear energy.
+|
+|
+[
+]
+[
+]
+[
+]
+[
+]
+[
+]
+Energy security: Does nuclear energy improve energy security nationally, internationally?
+|
+|
+[
+]
+Pro
+- Nuclear power will help lower oil dependencies and risks. Nuclear energy is one of the most viable alternatives to oil, particularly because it is capable of supplying such massive amounts of energy. According to a Stanford study, fast breeder reactors (that convert Uranium into other nuclear fuels while generating energy) have the potential to generate energy for billions of years, thus they make nuclear energy sustainable while lowering our dependency on oil, thus increasing our energy security.
+- Nuclear energy can help supply the poor world with needed electricity The massive increase in demand for electricity expected in the 21st century can only be met by an energy resource capable of supply a massive amount of electricity. Coal is an option, but it is highly destructive to air quality and the global environment. Nuclear energy is really the only other massively abundant, massively productive source of electricity capable of meeting these rising demands.
+|
+|
+[
+]
+Con
+- Nuclear energy is not applicable and accessible globally "The case against nuclear power". Greenpeace. January 8, 2008: "Nuclear is not an available power source in the Philippines, and, given the DOE’s power forecasts, a nuclear plant will be a poor choice to meet power demand because it takes too long to build. Being modular and decentralized by nature, new renewable energy can be expanded and built much more rapidly (and operated more efficiently given the country's archipelagic character) than nuclear and conventional polluting sources. [...] Uranium to fuel the BNPP will have to be imported as there are no uranium deposits in the Philippines, so the country’s dependence on foreign fuel is increased. Uranium is further subject to large price hikes since the resource is only available to a few countries. In fact, 58% of global uranium supplies come from only three countries and its processing as fuel can only be carried out in six countries. Further, at current global nuclear capacity, known uranium resources will last only 34 years."
+|
+|
+[
+]
+[
+]
+[
+]
+[
+]
+[
+]
+Terrorist threat: Is the terrorist threat to nuclear facilities non-existent/manageable?
+|
+|
+[
+]
+Yes
+|
+|
+[
+]
+No
+- A terrorist strike on a nuclear facility could be devastating "Nuclear’s Fatal Flaws: Security". Public Citizen. Retrieved 1.24.08: "The 9/11 Commission noted in June 2004 that al Qaeda’s original plan for September 11 was to hijack 10 airplanes and crash two of them into nuclear plants.[1] A successful attack would release 'large quantities of radioactive materials to the environment.'[2] A September 2004 study by Dr. Ed Lyman of the Union of Concerned Scientists, using the NRC’s own analysis method, found that a worst-case accident or attack at the Indian Point nuclear plant 35 miles north of New York City could cause up to 43,700 immediate fatalities and up to 518,000 long-term cancer deaths. Such a release could cost up to $2.1 trillion, and would force the permanent relocation of 11.1 million people."
+|
+|
+[
+]
+[
+]
+[
+]
+[
+]
+[
+]
+Proliferation: Is the risk of nuclear energy being used for weapons tolerable?
+|
+|
+[
+]
+Yes
+- Nuclear energy can reduce materials available for weapons-use. The Megatons-to-Megawatts program destroyed weapons material by using it to create electricity in power stations across the US. Far from increasing proliferation, nuclear energy is helping to reduce nuclear weapons quantities in a safe and useful manner.
+|
+|
+[
+]
+No
+|
+|
+[
+]
+[
+]
+[
+]
+[
+]
+[
+]
+Public opinion: Where does public opinion stand on this issue?
+|
+|
+[
+]
+Yes
+- Fears over nuclear energy are irrational James Lovelock, doyen of green scientists and known for his Gaia hypothesis, declared nuclear power was the only green solution: "Opposition to nuclear energy is based on irrational fear fed by Hollywood-style fiction, the green lobbies and the media. These fears are unjustified and nuclear energy from its start in 1952 has proved to be the safest of all energy sources."[2]
+- Fear toward nuclear energy is fed by misinformation Nuclear Power Now .org: "Unfortunately, the voting public has been victimized by forty years of misinformation regarding the safety of nuclear power. The graphs on nuclear energy showing it to be safe, economical, and in our national interest are countered by anti-nuclear activists using fear tactics to frighten the electorate into inaction."
+|
+|
+[
+]
+No
+- Ill-informed public opinion the main obstacle for nuclear energy. The majority of the public consider nuclear power plants to be unsafe. They really are very safe, but the public opinion in countries currently not using nuclear power is predominantly against nuclear energy. The public opinion really is the only factor stopping nuclear energy coming into place globally.
+|
+|
+[
+]
+[
+]
+[
+]
+[
+]
+[
+]
+General: General statements in support and against nuclear energy.
+|
+|
+[
+]
+Pro
+|
+|
+[
+]
+Con
+- Nuclear energy has a limited supply and is far inferior to solar power. Solar power is more renewable and cleaner. Its supply is endless, unlike that of nuclear energy. Similarly, wind power generates no waste and can sustain our planet for millenia to come. Nuclear power is not the answer. When there are so many cheaper, safer, cleaner and more sustainable alternatives, why the debate?
+|
+|
+[
+]
+[
+]
+[
+]
+[
+]
+Pro/con sources
+|
+|
+[
+]
+Yes
+- Patrick Moore. "Going Nuclear A Green Makes the Case". Washington Post. April 16th, 2006
+- Jay Lehr. "Making the Case for Nuclear Power". The Heartland Institute. February 1, 2005
+- Mark Brandly. "The Case for Nuclear Power". Virginia Viewpoint. October, 2001.
+- Pascal Zachary. "The case for nuclear power". SFGate. February 5, 2006
+- Max Schulz. "Nuclear Power Is the Future". Wilson Quarterly. Fall, 2006
+- Christine Todd Whitman. "The case in favor of nuclear power." Business Week. September 12, 2007
+- Robert C. Morris. "The Environmental Case for Nuclear Power" (Book). 2000
+- Leslie Kemeny. "Nuclear power can cut emissions and still maintain supply". The Age. 21 July 2008
+- "The future is green, the future is nuclear." Times Online. October 4, 2009
+- "The Business case for new nuclear power plants." Office of Nuclear Energy, Science, and Technology
+- John McCarthy. "Nuclear Energy is the Most Certain Source." Formal.standard
+- Pete Domenici. "A Brighter Tomorrow: Fulfilling the Promise of Nuclear Energy"
+- "How nuclear power could fertilise fields." New Scientist. September 23, 2009
+- James Lovelock, Honorary Visiting Fellow, Green College, Oxford University. "Nuclear Energy: the safe choice for now." July 2005
+- Mark McFadden. "No Such Thing as Nuclear Waste." Wall Street Journal. March 13, 2009
+- "Is nuclear energy a mortal ennemy of renewables?" Manicore. August 2005
+- Nuclear Power Now .org
+- NuclearTownhall
+|
+|
+[
+]
+No
+- "The Case Against Nuclear Power". Public Citizen. Retrieved 1.24.08
+- Wayne Ellwood and Dexter Tiranti. "The case against nuclear energy". New Internationalist. August, 1981
+- Jeremy Rifkin. "Nuclear Energy: Still a Bad Idea". Los Angeles Times. September 29, 2006
+- John W. Gofman, Ph.D., M.D. and Arthur R. Tamplin, Ph.D. "Poisoned Power, The Case Against Nuclear Power Plants Before and After Three Mile Island" (book). 1979
+- Mark Hertsgaard. "The True Costs of Nuclear Power". Mother Earth News. April/May 2006
+- "The case against nuclear power". Greenpeace. January 8, 2008
+- "The Case Against Nuclear Power". No New Nukes. Retrieved 1.24.08
+- "Nuclear Power: No Solution to Climate Change". Nuclear Information and Resource Center
+- No to nuclear power.org
+- "6 reasons against nuclear energy". 1 million Europeans against nuclear power
+- Stephanie Cooke. "A nuclear waste." New York Times. March 17, 2009
+- "End the nuclear age." Greenpeace. October 2008
+- Arjun Makhijani, Ph.D. and Scott Saleska. "The Nuclear Power Deception." (1996)
+- Gerry Wolf. "Why we don't need nuclear power". MNG.org
+- "Spain Says Has Power To Spare, Can Phase Out Nukes." Reuters. September 29th, 2009
+- "Spain Says Has Power To Spare, Can Phase Out Nukes." Planet Ark. September 29, 2009
+- Rhiannon Hoyle. "Scotland stands firm against nuclear." Construction News. 23 April, 2009
+- Noelle Straub and Peter Behr. "Will the US ever need to build another coal or nuclear plant?" Scientific American. April 22, 2009
+|
+|
+See also
+External links

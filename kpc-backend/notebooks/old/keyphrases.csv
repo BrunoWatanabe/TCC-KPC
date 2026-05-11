@@ -1,0 +1,146 @@
+keyphrase,cluster,curated,cluster_a1,curated_a1,cluster_a2,curated_a2
+Deterrence,1,1,1,1,3,1
+Lack of deterrence,1,1,1,0,3,0
+deterrence,1,1,1,0,3,0
+deterrent,1,1,1,0,3,0
+death_penalty_deters,1,1,1,0,3,0
+Severity of punishment,2,1,2,0,1,1
+Proportional punishment,2,1,2,0,1,0
+Cruel and unusual punishment,2,1,2,0,1,1
+punishment,2,1,2,1,1,0
+punishments,2,1,2,0,1,0
+punishing,2,1,2,0,1,0
+punish,2,1,2,0,1,0
+punishes,2,1,2,0,1,0
+homicides,3,1,5,1,24,0
+homicidesurvivors,3,1,5,0,24,0
+homicide,3,1,5,0,24,1
+murder,3,1,5,0,24,1
+murderers,3,1,5,0,24,0
+murderer,3,1,5,0,24,0
+murders,3,1,5,0,24,0
+assassinations,3,1,5,1,24,0
+murdering,3,1,5,0,24,0
+manslaughter,3,1,5,0,24,0
+assassination,3,1,5,0,24,0
+Retribution,4,1,7,1,1,1
+Moral retribution,4,1,7,0,1,1
+Cost-effectiveness,5,0,10,0,5,1
+Costly and wasteful,5,0,10,0,5,1
+death_penalty_costs,5,0,10,1,5,0
+Moral objections,6,1,11,0,1,0
+Dehumanization,6,1,11,0,1,1
+humaneness,6,1,11,1,1,1
+morality,6,1,11,1,1,0
+sentencing,7,1,13,1,20,0
+death_penalty_laws,7,1,13,1,20,1
+death_penalty_system,7,1,13,0,20,1
+convict,8,0,9,1,9,1
+convicting,8,0,9,0,9,0
+imprisonment,8,0,9,0,9,0
+incarceration,8,0,9,0,9,0
+incarcerating,8,0,9,0,9,0
+Protection of innocent lives,9,1,5,0,16,1
+Innocence,9,1,5,0,16,0
+Irreversibility,9,1,5,1,16,0
+Human fallibility,9,1,5,1,16,0
+Possibility of executing the innocent,9,1,5,0,16,1
+Public safety,10,0,3,1,4,1
+criminology,10,0,3,1,4,0
+criminality,10,0,3,0,4,1
+perpetrators,10,0,3,0,4,0
+Accountability,11,0,16,1,1,1
+executions,12,0,10,0,2,1
+case_against_death,12,0,10,0,2,1
+Death_Penalty_Cases,12,0,10,1,2,0
+Social order,13,1,3,1,4,1
+Upholding societal norms,13,1,3,0,4,1
+what_is_death_row_syndrome,14,0,10,0,5,0
+Death_Penalty_Page,14,0,10,0,5,0
+death_row,14,0,10,1,5,1
+euthanasia,15,0,15,1,5,1
+violence,16,0,6,1,1,1
+lethal,17,0,2,1,20,1
+Criminal defense lawyers,18,0,16,1,1,1
+Prosecutors,18,0,16,1,1,1
+prosecutes,18,0,16,0,1,0
+Discrimination,19,1,17,1,5,1
+Racial bias,19,1,17,1,5,1
+Disproportionate impact on marginalized communities,19,1,17,0,5,0
+Systemic injustice,19,1,17,0,5,0
+Rehabilitation potential,20,1,15,1,20,1
+Rehabilitation opportunity,20,1,15,0,20,0
+Focus on prevention and rehabilitation,20,1,15,0,20,1
+juvenile_death_penalty,20,1,15,0,20,0
+Closure for victims' families,21,1,8,0,25,1
+Restoring faith in the justice system,21,1,8,0,25,1
+Symbolic value,21,1,8,1,25,0
+homicidesurvivors,21,1,8,0,25,0
+fatalities,21,1,8,0,25,0
+sentencing,22,0,3,1,4,1
+penalty,22,0,3,0,4,0
+imprisonment,23,1,6,0,1,1
+incarceration,23,1,6,1,1,1
+incarcerating,23,1,6,0,1,0
+Crime prevention,24,1,8,0,1,1
+Recidivism prevention,24,1,8,1,1,0
+Dissuading potential offenders,24,1,8,0,1,1
+Removal of dangerous individuals,24,1,8,0,1,0
+Human rights,25,1,6,1,26,1
+Violation of the right to life,25,1,6,0,26,1
+Arbitrary application,25,1,6,1,26,0
+Violation of international norms,25,1,6,0,26,0
+Death Penalty Information Center,26,0,8,1,7,1
+Capital punishment researchers/scholars,26,0,8,0,7,1
+Media outlets/journalists,26,0,8,0,7,0
+Death_Penalty_Information,26,0,8,0,7,0
+Penalty_Information_Center,26,0,8,0,7,0
+death_penalty_poll,26,0,8,1,7,0
+death_penalty_found,26,0,8,0,7,0
+American Civil Liberties Union (ACLU),27,1,2,0,17,1
+Innocence Project,27,1,2,1,17,1
+National Coalition to Abolish the Death Penalty,27,1,2,0,17,0
+Religious organizations,27,1,2,1,17,0
+Supreme Court,28,0,8,1,7,1
+Supreme_Court,28,0,8,0,7,0
+state_Supreme_Court,28,0,8,0,7,0
+California_Supreme_Court,28,0,8,0,7,0
+Supreme_Court_Justice,28,0,8,0,7,0
+United_States_Supreme,28,0,8,0,7,0
+State legislatures,29,0,1,1,3,1
+State_Death_Penalty,29,0,1,0,3,0
+death_penalty_states,29,0,1,0,3,0
+California_Death_Penalty,29,0,1,0,3,0
+American_death_penalty,29,0,1,0,3,0
+federal_death_penalty,29,0,1,0,3,0
+Florida_Death_Penalty,29,0,1,0,3,0
+UNITED_STATES,29,0,1,0,3,0
+national_death_penalty,29,0,1,0,3,0
+Texas_death_penalty,29,0,1,0,3,0
+State Departments of Corrections,30,0,8,0,8,0
+U.S. Department of Justice,30,0,8,0,8,1
+Law enforcement agencies,30,0,8,1,8,1
+Bar associations,30,0,8,0,8,0
+Amnesty International,31,1,10,1,2,1
+Human Rights Watch,31,1,10,1,2,0
+United Nations,31,1,10,0,2,0
+International Court of Justice,31,1,10,0,2,1
+Victims' rights organizations,32,0,9,1,9,1
+death,33,0,14,0,16,0
+death_penalty,33,0,14,0,16,0
+Supports_Death_Penalty,33,0,14,0,16,0
+pro_death_penalty,33,0,14,0,16,0
+Death_Penalty_Support,33,0,14,0,16,0
+capital_punishment,33,0,14,0,16,0
+death_penalty_arguments,33,0,14,0,16,0
+support_capital_punishment,33,0,14,0,16,0
+Death_penalty_proponents,33,0,14,0,16,0
+anti_death_penalty,33,0,14,0,16,0
+death_penalty_opponents,33,0,14,0,16,0
+Death_Penalty_Drug,33,0,14,0,16,0
+Death_Penalty_Remains,33,0,14,0,16,0
+criminals,33,0,14,0,16,0
+crimes,33,0,14,0,16,0
+Justice,33,0,14,0,16,0
+Flawed justice system,33,0,14,0,16,0
+crime,33,0,14,0,16,0

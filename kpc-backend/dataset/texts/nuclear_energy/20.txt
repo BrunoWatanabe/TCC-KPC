@@ -1,0 +1,182 @@
+|Uranium mines inevitably pollute their environment, tailings dams cause pollution through leakage.
+||Uranium mines today aim for zero emission of pollutants. Any water release is of surface run-off and is close to drinking standard. Tailings retention does not normally cause pollution off site. Major uranium mines in Australia and Canada have ISO14001 certification.
+||WNA info papers:
+|
+Environmental Aspects of Uranium Mining;
+Australia's Uranium Mines
+|
+|
+|Uranium tailings retain almost all their radioactivity, which continues for hundreds of thousands of years.
+||True, but the level of radioactivity is very low & with normal engineering, they pose no threat to anyone. All the radioactivity is from the original orebody (no more is created). Uranium mine rehabilitation ensures that these are safe, stable and will cause no harm.
+||WNA info paper:
+|
+Environmental Aspects of Uranium Mining
+|
+|
+|Uranium is potentially hazardous to miners' health.
+||Uranium mining is highly regulated in most countries and standards ensure that no adverse health effects are likely.
+||WNA info paper:
+|
+Occupational Safety in Uranium Mining
+|
+|
+|There is no safe level of radiation exposure.
+||While this is accepted as a conservative basis for radiation protection, it is not a scientific statement of fact. Low levels of radiation comparable to those received naturally in some places are not harmful. There is no evidence of any harm below about 100 mSv/yr.
+||WNA info papers:
+|
+Radiation and Life;
+Nuclear Radiation & Health Effects
+|
+|
+|Nuclear wastes (as, or in, spent fuel) are an unresolved problem.
+||In all countries using nuclear energy there are well established procedures for storing, managing and transporting such wastes, funded from electricity users. Wastes are contained and managed, not released. Storage is safe and secure, plans are well in hand for eventual disposal.
+||WNA info papers:
+|
+Radioactive Waste Management;
+Waste Management: Overview
+|
+|
+|The nuclear industry is responsible for horrific wastes which will endure as a nightmare for our grandchildren.
+||Nuclear power is the only energy-producing industry which takes full responsibility for managing all its wastes, and bears the cost of this.
+||As above
+|
+|
+|
+|Nuclear reactors are unsafe, Chernobyl was typical, and resulted in a huge death toll.
+||The nuclear industry has an excellent safety record, with some 14,800 reactor years of operation spanning five decades. Even a major accident and meltdown as at Fukushima in 2011 would not endanger its neighbours. Some Soviet designed and built reactors have been a safety concern for many years, but are much better now than in 1986. The Chernobyl disaster was basically irrelevant to any western reactor, or any that might be built today.
+|
+According to authoritative UN figures, the Chernobyl death toll is 56 (31 workers at the time, more since and nine from thyroid cancer). There were no deaths or serious radiation doses from the Fukushima accident.
+|WNA info papers:
+|
+Safety of Nuclear Power Reactors;
+Advanced Nuclear Power Reactors;
+Chernobyl Accident 1986;
+Three Mile Island Accident;
+Fukushima Accident
+|
+|
+|Nuclear reactors are vulnerable to terrorist attacks like that on the World Trade Centre in 2001, waste and spent fuel storage is even more so.
+||Any reactor licensable in the West has a substantial containment structure and most also have a very robust pressure vessel and internal structures. Power reactors are well equipped to survive an impact of that kind without any significant radiological hazard locally. Civil waste and spent fuel storage is also robust and often below ground level.
+||WNA info paper:
+|
+Safety of Nuclear Power Reactors – Appendix 3
+|
+|
+|Insurance companies will not insure nuclear reactors so the risk devolves on to government.
+||All nuclear reactors, at least in the West, are insured. Not only so, they are a sought-after risk because of their high engineering and operational standards. Beyond the cover for individual plants there are national and international pooling arrangements for comprehensive third-party cover.
+||WNA info paper:
+|
+Liability for Nuclear Damage
+|
+|
+|Nuclear energy is too expensive, energy efficiency is all that's needed, with more use of renewables.
+||Nuclear electricity is mostly competitive with coal. If external costs are accounted, nuclear is very competitive. Energy efficiency is vital but cannot displace most generating capacity. Wind power typically costs much more than nuclear - often twice as much per kWh, and cannot provide power on demand.
+||WNA info paper:
+|
+The Economics of Nuclear Power
+|
+|
+|Nuclear power enjoys massive government subsidies.
+||Nowhere in the world is nuclear power subsidised – on the contrary in Sweden and Germany it has a special tax. In the USA limited subsidies are offered for initial third generation plants, the level (1.9c/kWh) equivalent to the unlimited subsidies available for wind generation.
+||WNA info paper:
+|
+Energy Subsidies & External Costs
+|
+|
+|In the whole fuel cycle, nuclear power uses nearly as much energy as it produces.
+||This popular folklore is easily rebutted by published data. In fact, considering all inputs including waste management, less than 6% of the output is required, usually only 2-3%.
+||WNA info paper:
+|
+Energy Balances & CO2 Implications
+|
+|
+|Decommissioning nuclear plants will be too expensive to undertake
+||Decommissioning is usually funded while the plant is operating. Experience to date gives a good idea of costs and earlier estimates are being revised downwards.
+||WNA info paper:
+|
+Decommissioning Nuclear Facilities
+|
+|
+|Renewable energy sources should be used instead.
+||Renewables may be used as much as possible, but intrinsic limitations (diffuse, intermittent sources) mean that wind and sun can never economically replace sources such as coal, gas and nuclear for large-scale, continuous, reliable supply.
+||WNA info papers:
+|
+Sustainable Energy;
+Renewable Energy & Electricity
+|
+|
+|Transport of uranium and other radioactive material is hazardous.
+||Any such material is transported in containers designed to ensure safety in any circumstance. Petrol tankers on a public road are more of a hazard than any radioactive material in transit anywhere.
+||WNA info paper:
+|
+Transport of Radioactive Materials
+|
+|
+|Reprocessing spent fuel gives rise to plutonium which is likely to be used in bombs.
+||The plutonium obtained from reprocessing is not suitable for bombs but is a valuable fuel which can be used with depleted uranium as mixed oxide fuel (MOX).
+||WNA info papers:
+|
+Plutonium;
+Mixed Oxide Fuel
+|
+|
+|Mining Australian/Canadian uraniumcontributes to nuclear weapons proliferation.
+||All traded uranium is sold for electricity production only, and two layers of international safeguards arrangements confirm this. Western suppliers have no customers failing to conform to stringent accounting and auditing requirements.
+||WNA info paper:
+|
+Safeguards to Prevent Nuclear Proliferation
+|
+|
+|We cannot be sure that our uranium does not end up in weapons, eg in France or China.
+||Safeguards would detect any diversion. Today military materials are being released for dilution and civil use, so there is not even a reason for diversion in major customer countries. France no longer has the means to enrich uranium beyond reactor-grade. China has ample uranium for any military program but is understood to have ceased putting uranium into this in the 1990s.
+||WNA info paper:
+|
+Military Warheads as a Source of Nuclear Fuel
+|
+|
+|Former US Vice-President Al Gore said (18/9/06): "During my eight years in the White House, every nuclear weapons proliferation issue we dealt with was connected to a nuclear reactor program. Today, the dangerous weapons programs in both Iran and North Korea are linked to their civilian reactor programs."
+||He is not correct. Iran has failed to convince anyone that its formerly clandestine enrichment program has anything to do with its nuclear power reactor under construction (which will be fuelled by Russia), and North Korea has no civil reactor program. In respect to Pakistan, which he may have had in mind, there is certainly a link between military and civil, but that is part of the reason it remains outside the NPT.
+||WNA info paper:
+|
+Safeguards to Prevent Nuclear Proliferation
+|
+|
+|Nuclear energy makes only a trivial contribution to world energy needs.
+||Electricity generation uses 40% of the world's primary energy. Nuclear provides 14% of world electricity.
+||WNA info papers:
+|
+Nuclear Power in the World Today;
+World Energy Needs and Nuclear Power;
+Uranium Markets
+|
+|
+|The number of nuclear reactors is steadily falling as they drop from favour.
+||Since 1996 the number of operating reactors has remained steady, but the output from nuclear has increased significantly. Those being retired are mostly small, new ones are mostly large. Some 60 new power reactors are being built, 160 more are planned, and many more are firmly proposed.
+||See above
+|
+|
+|
+|Nuclear energy makes only a trivial contribution to reducing carbon dioxide emissions.
+||Currently nuclear energy saves the emission of 2.5 billion tonnes of CO2 relative to coal. For every 22 tonnes of uranium used, one million tonnes of CO2 emissions is averted. Energy inputs to nuclear fuel cycle produce only a few (eg 1-3) percent of the CO2 emissions saved. Doubling the world's nuclear output would reduce CO2 emissions from power generation by about one-quarter.
+||WNA info papers:
+|
+Climate Change – The Science;
+Sustainable Energy;
+Energy Subsidies & External Costs;
+Energy Balances & CO2 Implications
+|
+|
+|Uranium enrichment plants are major emitters of chemicals which damage the ozone layer, specifically CFC-114 (Freon) used as coolant.
+||Two 1950s-era plants in USA were major emitters (360 t/yr), both are now closed. The last to close, in 2013, ran with much reduced emissions, well under 1% of total US CFC emissions. Other uranium enrichment and other plants do not use these chemicals.
+||WNA info paper:
+|
+Uranium Enrichment
+|
+|
+|Nuclear power plants use much more water than alternatives.
+||Any power plant (gas, coal or nuclear) using the conventional steam cycle needs to dump around two-thirds of the heat used in making electricity, the amount depending on the size and thermal efficiency of the plant. There is no fundamental difference between fossil fuel and nuclear in this regard.
+|
+The heat is dumped either to a large volume of water (from the sea or large river, heating it a few degrees) or to a relatively smaller volume of water in cooling towers, using evaporative cooling (latent heat of vapourisation). In the latter case some 2 to 2.5 litres/kWh is evaporated, depending on conditions.
+|WNA info paper:
+|
+Cooling Power Plants

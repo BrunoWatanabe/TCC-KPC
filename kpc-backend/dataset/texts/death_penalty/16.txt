@@ -1,0 +1,482 @@
+(Copyright 1986 by the Harvard Law Review Association)
+AGAINST THE AMERICAN SYSTEM OF CAPITAL PUNISHMENT
+By Jack Greenberg
+Professor of Law, Columbia University. A.B. 1945, LL.B. 1948, LL.D.
+1984 Columbia University. I am particularly grateful to my colleague Henry P.
+Monagahan for much useful criticism and many helpful suggestions. My
+colleagues Peter L. Strauss, Harold Edgar, and Don Verrilli also gave
+thoughtful and good advice. The arguments offered here, however, are my own
+and I bear full responsibility for them.
+Over and over, proponents of the death penalty insist that it is right
+and useful. In reply, abolitionists argue that it is morally flawed and cite
+studies to demonstrate its failure to deter. Were the subject not so grim and
+compelling, the exchanges would, by now, be tiresome.
+Yet all too frequently, the debate has been off the mark. Death penalty
+proponents have assumed a system of capital punishment that simply does not
+exist: a system in which the penalty is inflicted on the most reprehensible
+criminals and meted out frequently enough both to deter and to perform the
+moral and utilitarian function ascribed to retribution. Explicitly or
+implicitly, they assume a system in which certainly the worst criminals,
+Charles Manson or a putative killer of one's parent or child, for example, are
+executed in an even-handed manner. But this idealized system is not
+the American system of capital punishment. Because of the goals that our
+criminal justice system must satisfy - deterring crime, punishing the guilty,
+acquitting the innocent, avoiding needless cruelty, treating citizens equally,
+and prohibiting oppression by the state - America simply does not have the kind
+of capital punishment system contemplated by death penalty partisans.
+Indeed, the reality of American capital punishment is quite to the contrary.
+Since at least 1967, the death penalty has been inflicted only rarely,
+erratically, and often upon the least odious killers, while many of the most
+heinous criminals have escaped execution. Moreover, it has been employed
+almost exclusively in a few formerly slave-holding states, and there it has
+been used almost exclusively against killers of whites, not blacks, and never
+against white killers of blacks. This is the American system of capital
+punishment. It is this system, not some idealized one, that must be defended
+in any national debate on the death penalty. I submit that this system is
+deeply incompatible with the proclaimed objectives of death penalty
+proponents.
+I. THE AMERICAN SYSTEM OF CAPITAL PUNISHMENT
+Here is how America's system of capital punishment really works today. Since
+1967, the year in which the courts first began to grapple in earnest with death
+penalty issues, the death penalty has been frequently imposed but rarely
+enforced. Between 1967 and 1980, death sentences or convictions were reversed
+for 1899 of the 2402 people on death row, a reversal rate of nearly eighty
+percent. (1) These reversals reflected, among other factors, a 1968 Supreme
+Court decision dealing with how juries should be chosen in capital cases, (2) a
+cause they were imposed arbitrary and "freakishly," (3) and a 1976 decision
+holding mandatory death sentences unconstitutional. (4) Many death sentences
+were also invalidated on a wide variety of common-place state-law grounds, such
+as hearsay rule violations or improper prosecutorial argument.
+This judicial tendency to invalidate death penalties proved resistant to
+change. After 1972, in response to Supreme Court decisions, many states
+adopted new death penalty laws, and judges developed a clearer idea of the
+requirements that the Court had begun to enunciate a few years earlier. By
+1979, the efforts of state legislatures finally paid off when John Spenkelink
+(5) became the first person involuntarily (6) executed since 1967. (7)
+Nevertheless, from 1972 to 1980, the death penalty invalidation rate declined
+to "only" sixty percent. (8) In contrast, ordinary noncapital convictions and
+sentences were almost invariably upheld. (9)
+Today, the death row population has grown to more that 1600 convicts. About
+300 prisoners per year join this group, while about 100 per year leave death
+row, mainly by reason of judicial invalidations but also by execution and by
+death from other causes. (10) Following Spenkelink's execution, some states
+began to put some of these convicted murderers to death. Five persons were
+executed involuntarily in 1983, twenty-one in 1984, and fourteen in 1985. (11)
+Nevertheless, the number of actual executions seems to have reached a plateau.
+The average number of executions in the United States hovers at about twenty
+per year; as of March 1, only one person has been executed in 1986. (12) Yet
+even if this number doubled, or increased fivefold, executions would not be
+numerous either in proportion to the nation's homicides (approximately 19,000
+per year) (13) or to its death row population (over 1600). (14)
+One reason for the small number of executions is that the courts continue to
+upset capital convictions at an extraordinarily high rate, albeit not so high
+as earlier. Between January 1, 1982 and October 1, 1985, state supreme courts
+invalidated thirty-five percent of all capital judgments. State post-appellate
+process undid a few more. The federal district and appeals courts overturned
+another ten percent, and last Term the Supreme Court reversed three of the four
+capital sentences it reviewed. Altogether, about forty-five percent of capital
+judgments which were reviewed during this period were set aside by one court or
+another. (15) One index of the vitality of litigation to reverse executions is
+that while legal attacks on capital punishment began as a coordinated effort by
+civil rights lawyers, they now come from a variety of segments of the bar.
+(16)
+States not only execute convicted killers rarely, but they do so erratically.
+Spenkelink's execution, the nation's first involuntary execution since 1967,
+did not argur well for new systems of guided discretion designed to produce
+evenhanded capital justice in which only the worst murderers would be executed.
+Spenkelink was a drifter who killed a traveling companion who had sexually
+abused him. The Assistant Attorney General of Florida in charge of capital
+cases described him as "probably the least obnoxious individual on death row in
+terms of the crime he committed." (17)
+The current round of invalidations highlights the erratic imposition of the
+death penalty. These invalidations have been based largely on grounds
+unrelated to the heinousness of the crime or the reprehensibility of the
+criminal. (18) Thus, the most abhorrent perpetrators of the most execrable
+crimes have escaped the penalty on grounds wholly unrelated to moral desert -
+for example, because defense counsel, the prosecutor, or the judge acted
+ineffectively or improperly on some matter of evidence. By contrast, criminals
+far less detestable by any rational moral standard - like Spenkelink, "the
+least obnoxious individual on death row" - have gone to their deaths because
+their trials "went well." (19) Of course, when errors occur in securing a
+death penalty, the sentence should be invalidated, particularly because "there
+is a significant constitutional difference between the death penalty and lesser
+punishments." (20) The corollary of this imperative is that the current system
+of capital punishment violates a central tenet of capital justice -that the
+most reprehensible criminals deserve execution and others deserve lesser
+sentences.
+It is troubling as well that the current level of executions has been attained
+only by using expedited procedures that undermine confidence in the fairness of
+the death penalty process. Recent executions have occurred during a period in
+which some federal judges, frustrated with the slow pace of capital justice,
+have taken extraordinary measures to expedite capital cases in federal courts.
+For example, the Fifth Circuit has quickened habeas corpus appeals in capital
+cases by accelerating the dates of arguments and greatly compressing the time
+for briefing cases. (21) Increasingly, the Supreme Court has encourage this
+hurry-up justice. The Court has not only denied stay applications, (22) but it
+has also vacated stays entered by lower courts (23) in cases in which stays
+would have been routine in earlier times. (24) In sum, the recent invalidation
+rate seems unlikely to change significantly, thereby perpetuating the current
+system of erratic and haphazard executions.
+Of course, one major difference exists between the period 1982 to 1985 and
+earlier years: increasingly, the death penalty has been concentrated
+geographically, not applied evenly across the United States. In the most
+recent period, there were forty-three involuntary executions. Quite
+strikingly, all occurred in the states of the Old Confederacy. Thirty-four of
+the forty-three states, and more that a quarter were in a single state,
+Florida, with thirteen. (26) In all but four cases, the defendants killed
+white persons. (27) In no case was a white executed for killing a black
+person. (28)
+Why are there so few executions? Convictions and sentences are reversed,
+cases move slowly, and states devote relatively meager resources to pursuing
+actual executions. Even Florida, which above all other states has
+shown that it can execute almost any death row inmate it wants to, has killed
+only 13 of 221 inmates since 1979, 12 since 1982. (It now has 233 convicts on
+death row.) (29) Outside the former slave-holding states, more than half the
+states are now abolitionist either de jure (fourteen states) or de facto (five
+state have no one on death row). (30) Moreover, past experience suggests that
+the execution level will not go very high. Before the 1967-76 moratorium, the
+number of executions exceeded fifty only once after 1957 - fifty-six in 1960.
+(31) At the time there were fewer abolitionist states and more capital crimes.
+This experience suggests that executions will not deplete the death row
+population.
+The limited number of actual executions seems to me to reflect the very deep
+ambivalence that Americans feel about capital punishment. We are the only
+nation of the Western democratic world that has not abolished capital
+punishment. (32) By contrast, countries with whose dominant value systems were
+ordinarily disagree, like the Soviet Union, China, Iran, and South Africa,
+execute prisoners in great numbers. (33)
+II. THE FAILURES OF CAPITAL PUNISHMENT
+We have a system of capital punishment that results in infrequent, random, and
+erratic executions, one that is structured to inflict death neither on those
+who have committed the worst offenses nor on defendants of the worst character.
+This is the "system" - if that is the right descriptive term - of capital
+punishment that must be defended by death penalty proponents. This
+system may not be justified by positing a particularly gregarious killer like
+Charles Manson. Or commitment to the rule of law means that we need an
+acceptable general system of capital justice if we are to have one at
+all. However, the real American system of capital punishment clearly fails
+when measured against the most common justifications for the infliction of
+punishment, deterrence, and retribution.
+If capital punishment can be a deterrent greater than life imprisonment at
+all, the American system is at best a feeble one. Studies by Thorsten Sellin
+(34) showed no demonstrable deterrent effect of capital punishment even during
+its heyday. Today's death penalty, which is far less frequently used,
+geographically localized, and biased according to the race of the victim,
+cannot possibly upset that conclusion. The forty-three persons who were
+involuntarily executed from 1982 to 1985 were among a death row population of
+more that 1600 condemned to execution out of about 20,000 who committed
+non-negligent homicides per year. While forty-three percent of the victims
+were black, (35) the death penalty is so administered that it overwhelmingly
+condemns and executes those who have killed whites.
+Very little reason exists to believe that the present capital punishment
+system deters the conduct of others any more effectively than live
+imprisonment. (36) Potential killers who rationally weight the odds of being
+killed themselves must conclude that the danger is nonexistent in most parts of
+the country and that in the South the danger is slight, particularly if the
+proposed victim is black. Moreover, the paradigm of this kind of murderer, the
+contract killer, is almost by definition a person who take his chances like
+the soldier of fortune he is. (37)
+But most killers do not engage in anything like a cost-benefit analysis. They
+are impulsive, and they kill impulsively. If capital punishment is to deter
+them, it can do so only indirectly: by impression on potential killers a
+standard of right and wrong, a moral authority, and influence on their
+superegos that, notwithstanding mental disorder, would inhibit homicide. This
+conception of general deterrence seems deeply flawed because it rests upon a
+quite implausible conception of how this killer population internalizes social
+norms Although no mentally disturbed enough to sustain insanity as a defense,
+they are often highly disturbed, of low intelligence, and addicted to drugs or
+alcohol. In any even, the message, if any, that the real American system of
+capital punishment sends to the psyches of would-be-killers is quite limited:
+you may in a rare case be executed if you murder in the deepest South and kill
+a white person. (38)
+The consequences of the real American system of capital justice are no more
+favorable as far as retribution is concerned. Retributive theories of criminal
+punishment draw support from several different moral theories that cannot be
+adequately elaborated here. While some of the grounds of retribution argument
+resemble the conscience-building argument underlying general deterrence theory,
+(39) all retribution theories insist that seeking retribution constitutes a
+morally permissible use of governmental power. To retribution theorists, the
+death penalty makes a moral point: it holds up as an example worthy of the
+most sever condemnation one who has committed the most opprobrious crime.
+As with may controversies over moral issues, these purely moral arguments may
+appear to end any real possibility for further discussion. For those who
+believe in them, they persuade, just as the moral counter-arguments persuade
+abolitionists. But discussion should not end at this point. Those who claim a
+moral justification for capital punishment must reconcile that belief with
+other moral considerations. To my mind, the moral force of any retribution
+argument is racially undercut by the hard facts of the actual American system
+of capital punishment. This system violates fundamental norms because it is
+haphazard, and because it is regionally and racially biased. To these moral
+flaws, I would add another: the minuscule number of executions nowadays cannot
+achieve the grand moral aims that are presupposed by a serious societal
+commitment to retribution.
+Some retribution proponents argue that is the pronouncement of several hundred
+death sentences followed by lengthy life imprisonment, not the actual
+imposition of a few executions, that satisfies, the public's demand for
+retribution. Of course, the public has not said that it wants the death
+penalty as it exists - widely applicable but not infrequently used. Nor, to
+the best of my knowledge, is there any solid empirical basis for such a claim.
+Like other statues, death penalty laws are of general applicability, to be
+employed according to their terms. (40) Nothing in their language or
+legislative history authorizes the erratic, occasional, racially biased use of
+these laws. But my objections to this argument go much deeper. I find morally
+objectionable a system of may pronounced death sentences but few actual
+executions, a system in which race and region are the only significant variable
+in determining who actually dies. My objection is not grounded in a theory
+that posits any special moral rights for the death row populations. The
+decisive point is my understanding of the basic moral aspirations of American
+civilization, particularly its deep commitment to the rule of law. I cannot
+reconcile an erratic, racially and regionally biased system of executions with
+my understanding of the core values of our legal order.
+Death penalty proponents may respond to the argument by saying that if there
+is not enough capital punishment, there should be more. If only killers of
+whites are being executed, then killers of blacks should be killed too; and if
+many sentences are being reversed, standards of review should be relaxed. (41)
+In the meantime, they might urge, the death penalty should go on. But this
+argument is unavailing, because it seeks to change the terms to the debate in a
+fundamental way. It seeks to substitute an imaginary system for the real
+American system of capital punishment. If there were a different kind of
+system of death penalty administration in this country, or even a reasonable
+possibility that one might emerge, we could debate its implications. But any
+current debate over the death penalty cannot ignore the deep moral deficiencies
+of the present system. (42)
+III. THE CONSTITUTION AND THE DEATH PENALTY
+This debate about whether we should have a death penalty is a matter on which
+the Supreme Court is unlikely to have the last say now or in the near future.
+Yet, the Court's decisions have some relevance. The grounds that the Court has
+employed in striking down various forms of the death penalty resemble the
+arguments I have made. Freakishness was a ground for invalidating the death
+penalty as it was administered throughout the country in 1972. (43) Rarity of
+use contributed to invalidation of the death penalty for rape (44) and felony
+murder, (45) and to invalidation of the mandatory death penalty. (46) That
+constitutional law reflects moral concerns should not be strange: concepts of
+cruel and unusual punishment, due process, and equal protection express
+contemporary standards of decency.
+Moreover, the whole development of the fourteenth amendment points to the
+existence of certain basic standards of decency and fairness from which no
+state or region can claim exemption. One such value is, of course, the
+racially neutral administration of justice. No one disputes that one of the
+fourteenth amendment's central designs was to secure the evenhanded
+administration of justice in the southern state courts and that the persistent
+failure to achieve that goal has been one of America's greatest tragedies. We
+cannot be blind to the fact that actual executions have taken place primarily
+in the South and in a least a racially suspect manner. In light of our
+constitutional history, the race-specific aspects of the death penalty in the
+South are profoundly unsettling.
+Given the situation as I have described it, and as I believe it will continue
+so long as we have capital punishment, on could argue that the death penalty
+should be declared unconstitutional in all its forms. But the Court is
+unlikely to take that step soon. Only ten years have passed since the type of
+death statue now in use was upheld, and some states have had such laws for an
+even shorter period. Thirty-seven states have passed laws showing they want
+some sort of death penalty. Public opinion polls show that most Americans want
+capital punishment in some form. Having only recently invalidated on
+application of the death penalty in Furman v. Georgia in 1972, the
+Court is unlikely soon to deal with the concept wholesale again. But, if the
+way capital punishment works does not change materially. I think that at some
+point the court will declare the overall system to be cruel and unusual. If
+this prediction is correct - and it is at least arguably so - an additional
+moral factor enters the debate. Is it right to kill death row inmates during
+this period of experimentation? There is, of course, an element of
+bootstrapping to my argument: exercising further restraint in killing
+death-sentenced convicts reinforces arguments of freakishness and rarity of
+application. But unless one can assure a full and steady stream of executions,
+sufficient to do the jobs the death penalty proponents claim that it can do,
+there is further reason to kill no one at all.
+NOTES
+The authors of these Commentaries have not seen drafts of each other's pieces.
+The commentary format is not meant to be a debate, but rather is meant to
+present different perspectives on current issues of public importance.
+1 These statistics and the pre-1981 experience with the death penalty are
+reviewed more extensively in Greenberg, Capital Punishment as a System,
+91 Yale L.J. 908, 917-18 (1982).
+2 See Witherspoon v. Illinois, 391 U.S. 510 (1968). On the erosion
+of Witherspoon, see Wainwright v. Witt, 105 S. Ct. 844 (1985), and the
+perceptive comment in The Supreme Court, 1984 Term, 99 Harv. L. Rev.
+120 (1985).
+3 Furman v. Georgia, 408 U. S. 238, 293 (1972) (Brennan, J. concurring).
+4 See Woodson v. North Carolina, 428 U.S. 280 (1976).
+5. See Spinkellink v. State, 313 So. 2d 666 (Fla. 1975) cert.
+denied, 428 U.S. 911 (1976). Spenkelink's name was misspelled by many of
+he courts that considered his case. See Spinkellink v. Wainwright, 578
+F. 2d 582, 582 n.1 (5th Cir. 1978); Greenberg, supra note 1, at 913 n.
+27.
+6 I call execution "involuntary" if the defendant has contested actual
+implementations of the death penalty. Conversely, a "voluntary" execution is
+one in which the defendant at some point has voluntarily ceased efforts to
+resist.
+7 This statistic was derived from NAACP Legal Defense and Education Fund,
+Death Row, U.S.A. 4 (1986) and Greenberg, note 1 above, at 913. Other
+statistics set forth in this article, including the number and location of
+death-sentenced prisoner, where they have been executed, and their race and the
+race of their victims have been obtained for the Death Row U.S.A. data bank (on
+file at the NAACP Legal Defense and Educational Fund in New York), which was
+computerized in 1984-1985. Death Row U.S.A is frequently used as an
+authoritative source by courts, see, e.g., Godfrey v. Georgia, 446 U.S.
+420, 439 nn. 7 & 8 (1980); the media, see e.g., U.S. News &
+World Rep., May 11, 1981, at 72; and scholars, see e.g., Gillers,
+Deciding Who Dies, 129 U. PA. L. Rev. I, 2 n,2 (1980).
+8 See Greenberg, supra note 1 at 918.
+9 For example, in the federal court system during the year ending June 30,
+1980, 28598 defendants were convicted while only 4405 convicted defendants
+filed appeals. Of these appeals, only 6.5% prevailed. Thus, while not all
+defendants appealing were convicted during the year surveyed, one can estimate
+that about 1% of all criminal convictions handed down during that year (290 out
+of 28,598) were upset on appeal. See Administrative Office of the U.S.
+Courts, 1980 Annual Report of the Director 2 (table 2), 51 (table 10), 97.
+State court experience is similar. See Greenberg, supra note
+1, at 918 & n.65.
+10 See NAACP Legal Defense and Education Fund, supra note 7,
+at 1; Death Row U.S.A. data bank, supra note 7.
+11 See NAACP Legal Defense and Educational Fund, supra note 7,
+at 4. Between January 17,1977 and March 1, 1986, there were eight voluntary
+executions. Five were in states outside the South. At least seven were of
+killers of whites; in the eighth case, the race of the victim was unknown.
+See id.
+12 See id.
+13 See Federal Bureau of Investigation, U.S.. Dept. of Justice,
+Uniform Crime Reports, Crime in the United States 1984, at 6 (1985) (18,692
+murders in 1984).
+14 See NAACP Legal Defense and Educational Fund, supra note
+7, at 1.
+15 These statistics on reversal have been derived from the Death Row U.S. A.
+data bank, note 7 above. While 45% of judgments reviewed during this period
+were reversed, the cases involved sentences which in some instances have been
+imposed prior to January 1, 1982.
+16 The NAACP Legal Defense and Educational Fund, of which I was Director
+Counsel until 1984 and which commenced the attacks on capital punishment, has
+participated in virtually none of the state cases that invalidated death
+penalties and in very few of the recent federal cases. The American Bar
+Association Board of Governors, however, approved an effort to obtain %150,000
+for a post-conviction death penalty representation project in December 1983,
+and the Florida legislature enacted a law to furnish counsel on post-conviction
+death penalty proceedings, see Fla. Stat. Ann. (section symbol
+needed) 27.7001 (West Supp. 1986).
+17 Adler, Florida's Zealous Prosecutors: Death Specialists, Am.
+Law., Sept. 1981, at 36.
+18 See Death Row U.S.A. data bank, supra note 7 (reporting
+grounds of reversal). Because most invalidations occur in sate courts,
+proposed legislation that would make federal habeas corpus more difficult for
+prisoners see e.g., S. 238, 99th Cong., 1st Sess., 131 Cong. Rec.
+S481-82 (daily ed. Jan. 22, 1985), would only have a marginal effect.
+19 Because of the invalidations rest on a wide variety of grounds, not single
+doctrinal shift, or even a small number of shifts, is likely to result in a
+lower reversal rate.
+20 Beck v. Alabama, 337 U.S. 625, 637 (1980).
+21 See Barefoot v. Estelle, 463 U.S. 880, 886-92 (1983).
+22 See Dobbert v. Wainwright, 105 S. Ct. 34 (1984) (6-3 decision)
+23 See Wainwright v. Adams, 104 S. Ct. 2138 (1984) (5-4 decision)
+Woodard v. Hutchins, 464 U.S. 377 (1984) (5-4 decision) (per curiam).
+24 Cf. Marshall, Remarks on the Death Penalty Made at the Judicial
+Conference of the Second Circuit, 86 Colum. L. Rev. I, 6-7 (1986)
+(observing that expedited procedures deny defendants the ability to present
+their claims property); Marshall Assails Death Penalty Plea Process,
+N.Y. Times, Sept. 7, 1985, at A24, col. 1.
+25 See NAACP Legal Defense and Educational Fund, supra note
+7, at 4.
+26 See id. There were eight in Texas, 7 in Louisiana, and 6 in
+Georgia. The remainder were in Virginia, 3; North Carolina and South Carolina,
+2; and Alabama and Mississippi, 1. See id.
+27 See id.
+28 See id. The race-of-victim factor is examined in detail in Gross,
+Race and Death: The Judicial Evaluation of Evidence of Discrimination in
+Capital Sentencing, 18 U.C.D. L. Rev. 1275 (1985). Killers of whites are
+clearly sentenced to death more frequently than killers of blacks. See
+id. at 1318-19. The legal significance of the discrepancy is, however,
+under consideration by the Supreme Court and therefore not settled. See
+McCleskey v. Kemp, 753 F. 2d 877 (11th Cir. 1985) (en banc), petition for
+cert. filed, (U.S. May 28, 1985) (No. 84-6811). The principal issues are
+whether it is necessary to demonstrate that the discrepancy is a consequence of
+a pattern of intentional discrimination, whether it is necessary to demonstrate
+an intent to discriminate in the particular case, and how large a discrepancy
+must be shown to constitute a violation of equal protection and cruel and
+unusual punishment clauses.
+29 See NAACP Legal Defense and Educational Fund, supra note
+7, at 8.
+30 West Virginia is the only southern state that is abolitionist. See
+id. at 1.
+31 See Bedau, Background and Developments, in the Death
+Penalty in America 3, 25 (H. Bedau 3d ed. 1982). There were 21 executions in
+1962 and one in 1966. See id.
+32 See Greenberg, supra note 1, at 925. The European
+Convention of Human Rights has been amended to prohibit the death penalty in
+peace-time. See Protocol No. 6 to the Convention for the Protection of
+Human Rights and Fundamental Freedoms Concerning the Abolition of the Death
+Penalty, Apr. 28, 1983, Council of Europe, 22 I.L.M. 539. The consequence of
+the amendment is that parties to the treaty who ratify may not reinstate the
+death penalty without repudiating the entire treaty, a move that would have
+undesirable political consequences.
+33 See Greenberg, supra note 1, at 925; When Peking Fights
+Crime, News Is on the Wall, N.Y. Times, Jan. 28, 1986 at A2, col. 3.
+34 Sellins' studies of deterrence are reviewed in Kelin, Frost &
+Filatove, The Deterrent Effect of Capital Punishment: An Assessment of the
+Evidence, in The Death Penalty in America, supra note 31, at 138,
+139-40. The work of Isaac Ehrlich, who arrive at contrary conclusions, is
+reviewed in the same essay. See id. at 140-44. The authors concluded
+that Ehrlich's findings are seriously flawed and not persuasive. See id.
+at 157-58.
+35 See Bedau, Volume and Rate of Murder, in the Death Penalty
+in America, supra note 31, at 39, 43.
+36 In the sense of specific deterrence or incapacitation, of course, the
+forty-three who were put to death indeed have been deterred. But those serving
+life sentences or terms of years, of course, occasionally kill. That fact
+would not be accepted as grounds for having sentenced them to death in lieu of
+the original prison term. Recidivism by convicted murders and killings by
+prisoners generally are discussed in Bedau, Recidivism, Parole, and
+Deterrence in The Death Penalty in America, supra note 31, at
+173, and Wolfson, The Deterrent Effect of the Death Penalty Upon Prison
+Murder, in The Death Penalty in America, supra note 31 at 159,
+respectively. Wolfson concludes: "Given that the deterrent effect of the death
+penalty for prison homicide is to be seriously doubted, it is clear that
+management and physical changes in prison would do more than any legislated
+legal sanction to reduce the number of prison murders." Id. at 172.
+37 It might be argued that even the rare execution is dramatic and unduly
+publicized and consequently has great effect. Ironically, the slight increase
+in the number of executions in the past few years have robbed them of much
+dramatic effect.
+38 As to an asserted salutary influence on the healthy mind, tending to cause
+it to shun lethal violence, one can only respond that no evidence has been
+offered. Religious, social and noncapital legal requirements all teach us not
+to murder. If the death penalty were needed as an incremental influence to
+persuade noncrimnals to abjure killing, there would be elevated murder rates in
+abolitionist states and nations; these have not been demonstrated.
+39 The reply to this argument is the same as to the arguments that the death
+penalty deters by teaching not to kill. Retribution is also said to have
+another utilitarian by-product distinct from a Kantian eye-for-an-eye
+justification: it satisfies demands for vengeance, preventing retaliatory
+killing. Yet, during the period of no executions (1967-1977) and in the
+overwhelming number of states that have abolished the death penalty, have not
+sentenced anyone to death, or have not carried out executions, it is difficult
+to find an instance of vengeance killing, although during this time there have
+been perhaps 360,000 murders (about (20,000 per year for 18 years).
+It is also argued that particularly for those who have been close to the
+victims, who are members of his or her family, or who are fellow police
+officers, or for those members of the public who somehow feel and
+identification with the deceased, the death penalty provides personal
+satisfaction, repaying in some measure the loss they felt in the death of the
+victim. This hardly justifies the present system.
+40 A few death penalty proponents say that the death penalty is the only way
+of "assuring" life imprisonment for the works criminals. Recognizing that most
+death sentences have turned into interminable prison sentences, they say this
+is preferable to sentences of life imprisonment from which convicts may be
+released on parole. But human ingenuity can fashion a sentence of life without
+parole. The death sentence following extensive litigation, amounting to life
+sentence for most while executing only a few, is an inefficient way of
+achieving the purpose of live imprisonment. And again, this sort of life
+sentencing process is not what the death penalty law contemplate.
+41 This argument can be made by those who would defend the death penalty on
+deterrence grounds, as well as by those who rely upon retribution concepts.
+42 Some death penalty proponents argue that the erratic quality of the
+capital sentencing system and its racial bias are characteristic of the
+criminal justice system generally. But while such a condition may or may not
+be tolerable when it results in imprisonment, it hardly justifies killing
+convicts.
+43 See Furman v. Georgia, 408 U.S. 238, 293 (1972) (Brennan, J.
+concurring).
+44 See Coker v. Georgia, 433 U.S. 584, 594-97 (1977).
+45 See Enmund v. Florida, 458 U.S. 782, 792-96 (1982).
+46 See Woodson v. North Carolina, 428 U.S. 280, 292-303 (1976),
+HOME || PROS AND CONS || INTERVIEWS || FEEDBACK
+FRONTLINE / WGBH Educational Foundation / www.wgbh.org
+web site copyright 1995-2014
+WGBH educational foundation

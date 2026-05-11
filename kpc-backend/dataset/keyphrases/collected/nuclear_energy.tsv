@@ -1,0 +1,89 @@
+id	colected_from	keyphrase
+1	chatgpt_pro	Low carbon emissions
+2	chatgpt_pro	Reliable
+3	chatgpt_pro	High energy output
+4	chatgpt_pro	Cost-effective
+5	chatgpt_pro	Job creation
+6	chatgpt_pro	Energy independence
+7	chatgpt_pro	Reduced dependence on fossil fuels
+8	chatgpt_pro	Base-load energy
+9	chatgpt_pro	Technological innovation
+10	chatgpt_pro	Reduced air pollution
+11	chatgpt_pro	National security
+12	chatgpt_pro	Economic growth
+13	chatgpt_pro	Energy efficiency
+14	chatgpt_pro	Reduced land use
+15	chatgpt_pro	Climate change mitigation
+16	chatgpt_pro	Reduced water usage
+17	chatgpt_pro	Waste disposal
+18	chatgpt_pro	International cooperation
+19	chatgpt_pro	Education and research
+20	chatgpt_pro	Disaster preparedness
+21	chatgpt_against	Safety risks
+22	chatgpt_against	Nuclear accidents
+23	chatgpt_against	Radioactive waste
+24	chatgpt_against	Nuclear weapons proliferation
+25	chatgpt_against	High cost
+26	chatgpt_against	Security threats
+27	chatgpt_against	Public health concerns
+28	chatgpt_against	Environmental impacts
+29	chatgpt_against	Resource depletion
+30	chatgpt_against	Lack of renewable energy integration
+31	chatgpt_against	Decommissioning challenges
+32	chatgpt_against	Regulatory challenges
+33	chatgpt_against	Non-renewable energy source
+34	chatgpt_against	Water usage
+35	chatgpt_against	Dependence on uranium mining
+36	chatgpt_against	Health effects of radiation exposure
+37	chatgpt_against	Terrorist attacks
+38	chatgpt_against	Nuclear energy subsidies
+39	chatgpt_against	Mismanagement and corruption
+40	chatgpt_against	Ethical and moral considerations
+41	chatgpt_ne	Chernobyl
+42	chatgpt_ne	Fukushima
+43	chatgpt_ne	Three Mile Island
+44	chatgpt_ne	International Atomic Energy Agency (IAEA)
+45	chatgpt_ne	Nuclear Regulatory Commission (NRC)
+46	chatgpt_ne	Nuclear Non-Proliferation Treaty (NPT)
+47	chatgpt_ne	Uranium
+48	chatgpt_ne	Plutonium
+49	keybert	uranium
+50	keybert	nuke
+51	keybert	climate change
+52	keybert	fission
+53	keybert	mining
+54	keybert	radioactivity
+55	keybert	politics
+56	keybert	geologic
+57	keybert	safety
+58	keybert	disarmament
+59	keybert	reactor
+60	keybert	labour
+61	keybert	democratization
+62	keybert	Chernobyl
+63	keybert	Fukushima
+64	keybert	anthropogenic
+65	keybert	antiterrorism
+66	keybert	activism
+67	keybert	fision
+68	keybert	coal
+69	yake	power plant
+70	yake	nuclear power
+71	yake	nuclear waste
+72	yake	Nuclear Regulatory Commission
+73	yake	Nuclear Energy Institute
+74	yake	Chernobyl
+75	yake	Fukushima
+76	yake	technology
+77	yake	nuclear reactor
+78	yake	United States
+79	yake	Nuclear Energy Agency
+80	yake	World Nuclear Association
+81	yake	industry
+82	yake	nuclear power promotion
+83	yake	nuclear weapons
+84	yake	renewable energy
+85	yake	sustainability
+86	yake	nuclear fuel
+87	yake	nuclear energy production
+88	yake	commercial nuclear power

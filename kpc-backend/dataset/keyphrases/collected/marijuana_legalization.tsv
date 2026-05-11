@@ -1,0 +1,141 @@
+id	colected_from	keyphrase
+1	chatgpt_pro	Medicinal benefits
+2	chatgpt_pro	Economic growth
+3	chatgpt_pro	Tax revenue
+4	chatgpt_pro	Job creation
+5	chatgpt_pro	Criminal justice reform
+6	chatgpt_pro	Individual freedom
+7	chatgpt_pro	Reduction of opioid use
+8	chatgpt_pro	Regulation and control
+9	chatgpt_pro	Safety and quality control
+10	chatgpt_pro	Social equity
+11	chatgpt_pro	Medical research opportunities
+12	chatgpt_pro	Alternative medicine option
+13	chatgpt_pro	Alleviation of chronic pain
+14	chatgpt_pro	Treatment for specific conditions (e.g., epilepsy)
+15	chatgpt_pro	Cost savings in law enforcement
+16	chatgpt_pro	Reducing drug-related violence
+17	chatgpt_pro	Consumer choice
+18	chatgpt_pro	Harm reduction
+19	chatgpt_pro	Tourism and industry boost
+20	chatgpt_pro	Less burden on the judicial system
+21	chatgpt_against	Health risks
+22	chatgpt_against	Increased drug abuse
+23	chatgpt_against	Impaired cognitive function
+24	chatgpt_against	Addiction potential
+25	chatgpt_against	Gateway drug
+26	chatgpt_against	Public safety concerns
+27	chatgpt_against	Impaired driving
+28	chatgpt_against	Workplace productivity decline
+29	chatgpt_against	Negative effects on youth
+30	chatgpt_against	Mental health risks
+31	chatgpt_against	Increased emergency room visits
+32	chatgpt_against	Secondhand smoke exposure
+33	chatgpt_against	Conflict with federal law
+34	chatgpt_against	Decreased academic performance
+35	chatgpt_against	Higher dropout rates
+36	chatgpt_against	Social and moral concerns
+37	chatgpt_against	Decreased motivation and ambition
+38	chatgpt_against	Negative impact on communities
+39	chatgpt_against	Black market persistence
+40	chatgpt_against	Taxpayer burden for regulation and enforcement
+41	chatgpt_ne	United States
+42	chatgpt_ne	Canada
+43	chatgpt_ne	California
+44	chatgpt_ne	Colorado
+45	chatgpt_ne	Washington
+46	chatgpt_ne	Oregon
+47	chatgpt_ne	Uruguay
+48	chatgpt_ne	Netherlands
+49	chatgpt_ne	Portugal
+50	chatgpt_ne	Mexico
+51	chatgpt_ne	Alcohol and Tobacco industries
+52	chatgpt_ne	Pharmaceutical companies
+53	chatgpt_ne	Medical professionals
+54	chatgpt_ne	Law enforcement agencies
+55	chatgpt_ne	Federal government
+56	chatgpt_ne	State governments
+57	chatgpt_ne	Marijuana dispensaries
+58	chatgpt_ne	Marijuana growers
+59	chatgpt_ne	Marijuana users
+60	chatgpt_ne	Advocacy groups (e.g., NORML, Marijuana Policy Project)
+61	keybert	cannabinoid
+62	keybert	prescription
+63	keybert	narcotics
+64	keybert	tetrahydrocannabinol
+65	keybert	marijuanaproducts
+66	keybert	cannabinoids
+67	keybert	prescriptions
+68	keybert	marijuanatopia
+69	keybert	marijuanaright
+70	keybert	drug
+71	keybert	drugs
+72	keybert	methadone
+73	keybert	prescribed
+74	keybert	smokingweed
+75	keybert	narcotic
+76	keybert	opiate
+77	keybert	marijuanainside
+78	keybert	intoxication
+79	keybert	drugeducation
+80	keybert	medicinal
+81	keybert	drugpolicy
+82	keybert	nicotine
+83	keybert	prescribing
+84	keybert	intoxicated
+85	keybert	drugabuse
+86	keybert	marihuana
+87	keybert	cannabis
+88	keybert	opiates
+89	keybert	marijuana_files
+90	keybert	endocannabinoid
+91	keybert	psychoactive
+92	keybert	intoxicants
+93	keybert	weed
+94	keybert	medication
+95	keybert	overdose
+96	keybert	endocannabinoids
+97	keybert	drugged
+98	keybert	prophylactic
+99	keybert	sobriety
+100	keybert	teens_marijuana_brochure
+101	yake	Drug_Control_Policy
+102	yake	marijuana
+103	yake	Drug_Policy
+104	yake	National_Drug_Control
+105	yake	Drug
+106	yake	medical_marijuana
+107	yake	marijuana_legalization
+108	yake	Drug_Policy_Alliance
+109	yake	drugs
+110	yake	Marijuana_Policy_Project
+111	yake	Drug_Free_Australia
+112	yake	Drug_Policy_Foundation
+113	yake	National_Drug
+114	yake	drug_policy_reform
+115	yake	legalizing_marijuana
+116	yake	United_States_Drug
+117	yake	drug_legalization
+118	yake	Drug_Control
+119	yake	national_Marijuana_Policy
+120	yake	Drug_Abuse
+121	yake	drugs_make_marijuana
+122	yake	drug_law_reform
+123	yake	Medical_Marijuana_States
+124	yake	United_States
+125	yake	Marijuana_Policy
+126	yake	drug_laws
+127	yake	illegal_drugs
+128	yake	Swedish_drug_policy
+129	yake	Transform_Drug_Policy
+130	yake	Marijuana_Laws
+131	yake	National_Drug_Policy
+132	yake	Legalization
+133	yake	Drug_Policy_Research
+134	yake	legalizing_drugs
+135	yake	Drug_War
+136	yake	illicit_drug
+137	yake	Drug_Free
+138	yake	national_drug_strategy
+139	yake	States_Drug_Enforcement
+140	yake	Drug_Enforcement_Administration

@@ -1,0 +1,15 @@
+Metropolitan Edison Co. v. People Against Nuclear Energy (PANE) (and United States Nuclear Regulatory Commission v. PANE)
+460 U.S. 766
+Court: Supreme Court of the United States
+Year of Decision: 1983
+Read the full-text amicus brief (PDF, 495KB)
+Issue
+Whether there are situations in which an environmental impact statement under the National Environmental Policy Act must consider the effects of a proposed action on psychological health
+Index Topics
+Environmental Impact Analyses; Scientific Research (environmental impact statement)
+Facts
+PANE challenged a Nuclear Regulatory Commission (NRC) finding that it was not required to consider potential psychological injury that would result from restarting a cool reactor at Three Mile Island before it authorized the restart. The appeals court vacated and remanded the case to the NRC to determine whether new information concerning psychological damage requires it to prepare a supplemental environmental impact statement that considered the psychological health and socioeconomic consequences on surrounding communities. APA submitted a brief urging the Supreme Court to deny review of the case. However, the Supreme Court granted review and APA submitted an amicus brief in the case.
+APA's Position
+APA's brief had three objectives: (1) to persuade the Court not to make ill-informed or disparaging findings about psychology; (2) to persuade the Court that in appropriate cases, psychological effects are cognizable under the National Environmental Policy Act (NEPA); and (3) to persuade the Court to decide this particular case on as narrow a ground as possible. Each of these objectives was achieved.
+Results
+The U.S. Supreme Court acknowledged that in some cases, an environmental impact statement would have to consider the effects of a proposed action on psychological health. However, the Court felt that when Congress enacted NEPA, it intended to require that environmental impact statements measure the effects of proposed actions only if those effects are caused by a change in the physical environment. Thus, the Court decided the case on a narrow ground and expressly left open the possibility that psychological effects would have to be considered in an appropriate case.

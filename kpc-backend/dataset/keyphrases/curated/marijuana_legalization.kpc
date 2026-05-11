@@ -1,0 +1,141 @@
+id	colected_from	keyphrase	cluster_a1	cluster_a2	clustered	select_a1_k1	selected_a1_k2	select_a2_k1	select_a2_k2	selected1	selected2	alias
+1	chatgpt_pro	Medicinal benefits	1	1								
+2	chatgpt_pro	Economic growth	3	2								
+3	chatgpt_pro	Tax revenue	13	2								
+4	chatgpt_pro	Job creation	3	2								
+5	chatgpt_pro	Criminal justice reform	17	4								
+6	chatgpt_pro	Individual freedom	9	5								
+7	chatgpt_pro	Reduction of opioid use	12	6								
+8	chatgpt_pro	Regulation and control	14	10								
+9	chatgpt_pro	Safety and quality control	10	7								
+10	chatgpt_pro	Social equity	18	9								
+11	chatgpt_pro	Medical research opportunities	1	8								
+12	chatgpt_pro	Alternative medicine option	1	1								
+13	chatgpt_pro	Alleviation of chronic pain	1	1								
+14	chatgpt_pro	Treatment for specific conditions (e.g., epilepsy)	1	1								
+15	chatgpt_pro	Cost savings in law enforcement	20	4								
+16	chatgpt_pro	Reducing drug-related violence	22	4								
+17	chatgpt_pro	Consumer choice	19	5								
+18	chatgpt_pro	Harm reduction	22	4								
+19	chatgpt_pro	Tourism and industry boost	3	2								
+20	chatgpt_pro	Less burden on the judicial system	20	4								
+21	chatgpt_against	Health risks	2	12								
+22	chatgpt_against	Increased drug abuse	4	20								
+23	chatgpt_against	Impaired cognitive function	11	12								
+24	chatgpt_against	Addiction potential	5	12								
+25	chatgpt_against	Gateway drug	5	20								
+26	chatgpt_against	Public safety concerns	10	14								
+27	chatgpt_against	Impaired driving	11	19								
+28	chatgpt_against	Workplace productivity decline	11	12								
+29	chatgpt_against	Negative effects on youth	16	12								
+30	chatgpt_against	Mental health risks	11	12								
+31	chatgpt_against	Increased emergency room visits	2	18								
+32	chatgpt_against	Secondhand smoke exposure	2	18								
+33	chatgpt_against	Conflict with federal law	17	17								
+34	chatgpt_against	Decreased academic performance	11	12								
+35	chatgpt_against	Higher dropout rates	11	16								
+36	chatgpt_against	Social and moral concerns	18	14								
+37	chatgpt_against	Decreased motivation and ambition	11	15								
+38	chatgpt_against	Negative impact on communities	26	14								
+39	chatgpt_against	Black market persistence	25	13								
+40	chatgpt_against	Taxpayer burden for regulation and enforcement	13	17								
+41	chatgpt_ne	United States	27	28								
+42	chatgpt_ne	Canada	33	27								
+43	chatgpt_ne	California	33	28								
+44	chatgpt_ne	Colorado	33	28								
+45	chatgpt_ne	Washington	33	28								
+46	chatgpt_ne	Oregon	33	28								
+47	chatgpt_ne	Uruguay	33	27								
+48	chatgpt_ne	Netherlands	33	27								
+49	chatgpt_ne	Portugal	33	27								
+50	chatgpt_ne	Mexico	33	27								
+51	chatgpt_ne	Alcohol and Tobacco industries	32	29								
+52	chatgpt_ne	Pharmaceutical companies	21	29								
+53	chatgpt_ne	Medical professionals	1	31								
+54	chatgpt_ne	Law enforcement agencies	20	30								
+55	chatgpt_ne	Federal government	28	30								
+56	chatgpt_ne	State governments	28	30								
+57	chatgpt_ne	Marijuana dispensaries	19	32								
+58	chatgpt_ne	Marijuana growers	19	32								
+59	chatgpt_ne	Marijuana users	19	32								
+60	chatgpt_ne	Advocacy groups (e.g., NORML, Marijuana Policy Project)	29	30								
+61	keybert	cannabinoid	33	21								
+62	keybert	prescription	8	1								
+63	keybert	narcotics	33	22								
+64	keybert	tetrahydrocannabinol	33	21								
+65	keybert	marijuanaproducts	19	33								
+66	keybert	cannabinoids	33	21								
+67	keybert	prescriptions	8	1								
+68	keybert	marijuanatopia	33	33								
+69	keybert	marijuanaright	9	33								
+70	keybert	drug	33	20								
+71	keybert	drugs	33	20								
+72	keybert	methadone	12	21								
+73	keybert	prescribed	8	1								
+74	keybert	smokingweed	33	20								
+75	keybert	narcotic	33	22								
+76	keybert	opiate	12	21								
+77	keybert	marijuanainside	33	21								
+78	keybert	intoxication	7	20								
+79	keybert	drugeducation	16	10								
+80	keybert	medicinal	1	1								
+81	keybert	drugpolicy	6	22								
+82	keybert	nicotine	33	23								
+83	keybert	prescribing	8	1								
+84	keybert	intoxicated	7	20								
+85	keybert	drugabuse	4	20								
+86	keybert	marihuana	33	33								
+87	keybert	cannabis	33	33								
+88	keybert	opiates	12	21								
+89	keybert	marijuana_files	33	33								
+90	keybert	endocannabinoid	23	21								
+91	keybert	psychoactive	33	21								
+92	keybert	intoxicants	7	20								
+93	keybert	weed	33	33								
+94	keybert	medication	1	1								
+95	keybert	overdose	4	20								
+96	keybert	endocannabinoids	23	21								
+97	keybert	drugged	7	20								
+98	keybert	prophylactic	22	1								
+99	keybert	sobriety	22	24								
+100	keybert	teens_marijuana_brochure	16	33								
+101	yake	Drug_Control_Policy	6	10								
+102	yake	marijuana	33	33								
+103	yake	Drug_Policy	6	10								
+104	yake	National_Drug_Control	28	10								
+105	yake	Drug	33	20								
+106	yake	medical_marijuana	1	1								
+107	yake	marijuana_legalization	33	33								
+108	yake	Drug_Policy_Alliance	29	10								
+109	yake	drugs	33	20								
+110	yake	Marijuana_Policy_Project	29	33								
+111	yake	Drug_Free_Australia	31	10								
+112	yake	Drug_Policy_Foundation	29	10								
+113	yake	National_Drug	27	3								
+114	yake	drug_policy_reform	6	10								
+115	yake	legalizing_marijuana	33	33								
+116	yake	United_States_Drug	27	11								
+117	yake	drug_legalization	33	33								
+118	yake	Drug_Control	14	10								
+119	yake	national_Marijuana_Policy	6	33								
+120	yake	Drug_Abuse	4	20								
+121	yake	drugs_make_marijuana	33	33								
+122	yake	drug_law_reform	17	10								
+123	yake	Medical_Marijuana_States	30	33								
+124	yake	United_States	33	11								
+125	yake	Marijuana_Policy	6	33								
+126	yake	drug_laws	17	25								
+127	yake	illegal_drugs	15	25								
+128	yake	Swedish_drug_policy	6	10								
+129	yake	Transform_Drug_Policy	29	10								
+130	yake	Marijuana_Laws	17	10								
+131	yake	National_Drug_Policy	6	3								
+132	yake	Legalization	33	26								
+133	yake	Drug_Policy_Research	24	10								
+134	yake	legalizing_drugs	33	26								
+135	yake	Drug_War	28	22								
+136	yake	illicit_drug	15	20								
+137	yake	Drug_Free	31	10								
+138	yake	national_drug_strategy	6	3								
+139	yake	States_Drug_Enforcement	28	11								
+140	yake	Drug_Enforcement_Administration	28	10								

@@ -1,0 +1,141 @@
+self.model.get_annotation_files(user, topic)	keyphrase	clustering	selected	selected1	selected2	alias
+chatgpt_pro	Choice	0	0	0	0	
+chatgpt_pro	Autonomy	0	0	0	0	
+chatgpt_pro	Reproductive rights	0	1	0	1	women_rights
+chatgpt_pro	Privacy	0	0	0	0	
+chatgpt_pro	Bodily autonomy	0	0	0	0	
+chatgpt_pro	Women's health	0	1	0	0	health
+chatgpt_pro	Pregnancy complications	0	0	0	0	
+chatgpt_pro	Fetal abnormalities	0	0	0	0	
+chatgpt_pro	Rape and incest	0	1	0	0	women_rights
+chatgpt_pro	Overpopulation	0	0	0	0	
+chatgpt_pro	Access to safe abortion	0	1	1	0	safety
+chatgpt_pro	Gender equality	0	0	0	0	
+chatgpt_pro	Freedom of religion	0	0	0	0	
+chatgpt_pro	Separation of church and state	0	1	0	1	religion_and_church
+chatgpt_pro	Mental health	0	1	0	0	health
+chatgpt_pro	Economic security	0	1	0	0	education_and_career
+chatgpt_pro	Education and career opportunities	0	1	1	0	education_and_career
+chatgpt_pro	Family planning	0	1	0	0	parenthood
+chatgpt_pro	Preventing illegal abortions	0	0	0	0	
+chatgpt_pro	Maternal mortality	0	1	0	0	health
+chatgpt_against	Sanctity of life	0	1	0	0	religion_and_church
+chatgpt_against	Human rights	0	0	0	0	
+chatgpt_against	Moral values	0	1	1	0	ethics_and_moral_values
+chatgpt_against	Religious beliefs	0	1	1	0	religion_and_church
+chatgpt_against	Murder	0	1	1	0	killing_and_infanticide
+chatgpt_against	Genocide	0	1	0	0	killing_and_infanticide
+chatgpt_against	Unborn child	0	1	0	0	unborn_rights
+chatgpt_against	Personhood	0	1	0	1	human_life_and_personhood
+chatgpt_against	Responsibility	0	1	0	0	parenthood
+chatgpt_against	Adoption	0	0	0	0	
+chatgpt_against	Natural law	0	1	0	0	law_and_politics
+chatgpt_against	Contraception	0	1	0	1	conception_and_contraception
+chatgpt_against	Abstinence	0	0	0	0	
+chatgpt_against	Social consequences	0	1	0	0	parenthood
+chatgpt_against	Family stability	0	1	0	0	parenthood
+chatgpt_against	Women's health risks	0	1	0	0	health
+chatgpt_against	Abortion regret	0	1	1	0	abortion_distress
+chatgpt_against	Infertility	0	1	0	0	health
+chatgpt_against	Coercion and pressure	0	1	0	0	abortion_distress
+chatgpt_against	Pain of the fetus	0	1	0	0	unborn_rights
+chatgpt_ne	Roe v. Wade	0	0	0	0	
+chatgpt_ne	Planned Parenthood	0	1	1	0	parenthood
+chatgpt_ne	Supreme Court	0	1	1	0	Pro-Choice_Organization
+chatgpt_ne	Constitution	0	0	0	0	
+chatgpt_ne	United Nations	0	0	0	0	
+chatgpt_ne	Human Rights Watch	0	0	0	0	
+chatgpt_ne	World Health Organization	0	1	0	0	health
+chatgpt_ne	American Medical Association	0	0	0	0	
+chatgpt_ne	Catholic Church	0	1	0	0	religion_and_church
+chatgpt_ne	Protestant denominations	0	1	0	0	Pro-Life_Organization
+chatgpt_ne	Islamic Law	0	1	0	0	law_and_politics
+chatgpt_ne	Jewish Law	0	1	0	0	law_and_politics
+chatgpt_ne	The Bible	0	1	0	0	religion_and_church
+chatgpt_ne	Science	0	0	0	0	
+chatgpt_ne	Medical studies	0	0	0	0	
+chatgpt_ne	Statistics	0	0	0	0	
+chatgpt_ne	Feminist organizations	0	0	0	0	
+chatgpt_ne	Pro-life organizations	0	1	1	0	Pro-Life_Organization
+chatgpt_ne	Pro-choice organizations	0	1	1	0	Pro-Choice_Organization
+chatgpt_ne	Politicians and political parties	0	1	0	1	law_and_politics
+keybert	abortionargument	0	0	0	0	
+keybert	abortion	0	0	0	0	
+keybert	birthright	0	1	0	1	unborn_rights
+keybert	abortions	0	0	0	0	
+keybert	freedoms	0	0	0	0	
+keybert	abortion4	0	0	0	0	
+keybert	fetus	0	1	0	0	unborn_rights
+keybert	foetus	0	1	0	0	unborn_rights
+keybert	constitutionality	0	0	0	0	
+keybert	abortionist	0	0	0	0	
+keybert	abortionists	0	0	0	0	
+keybert	abortion14	0	0	0	0	
+keybert	abortionfacts	0	0	0	0	
+keybert	unborn	0	1	1	0	unborn_rights
+keybert	abortionshould	0	0	0	0	
+keybert	constitution	0	0	0	0	
+keybert	foetuses	0	1	0	0	unborn_rights
+keybert	fetuses	0	1	0	0	unborn_rights
+keybert	unconstitutionally	0	0	0	0	
+keybert	unconstitutional	0	0	0	0	
+keybert	constitutional	0	0	0	0	
+keybert	amniotic	0	0	0	0	
+keybert	freedom	0	0	0	0	
+keybert	womb	0	0	0	0	
+keybert	fb_induced_abortion	0	0	0	0	
+keybert	constitutionally	0	0	0	0	
+keybert	liberties	0	0	0	0	
+keybert	constitutions	0	0	0	0	
+keybert	fetal	0	0	0	0	
+keybert	aborted	0	0	0	0	
+keybert	abstinence	0	1	0	0	conception_and_contraception
+keybert	preborn	0	1	0	0	unborn_rights
+keybert	roe	0	0	0	0	
+keybert	wombs	0	0	0	0	
+keybert	conception	0	1	1	0	conception_and_contraception
+keybert	euthanasia	0	0	0	0	
+keybert	abortificants	0	0	0	0	
+keybert	wombless	0	0	0	0	
+keybert	rights	0	0	0	0	
+keybert	infanticide	0	1	0	1	killing_and_infanticide
+yake	abortion	0	0	0	0	
+yake	abortions	0	0	0	0	
+yake	Supreme Court	0	1	0	0	Pro-Choice_Organization
+yake	Women	0	1	1	0	women_rights
+yake	life	0	1	0	0	human_life_and_personhood
+yake	Human Life	0	1	1	0	human_life_and_personhood
+yake	United States	0	0	0	0	
+yake	abortion law	0	1	0	0	law_and_politics
+yake	Abortion Ban Act	0	1	0	0	law_and_politics
+yake	legal abortion	0	0	0	0	
+yake	Texas abortion case	0	0	0	0	
+yake	human	0	0	0	0	
+yake	Court	0	1	0	0	Pro-Choice_Organization
+yake	make abortion illegal	0	0	0	0	
+yake	human life amendment	0	1	0	0	human_life_and_personhood
+yake	make abortion	0	0	0	0	
+yake	law	0	1	1	0	law_and_politics
+yake	states	0	0	0	0	
+yake	woman	0	1	0	0	women_rights
+yake	Supreme Court justices	0	1	0	0	Pro-Choice_Organization
+yake	state	0	0	0	0	
+yake	abortion bans	0	0	0	0	
+yake	late term abortion	0	0	0	0	
+yake	abortion debate	0	0	0	0	
+yake	term abortion bans	0	0	0	0	
+yake	Roe	0	0	0	0	
+yake	health	0	1	1	0	health
+yake	Legal Abortion Arguments	0	0	0	0	
+yake	abortion illegal	0	0	0	0	
+yake	Child	0	1	0	0	unborn_rights
+yake	Abortion Arguments Pro	0	0	0	0	
+yake	abortion restrictions	0	0	0	0	
+yake	Paul Ryan	0	0	0	0	
+yake	Poland abortion laws	0	1	0	0	law_and_politics
+yake	term abortions	0	0	0	0	
+yake	illegal abortions	0	0	0	0	
+yake	arguments	0	0	0	0	
+yake	pregnancy	0	0	0	0	
+yake	argument	0	0	0	0	
+yake	health care	0	1	0	0	health

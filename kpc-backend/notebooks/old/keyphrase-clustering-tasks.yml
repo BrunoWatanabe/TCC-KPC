@@ -1,0 +1,9 @@
+- keyphrase clustering: construção do cluster que consiste no agrupamento das keyphrases, sendo a formação de 32 grupos de keyphrases de 140 disponíveis
+  - entrada: 140 keyphrases
+  - saída: 32 clusters de keyphrases
+- cluster filtering: consiste na seleção de 16 clusters dos 32 disponíveis
+  - entrada: 32 clusters de keyphrases
+  - saída: 16 clusters de keyphrases
+- keyphrases selection: consiste na seleção de 1 a 2 keyphrases de cada cluster selecionado
+  - entrada: 16 clusters de keyphrases
+  - saída: 1 a 2 keyphrases de cada cluster selecionado

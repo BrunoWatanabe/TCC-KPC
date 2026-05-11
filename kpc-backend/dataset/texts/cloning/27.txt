@@ -1,0 +1,26 @@
+Disks and Drives: To backup or clone? The Pros, Cons and differences
+A hard drive backup
+When backing up a hard drive the entire content of the selected drive or partition are backed up into a file (also known as an Image) on to the target location. By doing so, all data is saved into one single file. When carrying out a full backup of the system hard drive the entire operating system as well as all installed programs and settings are also saved. This file can also be protected or “encrypted” with a password.
+Pros:
+Easy management as only one file contains the entire backup.
+Providing the target disk is big enough, numerous backups can be saved simultaneously.
+The backup file can be compressed and so uses less space.
+Cons:
+In order to restore the system or data to a previous state or to access files and documents, the backup software is required.
+Drive clone
+When duplicating or cloning a drive a copy of the drive or partition is created directly to the target location. This means you get an immediate copy including the hard disk structure, i.e. the partition layout and split. A cloned disk or drive contains all the partitions from the source disk or drive.
+Pros:
+The data is copied directly to the target location and can be used and edited immediately.
+A cloned system drive that contains the operating system can be mounted as a new drive and immediately booted.
+Cons:
+A clone needs more space because the partitions are immediately created on the target disk. For that reason it is not possible to compress or encrypt the data.
+An incremental or differential clone is not possible.
+Only one version of the duplicated data can be held at one time on a drive.
+Recommendation:
+Should the backup need to be created on a regular basis then we recommend the hard drive backup. This takes up less space and allows for the creation of incremental and differential backups afterwards.
+If however you need a bootable spare drive in order to be up and running quickly after a crash and to reduce downtime then we recommend a clone or duplicate.
+A combination of the two has proven over time to be the best practice: a regular hard drive backup for the daily data, then supplemented by a clone of the system drive in order to be up and running quickly in an emergency.
+More background information:
+Make a complete system image both before and immediately after the Windows 10 upgrade
+How often should a Data Backup be made?
+Different methods for data backups

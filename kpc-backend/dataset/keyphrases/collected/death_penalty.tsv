@@ -1,0 +1,141 @@
+id	colected_from	keyphrase
+1	chatgpt_pro	Deterrence
+2	chatgpt_pro	Justice
+3	chatgpt_pro	Retribution
+4	chatgpt_pro	Public safety
+5	chatgpt_pro	Crime prevention
+6	chatgpt_pro	Accountability
+7	chatgpt_pro	Closure for victims' families
+8	chatgpt_pro	Cost-effectiveness
+9	chatgpt_pro	Moral retribution
+10	chatgpt_pro	Severity of punishment
+11	chatgpt_pro	Social order
+12	chatgpt_pro	Rehabilitation potential
+13	chatgpt_pro	Proportional punishment
+14	chatgpt_pro	Recidivism prevention
+15	chatgpt_pro	Dissuading potential offenders
+16	chatgpt_pro	Protection of innocent lives
+17	chatgpt_pro	Restoring faith in the justice system
+18	chatgpt_pro	Upholding societal norms
+19	chatgpt_pro	Removal of dangerous individuals
+20	chatgpt_pro	Symbolic value
+21	chatgpt_against	Human rights
+22	chatgpt_against	Cruel and unusual punishment
+23	chatgpt_against	Innocence
+24	chatgpt_against	Arbitrary application
+25	chatgpt_against	Irreversibility
+26	chatgpt_against	Discrimination
+27	chatgpt_against	Flawed justice system
+28	chatgpt_against	Racial bias
+29	chatgpt_against	Lack of deterrence
+30	chatgpt_against	Violation of international norms
+31	chatgpt_against	Rehabilitation opportunity
+32	chatgpt_against	Costly and wasteful
+33	chatgpt_against	Moral objections
+34	chatgpt_against	Systemic injustice
+35	chatgpt_against	Focus on prevention and rehabilitation
+36	chatgpt_against	Disproportionate impact on marginalized communities
+37	chatgpt_against	Human fallibility
+38	chatgpt_against	Dehumanization
+39	chatgpt_against	Violation of the right to life
+40	chatgpt_against	Possibility of executing the innocent
+41	chatgpt_ne	Amnesty International
+42	chatgpt_ne	Human Rights Watch
+43	chatgpt_ne	United Nations
+44	chatgpt_ne	American Civil Liberties Union (ACLU)
+45	chatgpt_ne	Innocence Project
+46	chatgpt_ne	Death Penalty Information Center
+47	chatgpt_ne	Supreme Court
+48	chatgpt_ne	International Court of Justice
+49	chatgpt_ne	National Coalition to Abolish the Death Penalty
+50	chatgpt_ne	Capital punishment researchers/scholars
+51	chatgpt_ne	Victims' rights organizations
+52	chatgpt_ne	Criminal defense lawyers
+53	chatgpt_ne	Prosecutors
+54	chatgpt_ne	State Departments of Corrections
+55	chatgpt_ne	U.S. Department of Justice
+56	chatgpt_ne	Law enforcement agencies
+57	chatgpt_ne	State legislatures
+58	chatgpt_ne	Religious organizations
+59	chatgpt_ne	Bar associations
+60	chatgpt_ne	Media outlets/journalists
+61	keybert	deterrence
+62	keybert	homicides
+63	keybert	criminology
+64	keybert	deterrent
+65	keybert	criminality
+66	keybert	homicidesurvivors
+67	keybert	homicide
+68	keybert	punishment
+69	keybert	executions
+70	keybert	murder
+71	keybert	crime
+72	keybert	murderers
+73	keybert	case_against_death
+74	keybert	murderer
+75	keybert	crimes
+76	keybert	murders
+77	keybert	punishments
+78	keybert	fatalities
+79	keybert	humaneness
+80	keybert	convict
+81	keybert	assassinations
+82	keybert	murdering
+83	keybert	perpetrators
+84	keybert	manslaughter
+85	keybert	what_is_death_row_syndrome
+86	keybert	convicting
+87	keybert	assassination
+88	keybert	euthanasia
+89	keybert	imprisonment
+90	keybert	criminals
+91	keybert	morality
+92	keybert	incarceration
+93	keybert	incarcerating
+94	keybert	punishing
+95	keybert	violence
+96	keybert	lethal
+97	keybert	prosecutes
+98	keybert	sentencing
+99	keybert	punish
+100	keybert	punishes
+101	yake	death_penalty
+102	yake	Death_Penalty_Support
+103	yake	Death_Penalty_Cases
+104	yake	Death_Penalty_Information
+105	yake	death
+106	yake	death_penalty_laws
+107	yake	State_Death_Penalty
+108	yake	death_penalty_states
+109	yake	penalty
+110	yake	Death_Penalty_Page
+111	yake	death_penalty_system
+112	yake	Death_Penalty_Remains
+113	yake	capital_punishment
+114	yake	California_Death_Penalty
+115	yake	death_row
+116	yake	anti_death_penalty
+117	yake	death_penalty_deters
+118	yake	Supreme_Court
+119	yake	death_penalty_arguments
+120	yake	Supports_Death_Penalty
+121	yake	American_death_penalty
+122	yake	state_Supreme_Court
+123	yake	death_penalty_opponents
+124	yake	federal_death_penalty
+125	yake	California_Supreme_Court
+126	yake	Penalty_Information_Center
+127	yake	death_penalty_costs
+128	yake	Supreme_Court_Justice
+129	yake	juvenile_death_penalty
+130	yake	Death_penalty_proponents
+131	yake	death_penalty_poll
+132	yake	Florida_Death_Penalty
+133	yake	support_capital_punishment
+134	yake	pro_death_penalty
+135	yake	United_States_Supreme
+136	yake	UNITED_STATES
+137	yake	death_penalty_found
+138	yake	national_death_penalty
+139	yake	Death_Penalty_Drug
+140	yake	Texas_death_penalty

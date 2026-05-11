@@ -1,0 +1,12 @@
+Clustering:
+1 -  could curate a list of a given keyphrases?
+2 - Please curate 16 keyphrases from this list of 140 keyphrases
+3 - {give the list of 140 keyphrases}
+4 - could you combine 1 or 2 keyphrases in this keyphrase curation limiting to 16 sets, using comma to separate them using unique keyphrases?
+5 - sort alfabetically
+6 - use unique keyphrases 
+
+Keyphrase Generation:
+list 20 main keywords of pro arguments about {topic}, limiting the number of keywords to 3
+list 20 main keywords of arguments against about {topic}, limiting the number of keywords to 3
+What is the 20 main cited named entities in arguments about {topic}

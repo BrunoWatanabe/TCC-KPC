@@ -1,0 +1,141 @@
+id	colected_from	keyphrase	cluster_a1	cluster_a2	clustered	select_a1_k1	selected_a1_k2	select_a2_k1	select_a2_k2	selected1	selected2	alias
+1	chatgpt_pro	Deterrence	3	1						0	0	
+2	chatgpt_pro	Justice	1	2						0	0	
+3	chatgpt_pro	Retribution	24	5						1	0	women_rights
+4	chatgpt_pro	Public safety	1	7						0	0	
+5	chatgpt_pro	Crime prevention	5	10						0	0	
+6	chatgpt_pro	Accountability	1	11						1	0	health
+7	chatgpt_pro	Closure for victims' families	20	13						0	0	
+8	chatgpt_pro	Cost-effectiveness	9	9						0	0	
+9	chatgpt_pro	Moral retribution	16	5						1	0	women_rights
+10	chatgpt_pro	Severity of punishment	4	3						0	0	
+11	chatgpt_pro	Social order	1	16						1	1	safety
+12	chatgpt_pro	Rehabilitation potential	2	10						0	0	
+13	chatgpt_pro	Proportional punishment	4	3						0	0	
+14	chatgpt_pro	Recidivism prevention	5	10						1	0	religion_and_church
+15	chatgpt_pro	Dissuading potential offenders	5	15						1	0	health
+16	chatgpt_pro	Protection of innocent lives	1	6						1	0	education_and_career
+17	chatgpt_pro	Restoring faith in the justice system	20	2						1	1	education_and_career
+18	chatgpt_pro	Upholding societal norms	1	16						1	0	parenthood
+19	chatgpt_pro	Removal of dangerous individuals	5	17						0	0	
+20	chatgpt_pro	Symbolic value	20	15						1	0	health
+21	chatgpt_against	Human rights	25	8						1	0	religion_and_church
+22	chatgpt_against	Cruel and unusual punishment	4	3						0	0	
+23	chatgpt_against	Innocence	1	6						1	1	ethics_and_moral_values
+24	chatgpt_against	Arbitrary application	1	8						1	1	religion_and_church
+25	chatgpt_against	Irreversibility	26	6						1	1	killing_and_infanticide
+26	chatgpt_against	Discrimination	7	8						1	0	killing_and_infanticide
+27	chatgpt_against	Flawed justice system	17	2						1	0	unborn_rights
+28	chatgpt_against	Racial bias	7	8						1	0	human_life_and_personhood
+29	chatgpt_against	Lack of deterrence	3	1						1	0	parenthood
+30	chatgpt_against	Violation of international norms	8	8						0	0	
+31	chatgpt_against	Rehabilitation opportunity	2	10						1	0	law_and_politics
+32	chatgpt_against	Costly and wasteful	9	9						1	0	conception_and_contraception
+33	chatgpt_against	Moral objections	16	14						0	0	
+34	chatgpt_against	Systemic injustice	17	2						1	0	parenthood
+35	chatgpt_against	Focus on prevention and rehabilitation	2	10						1	0	parenthood
+36	chatgpt_against	Disproportionate impact on marginalized communities	17	8						1	0	health
+37	chatgpt_against	Human fallibility	6	6						1	1	abortion_distress
+38	chatgpt_against	Dehumanization	6	14						1	0	health
+39	chatgpt_against	Violation of the right to life	8	8						1	0	abortion_distress
+40	chatgpt_against	Possibility of executing the innocent	6	6						1	0	unborn_rights
+41	chatgpt_ne	Amnesty International	28	27						0	0	
+42	chatgpt_ne	Human Rights Watch	28	27						1	1	parenthood
+43	chatgpt_ne	United Nations	28	27						1	1	Pro-Choice_Organization
+44	chatgpt_ne	American Civil Liberties Union (ACLU)	29	28						0	0	
+45	chatgpt_ne	Innocence Project	31	28						0	0	
+46	chatgpt_ne	Death Penalty Information Center	29	18						0	0	
+47	chatgpt_ne	Supreme Court	27	30						1	0	health
+48	chatgpt_ne	International Court of Justice	28	27						0	0	
+49	chatgpt_ne	National Coalition to Abolish the Death Penalty	31	28						1	0	religion_and_church
+50	chatgpt_ne	Capital punishment researchers/scholars	31	18						1	0	Pro-Life_Organization
+51	chatgpt_ne	Victims' rights organizations	32	28						1	0	law_and_politics
+52	chatgpt_ne	Criminal defense lawyers	31	24						1	0	law_and_politics
+53	chatgpt_ne	Prosecutors	27	24						1	0	religion_and_church
+54	chatgpt_ne	State Departments of Corrections	29	32						0	0	
+55	chatgpt_ne	U.S. Department of Justice	27	32						0	0	
+56	chatgpt_ne	Law enforcement agencies	29	32						0	0	
+57	chatgpt_ne	State legislatures	27	31						0	0	
+58	chatgpt_ne	Religious organizations	30	28						1	1	Pro-Life_Organization
+59	chatgpt_ne	Bar associations	30	32						1	1	Pro-Choice_Organization
+60	chatgpt_ne	Media outlets/journalists	30	18						1	0	law_and_politics
+61	keybert	deterrence	3	1						0	0	
+62	keybert	homicides	10	4						0	0	
+63	keybert	criminology	11	7						1	0	unborn_rights
+64	keybert	deterrent	3	1						0	0	
+65	keybert	criminality	11	7						0	0	
+66	keybert	homicidesurvivors	10	4						0	0	
+67	keybert	homicide	10	4						1	0	unborn_rights
+68	keybert	punishment	12	3						1	0	unborn_rights
+69	keybert	executions	15	12						0	0	
+70	keybert	murder	10	4						0	0	
+71	keybert	crime	11	10						0	0	
+72	keybert	murderers	10	4						0	0	
+73	keybert	case_against_death	14	12						0	0	
+74	keybert	murderer	10	4						1	1	unborn_rights
+75	keybert	crimes	11	25						0	0	
+76	keybert	murders	10	4						0	0	
+77	keybert	punishments	12	3						1	0	unborn_rights
+78	keybert	fatalities	14	26						1	0	unborn_rights
+79	keybert	humaneness	6	14						0	0	
+80	keybert	convict	13	20						0	0	
+81	keybert	assassinations	23	4						0	0	
+82	keybert	murdering	10	4						0	0	
+83	keybert	perpetrators	19	17						0	0	
+84	keybert	manslaughter	10	4						0	0	
+85	keybert	what_is_death_row_syndrome	14	29						0	0	
+86	keybert	convicting	13	20						0	0	
+87	keybert	assassination	23	4						0	0	
+88	keybert	euthanasia	15	21						0	0	
+89	keybert	imprisonment	18	20						0	0	
+90	keybert	criminals	11	17						0	0	
+91	keybert	morality	16	14						1	0	conception_and_contraception
+92	keybert	incarceration	18	20						1	0	unborn_rights
+93	keybert	incarcerating	18	20						0	0	
+94	keybert	punishing	12	3						0	0	
+95	keybert	violence	15	22						1	1	conception_and_contraception
+96	keybert	lethal	15	23						0	0	
+97	keybert	prosecutes	13	24						0	0	
+98	keybert	sentencing	21	19						0	0	
+99	keybert	punish	12	3						0	0	
+100	keybert	punishes	12	3						1	0	killing_and_infanticide
+101	yake	death_penalty	33	33						0	0	
+102	yake	Death_Penalty_Support	33	33						0	0	
+103	yake	Death_Penalty_Cases	33	12						1	0	Pro-Choice_Organization
+104	yake	Death_Penalty_Information	33	18						1	1	women_rights
+105	yake	death	33	33						1	0	human_life_and_personhood
+106	yake	death_penalty_laws	33	19						1	1	human_life_and_personhood
+107	yake	State_Death_Penalty	33	31						0	0	
+108	yake	death_penalty_states	33	31						1	0	law_and_politics
+109	yake	penalty	21	33						1	0	law_and_politics
+110	yake	Death_Penalty_Page	33	29						0	0	
+111	yake	death_penalty_system	33	19						0	0	
+112	yake	Death_Penalty_Remains	33	11						0	0	
+113	yake	capital_punishment	22	33						1	0	Pro-Choice_Organization
+114	yake	California_Death_Penalty	33	31						0	0	
+115	yake	death_row	22	29						1	0	human_life_and_personhood
+116	yake	anti_death_penalty	33	33						0	0	
+117	yake	death_penalty_deters	33	1						1	1	law_and_politics
+118	yake	Supreme_Court	27	30						0	0	
+119	yake	death_penalty_arguments	33	33						1	0	women_rights
+120	yake	Supports_Death_Penalty	33	33						1	0	Pro-Choice_Organization
+121	yake	American_death_penalty	33	31						0	0	
+122	yake	state_Supreme_Court	27	30						0	0	
+123	yake	death_penalty_opponents	33	33						0	0	
+124	yake	federal_death_penalty	33	31						0	0	
+125	yake	California_Supreme_Court	33	30						0	0	
+126	yake	Penalty_Information_Center	29	18						0	0	
+127	yake	death_penalty_costs	33	9						1	1	health
+128	yake	Supreme_Court_Justice	27	30						0	0	
+129	yake	juvenile_death_penalty	33	10						0	0	
+130	yake	Death_penalty_proponents	33	33						1	0	unborn_rights
+131	yake	death_penalty_poll	33	18						0	0	
+132	yake	Florida_Death_Penalty	33	31						0	0	
+133	yake	support_capital_punishment	22	33						0	0	
+134	yake	pro_death_penalty	33	33						1	0	law_and_politics
+135	yake	United_States_Supreme	27	30						0	0	
+136	yake	UNITED_STATES	27	31						0	0	
+137	yake	death_penalty_found	33	18						0	0	
+138	yake	national_death_penalty	33	31						0	0	
+139	yake	Death_Penalty_Drug	33	10						0	0	
+140	yake	Texas_death_penalty	33	31						1	0	health

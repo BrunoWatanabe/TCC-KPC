@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = []
+package-dir = {"" = "src"}
+
+[project]
+name = "keyphrase_curation"
+dynamic = ["version", "readme"]
+dependencies = ["fastapi"]
+
+[tool.setuptools.dynamic]
+version = {attr = "keyphrase_curation.VERSION"}
+readme = {file = "README.md"}
+
+# [project.scripts]
+# kzactl = "app.cli.kza_ctl:cli"

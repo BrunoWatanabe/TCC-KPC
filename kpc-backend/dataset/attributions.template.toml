@@ -1,0 +1,38 @@
+[admin] # admin profile
+password = "" # generate with util.security.hash_password
+
+[user1] # a user with annotator profile
+password = "" # hashed password
+
+[user1.attributions] # user1 attributions
+[user1.attributions.death_penalty] # user1 death_penalty attribution
+profile = "annotator" # attribution profile
+annotation_files.source = "keyphrases/curated/death_penalty.kpc" # source file
+annotation_files.target = "annotations/user1/death_penalty.kpc" # target file
+annotation_status = "assigned" # available statuses: assigned, started, finished, adjudicated
+annotation_task = "keyphrase_clustering" # available tasks: keyphrase_clustering, keyphrase_selection
+
+[user2] # a user with annotator profile
+password = "" # hashed password
+
+[user2.attributions] # user2 attributions
+[user2.attributions.death_penalty] # user2 death_penalty attribution
+profile = "annotator" # attribution profile
+annotation_files.source = "keyphrases/curated/death_penalty.kpc" # source file
+annotation_files.target = "annotations/user2/death_penalty.kpc" # target file
+annotation_status = "assigned" # available statuses: assigned, started, finished, adjudicated
+annotation_task = "keyphrase_clustering" # available tasks: keyphrase_clustering, keyphrase_selection
+
+[user3] # a user with adjudicator profile
+password = "" # hashed password
+
+[user3.attributions] # user3 attributions
+[user3.attributions.death_penalty] # user3 death_penalty attribution
+profile = "adjudicator" # attribution profile
+annotation_files.sources = [    # source files
+    "annotations/user1/death_penalty.kpc",   # user1 annotations
+    "annotations/user2/death_penalty.kpc"    # user2 annotations
+]
+annotation_files.target = "annotations/user3/death_penalty.kpc" # target file
+annotation_status = "assigned" # available statuses: assigned, started, finished, adjudicated
+annotation_task = "keyphrase_clustering" # available tasks: keyphrase_clustering, keyphrase_selection

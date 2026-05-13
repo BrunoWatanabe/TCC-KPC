@@ -1,0 +1,463 @@
+````markdown
+# 🚀 Roadmap do Projeto — Spec-Kit
+
+## 📌 Visão Geral
+
+O projeto tem como objetivo criar um framework experimental para:
+
+- Spec-Driven Development (SDD)
+- Model-Driven Engineering (MDE)
+- Agentes assistidos por IA
+- Avaliação de alinhamento entre modelagem e implementação
+
+A proposta central é permitir que:
+
+```text
+especificação ↔ modelo ↔ código ↔ testes
+```
+
+permaneçam alinhados durante o desenvolvimento.
+
+---
+
+# 🧠 Ideia Central do Projeto
+
+O projeto propõe uma metodologia onde:
+
+| Papel | Responsabilidade |
+|---|---|
+| Agente Arquiteto | cria especificações e modelos |
+| Agente Desenvolvedor | implementa funcionalidades |
+| Agente QA | valida alinhamento |
+
+Tudo isso apoiado por:
+- GitHub Copilot
+- PlantUML
+- GitHub Actions
+- métricas de alinhamento
+- rastreabilidade entre artefatos
+
+---
+
+# 🧱 FASE 1 — Estrutura Inicial do Framework
+
+## 🎯 Objetivo
+
+Criar a base do projeto.
+
+---
+
+## ✅ Etapas
+
+### 1. Criar estrutura do repositório
+
+Criar:
+- `specs/`
+- `diagrams/`
+- `.github/agents/`
+- `qa/reports/`
+- `docs/`
+
+---
+
+### 2. Configurar ambiente
+
+Instalar:
+- Java
+- PlantUML
+- Graphviz
+- VS Code
+- GitHub Copilot
+
+---
+
+### 3. Criar README inicial
+
+Documentar:
+- objetivo do projeto
+- metodologia
+- agentes
+- estrutura do framework
+
+---
+
+### 4. Criar templates do Spec-Kit
+
+Criar modelos base:
+- `spec.md`
+- `tasks.md`
+- `acceptance.md`
+- `traceability.md`
+
+---
+
+# 🤖 FASE 2 — Sistema de Agentes
+
+## 🎯 Objetivo
+
+Estruturar os agentes especializados.
+
+---
+
+## ✅ Etapas
+
+### 1. Criar agente Arquiteto
+
+Responsável por:
+- especificação
+- diagramas
+- rastreabilidade
+
+---
+
+### 2. Criar agente Desenvolvedor
+
+Responsável por:
+- implementação
+- testes
+- aderência à especificação
+
+---
+
+### 3. Criar agente QA
+
+Responsável por:
+- análise de alinhamento
+- inconsistências
+- relatórios
+
+---
+
+### 4. Criar governança dos agentes
+
+Criar:
+- `AGENTS.md`
+- `copilot-instructions.md`
+
+---
+
+# 🧩 FASE 3 — Integração SDD + MDE
+
+## 🎯 Objetivo
+
+Integrar especificações com modelagem.
+
+---
+
+## ✅ Etapas
+
+### 1. Definir modelos oficiais
+
+Usar:
+- diagramas de classe
+- sequência
+- componentes
+- casos de uso
+
+---
+
+### 2. Criar convenções de rastreabilidade
+
+Definir:
+- como requisitos ligam ao código
+- como diagramas ligam à implementação
+- como testes validam requisitos
+
+---
+
+### 3. Padronizar naming
+
+Exemplo:
+
+```text
+RF1 → UserService.createUser()
+```
+
+---
+
+# 🔄 FASE 4 — Fluxo Completo de Desenvolvimento
+
+## 🎯 Objetivo
+
+Executar o ciclo completo da metodologia.
+
+---
+
+## ✅ Fluxo
+
+### 1. Criar issue
+
+Exemplo:
+
+```text
+Implementar cadastro de usuário
+```
+
+---
+
+### 2. Agente Arquiteto
+
+Produz:
+- `spec.md`
+- diagramas PlantUML
+- `traceability.md`
+
+---
+
+### 3. Decomposição
+
+Gerar:
+- `tasks.md`
+- `acceptance.md`
+
+---
+
+### 4. Agente Desenvolvedor
+
+Implementa:
+- código
+- testes
+- integração
+
+---
+
+### 5. Agente QA
+
+Analisa:
+- modelo ↔ código
+- spec ↔ implementação
+- testes ↔ requisitos
+
+---
+
+### 6. Geração de relatório
+
+Criar:
+- `alignment-report.md`
+
+---
+
+# 📊 FASE 5 — Métricas de Alinhamento
+
+## 🎯 Objetivo
+
+Transformar alinhamento em métricas mensuráveis.
+
+---
+
+## ✅ Métricas principais
+
+### 1. Cobertura do modelo
+
+```text
+elementos implementados / elementos modelados
+```
+
+---
+
+### 2. Precisão da implementação
+
+```text
+implementações corretas / implementações totais
+```
+
+---
+
+### 3. Divergência semântica
+
+Detectar:
+- regras quebradas
+- comportamento divergente
+
+---
+
+### 4. Over-engineering
+
+```text
+código sem representação no modelo
+```
+
+---
+
+### 5. Score geral de alinhamento
+
+Combinar:
+- cobertura
+- precisão
+- divergência
+- inconsistências
+
+---
+
+# 🧪 FASE 6 — Pesquisa Experimental
+
+## 🎯 Objetivo
+
+Avaliar cientificamente a metodologia.
+
+---
+
+## ✅ Experimentos
+
+### Experimento 1 — Com agentes vs sem agentes
+
+Comparar:
+- qualidade
+- alinhamento
+- tempo
+
+---
+
+### Experimento 2 — Modelagem forte vs fraca
+
+Comparar:
+- retrabalho
+- inconsistências
+- drift arquitetural
+
+---
+
+### Experimento 3 — Precisão do QA
+
+Medir:
+- falsos positivos
+- falsos negativos
+- recall
+- precisão
+
+---
+
+# 🔍 FASE 7 — Automação
+
+## 🎯 Objetivo
+
+Automatizar análise de alinhamento.
+
+---
+
+## ✅ Etapas
+
+### 1. GitHub Actions
+
+Automatizar:
+- testes
+- validação PlantUML
+- geração de relatórios
+
+---
+
+### 2. Parser de PlantUML
+
+Extrair:
+- classes
+- relações
+- componentes
+
+---
+
+### 3. Parser de código
+
+Extrair:
+- AST
+- classes
+- métodos
+- dependências
+
+---
+
+### 4. Comparador modelo ↔ código
+
+Detectar:
+- ausências
+- excessos
+- divergências
+
+---
+
+# 📈 FASE 8 — Dashboard e Visualização
+
+## 🎯 Objetivo
+
+Visualizar evolução do alinhamento.
+
+---
+
+## ✅ Visualizações
+
+- score por PR
+- evolução temporal
+- heatmap de inconsistências
+- cobertura da modelagem
+- drift arquitetural
+
+---
+
+# 📚 FASE 9 — Consolidação Científica
+
+## 🎯 Objetivo
+
+Transformar o projeto em pesquisa/publicação.
+
+---
+
+## ✅ Produções
+
+### 1. Artigo
+
+Tema:
+
+```text
+Agent-Assisted Alignment Evaluation in SDD + MDE Environments
+```
+
+---
+
+### 2. Estudo de caso
+
+Aplicar em:
+- backend real
+- sistema acadêmico
+- microsserviço
+- API
+
+---
+
+### 3. Dataset experimental
+
+Salvar:
+- relatórios QA
+- métricas
+- PRs
+- versões dos modelos
+
+---
+
+# 🚀 Visão Final do Projeto
+
+Ao final, o framework será capaz de:
+
+- criar especificações formais
+- modelar arquitetura com PlantUML
+- implementar funcionalidades usando agentes
+- avaliar alinhamento automaticamente
+- gerar métricas quantitativas
+- detectar drift arquitetural
+- produzir relatórios científicos
+
+---
+
+# 🧠 Resultado Esperado
+
+O projeto pretende demonstrar que:
+
+```text
+SDD + MDE + agentes especializados
+```
+
+pode melhorar:
+- alinhamento entre artefatos
+- qualidade arquitetural
+- rastreabilidade
+- consistência do software
+- capacidade de evolução do sistema
+````

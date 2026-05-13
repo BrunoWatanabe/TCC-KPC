@@ -1,5 +1,0 @@
-#!/bin/bash
-
-prefix=`pwd`
-pkill -f "$prefix/venv/bin/run.py"
-pkill -f "$prefix/venv/bin/uvicorn"

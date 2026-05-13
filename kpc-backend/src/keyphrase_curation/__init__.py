@@ -3,13 +3,28 @@ from pathlib import Path
 import sys
 
 config = None
-env_filepath = find_dotenv()
-root_path = Path(env_filepath).parent
+root_path = Path(__file__).resolve().parents[2]
+env_filepath = find_dotenv(usecwd=True) or str(root_path / ".env")
 sys.path.append(str(root_path))
+
+_REQUIRED_KEYS = [
+    "DATASET_RELATIVE_PATH",
+    "ATTRIBUTIONS_FILENAME",
+    "CLUSTER_IDS_LENGTH",
+    "CURATED_KEYPHRASES_LENGTH",
+]
 
 
 def init_config():
-    config = dotenv_values()
+    config = dotenv_values(env_filepath) or {}
+    missing_keys = [key for key in _REQUIRED_KEYS if not config.get(key)]
+
+    if missing_keys:
+        missing = ", ".join(missing_keys)
+        raise RuntimeError(
+            f"Configuracao incompleta em {env_filepath}: {missing}"
+        )
+
     config['root_path'] = str(root_path)
     dataset_path = f"{root_path}/{config['DATASET_RELATIVE_PATH']}"
     config['dataset_path'] = dataset_path

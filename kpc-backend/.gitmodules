@@ -3,4 +3,4 @@
 	url = https://github.com/marceloakira/reactpy-material.git
 [submodule "reactpy-material"]
 	path = reactpy-material
-	url = https://github.com/williamneto/reactpy-material
+	url = https://github.com/williamneto/reactpy-material.git

@@ -1,4 +1,10 @@
 {
+  "scripts": {
+    "launcher:local": "bash ../launcher/start.sh local",
+    "launcher:docker": "bash ../launcher/start.sh docker",
+    "launcher:dual:local": "bash ../launcher/start-dual-terminal.sh local",
+    "launcher:dual:docker": "bash ../launcher/start-dual-terminal.sh docker"
+  },
   "dependencies": {
     "@mui/material": "^5.14.15",
     "react": "^18.2.0"

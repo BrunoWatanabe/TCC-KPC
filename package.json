@@ -1,0 +1,13 @@
+{
+  "name": "kpc-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "launcher:local": "bash launcher/start.sh local",
+    "launcher:docker": "bash launcher/start.sh docker",
+    "launcher:dual:local": "bash launcher/start-dual-terminal.sh local",
+    "launcher:dual:docker": "bash launcher/start-dual-terminal.sh docker",
+    "launcher:status": "bash launcher/status.sh",
+    "launcher:stop": "bash launcher/stop.sh"
+  }
+}

@@ -1,3 +1,5 @@
+import os
+
 import uvicorn
 from fastapi import FastAPI, Depends
 from fastapi.responses import JSONResponse
@@ -53,10 +55,15 @@ async def get_documentation(
     return get_swagger_ui_html(openapi_url="/openapi.json", title="docs")
 
 if __name__ == "__main__":
+    def _as_bool(value, default=True):
+        if value is None:
+            return default
+        return value.strip().lower() in {"1", "true", "yes", "on"}
+
     uvicorn.run(
         "keyphrase_curation.api.main:app",
-        host="127.0.0.1",
-        port=3132,
-        reload=True)
+        host=os.getenv("KPC_HOST", "127.0.0.1"),
+        port=int(os.getenv("KPC_PORT", "3132")),
+        reload=_as_bool(os.getenv("KPC_RELOAD", "1")))
 
 

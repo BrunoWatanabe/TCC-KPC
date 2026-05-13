@@ -80,7 +80,7 @@ cp attributions.template.toml attributions.toml
 
 For interactive execution, run:
 ```bash
-python run.py
+bash launcher/start.sh local
 ```
 
 Finally, you can open your browser in URL:
@@ -91,15 +91,30 @@ Finally, you can open your browser in URL:
 
 For background execution, run:
 ```bash
-./start
+bash launcher/start.sh local
 ```
 
 If you want to show execution status, run:
 ```bash
-./status
+bash launcher/status.sh
 ```
 
 If you want to stop execution, run:
 ```bash
-./stop
+bash launcher/stop.sh
 ```
+
+## Novo inicializador
+
+Um launcher organizado foi adicionado em `launcher/` com duas opcoes:
+
+```bash
+bash launcher/start.sh local
+bash launcher/start.sh docker
+```
+
+Se voce chamar `bash launcher/start.sh` sem argumento, um menu interativo pergunta qual modo usar.
+
+O modo Docker faz verificacoes antes de subir: confirma `docker`, testa o daemon e inicializa os submodulos e arquivos de ambiente quando necessario.
+
+Os arquivos legados `start`, `status`, `stop`, `Dockerfile` e `docker-compose.yml` do root foram removidos para manter o backend centralizado em `launcher/`.

@@ -189,6 +189,18 @@ npm run dev:mvvm
 # Acessar: http://localhost:5174
 ```
 
+### Launcher organizado
+```bash
+bash launcher/start.sh local
+bash launcher/status.sh
+bash launcher/stop.sh
+```
+
+Modo Docker disponível:
+```bash
+bash launcher/start.sh docker
+```
+
 Hot Module Replacement ativo; alterações em Views e ViewModels aplicadas imediatamente.
 
 ### Biblioteca de Componentes (modo UMD)

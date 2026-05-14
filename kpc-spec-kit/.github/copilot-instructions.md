@@ -1,3 +1,8 @@
+<!-- SPECKIT START -->
+For additional context about technologies to be used, project structure,
+shell commands, and other important information, read the current plan
+<!-- SPECKIT END -->
+
 # copilot-instructions.md — Instruções Globais para GitHub Copilot
 
 ## 📌 Visão Geral
@@ -26,7 +31,7 @@ Garantir que:
 ### Ao Criar Especificação
 
 **Copilot deve**:
-- ✅ Usar template `specs/templates/spec.md`
+- ✅ Usar template `.specify/templates/kpc-spec-initial.md`
 - ✅ Estruturar requisitos em formato BDD
   ```gherkin
   Dado [contexto]
@@ -95,7 +100,7 @@ class UserService {
   ```
   RF001 → UserService::authenticate()
   RF001 → tests/test_user_service.py::test_authenticate_success
-  RF001 → diagrams/auth_classes.puml::UserService
+  RF001 → .specify/diagrams/auth_classes.puml::UserService
   ```
 - ✅ Validar cobertura 100% (todo RF tem implementação)
 - ✅ Detectar "orfandade"
@@ -119,7 +124,7 @@ class UserService {
       
       Rastreamento:
       - Spec: specs/auth/spec.md::RF001
-      - Modelo: diagrams/auth_classes.puml::UserService
+      - Modelo: .specify/diagrams/auth_classes.puml::UserService
       - Teste: tests/test_user_service.py::TestUserService
       """
   ```
@@ -403,7 +408,7 @@ Copilot:
 - Agente Arquiteto: `.github/agents/architect.md`
 - Agente Desenvolvedor: `.github/agents/developer.md`
 - Agente QA: `.github/agents/qa.md`
-- Templates: `specs/templates/`
+- Templates: `.specify/templates/` (versões do framework) ou `.specify/templates/kpc-*-initial.md` (versões KPC)
 
 ---
 

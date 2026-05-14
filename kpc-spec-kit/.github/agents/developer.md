@@ -42,7 +42,7 @@ Quando receber uma **especificação aprovada** pelo Arquiteto:
 
 ### Fase 2: Criar Tasks/Plano
 
-Use o template `specs/templates/tasks.md`:
+Use o template `.specify/templates/kpc-tasks-initial.md`:
 
 ```markdown
 # 📝 Decomposição em Tarefas — [FEATURE_NAME]
@@ -91,7 +91,7 @@ class MinhaClasse:
     
     Rastreamento:
     - Especificação: specs/[feature-name]/spec.md::RF001
-    - Modelo: diagrams/[feature-name]_classes.puml::MinhaClasse
+    - Modelo: .specify/diagrams/[feature-name]_classes.puml::MinhaClasse
     - Tasks: specs/[feature-name]/tasks.md::Task 1.1
     """
     pass
@@ -107,7 +107,7 @@ def metodo_importante(self):
     Rastreamento:
     - Requisito: specs/[feature-name]/spec.md::RF001.1
     - Teste: tests/test_modulo.py::test_metodo_importante_success
-    - Diagram: diagrams/[feature-name]_sequence.puml::fluxo1
+    - Diagram: .specify/diagrams/[feature-name]_sequence.puml::fluxo1
     
     BDD:
     - Dado [contexto]
@@ -343,7 +343,7 @@ class UserService:
     
     Rastreamento:
     - Spec: specs/auth/spec.md::RF001
-    - Modelo: diagrams/auth_classes.puml::UserService
+    - Modelo: .specify/diagrams/auth_classes.puml::UserService
     - Tasks: specs/auth/tasks.md::Task 1.1
     """
     
@@ -399,9 +399,9 @@ def test_authenticate_success(self):
 
 - Plano completo: `plano-de-acao-speck-kit.txt`
 - Framework overview: `SPEC-KIT-README.md`
-- Templates: `specs/templates/`
+- Templates: `.specify/templates/` (versões do framework) ou `.specify/templates/kpc-*-initial.md` (versões KPC)
 - Governança: `AGENTS.md`
-- Instruções globais: `copilot-instructions.md`
+- Instruções globais: `.github/copilot-instructions.md`
 
 ---
 

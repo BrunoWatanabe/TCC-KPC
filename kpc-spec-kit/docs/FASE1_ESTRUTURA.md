@@ -93,7 +93,7 @@ TCC-KPC/
 - Fluxo de implementação
 - Critérios de conclusão
 
-**Localização**: `specs/templates/spec.md`
+**Localização**: `.specify/templates/kpc-spec-initial.md`
 
 ---
 
@@ -112,7 +112,7 @@ TCC-KPC/
 - Tabela resumida
 - Sequência de implementação
 
-**Localização**: `specs/templates/tasks.md`
+**Localização**: `.specify/templates/kpc-tasks-initial.md`
 
 ---
 
@@ -129,7 +129,7 @@ TCC-KPC/
 - Testes automáticos
 - Relatório de execução
 
-**Localização**: `specs/templates/acceptance.md`
+**Localização**: `.specify/templates/kpc-acceptance-initial.md`
 
 ---
 
@@ -146,7 +146,7 @@ TCC-KPC/
 - Relatório de cobertura
 - Histórico de mudanças
 
-**Localização**: `specs/templates/traceability.md`
+**Localização**: `.specify/templates/kpc-traceability-initial.md`
 
 ---
 
@@ -234,7 +234,7 @@ Métricas documentadas
 
 1. **Copiar template spec.md**:
    ```bash
-   cp specs/templates/spec.md specs/auth/spec.md
+   cp .specify/templates/kpc-spec-initial.md specs/auth/spec.md
    ```
 
 2. **Preencher especificação**:
@@ -245,7 +245,7 @@ Métricas documentadas
 
 3. **Criar tasks.md**:
    ```bash
-   cp specs/templates/tasks.md specs/auth/tasks.md
+   cp .specify/templates/kpc-tasks-initial.md specs/auth/tasks.md
    ```
 
 4. **Decompor em tarefas**:
@@ -256,7 +256,7 @@ Métricas documentadas
 
 5. **Criar acceptance.md**:
    ```bash
-   cp specs/templates/acceptance.md specs/auth/acceptance.md
+   cp .specify/templates/kpc-acceptance-initial.md specs/auth/acceptance.md
    ```
 
 6. **Definir cenários BDD**:
@@ -266,7 +266,7 @@ Métricas documentadas
 
 7. **Preencher traceability.md**:
    ```bash
-   cp specs/templates/traceability.md specs/auth/traceability.md
+   cp .specify/templates/kpc-traceability-initial.md specs/auth/traceability.md
    ```
 
 8. **Manter rastreamento**:
@@ -284,7 +284,7 @@ Métricas documentadas
 - [ ] Criar `.instructions.md` para Agente Desenvolvedor
 - [ ] Criar `.instructions.md` para Agente QA
 - [ ] Criar `AGENTS.md` com governança
-- [ ] Criar `copilot-instructions.md` global
+- [ ] Criar `.github/copilot-instructions.md` global
 
 ---
 
@@ -301,7 +301,7 @@ Métricas documentadas
 
 ## ✅ Checklist de Conclusão
 
-- [x] Criar estrutura do repositório (specs/, diagrams/, .github/agents/, qa/reports/)
+- [x] Criar estrutura do repositório (specs/, .specify/diagrams/, .github/agents/, .specify/qa/reports/)
 - [x] Documentação de ambiente atualizada
 - [x] README do framework criado
 - [x] Templates base criados (spec.md, tasks.md, acceptance.md, traceability.md)
@@ -313,10 +313,10 @@ Métricas documentadas
 ## 🔗 Arquivos Relacionados
 
 - [SPEC-KIT-README.md](../SPEC-KIT-README.md) — Overview do framework
-- [spec.md](../specs/templates/spec.md) — Template de especificação
-- [tasks.md](../specs/templates/tasks.md) — Template de tarefas
-- [acceptance.md](../specs/templates/acceptance.md) — Template de testes
-- [traceability.md](../specs/templates/traceability.md) — Template de rastreamento
+- [kpc-spec-initial.md](../.specify/templates/kpc-spec-initial.md) — Template de especificação (versão KPC)
+- [kpc-tasks-initial.md](../.specify/templates/kpc-tasks-initial.md) — Template de tarefas (versão KPC)
+- [kpc-acceptance-initial.md](../.specify/templates/kpc-acceptance-initial.md) — Template de testes (versão KPC)
+- [kpc-traceability-initial.md](../.specify/templates/kpc-traceability-initial.md) — Template de rastreamento (versão KPC)
 
 ---
 

@@ -45,7 +45,7 @@ Garantir rastreabilidade completa entre requisitos, modelos, implementação e t
 
 #### Diagrama de Classes
 
-**Arquivo**: `diagrams/[FEATURE_NAME]_classes.puml`
+**Arquivo**: `.specify/diagrams/[FEATURE_NAME]_classes.puml`
 
 **Classes Definidas**:
 - `ClasseA` → Implementa RF1.1
@@ -70,7 +70,7 @@ ClasseA --> ClasseB
 
 #### Diagrama de Sequência
 
-**Arquivo**: `diagrams/[FEATURE_NAME]_sequence.puml`
+**Arquivo**: `.specify/diagrams/[FEATURE_NAME]_sequence.puml`
 
 **Fluxos Modelados**:
 - Fluxo 1: Interação entre ClasseA e ClasseB
@@ -106,7 +106,7 @@ class ClasseA:
     
     Rastreamento:
     - RF1.1: Descrição do requisito
-    - Modelo: diagrams/[FEATURE_NAME]_classes.puml::ClasseA
+    - Modelo: .specify/diagrams/[FEATURE_NAME]_classes.puml::ClasseA
     - Testes: tests/test_classe_a.py::TestClasseA
     """
     
@@ -212,7 +212,7 @@ tests/test_classe_a.py
 #### Inconsistência 1: [Descrição]
 
 **Local**:
-- Modelo: `diagrams/[FEATURE_NAME]_classes.puml`
+- Modelo: `.specify/diagrams/[FEATURE_NAME]_classes.puml`
 - Código: `src/modulo/classe_a.py::metodo1()`
 
 **Divergência**: [Descrever diferença]
@@ -244,7 +244,7 @@ tests/test_classe_a.py
 - **Especificação**: `spec.md`
 - **Tarefas**: `tasks.md`
 - **Testes de Aceitação**: `acceptance.md`
-- **Diagramas**: `diagrams/[FEATURE_NAME]_*.puml`
+- **Diagramas**: `.specify/diagrams/[FEATURE_NAME]_*.puml`
 
 ---
 

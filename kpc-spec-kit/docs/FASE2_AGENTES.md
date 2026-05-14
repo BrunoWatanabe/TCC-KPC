@@ -221,7 +221,7 @@ AGENTS.md                      # Coordenação de agentes
 ├─ Métricas de saúde
 └─ Integração GitHub
 
-copilot-instructions.md        # Instruções globais para Copilot
+.github/copilot-instructions.md  # Instruções globais para Copilot
 ├─ Comportamento esperado
 ├─ Padrões de nomeação
 ├─ Estrutura de comentários
@@ -467,9 +467,9 @@ Funcionalidade: Autenticação de Usuário (RF001)
 
 ```bash
 # Copilot como Arquiteto
-- Lê specs/templates/spec.md
+- Lê .specify/templates/kpc-spec-initial.md
 - Cria specs/[feature]/spec.md
-- Cria diagrams/[feature]_*.puml
+- Cria .specify/diagrams/[feature]_*.puml
 - Cria specs/[feature]/traceability.md
 ```
 
@@ -490,7 +490,7 @@ Funcionalidade: Autenticação de Usuário (RF001)
 - Lê .github/agents/qa.md
 - Cria specs/[feature]/acceptance.md
 - Executa testes BDD
-- Cria qa/reports/[feature]-alignment-report.md
+- Cria .specify/qa/reports/[feature]-alignment-report.md
 ```
 
 ---
@@ -501,7 +501,7 @@ Funcionalidade: Autenticação de Usuário (RF001)
 - [x] Agente Desenvolvedor documentado (developer.md)
 - [x] Agente QA documentado (qa.md)
 - [x] Governança estabelecida (AGENTS.md)
-- [x] Instruções Copilot criadas (copilot-instructions.md)
+- [x] Instruções Copilot criadas (.github/copilot-instructions.md)
 - [x] Fluxo de coordenação definido
 - [x] Matriz de responsabilidades clara
 - [x] Padrões de comunicação padronizados
@@ -546,7 +546,7 @@ Funcionalidade: Autenticação de Usuário (RF001)
 
 /
 ├── AGENTS.md                      # Governança
-├── copilot-instructions.md        # Instruções Copilot
+├── .github/copilot-instructions.md # Instruções Copilot
 └── docs/FASE2_AGENTES.md         # Esta documentação
 ```
 
@@ -558,7 +558,7 @@ Funcionalidade: Autenticação de Usuário (RF001)
 - Framework overview: `SPEC-KIT-README.md`
 - Documentação FASE 1: `docs/FASE1_ESTRUTURA.md`
 - Governança: `AGENTS.md`
-- Instruções Copilot: `copilot-instructions.md`
+- Instruções Copilot: `.github/copilot-instructions.md`
 
 ---
 

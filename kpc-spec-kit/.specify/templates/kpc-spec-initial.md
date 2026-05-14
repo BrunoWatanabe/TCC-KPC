@@ -90,7 +90,7 @@ Usuario --> UC1
 @enduml
 ```
 
-**Arquivo PlantUML**: `diagrams/[FEATURE_NAME]_usecases.puml`
+**Arquivo PlantUML**: `.specify/diagrams/[FEATURE_NAME]_usecases.puml`
 
 ---
 
@@ -106,7 +106,7 @@ Servidor --> Cliente: Resposta
 @enduml
 ```
 
-**Arquivo PlantUML**: `diagrams/[FEATURE_NAME]_sequence.puml`
+**Arquivo PlantUML**: `.specify/diagrams/[FEATURE_NAME]_sequence.puml`
 
 ---
 
@@ -123,7 +123,7 @@ class Entidade {
 @enduml
 ```
 
-**Arquivo PlantUML**: `diagrams/[FEATURE_NAME]_classes.puml`
+**Arquivo PlantUML**: `.specify/diagrams/[FEATURE_NAME]_classes.puml`
 
 ---
 

@@ -86,30 +86,39 @@ TCC-KPC/
 - [x] Criar estrutura de diretórios
 - [x] Configurar ambiente
 - [x] Criar README
-- [ ] Criar templates
+- [x] Criar templates
 
-### FASE 2: Sistema de Agentes
+**Documentação**: [docs/FASE1_ESTRUTURA.md](docs/FASE1_ESTRUTURA.md)
+
+### FASE 2: Sistema de Agentes ✅
 Estruturar agentes especializados (Arquiteto, Desenvolvedor, QA)
 
-### FASE 3: Integração SDD + MDE
-Integrar especificações com modelagem formal
+**Documentação**: [docs/FASE2_AGENTES.md](docs/FASE2_AGENTES.md)
 
-### FASE 4: Fluxo Completo de Desenvolvimento
-Executar ciclo completo da metodologia
+### FASE 3: Integração SDD + MDE ✅
+Integrar especificações com modelagem formal (4 modelos PlantUML, convenções de rastreabilidade, padrões de nomenclatura)
 
-### FASE 5: Métricas de Alinhamento
-Transformar alinhamento em métricas mensuráveis
+**Documentação**: [docs/FASE3_INTEGRACAO.md](docs/FASE3_INTEGRACAO.md)
 
-### FASE 6: Pesquisa Experimental
+### FASE 4: Fluxo Completo de Desenvolvimento ⏳
+Executar ciclo completo da metodologia com exemplo real
+
+### FASE 5: Métricas de Alinhamento ✅
+Transformar alinhamento em métricas mensuráveis (Cobertura, Precisão, Divergência, Over-Eng, Score Geral)
+
+**Documentação**: [docs/FASE5_METRICAS.md](docs/FASE5_METRICAS.md)  
+**Técnico**: [METRICAS-ALINHAMENTO.md](METRICAS-ALINHAMENTO.md)
+
+### FASE 6: Pesquisa Experimental ⏳
 Avaliar cientificamente a metodologia
 
-### FASE 7: Automação
+### FASE 7: Automação ⏳
 Automatizar análise com GitHub Actions
 
-### FASE 8: Dashboard e Visualização
+### FASE 8: Dashboard e Visualização ⏳
 Visualizar evolução do alinhamento
 
-### FASE 9: Consolidação Científica
+### FASE 9: Consolidação Científica ⏳
 Transformar em pesquisa/publicação
 
 ## 📊 Métricas Principais
@@ -120,13 +129,44 @@ Transformar em pesquisa/publicação
 - **Over-Engineering**: código sem representação no modelo
 - **Score Geral de Alinhamento**: combinação das métricas acima
 
+## 📐 Convenções e Padrões do Framework
+
+### Modelos e Diagramas
+- **MODELS.md** — Definição dos 4 modelos PlantUML oficiais (Use Cases, Classes, Sequence, Components)
+
+### Rastreabilidade
+- **TRACEABILITY-CONVENTIONS.md** — Como criar rastreabilidade bidirecional entre Requisitos ↔ Modelo ↔ Código ↔ Teste
+
+### Nomenclatura
+- **NAMING-CONVENTIONS.md** — Padrões de nomeação (RF001 → UserService.authenticate())
+
+### Métricas
+- **METRICAS-ALINHAMENTO.md** — Definição técnica das 5 métricas de alinhamento com exemplos
+
 ## 📚 Documentação
 
+### Fases do Projeto
 Cada fase possui documentação específica em `docs/`:
 
-- `FASE1_ESTRUTURA.md` — Detalhes de estrutura
-- `FASE2_AGENTES.md` — Configuração de agentes
-- `METODOLOGIA.md` — Detalhes da metodologia SDD+MDE
+- [docs/FASE1_ESTRUTURA.md](docs/FASE1_ESTRUTURA.md) — Detalhes de estrutura
+- [docs/FASE2_AGENTES.md](docs/FASE2_AGENTES.md) — Configuração de agentes
+- [docs/FASE3_INTEGRACAO.md](docs/FASE3_INTEGRACAO.md) — Integração SDD + MDE
+- [docs/FASE5_METRICAS.md](docs/FASE5_METRICAS.md) — Métricas de alinhamento
+
+### Sistema de Agentes
+- [AGENTS.md](AGENTS.md) — Governança e coordenação dos agentes
+- [.github/agents/architect.md](.github/agents/architect.md) — Instruções do Agente Arquiteto
+- [.github/agents/developer.md](.github/agents/developer.md) — Instruções do Agente Desenvolvedor
+- [.github/agents/qa.md](.github/agents/qa.md) — Instruções do Agente QA
+- [.github/copilot-instructions.md](.github/copilot-instructions.md) — Instruções globais para GitHub Copilot
+
+### Padrões e Convenções
+- [MODELS.md](MODELS.md) — Modelos PlantUML oficiais
+- [TRACEABILITY-CONVENTIONS.md](TRACEABILITY-CONVENTIONS.md) — Convenções de rastreabilidade
+- [NAMING-CONVENTIONS.md](NAMING-CONVENTIONS.md) — Padrões de nomenclatura
+
+### Métricas
+- [METRICAS-ALINHAMENTO.md](METRICAS-ALINHAMENTO.md) — Documentação técnica das métricas
 
 ## 🔗 Integração com Projeto Existente
 
@@ -142,5 +182,6 @@ Projeto acadêmico - TCC (Trabalho de Conclusão de Curso)
 
 ---
 
-**Última atualização**: Mai 2026
-**Status**: FASE 1 em andamento
+**Última atualização**: Mai 2026  
+**Status**: FASE 5 — Métricas de Alinhamento ✅ COMPLETA  
+**Próxima**: FASE 6 — Pesquisa Experimental

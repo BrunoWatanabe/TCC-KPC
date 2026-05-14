@@ -39,7 +39,7 @@ Quando receber uma **issue/requisição**:
 
 ### Fase 2: Criar Especificação
 
-Use o template `specs/templates/spec.md`:
+Use o template `.specify/templates/kpc-spec-initial.md`:
 
 ```markdown
 # 📋 Especificação — [FEATURE_NAME]
@@ -73,7 +73,7 @@ Use o template `specs/templates/spec.md`:
 
 ### Fase 3: Criar Diagramas UML
 
-Crie em `diagrams/[FEATURE_NAME]_*.puml`:
+Crie em `.specify/diagrams/[FEATURE_NAME]_*.puml`:
 
 #### 3.1 Diagrama de Casos de Uso
 
@@ -137,7 +137,7 @@ Modelo --> Implementacao
 
 ### Fase 4: Criar Rastreabilidade
 
-Use o template `specs/templates/traceability.md`:
+Use o template `.specify/templates/kpc-traceability-initial.md`:
 
 1. **Mapear Requisito → Componente**:
    - RF1.1 → UserService
@@ -174,9 +174,9 @@ Quando completar uma especificação, valide:
 
 | Template | Localização | Quando Usar |
 |----------|-------------|------------|
-| spec.md | `specs/templates/spec.md` | Nova feature/requisito |
-| tasks.md | `specs/templates/tasks.md` | Decomposição (trabalhará com Desenvolvedor) |
-| traceability.md | `specs/templates/traceability.md` | Sempre, depois dos diagramas |
+| spec.md | `.specify/templates/kpc-spec-initial.md` | Nova feature/requisito |
+| tasks.md | `.specify/templates/kpc-tasks-initial.md` | Decomposição (trabalhará com Desenvolvedor) |
+| traceability.md | `.specify/templates/kpc-traceability-initial.md` | Sempre, depois dos diagramas |
 
 ---
 
@@ -203,10 +203,10 @@ specs/[feature-name]/tasks.md
 specs/[feature-name]/acceptance.md
 specs/[feature-name]/traceability.md
 
-diagrams/[feature-name]_usecases.puml
-diagrams/[feature-name]_classes.puml
-diagrams/[feature-name]_sequence.puml
-diagrams/[feature-name]_components.puml
+.specify/diagrams/[feature-name]_usecases.puml
+.specify/diagrams/[feature-name]_classes.puml
+.specify/diagrams/[feature-name]_sequence.puml
+.specify/diagrams/[feature-name]_components.puml
 ```
 
 ---
@@ -309,7 +309,7 @@ RF001 → UserService::authenticate()
 - Plano completo: `plano-de-acao-speck-kit.txt`
 - Framework overview: `SPEC-KIT-README.md`
 - Governança: `AGENTS.md`
-- Instruções globais: `copilot-instructions.md`
+- Instruções globais: `.github/copilot-instructions.md`
 
 ---
 

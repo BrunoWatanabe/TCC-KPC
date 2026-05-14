@@ -310,10 +310,10 @@ QA: "Teste de aceitação falhou para RF001"
 
 - `.github/agents/architect.md` — Instruções
 - `specs/[feature]/spec.md` — Especificação
-- `diagrams/[feature]_usecases.puml` — Casos de uso
-- `diagrams/[feature]_classes.puml` — Classes
-- `diagrams/[feature]_sequence.puml` — Sequência
-- `diagrams/[feature]_components.puml` — Componentes
+- `.specify/diagrams/[feature]_usecases.puml` — Casos de uso
+- `.specify/diagrams/[feature]_classes.puml` — Classes
+- `.specify/diagrams/[feature]_sequence.puml` — Sequência
+- `.specify/diagrams/[feature]_components.puml` — Componentes
 - `specs/[feature]/traceability.md` — Rastreamento
 
 ### Criados pelo Desenvolvedor
@@ -327,7 +327,7 @@ QA: "Teste de aceitação falhou para RF001"
 
 - `.github/agents/qa.md` — Instruções
 - `specs/[feature]/acceptance.md` — Testes BDD
-- `qa/reports/[feature]-alignment-report.md` — Relatório
+- `.specify/qa/reports/[feature]-alignment-report.md` — Relatório
 
 ---
 
@@ -402,7 +402,7 @@ Tempo total: ~9 dias (em paralelo)
 - Agente Arquiteto: `.github/agents/architect.md`
 - Agente Desenvolvedor: `.github/agents/developer.md`
 - Agente QA: `.github/agents/qa.md`
-- Instruções Globais: `copilot-instructions.md`
+- Instruções Globais: `.github/copilot-instructions.md`
 
 ---
 

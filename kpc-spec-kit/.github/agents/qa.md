@@ -51,7 +51,7 @@ Quando receber código + testes:
 
 ### Fase 2: Criar Testes de Aceitação
 
-Use o template `specs/templates/acceptance.md`:
+Use o template `.specify/templates/kpc-acceptance-initial.md`:
 
 ```markdown
 # ✅ Testes de Aceitação — [FEATURE_NAME]
@@ -175,7 +175,7 @@ Status: AVISO
 
 ### Fase 6: Gerar Relatório
 
-Use o template `qa/reports/[FEATURE_NAME]-alignment-report.md`:
+Use o template `.specify/qa/reports/[FEATURE_NAME]-alignment-report.md`:
 
 ```markdown
 # 📊 Relatório de Alinhamento — [FEATURE_NAME]
@@ -382,9 +382,9 @@ ENTRADA: Código do Desenvolvedor + testes
 
 - Plano completo: `plano-de-acao-speck-kit.txt`
 - Framework overview: `SPEC-KIT-README.md`
-- Templates: `specs/templates/`
+- Templates: `.specify/templates/` (versões do framework) ou `.specify/templates/kpc-*-initial.md` (versões KPC)
 - Governança: `AGENTS.md`
-- Instruções globais: `copilot-instructions.md`
+- Instruções globais: `.github/copilot-instructions.md`
 
 ---
 

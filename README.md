@@ -18,9 +18,9 @@ Este repositório agrupa o Spec-Kit (framework de especificação/agents) e a pl
   3.5 [outros diretórios importantes](#35-outros)
 4. [Links e READMEs das subpastas](#4-links-readmes)
 5. [Contribuição e notas rápidas](#5-contribuicao)
+6. [Relatórios e Pesquisa](#6-relatorios-e-pesquisa)
 
 ---
-
 <a name="1-visao-geral"></a>
 ## 1. Visão geral
 
@@ -186,5 +186,15 @@ Observação: se uma subpasta tiver README com explicações mais detalhadas, ab
 - Antes de contribuir, rode os testes e verifique o fluxo desejado (frontend ou backend).
 - Não comite arquivos sensíveis como `.env` ou `dataset/attributions.toml` com dados privados.
 - Para dúvidas sobre execução, abra uma issue ou consulte os READMEs locais linkados acima.
+ 
+ <a name="6-relatorios-e-pesquisa"></a>
+ ## 6. Relatórios e Pesquisa
+
+ Esta seção resume a pasta `relatorios/`, que contém relatórios, notas e materiais de pesquisa relacionados à ferramenta.
+
+ - Pasta: `relatorios/`
+ - Leia: [relatorios/README.md](relatorios/README.md)
+
+ Use essa pasta para centralizar documentação de pesquisa, resultados experimentais e rascunhos técnicos.
 
 ---

@@ -5,7 +5,7 @@
 **DISCIPLINA:** CCO0448 – Engenharia de Software
 **PROFESSOR:** Valdemar Vicente Graciano Neto
 **TURMA:** A
-**PARTICIPANTES:** Daired & Gustavo
+**PARTICIPANTES:** Daired
 **DATA:** 14 de maio de 2026
 
 ---
@@ -84,7 +84,7 @@ O estudo envolverá dois grupos de participantes com papéis distintos:
 
 | Papel | Responsabilidade |
 |-------|------------------|
-| Agente Arquiteto + Aluno Gustavo | Modelagem colaborativa do frontend utilizando UML textual (PlantUML) |
+| Agente Arquiteto + Aluno X | Modelagem colaborativa do frontend utilizando UML textual (PlantUML) |
 | Agente Developer + Aluno Daired | Codificação colaborativa do frontend a partir do modelo estabelecido |
 
 **Critérios de inclusão:**
@@ -460,7 +460,7 @@ O Agente Juiz apresenta precisão e revocação superiores a 0,80 na detecção 
 | Tarefa | Responsável | Descrição |
 |--------|-------------|-----------|
 | Planejamento da sprint | Ambos alunos | Definir backlog da sprint |
-| Modelagem (se necessário) | Agente Arquiteto + Aluno Gustavo | Atualizar/refinar modelo UML |
+| Modelagem (se necessário) | Agente Arquiteto + Aluno X | Atualizar/refinar modelo UML |
 | Codificação | Agente Developer + Aluno Daired | Gerar código a partir do modelo |
 | Commit | Aluno Daired | Realizar commit do código |
 | Verificação do Juiz | Agente Juiz | Executar após cada commit |

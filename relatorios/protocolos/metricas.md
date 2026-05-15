@@ -1,7 +1,7 @@
 # Relatório de Métricas para Avaliação do Framework MDE+SDD com Agentes de IA
 
 **TCC**: Ressurreição da Engenharia Orientada a Modelos com Auxílio de Agentes de IA e Desenvolvimento Orientado a Especificações  
-**Autores**: Daired & Gustavo  
+**Autores**: Daired
 **Versão**: 1.0 — Mai/2026  
 **Status**: Rascunho — Planejamento de Pesquisa
 
@@ -449,4 +449,4 @@ A seguir, tópicos e termos de busca sugeridos para embasar teoricamente as mét
 
 ---
 
-*Documento de planejamento de métricas — TCC Daired & Gustavo — Mai/2026*
+*Documento de planejamento de métricas — TCC Daired — Mai/2026*

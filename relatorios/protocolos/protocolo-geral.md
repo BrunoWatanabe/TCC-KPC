@@ -10,7 +10,7 @@
 
 **DATA ATUALIZAÇÃO:** 20/05/2026
 
-**Versão:** 5.0 (Rubrica Padronizada)
+**Versão:** 5.1 (Hiperlinks Corrigidos)
 
 **Status:** Protocolo para revisão do orientador
 
@@ -36,21 +36,21 @@
 10. [Avaliação e Métricas](#10-avaliação-e-métricas)
     - 10.1 [Rubrica Padronizada (0-4)](#101-rubrica-padronizada-0-4)
     - 10.2 [Grupo A — Qualidade do Agente QA](#102-grupo-a--métricas-de-qualidade-do-agente-qa)
-        - A1: Matriz de Confusão
-        - A2: Precisão (Precision)
-        - A3: Revocação (Recall)
-        - A4: F1-Score
-        - A5: Taxa de Falso Negativo (FNR)
-        - A6: Taxa de Falso Positivo (FPR)
-        - A7: Taxa de Concordância
-        - A8: Qualidade da Justificativa
+        - [A1: Matriz de Confusão](#a1-matriz-de-confusão-do-qa)
+        - [A2: Precisão (Precision)](#a2-precisão-do-qa-precision)
+        - [A3: Revocação (Recall)](#a3-revocação-do-qa-recall)
+        - [A4: F1-Score](#a4-f1-score-do-qa)
+        - [A5: Taxa de Falso Negativo (FNR)](#a5-taxa-de-falso-negativo-fnr)
+        - [A6: Taxa de Falso Positivo (FPR)](#a6-taxa-de-falso-positivo-fpr)
+        - [A7: Taxa de Concordância](#a7-taxa-de-concordância-na-audiência)
+        - [A8: Qualidade da Justificativa](#a8-qualidade-da-justificativa)
     - 10.3 [Grupo B — Alinhamento Modelo-Código](#103-grupo-b--métricas-de-alinhamento-modelo-código)
-        - B1: Cobertura do Modelo
-        - B2: Precisão da Implementação
-        - B3: Divergência Semântica
-        - B4: Over-Engineering
-        - B5: Score Geral de Alinhamento
-        - B6: Rastreabilidade
+        - [B1: Cobertura do Modelo](#b1-cobertura-do-modelo)
+        - [B2: Precisão da Implementação](#b2-precisão-da-implementação)
+        - [B3: Divergência Semântica](#b3-divergência-semântica)
+        - [B4: Over-Engineering](#b4-over-engineering)
+        - [B5: Score Geral de Alinhamento](#b5-score-geral-de-alinhamento)
+        - [B6: Rastreabilidade](#b6-rastreabilidade)
     - 10.4 [Resumo das Métricas](#104-resumo-das-métricas)
 11. [Síntese das Métricas por Sprint](#11-síntese-das-métricas-por-sprint)
 12. [Hipóteses](#12-hipóteses)
@@ -273,7 +273,7 @@ Todas as métricas quantitativas deste protocolo seguem a seguinte rubrica padro
 
 `F1 = 2 × (Precisão × Recall) / (Precisão + Recall)`
 
-**Fonte dos dados:** Calculado a partir das métricas A2 e A3
+**Fonte dos dados:** Calculado a partir das métricas [A2](#a2-precisão-do-qa-precision) e [A3](#a3-revocação-do-qa-recall)
 
 **Rubrica de Avaliação:**
 
@@ -343,7 +343,7 @@ Todas as métricas quantitativas deste protocolo seguem a seguinte rubrica padro
 
 #### A8: Qualidade da Justificativa
 
-**Fonte dos dados:** [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) (item AUD-13, com cálculo ponderado)
+**Fonte dos dados:** [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) (item AUD-13)
 
 **Rubrica de Avaliação:**
 
@@ -439,7 +439,7 @@ Todas as métricas quantitativas deste protocolo seguem a seguinte rubrica padro
 
 `Score = (Cobertura × 0,35) + (Precisão × 0,35) + ((100 − Divergência) × 0,20) + ((100 − Over-Engineering) × 0,10)`
 
-**Fonte dos dados:** Calculado a partir das métricas B1, B2, B3, B4
+**Fonte dos dados:** Calculado a partir das métricas [B1](#b1-cobertura-do-modelo), [B2](#b2-precisão-da-implementação), [B3](#b3-divergência-semântica) e [B4](#b4-over-engineering)
 
 **Rubrica de Avaliação:**
 
@@ -475,20 +475,20 @@ Todas as métricas quantitativas deste protocolo seguem a seguinte rubrica padro
 
 | Grupo | ID | Métrica | Unidade | Fonte Principal | Rubrica (0-4) |
 |-------|-----|---------|---------|-----------------|----------------|
-| A | A1 | Matriz de Confusão | Qualitativo | Checklist 1 | Consistência dos registros |
-| A | A2 | Precisão (Precision) | 0-1 | Checklist 1 | Valor da métrica |
-| A | A3 | Revocação (Recall) | 0-1 | Checklist 1 | Valor da métrica |
-| A | A4 | F1-Score | 0-1 | Calculado (A2,A3) | Valor da métrica |
-| A | A5 | Taxa de Falso Negativo (FNR) | 0-1 | Checklist 1 | Valor da métrica |
-| A | A6 | Taxa de Falso Positivo (FPR) | 0-1 | Checklist 1 | Valor da métrica |
-| A | A7 | Taxa de Concordância | 0-1 | Checklist 1 | Valor da métrica |
-| A | A8 | Qualidade da Justificativa | 0-4 | Checklist 1 | Rubrica específica |
-| B | B1 | Cobertura do Modelo | % | Checklist 2 + NE-02/NE-03 | Valor da métrica |
-| B | B2 | Precisão da Implementação | % | Checklist 2 + NE-03 | Valor da métrica |
-| B | B3 | Divergência Semântica | % | Checklist 2 | Valor da métrica |
-| B | B4 | Over-Engineering | % | Checklist 2 + NE-03 | Valor da métrica |
-| B | B5 | Score Geral de Alinhamento | 0-100 | Calculado (B1-B4) | Valor do score |
-| B | B6 | Rastreabilidade | % | Checklist 2 | Valor da métrica |
+| A | [A1](#a1-matriz-de-confusão-do-qa) | Matriz de Confusão | Qualitativo | [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) | Consistência dos registros |
+| A | [A2](#a2-precisão-do-qa-precision) | Precisão (Precision) | 0-1 | [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) | Valor da métrica |
+| A | [A3](#a3-revocação-do-qa-recall) | Revocação (Recall) | 0-1 | [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) | Valor da métrica |
+| A | [A4](#a4-f1-score-do-qa) | F1-Score | 0-1 | Calculado (A2,A3) | Valor da métrica |
+| A | [A5](#a5-taxa-de-falso-negativo-fnr) | Taxa de Falso Negativo (FNR) | 0-1 | [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) | Valor da métrica |
+| A | [A6](#a6-taxa-de-falso-positivo-fpr) | Taxa de Falso Positivo (FPR) | 0-1 | [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) | Valor da métrica |
+| A | [A7](#a7-taxa-de-concordância-na-audiência) | Taxa de Concordância | 0-1 | [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) | Valor da métrica |
+| A | [A8](#a8-qualidade-da-justificativa) | Qualidade da Justificativa | 0-4 | [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) | Rubrica específica |
+| B | [B1](#b1-cobertura-do-modelo) | Cobertura do Modelo | % | [Checklist 2](#172-checklist-2--avaliação-de-alinhamento-modelo-código) + [NE-02](#162-ne-02-parser-de-modelos-uml-plantuml)/[NE-03](#163-ne-03-parser-de-código-fonte-ast) | Valor da métrica |
+| B | [B2](#b2-precisão-da-implementação) | Precisão da Implementação | % | [Checklist 2](#172-checklist-2--avaliação-de-alinhamento-modelo-código) + [NE-03](#163-ne-03-parser-de-código-fonte-ast) | Valor da métrica |
+| B | [B3](#b3-divergência-semântica) | Divergência Semântica | % | [Checklist 2](#172-checklist-2--avaliação-de-alinhamento-modelo-código) | Valor da métrica |
+| B | [B4](#b4-over-engineering) | Over-Engineering | % | [Checklist 2](#172-checklist-2--avaliação-de-alinhamento-modelo-código) + [NE-03](#163-ne-03-parser-de-código-fonte-ast) | Valor da métrica |
+| B | [B5](#b5-score-geral-de-alinhamento) | Score Geral de Alinhamento | 0-100 | Calculado (B1-B4) | Valor do score |
+| B | [B6](#b6-rastreabilidade) | Rastreabilidade | % | [Checklist 2](#172-checklist-2--avaliação-de-alinhamento-modelo-código) | Valor da métrica |
 
 ---
 
@@ -498,19 +498,19 @@ Ao final de cada sprint, consolidar os seguintes indicadores:
 
 | Grupo | Métrica | Pontuação (0-4) | Classificação |
 |-------|---------|-----------------|---------------|
-| A | Precisão do QA | __ | MB / B / R / B / E |
-| A | Recall do QA | __ | MB / B / R / B / E |
-| A | F1-Score | __ | MB / B / R / B / E |
-| A | Concordância | __ | MB / B / R / B / E |
-| A | Qualidade da Justificativa (média) | __ | MB / B / R / B / E |
-| B | Cobertura do Modelo | __ | MB / B / R / B / E |
-| B | Precisão da Implementação | __ | MB / B / R / B / E |
-| B | Score Geral de Alinhamento | __ | MB / B / R / B / E |
-| B | Rastreabilidade | __ | MB / B / R / B / E |
+| A | [Precisão do QA](#a2-precisão-do-qa-precision) | __ | MB / B / R / B / E |
+| A | [Recall do QA](#a3-revocação-do-qa-recall) | __ | MB / B / R / B / E |
+| A | [F1-Score](#a4-f1-score-do-qa) | __ | MB / B / R / B / E |
+| A | [Concordância](#a7-taxa-de-concordância-na-audiência) | __ | MB / B / R / B / E |
+| A | [Qualidade da Justificativa (média)](#a8-qualidade-da-justificativa) | __ | MB / B / R / B / E |
+| B | [Cobertura do Modelo](#b1-cobertura-do-modelo) | __ | MB / B / R / B / E |
+| B | [Precisão da Implementação](#b2-precisão-da-implementação) | __ | MB / B / R / B / E |
+| B | [Score Geral de Alinhamento](#b5-score-geral-de-alinhamento) | __ | MB / B / R / B / E |
+| B | [Rastreabilidade](#b6-rastreabilidade) | __ | MB / B / R / B / E |
 
 **Legenda:** MB = Muito Baixo (0), B = Baixo (1), R = Regular (2), B = Bom (3), E = Excelente (4)
 
-**Observação:** As métricas A2 a A7 e B1 a B4 devem ser convertidas para a rubrica padronizada (0-4) conforme as tabelas da Seção 10 antes de serem consolidadas nesta síntese.
+**Observação:** As métricas A2 a A7 e B1 a B4 devem ser convertidas para a rubrica padronizada (0-4) conforme as tabelas da [Seção 10](#10-avaliação-e-métricas) antes de serem consolidadas nesta síntese.
 
 ---
 
@@ -584,7 +584,7 @@ Este capítulo descreve as fontes automatizadas de coleta de dados que **não de
 |-------------|-----------|
 | **Descrição** | Registros automáticos gerados pelo Agente QA durante a verificação de inconsistências |
 | **Dados extraídos** | ID do commit, inconsistências detectadas (tipo, localização, severidade), veredicto inicial |
-| **Métricas relacionadas** | A1 a A8 |
+| **Métricas relacionadas** | [A1](#a1-matriz-de-confusão-do-qa) a [A8](#a8-qualidade-da-justificativa) |
 | **Ferramenta de extração** | Sistema de logging do Agente QA (saída em JSON) |
 | **Script de automação** | `scripts/extract-qa-logs.py` |
 | **Frequência de coleta** | A cada execução do Agente QA (trigger por commit) |
@@ -598,7 +598,7 @@ Este capítulo descreve as fontes automatizadas de coleta de dados que **não de
 |-------------|-----------|
 | **Descrição** | Script para extrair elementos dos diagramas PlantUML |
 | **Dados extraídos** | Classes, métodos, atributos, relacionamentos, parâmetros de métodos |
-| **Métricas relacionadas** | B1, B2, B6 |
+| **Métricas relacionadas** | [B1](#b1-cobertura-do-modelo), [B2](#b2-precisão-da-implementação), [B6](#b6-rastreabilidade) |
 | **Ferramenta de extração** | Python com regex e parsing de texto estruturado (PlantUML) |
 | **Script de automação** | `scripts/parse-plantuml.py` |
 | **Frequência de coleta** | A cada atualização do modelo (início e fim de sprint) |
@@ -612,7 +612,7 @@ Este capítulo descreve as fontes automatizadas de coleta de dados que **não de
 |-------------|-----------|
 | **Descrição** | Script para extrair elementos do código fonte via Análise de Sintaxe Abstrata (AST) |
 | **Dados extraídos** | Classes, métodos, atributos, parâmetros, tipos de retorno |
-| **Métricas relacionadas** | B1, B2, B4 |
+| **Métricas relacionadas** | [B1](#b1-cobertura-do-modelo), [B2](#b2-precisão-da-implementação), [B4](#b4-over-engineering) |
 | **Ferramenta de extração** | `tree-sitter` (TypeScript/JavaScript) |
 | **Script de automação** | `scripts/parse-code-ast.py` |
 | **Frequência de coleta** | A cada commit (via CI) e ao final de cada sprint |
@@ -624,9 +624,9 @@ Este capítulo descreve as fontes automatizadas de coleta de dados que **não de
 
 | ID | Nome | Métricas | Automação | Formato de Saída |
 |----|------|----------|-----------|------------------|
-| NE-01 | Logs do Agente QA | A1 a A8 | Script | JSON → Banco de dados |
-| NE-02 | Parser PlantUML | B1, B2, B6 | Script | JSON |
-| NE-03 | Parser AST | B1, B2, B4 | CI + Script | JSON |
+| [NE-01](#161-ne-01-logs-do-agente-qa) | Logs do Agente QA | A1 a A8 | Script | JSON → Banco de dados |
+| [NE-02](#162-ne-02-parser-de-modelos-uml-plantuml) | Parser PlantUML | B1, B2, B6 | Script | JSON |
+| [NE-03](#163-ne-03-parser-de-código-fonte-ast) | Parser AST | B1, B2, B4 | CI + Script | JSON |
 
 ---
 
@@ -657,6 +657,8 @@ Este capítulo descreve as fontes automatizadas de coleta de dados que **não de
 | AUD-15 | Tempo da audiência (minutos) | __ |
 | AUD-16 | Comentários adicionais | __________ |
 
+**Este checklist alimenta as métricas:** [A1](#a1-matriz-de-confusão-do-qa), [A2](#a2-precisão-do-qa-precision), [A3](#a3-revocação-do-qa-recall), [A5](#a5-taxa-de-falso-negativo-fnr), [A6](#a6-taxa-de-falso-positivo-fpr), [A7](#a7-taxa-de-concordância-na-audiência), [A8](#a8-qualidade-da-justificativa)
+
 ---
 
 ### 17.2 Checklist 2 — Avaliação de Alinhamento Modelo-Código
@@ -667,26 +669,28 @@ Este capítulo descreve as fontes automatizadas de coleta de dados que **não de
 |----|------|-------|-------|
 | ALI-01 | Sprint | __________ | - |
 | ALI-02 | Componente/módulo | __________ | - |
-| ALI-03 | Classes modeladas | __ | NE-02 |
-| ALI-04 | Classes implementadas | __ | NE-03 |
-| ALI-05 | Métodos modelados | __ | NE-02 |
-| ALI-06 | Métodos implementados | __ | NE-03 |
-| ALI-07 | Atributos modelados | __ | NE-02 |
-| ALI-08 | Atributos implementados | __ | NE-03 |
+| ALI-03 | Classes modeladas | __ | [NE-02](#162-ne-02-parser-de-modelos-uml-plantuml) |
+| ALI-04 | Classes implementadas | __ | [NE-03](#163-ne-03-parser-de-código-fonte-ast) |
+| ALI-05 | Métodos modelados | __ | [NE-02](#162-ne-02-parser-de-modelos-uml-plantuml) |
+| ALI-06 | Métodos implementados | __ | [NE-03](#163-ne-03-parser-de-código-fonte-ast) |
+| ALI-07 | Atributos modelados | __ | [NE-02](#162-ne-02-parser-de-modelos-uml-plantuml) |
+| ALI-08 | Atributos implementados | __ | [NE-03](#163-ne-03-parser-de-código-fonte-ast) |
 | ALI-09 | Cobertura do modelo (B1) | __% | Calculado |
 | ALI-10 | Implementações corretas | __ | Validação manual |
-| ALI-11 | Total de implementações | __ | NE-03 |
+| ALI-11 | Total de implementações | __ | [NE-03](#163-ne-03-parser-de-código-fonte-ast) |
 | ALI-12 | Precisão da implementação (B2) | __% | Calculado |
 | ALI-13 | Comportamentos divergentes | __ | Validação manual |
 | ALI-14 | Divergência semântica (B3) | __% | Calculado |
 | ALI-15 | Lista de divergências identificadas | __________ | Validação manual |
-| ALI-16 | Linhas de código não modeladas | __ LOC | NE-03 |
-| ALI-17 | Linhas de código totais | __ LOC | NE-03 |
+| ALI-16 | Linhas de código não modeladas | __ LOC | [NE-03](#163-ne-03-parser-de-código-fonte-ast) |
+| ALI-17 | Linhas de código totais | __ LOC | [NE-03](#163-ne-03-parser-de-código-fonte-ast) |
 | ALI-18 | Over-Engineering (B4) | __% | Calculado |
 | ALI-19 | Score Geral de Alinhamento (B5) | __ | Calculado |
 | ALI-20 | Total de RFs no escopo | __ | Documento de requisitos |
-| ALI-21 | RFs com rastreabilidade completa | __ | NE-02 + NE-03 |
+| ALI-21 | RFs com rastreabilidade completa | __ | [NE-02](#162-ne-02-parser-de-modelos-uml-plantuml) + [NE-03](#163-ne-03-parser-de-código-fonte-ast) |
 | ALI-22 | Rastreabilidade (B6) | __% | Calculado |
+
+**Este checklist alimenta as métricas:** [B1](#b1-cobertura-do-modelo), [B2](#b2-precisão-da-implementação), [B3](#b3-divergência-semântica), [B4](#b4-over-engineering), [B5](#b5-score-geral-de-alinhamento), [B6](#b6-rastreabilidade)
 
 ---
 

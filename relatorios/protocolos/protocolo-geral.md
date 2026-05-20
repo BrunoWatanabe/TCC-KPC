@@ -3,10 +3,15 @@
 **UNIVERSIDADE FEDERAL DE GOIÁS — INSTITUTO DE INFORMÁTICA — CIÊNCIA DA COMPUTAÇÃO**
 
 **DISCIPLINA:** Projeto Final de Curso 2
+
 **PROFESSOR:** Marcelo Akira Inuzuka
+
 **PARTICIPANTES:** Daired
+
 **DATA ATUALIZAÇÃO:** 20/05/2026
+
 **Versão:** 3.0
+
 **Status:** Protocolo inicial a ser revisado.
 
 ---

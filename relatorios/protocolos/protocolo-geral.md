@@ -10,43 +10,77 @@
 
 **DATA ATUALIZAÇÃO:** 20/05/2026
 
-**Versão:** 4.0 (Escopo Reduzido)
+**Versão:** 5.0 (Rubrica Padronizada)
 
-**Status:** Protocolo inicial a ser revisado.
+**Status:** Protocolo para revisão do orientador
 
 ---
 
 ## Sumário
 
-1. [Informações Gerais](#informações-gerais)
-2. [Contextualização e Motivação](#contextualização-e-motivação)
-3. [Objetivos](#objetivos)
-4. [Questões de Pesquisa](#questões-de-pesquisa)
-5. [Método de Pesquisa](#método-de-pesquisa)
-6. [Participantes](#participantes)
-7. [Variáveis de Controle](#variáveis-de-controle)
-8. [Variáveis Independentes](#variáveis-independentes)
-9. [Variáveis Dependentes](#variáveis-dependentes)
-10. [Avaliação e Métricas](#avaliação-e-métricas)
-    - [Grupo A — Qualidade do Agente QA](#grupo-a--métricas-de-qualidade-do-agente-qa)
-    - [Grupo B — Alinhamento Modelo-Código](#grupo-b--métricas-de-alinhamento-modelo-código)
-11. [Hipóteses](#hipóteses)
-12. [Materiais](#materiais)
-13. [Estratégias de Construção do Prompt](#estratégias-de-construção-do-prompt)
-14. [Tarefas Executadas](#tarefas-executadas)
-15. [Fontes de Extração de Dados Não Humanos](#fontes-de-extração-de-dados-não-humanos)
-16. [Checklists para Coleta de Dados Humanos](#checklists-para-coleta-de-dados-humanos)
-    - [Checklist 1 — Audiência do QA](#checklist-1--avaliação-de-audiência-do-agente-qa)
-    - [Checklist 2 — Alinhamento Modelo-Código](#checklist-2--avaliação-de-alinhamento-modelo-código)
-    - [Checklist 3 — Configuração do Experimento](#checklist-3--registro-de-configuração-do-experimento)
-17. [Síntese das Métricas por Sprint](#síntese-das-métricas-por-sprint)
-18. [Benefícios e Contribuições Esperadas](#benefícios-e-contribuições-esperadas)
-19. [Limitações e Ameaças à Validade](#limitações-e-ameaças-à-validade)
-20. [Referências](#referências)
+1. [Informações Gerais](#1-informações-gerais)
+2. [Contextualização e Motivação](#2-contextualização-e-motivação)
+3. [Objetivos](#3-objetivos)
+   - 3.1 [Objetivo Geral](#31-objetivo-geral)
+   - 3.2 [Objetivo GQM](#32-objetivo-gqm)
+4. [Questões de Pesquisa](#4-questões-de-pesquisa)
+   - 4.1 [QP1: Eficácia do Agente QA](#41-qp1-eficácia-do-agente-qa)
+   - 4.2 [QP2: Alinhamento Modelo-Código](#42-qp2-alinhamento-modelo-código)
+5. [Método de Pesquisa](#5-método-de-pesquisa)
+6. [Participantes](#6-participantes)
+   - 6.1 [Grupo 1 — Desenvolvedores](#61-grupo-1--desenvolvedores-alunos-pesquisadores)
+   - 6.2 [Grupo 2 — Avaliadores](#62-grupo-2--avaliadores-árbitros-humanos)
+7. [Variáveis de Controle](#7-variáveis-de-controle)
+8. [Variáveis Independentes](#8-variáveis-independentes)
+9. [Variáveis Dependentes](#9-variáveis-dependentes)
+10. [Avaliação e Métricas](#10-avaliação-e-métricas)
+    - 10.1 [Rubrica Padronizada (0-4)](#101-rubrica-padronizada-0-4)
+    - 10.2 [Grupo A — Qualidade do Agente QA](#102-grupo-a--métricas-de-qualidade-do-agente-qa)
+        - A1: Matriz de Confusão
+        - A2: Precisão (Precision)
+        - A3: Revocação (Recall)
+        - A4: F1-Score
+        - A5: Taxa de Falso Negativo (FNR)
+        - A6: Taxa de Falso Positivo (FPR)
+        - A7: Taxa de Concordância
+        - A8: Qualidade da Justificativa
+    - 10.3 [Grupo B — Alinhamento Modelo-Código](#103-grupo-b--métricas-de-alinhamento-modelo-código)
+        - B1: Cobertura do Modelo
+        - B2: Precisão da Implementação
+        - B3: Divergência Semântica
+        - B4: Over-Engineering
+        - B5: Score Geral de Alinhamento
+        - B6: Rastreabilidade
+    - 10.4 [Resumo das Métricas](#104-resumo-das-métricas)
+11. [Síntese das Métricas por Sprint](#11-síntese-das-métricas-por-sprint)
+12. [Hipóteses](#12-hipóteses)
+    - 12.1 [Hipótese Nula — Agente QA](#121-hipótese-nula--agente-qa)
+    - 12.2 [Hipótese Alternativa — Agente QA](#122-hipótese-alternativa--agente-qa)
+    - 12.3 [Hipótese Nula — Alinhamento](#123-hipótese-nula--alinhamento)
+    - 12.4 [Hipótese Alternativa — Alinhamento](#124-hipótese-alternativa--alinhamento)
+13. [Materiais](#13-materiais)
+14. [Estratégias de Construção do Prompt](#14-estratégias-de-construção-do-prompt)
+15. [Tarefas Executadas](#15-tarefas-executadas)
+16. [Fontes de Extração de Dados Não Humanos](#16-fontes-de-extração-de-dados-não-humanos)
+    - 16.1 [NE-01: Logs do Agente QA](#161-ne-01-logs-do-agente-qa)
+    - 16.2 [NE-02: Parser de Modelos UML (PlantUML)](#162-ne-02-parser-de-modelos-uml-plantuml)
+    - 16.3 [NE-03: Parser de Código Fonte (AST)](#163-ne-03-parser-de-código-fonte-ast)
+    - 16.4 [Resumo das Fontes de Dados Não Humanos](#164-resumo-das-fontes-de-dados-não-humanos)
+17. [Checklists para Coleta de Dados Humanos](#17-checklists-para-coleta-de-dados-humanos)
+    - 17.1 [Checklist 1 — Audiência do QA](#171-checklist-1--avaliação-de-audiência-do-agente-qa)
+    - 17.2 [Checklist 2 — Alinhamento Modelo-Código](#172-checklist-2--avaliação-de-alinhamento-modelo-código)
+    - 17.3 [Checklist 3 — Configuração do Experimento](#173-checklist-3--registro-de-configuração-do-experimento)
+18. [Benefícios e Contribuições Esperadas](#18-benefícios-e-contribuições-esperadas)
+19. [Limitações e Ameaças à Validade](#19-limitações-e-ameaças-à-validade)
+    - 19.1 [Ameaças à Validade Interna](#191-ameaças-à-validade-interna)
+    - 19.2 [Ameaças à Validade Externa](#192-ameaças-à-validade-externa)
+    - 19.3 [Ameaças à Validade de Constructo](#193-ameaças-à-validade-de-constructo)
+    - 19.4 [Ameaças à Validade de Conclusão](#194-ameaças-à-validade-de-conclusão)
+20. [Referências](#20-referências)
 
 ---
 
-## Informações Gerais
+## 1. Informações Gerais
 
 | Campo | Descrição |
 |-------|-----------|
@@ -56,7 +90,7 @@
 
 ---
 
-## Contextualização e Motivação
+## 2. Contextualização e Motivação
 
 O desenvolvimento de software assistido por Inteligência Artificial tem ganhado crescente atenção, especialmente com o avanço dos Modelos de Linguagem de Grande Escala (LLMs). No entanto, observou-se em projetos práticos que, na ausência de uma modelagem clara e de técnicas estruturadas de controle sobre o código gerado por IA, o desenvolvimento sofre atrasos significativos e perda de qualidade de código.
 
@@ -72,39 +106,43 @@ O foco deste estudo está na **avaliação da eficácia do Agente QA** e no **al
 
 ---
 
-## Objetivos
+## 3. Objetivos
 
-### Objetivo Geral
+### 3.1 Objetivo Geral
 
 Avaliar a eficácia do Agente QA na detecção de inconsistências entre modelo e código, bem como o nível de alinhamento alcançado pelo pipeline de agentes de IA (Arquiteto, Developer e QA) baseado em MDE+SDD.
 
-### Objetivo GQM (Goal-Question-Metric)
+### 3.2 Objetivo GQM (Goal-Question-Metric)
 
 Esta pesquisa busca **analisar** o pipeline de agentes de IA com MDE+SDD com o propósito de **avaliar** a eficácia do Agente QA e o alinhamento entre modelo e código sob a perspectiva de **pesquisadores e desenvolvedores** no contexto de um **experimento controlado com ciclos de sprint**.
 
 ---
 
-## Questões de Pesquisa
+## 4. Questões de Pesquisa
 
-### QP1: O Agente QA é eficaz na detecção de inconsistências entre modelo e código, apresentando alta precisão e revocação?
+### 4.1 QP1: Eficácia do Agente QA
+
+O Agente QA é eficaz na detecção de inconsistências entre modelo e código, apresentando alta precisão e revocação?
 
 **Rationale:** Ao responder a esta pergunta, espera-se avaliar o desempenho do Agente QA como mecanismo de controle de qualidade, identificando seus acertos (TP e TN) e erros (FP e FN), bem como sua capacidade de discriminar corretamente entre inconsistências legítimas e decisões conscientes.
 
-### QP2: Qual é o nível de alinhamento entre modelo e código alcançado pelo pipeline de agentes, e como esse alinhamento evolui ao longo das sprints?
+### 4.2 QP2: Alinhamento Modelo-Código
+
+Qual é o nível de alinhamento entre modelo e código alcançado pelo pipeline de agentes, e como esse alinhamento evolui ao longo das sprints?
 
 **Rationale:** Espera-se que a resposta forneça evidências sobre a capacidade do modelo gerado colaborativamente de servir como "âncora" para o desenvolvimento, bem como sobre a eficácia do Agente QA em manter a consistência entre modelo e código ao longo do tempo, medido por métricas de cobertura, precisão, divergência semântica e over-engineering.
 
 ---
 
-## Método de Pesquisa
+## 5. Método de Pesquisa
 
 **Experimento controlado**, pois o objetivo é estabelecer uma relação entre o uso do pipeline de agentes de IA com MDE+SDD (variável independente) e as métricas de eficácia do Agente QA e alinhamento modelo-código (variáveis dependentes). O experimento ocorrerá em ciclos de sprint (Scrum), com duração estimada de 1 a 2 semanas cada.
 
 ---
 
-## Participantes
+## 6. Participantes
 
-### Grupo 1 — Desenvolvedores (Alunos Pesquisadores)
+### 6.1 Grupo 1 — Desenvolvedores (Alunos Pesquisadores)
 
 | Papel | Responsabilidade |
 |-------|------------------|
@@ -113,7 +151,7 @@ Esta pesquisa busca **analisar** o pipeline de agentes de IA com MDE+SDD com o p
 
 **Critérios de inclusão:** Conhecimento avançado em desenvolvimento frontend, experiência prévia com UML, disponibilidade para todas as sprints.
 
-### Grupo 2 — Avaliadores (Árbitros Humanos)
+### 6.2 Grupo 2 — Avaliadores (Árbitros Humanos)
 
 | Papel | Responsabilidade |
 |-------|------------------|
@@ -125,7 +163,7 @@ Esta pesquisa busca **analisar** o pipeline de agentes de IA com MDE+SDD com o p
 
 ---
 
-## Variáveis de Controle
+## 7. Variáveis de Controle
 
 | Variável | Estratégia de Controle |
 |----------|------------------------|
@@ -137,7 +175,7 @@ Esta pesquisa busca **analisar** o pipeline de agentes de IA com MDE+SDD com o p
 
 ---
 
-## Variáveis Independentes
+## 8. Variáveis Independentes
 
 | Variável | Níveis/Tratamentos |
 |----------|---------------------|
@@ -145,7 +183,7 @@ Esta pesquisa busca **analisar** o pipeline de agentes de IA com MDE+SDD com o p
 
 ---
 
-## Variáveis Dependentes
+## 9. Variáveis Dependentes
 
 | Variável | Métrica Associada |
 |----------|-------------------|
@@ -154,13 +192,23 @@ Esta pesquisa busca **analisar** o pipeline de agentes de IA com MDE+SDD com o p
 
 ---
 
-## Avaliação e Métricas
+## 10. Avaliação e Métricas
+
+### 10.1 Rubrica Padronizada (0-4)
+
+Todas as métricas quantitativas deste protocolo seguem a seguinte rubrica padronizada de avaliação, sem o uso de emoticons ou símbolos subjetivos:
+
+| Pontuação | Classificação | Critério Geral |
+|-----------|---------------|----------------|
+| 0 | Muito Baixo (MB) | Desempenho muito abaixo do esperado; não atende aos requisitos mínimos |
+| 1 | Baixo (B) | Desempenho abaixo do esperado; atende parcialmente aos requisitos mínimos |
+| 2 | Regular (R) | Desempenho na média esperada; atende aos requisitos mínimos |
+| 3 | Bom (B) | Desempenho acima do esperado; atende plenamente aos requisitos |
+| 4 | Excelente (E) | Desempenho muito acima do esperado; excede os requisitos |
 
 ---
 
-### Grupo A — Métricas de Qualidade do Agente QA
-
----
+### 10.2 Grupo A — Métricas de Qualidade do Agente QA
 
 #### A1: Matriz de Confusão do QA
 
@@ -171,7 +219,17 @@ Esta pesquisa busca **analisar** o pipeline de agentes de IA com MDE+SDD com o p
 | **FP** | Falso Positivo | QA detectou inconsistência que não existia |
 | **FN** | Falso Negativo | QA não detectou inconsistência que existia |
 
-**Fonte dos dados:** [Checklist 1 — Avaliação de Audiência do Agente QA](#checklist-1--avaliação-de-audiência-do-agente-qa) (itens AUD-06, AUD-07, AUD-08, AUD-09)
+**Fonte dos dados:** [Checklist 1 — Avaliação de Audiência do Agente QA](#171-checklist-1--avaliação-de-audiência-do-agente-qa) (itens AUD-06, AUD-07, AUD-08, AUD-09)
+
+**Rubrica de Avaliação:**
+
+| Pontuação | Critério |
+|-----------|----------|
+| 0 | Matriz não registrada ou registros inconsistentes em mais de 50% dos casos |
+| 1 | Matriz registrada, mas com inconsistências em 25-50% dos casos |
+| 2 | Matriz completa, com consistência em 75-89% dos casos |
+| 3 | Matriz completa, com consistência em 90-94% dos casos |
+| 4 | Matriz completa, com consistência em 95-100% dos casos |
 
 ---
 
@@ -179,9 +237,17 @@ Esta pesquisa busca **analisar** o pipeline de agentes de IA com MDE+SDD com o p
 
 `Precisão = TP / (TP + FP)`
 
-**Target:** ≥ 0,85
+**Fonte dos dados:** [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) (contagem de TP e FP)
 
-**Fonte dos dados:** [Checklist 1](#checklist-1--avaliação-de-audiência-do-agente-qa) (contagem de TP e FP)
+**Rubrica de Avaliação:**
+
+| Pontuação | Critério (Valor da Métrica) |
+|-----------|-----------------------------|
+| 0 | Precisão < 0,50 |
+| 1 | 0,50 ≤ Precisão < 0,70 |
+| 2 | 0,70 ≤ Precisão < 0,85 |
+| 3 | 0,85 ≤ Precisão < 0,95 |
+| 4 | Precisão ≥ 0,95 |
 
 ---
 
@@ -189,9 +255,17 @@ Esta pesquisa busca **analisar** o pipeline de agentes de IA com MDE+SDD com o p
 
 `Recall = TP / (TP + FN)`
 
-**Target:** ≥ 0,80
+**Fonte dos dados:** [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) (contagem de TP e FN)
 
-**Fonte dos dados:** [Checklist 1](#checklist-1--avaliação-de-audiência-do-agente-qa) (contagem de TP e FN)
+**Rubrica de Avaliação:**
+
+| Pontuação | Critério (Valor da Métrica) |
+|-----------|-----------------------------|
+| 0 | Recall < 0,50 |
+| 1 | 0,50 ≤ Recall < 0,70 |
+| 2 | 0,70 ≤ Recall < 0,80 |
+| 3 | 0,80 ≤ Recall < 0,90 |
+| 4 | Recall ≥ 0,90 |
 
 ---
 
@@ -199,9 +273,17 @@ Esta pesquisa busca **analisar** o pipeline de agentes de IA com MDE+SDD com o p
 
 `F1 = 2 × (Precisão × Recall) / (Precisão + Recall)`
 
-**Target:** ≥ 0,82
-
 **Fonte dos dados:** Calculado a partir das métricas A2 e A3
+
+**Rubrica de Avaliação:**
+
+| Pontuação | Critério (Valor da Métrica) |
+|-----------|-----------------------------|
+| 0 | F1-Score < 0,50 |
+| 1 | 0,50 ≤ F1-Score < 0,70 |
+| 2 | 0,70 ≤ F1-Score < 0,82 |
+| 3 | 0,82 ≤ F1-Score < 0,90 |
+| 4 | F1-Score ≥ 0,90 |
 
 ---
 
@@ -209,9 +291,17 @@ Esta pesquisa busca **analisar** o pipeline de agentes de IA com MDE+SDD com o p
 
 `FNR = FN / (TP + FN)`
 
-**Target:** ≤ 0,20
+**Fonte dos dados:** [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) (itens onde QA não detectou inconsistência existente)
 
-**Fonte dos dados:** [Checklist 1](#checklist-1--avaliação-de-audiência-do-agente-qa) (itens onde QA não detectou inconsistência existente)
+**Rubrica de Avaliação:**
+
+| Pontuação | Critério (Valor da Métrica) |
+|-----------|-----------------------------|
+| 0 | FNR > 0,40 |
+| 1 | 0,30 < FNR ≤ 0,40 |
+| 2 | 0,20 < FNR ≤ 0,30 |
+| 3 | 0,10 < FNR ≤ 0,20 |
+| 4 | FNR ≤ 0,10 |
 
 ---
 
@@ -219,9 +309,17 @@ Esta pesquisa busca **analisar** o pipeline de agentes de IA com MDE+SDD com o p
 
 `FPR = FP / (FP + TN)`
 
-**Target:** ≤ 0,15
+**Fonte dos dados:** [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) (itens onde QA detectou inconsistência inexistente)
 
-**Fonte dos dados:** [Checklist 1](#checklist-1--avaliação-de-audiência-do-agente-qa) (itens onde QA detectou inconsistência inexistente)
+**Rubrica de Avaliação:**
+
+| Pontuação | Critério (Valor da Métrica) |
+|-----------|-----------------------------|
+| 0 | FPR > 0,30 |
+| 1 | 0,20 < FPR ≤ 0,30 |
+| 2 | 0,15 < FPR ≤ 0,20 |
+| 3 | 0,10 < FPR ≤ 0,15 |
+| 4 | FPR ≤ 0,10 |
 
 ---
 
@@ -229,43 +327,55 @@ Esta pesquisa busca **analisar** o pipeline de agentes de IA com MDE+SDD com o p
 
 `Concordância = (Veredictos alinhados com árbitros) / (Total de audiências)`
 
-**Target:** ≥ 0,80
+**Fonte dos dados:** [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) (item AUD-08)
 
-**Fonte dos dados:** [Checklist 1](#checklist-1--avaliação-de-audiência-do-agente-qa) (item AUD-08)
+**Rubrica de Avaliação:**
+
+| Pontuação | Critério (Valor da Métrica) |
+|-----------|-----------------------------|
+| 0 | Concordância < 0,50 |
+| 1 | 0,50 ≤ Concordância < 0,70 |
+| 2 | 0,70 ≤ Concordância < 0,80 |
+| 3 | 0,80 ≤ Concordância < 0,90 |
+| 4 | Concordância ≥ 0,90 |
 
 ---
 
-#### A8: Qualidade da Justificativa (Rubrica 0–4)
+#### A8: Qualidade da Justificativa
+
+**Fonte dos dados:** [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) (item AUD-13, com cálculo ponderado)
+
+**Rubrica de Avaliação:**
 
 | Pontuação | Descrição |
 |-----------|-----------|
-| 0 | Sem justificativa |
-| 1 | Justificativa vaga ou irrelevante |
-| 2 | Justificativa parcialmente coerente |
-| 3 | Justificativa coerente e bem fundamentada |
-| 4 | Justificativa excelente com evidências |
-
-**Target:** ≥ 3
-
-**Fonte dos dados:** [Checklist 1](#checklist-1--avaliação-de-audiência-do-agente-qa) (item AUD-13, com cálculo ponderado)
+| 0 | Sem justificativa ou justificativa ininteligível |
+| 1 | Justificativa vaga, sem estrutura clara ou sem relação com o caso |
+| 2 | Justificativa parcialmente coerente, mas com lacunas ou inconsistências |
+| 3 | Justificativa coerente e bem fundamentada, com evidências adequadas |
+| 4 | Justificativa excelente, com múltiplas evidências cruzadas (modelo + código + spec) |
 
 ---
 
-### Grupo B — Métricas de Alinhamento Modelo-Código
-
----
+### 10.3 Grupo B — Métricas de Alinhamento Modelo-Código
 
 #### B1: Cobertura do Modelo
 
 `Cobertura = (Elementos implementados / Elementos modelados) × 100`
 
-| Status | Range |
-|--------|-------|
-| 🟢 Excelente | 95–100% |
-| 🟡 Aceitável | 80–94% |
-| 🔴 Crítico | < 80% |
+**Elementos contados:** classes, métodos, atributos, relacionamentos em PlantUML.
 
-**Fonte dos dados:** [Checklist 2 — Avaliação de Alinhamento Modelo-Código](#checklist-2--avaliação-de-alinhamento-modelo-código) (itens ALI-03 a ALI-09)
+**Fonte dos dados:** [Checklist 2 — Avaliação de Alinhamento Modelo-Código](#172-checklist-2--avaliação-de-alinhamento-modelo-código) (itens ALI-03 a ALI-09)
+
+**Rubrica de Avaliação:**
+
+| Pontuação | Critério (Valor da Métrica) |
+|-----------|-----------------------------|
+| 0 | Cobertura < 60% |
+| 1 | 60% ≤ Cobertura < 80% |
+| 2 | 80% ≤ Cobertura < 90% |
+| 3 | 90% ≤ Cobertura < 95% |
+| 4 | Cobertura ≥ 95% |
 
 ---
 
@@ -273,13 +383,17 @@ Esta pesquisa busca **analisar** o pipeline de agentes de IA com MDE+SDD com o p
 
 `Precisão = (Implementações corretas / Implementações totais) × 100`
 
-| Status | Range |
-|--------|-------|
-| 🟢 Excelente | 90–100% |
-| 🟡 Aceitável | 75–89% |
-| 🔴 Crítico | < 75% |
+**Fonte dos dados:** [Checklist 2](#172-checklist-2--avaliação-de-alinhamento-modelo-código) (itens ALI-10 a ALI-12)
 
-**Fonte dos dados:** [Checklist 2](#checklist-2--avaliação-de-alinhamento-modelo-código) (itens ALI-10 a ALI-12)
+**Rubrica de Avaliação:**
+
+| Pontuação | Critério (Valor da Métrica) |
+|-----------|-----------------------------|
+| 0 | Precisão < 60% |
+| 1 | 60% ≤ Precisão < 75% |
+| 2 | 75% ≤ Precisão < 85% |
+| 3 | 85% ≤ Precisão < 90% |
+| 4 | Precisão ≥ 90% |
 
 ---
 
@@ -287,13 +401,19 @@ Esta pesquisa busca **analisar** o pipeline de agentes de IA com MDE+SDD com o p
 
 `Divergência = (Comportamentos divergentes / Total de implementações) × 100`
 
-| Status | Range |
-|--------|-------|
-| 🟢 Excelente | 0% |
-| 🟡 Aceitável | 1–5% |
-| 🔴 Crítico | > 5% |
+**Tipos de divergência:** regra funcional violada, comportamento não modelado, exceção não documentada, lógica invertida.
 
-**Fonte dos dados:** [Checklist 2](#checklist-2--avaliação-de-alinhamento-modelo-código) (itens ALI-13 a ALI-15)
+**Fonte dos dados:** [Checklist 2](#172-checklist-2--avaliação-de-alinhamento-modelo-código) (itens ALI-13 a ALI-15)
+
+**Rubrica de Avaliação:**
+
+| Pontuação | Critério (Valor da Métrica) |
+|-----------|-----------------------------|
+| 0 | Divergência > 15% |
+| 1 | 10% < Divergência ≤ 15% |
+| 2 | 5% < Divergência ≤ 10% |
+| 3 | 1% < Divergência ≤ 5% |
+| 4 | Divergência = 0% |
 
 ---
 
@@ -301,13 +421,17 @@ Esta pesquisa busca **analisar** o pipeline de agentes de IA com MDE+SDD com o p
 
 `Over-Engineering = (Código não modelado / Total de código) × 100`
 
-| Status | Range |
-|--------|-------|
-| 🟢 Excelente | 0–10% |
-| 🟡 Aceitável | 11–20% |
-| 🔴 Crítico | > 20% |
+**Fonte dos dados:** [Checklist 2](#172-checklist-2--avaliação-de-alinhamento-modelo-código) (itens ALI-16 a ALI-18) + [NE-03](#163-ne-03-parser-de-código-fonte-ast)
 
-**Fonte dos dados:** [Checklist 2](#checklist-2--avaliação-de-alinhamento-modelo-código) (itens ALI-16 a ALI-18) + [NE-03](#fonte-ne-03-parser-de-código-fonte-ast)
+**Rubrica de Avaliação:**
+
+| Pontuação | Critério (Valor da Métrica) |
+|-----------|-----------------------------|
+| 0 | Over-Engineering > 25% |
+| 1 | 20% < Over-Engineering ≤ 25% |
+| 2 | 10% < Over-Engineering ≤ 20% |
+| 3 | 5% < Over-Engineering ≤ 10% |
+| 4 | Over-Engineering ≤ 5% |
 
 ---
 
@@ -315,14 +439,17 @@ Esta pesquisa busca **analisar** o pipeline de agentes de IA com MDE+SDD com o p
 
 `Score = (Cobertura × 0,35) + (Precisão × 0,35) + ((100 − Divergência) × 0,20) + ((100 − Over-Engineering) × 0,10)`
 
-| Range | Status |
-|-------|--------|
-| 90–100 | 🟢 Excelente |
-| 75–89 | 🟡 Bom |
-| 60–74 | 🟠 Inadequado |
-| < 60 | 🔴 Crítico |
-
 **Fonte dos dados:** Calculado a partir das métricas B1, B2, B3, B4
+
+**Rubrica de Avaliação:**
+
+| Pontuação | Critério (Valor do Score) |
+|-----------|---------------------------|
+| 0 | Score < 50 |
+| 1 | 50 ≤ Score < 60 |
+| 2 | 60 ≤ Score < 75 |
+| 3 | 75 ≤ Score < 90 |
+| 4 | Score ≥ 90 |
 
 ---
 
@@ -330,29 +457,80 @@ Esta pesquisa busca **analisar** o pipeline de agentes de IA com MDE+SDD com o p
 
 `Rastreabilidade = (RFs com cadeia completa RF→Modelo→Código) / (Total de RFs) × 100`
 
-**Target:** ≥ 90%
+**Fonte dos dados:** [Checklist 2](#172-checklist-2--avaliação-de-alinhamento-modelo-código) (itens ALI-20 a ALI-22)
 
-**Fonte dos dados:** [Checklist 2](#checklist-2--avaliação-de-alinhamento-modelo-código) (itens ALI-20 a ALI-22)
+**Rubrica de Avaliação:**
+
+| Pontuação | Critério (Valor da Métrica) |
+|-----------|-----------------------------|
+| 0 | Rastreabilidade < 60% |
+| 1 | 60% ≤ Rastreabilidade < 75% |
+| 2 | 75% ≤ Rastreabilidade < 85% |
+| 3 | 85% ≤ Rastreabilidade < 90% |
+| 4 | Rastreabilidade ≥ 90% |
 
 ---
 
-## Hipóteses
+### 10.4 Resumo das Métricas
 
-### H01 (Hipótese Nula — Agente QA)
+| Grupo | ID | Métrica | Unidade | Fonte Principal | Rubrica (0-4) |
+|-------|-----|---------|---------|-----------------|----------------|
+| A | A1 | Matriz de Confusão | Qualitativo | Checklist 1 | Consistência dos registros |
+| A | A2 | Precisão (Precision) | 0-1 | Checklist 1 | Valor da métrica |
+| A | A3 | Revocação (Recall) | 0-1 | Checklist 1 | Valor da métrica |
+| A | A4 | F1-Score | 0-1 | Calculado (A2,A3) | Valor da métrica |
+| A | A5 | Taxa de Falso Negativo (FNR) | 0-1 | Checklist 1 | Valor da métrica |
+| A | A6 | Taxa de Falso Positivo (FPR) | 0-1 | Checklist 1 | Valor da métrica |
+| A | A7 | Taxa de Concordância | 0-1 | Checklist 1 | Valor da métrica |
+| A | A8 | Qualidade da Justificativa | 0-4 | Checklist 1 | Rubrica específica |
+| B | B1 | Cobertura do Modelo | % | Checklist 2 + NE-02/NE-03 | Valor da métrica |
+| B | B2 | Precisão da Implementação | % | Checklist 2 + NE-03 | Valor da métrica |
+| B | B3 | Divergência Semântica | % | Checklist 2 | Valor da métrica |
+| B | B4 | Over-Engineering | % | Checklist 2 + NE-03 | Valor da métrica |
+| B | B5 | Score Geral de Alinhamento | 0-100 | Calculado (B1-B4) | Valor do score |
+| B | B6 | Rastreabilidade | % | Checklist 2 | Valor da métrica |
+
+---
+
+## 11. Síntese das Métricas por Sprint
+
+Ao final de cada sprint, consolidar os seguintes indicadores:
+
+| Grupo | Métrica | Pontuação (0-4) | Classificação |
+|-------|---------|-----------------|---------------|
+| A | Precisão do QA | __ | MB / B / R / B / E |
+| A | Recall do QA | __ | MB / B / R / B / E |
+| A | F1-Score | __ | MB / B / R / B / E |
+| A | Concordância | __ | MB / B / R / B / E |
+| A | Qualidade da Justificativa (média) | __ | MB / B / R / B / E |
+| B | Cobertura do Modelo | __ | MB / B / R / B / E |
+| B | Precisão da Implementação | __ | MB / B / R / B / E |
+| B | Score Geral de Alinhamento | __ | MB / B / R / B / E |
+| B | Rastreabilidade | __ | MB / B / R / B / E |
+
+**Legenda:** MB = Muito Baixo (0), B = Baixo (1), R = Regular (2), B = Bom (3), E = Excelente (4)
+
+**Observação:** As métricas A2 a A7 e B1 a B4 devem ser convertidas para a rubrica padronizada (0-4) conforme as tabelas da Seção 10 antes de serem consolidadas nesta síntese.
+
+---
+
+## 12. Hipóteses
+
+### 12.1 Hipótese Nula — Agente QA (H01)
 O Agente QA não apresenta precisão e revocação superiores a 0,80 na detecção de inconsistências entre modelo e código.
 
-### HA1 (Hipótese Alternativa — Agente QA)
+### 12.2 Hipótese Alternativa — Agente QA (HA1)
 O Agente QA apresenta precisão e revocação superiores a 0,80 na detecção de inconsistências entre modelo e código.
 
-### H02 (Hipótese Nula — Alinhamento)
-O pipeline de agentes não produz alinhamento modelo-código com score superior a 75 (nível "Bom").
+### 12.3 Hipótese Nula — Alinhamento (H02)
+O pipeline de agentes não produz alinhamento modelo-código com score superior a 75 (nível "Bom" na rubrica 0-4).
 
-### HA2 (Hipótese Alternativa — Alinhamento)
-O pipeline de agentes produz alinhamento modelo-código com score superior a 75 (nível "Bom").
+### 12.4 Hipótese Alternativa — Alinhamento (HA2)
+O pipeline de agentes produz alinhamento modelo-código com score superior a 75 (nível "Bom" na rubrica 0-4).
 
 ---
 
-## Materiais
+## 13. Materiais
 
 | Material | Descrição |
 |----------|-----------|
@@ -366,7 +544,7 @@ O pipeline de agentes produz alinhamento modelo-código com score superior a 75 
 
 ---
 
-## Estratégias de Construção do Prompt
+## 14. Estratégias de Construção do Prompt
 
 | Agente | Estratégia |
 |--------|-----------|
@@ -376,7 +554,7 @@ O pipeline de agentes produz alinhamento modelo-código com score superior a 75 
 
 ---
 
-## Tarefas Executadas
+## 15. Tarefas Executadas
 
 ### Por Sprint
 
@@ -394,19 +572,19 @@ O pipeline de agentes produz alinhamento modelo-código com score superior a 75 
 
 ---
 
-## Fontes de Extração de Dados Não Humanos
+## 16. Fontes de Extração de Dados Não Humanos
 
 Este capítulo descreve as fontes automatizadas de coleta de dados que **não dependem de intervenção humana**, utilizadas para alimentar as métricas dos Grupos A e B.
 
 ---
 
-### Fonte NE-01: Logs do Agente QA
+### 16.1 NE-01: Logs do Agente QA
 
 | Propriedade | Descrição |
 |-------------|-----------|
-| **Descrição** | Registros automáticos gerados pelo Agente QA durante a verificação de inconsistências. |
-| **Dados extraídos** | ID do commit verificado, inconsistências detectadas (tipo, localização, severidade), veredicto inicial. |
-| **Métricas relacionadas** | [A1 a A8 (todas as métricas do Grupo A)](#grupo-a--métricas-de-qualidade-do-agente-qa) |
+| **Descrição** | Registros automáticos gerados pelo Agente QA durante a verificação de inconsistências |
+| **Dados extraídos** | ID do commit, inconsistências detectadas (tipo, localização, severidade), veredicto inicial |
+| **Métricas relacionadas** | A1 a A8 |
 | **Ferramenta de extração** | Sistema de logging do Agente QA (saída em JSON) |
 | **Script de automação** | `scripts/extract-qa-logs.py` |
 | **Frequência de coleta** | A cada execução do Agente QA (trigger por commit) |
@@ -414,13 +592,13 @@ Este capítulo descreve as fontes automatizadas de coleta de dados que **não de
 
 ---
 
-### Fonte NE-02: Parser de Modelos UML (PlantUML)
+### 16.2 NE-02: Parser de Modelos UML (PlantUML)
 
 | Propriedade | Descrição |
 |-------------|-----------|
-| **Descrição** | Script para extrair elementos dos diagramas PlantUML (classes, métodos, atributos, relacionamentos). |
-| **Dados extraídos** | Lista de classes, métodos por classe, atributos por classe, tipos de relacionamento, parâmetros de métodos. |
-| **Métricas relacionadas** | [B1 (Cobertura do Modelo)](#b1-cobertura-do-modelo), [B2 (Precisão)](#b2-precisão-da-implementação), [B6 (Rastreabilidade)](#b6-rastreabilidade) |
+| **Descrição** | Script para extrair elementos dos diagramas PlantUML |
+| **Dados extraídos** | Classes, métodos, atributos, relacionamentos, parâmetros de métodos |
+| **Métricas relacionadas** | B1, B2, B6 |
 | **Ferramenta de extração** | Python com regex e parsing de texto estruturado (PlantUML) |
 | **Script de automação** | `scripts/parse-plantuml.py` |
 | **Frequência de coleta** | A cada atualização do modelo (início e fim de sprint) |
@@ -428,13 +606,13 @@ Este capítulo descreve as fontes automatizadas de coleta de dados que **não de
 
 ---
 
-### Fonte NE-03: Parser de Código Fonte (AST)
+### 16.3 NE-03: Parser de Código Fonte (AST)
 
 | Propriedade | Descrição |
 |-------------|-----------|
-| **Descrição** | Script para extrair elementos do código fonte via Análise de Sintaxe Abstrata (AST). |
-| **Dados extraídos** | Lista de classes, métodos, atributos, parâmetros, tipos de retorno. |
-| **Métricas relacionadas** | [B1 (Cobertura)](#b1-cobertura-do-modelo), [B2 (Precisão)](#b2-precisão-da-implementação), [B4 (Over-Engineering)](#b4-over-engineering) |
+| **Descrição** | Script para extrair elementos do código fonte via Análise de Sintaxe Abstrata (AST) |
+| **Dados extraídos** | Classes, métodos, atributos, parâmetros, tipos de retorno |
+| **Métricas relacionadas** | B1, B2, B4 |
 | **Ferramenta de extração** | `tree-sitter` (TypeScript/JavaScript) |
 | **Script de automação** | `scripts/parse-code-ast.py` |
 | **Frequência de coleta** | A cada commit (via CI) e ao final de cada sprint |
@@ -442,21 +620,21 @@ Este capítulo descreve as fontes automatizadas de coleta de dados que **não de
 
 ---
 
-### Resumo das Fontes de Dados Não Humanos
+### 16.4 Resumo das Fontes de Dados Não Humanos
 
-| ID da Fonte | Nome | Métricas que Alimenta | Automação |
-|-------------|------|----------------------|-----------|
-| NE-01 | Logs do Agente QA | A1 a A8 | Script |
-| NE-02 | Parser PlantUML | B1, B2, B6 | Script |
-| NE-03 | Parser AST de Código | B1, B2, B4 | Script |
-
----
-
-## Checklists para Coleta de Dados Humanos
+| ID | Nome | Métricas | Automação | Formato de Saída |
+|----|------|----------|-----------|------------------|
+| NE-01 | Logs do Agente QA | A1 a A8 | Script | JSON → Banco de dados |
+| NE-02 | Parser PlantUML | B1, B2, B6 | Script | JSON |
+| NE-03 | Parser AST | B1, B2, B4 | CI + Script | JSON |
 
 ---
 
-### Checklist 1 — Avaliação de Audiência do Agente QA
+## 17. Checklists para Coleta de Dados Humanos
+
+---
+
+### 17.1 Checklist 1 — Avaliação de Audiência do Agente QA
 
 *Preenchido pelos professores (árbitros humanos) para cada inconsistência detectada.*
 
@@ -481,7 +659,7 @@ Este capítulo descreve as fontes automatizadas de coleta de dados que **não de
 
 ---
 
-### Checklist 2 — Avaliação de Alinhamento Modelo-Código
+### 17.2 Checklist 2 — Avaliação de Alinhamento Modelo-Código
 
 *Preenchido pelos alunos com validação dos professores.*
 
@@ -489,30 +667,30 @@ Este capítulo descreve as fontes automatizadas de coleta de dados que **não de
 |----|------|-------|-------|
 | ALI-01 | Sprint | __________ | - |
 | ALI-02 | Componente/módulo | __________ | - |
-| ALI-03 | Classes modeladas | __ | [NE-02](#fonte-ne-02-parser-de-modelos-uml-plantuml) |
-| ALI-04 | Classes implementadas | __ | [NE-03](#fonte-ne-03-parser-de-código-fonte-ast) |
-| ALI-05 | Métodos modelados | __ | [NE-02](#fonte-ne-02-parser-de-modelos-uml-plantuml) |
-| ALI-06 | Métodos implementados | __ | [NE-03](#fonte-ne-03-parser-de-código-fonte-ast) |
-| ALI-07 | Atributos modelados | __ | [NE-02](#fonte-ne-02-parser-de-modelos-uml-plantuml) |
-| ALI-08 | Atributos implementados | __ | [NE-03](#fonte-ne-03-parser-de-código-fonte-ast) |
+| ALI-03 | Classes modeladas | __ | NE-02 |
+| ALI-04 | Classes implementadas | __ | NE-03 |
+| ALI-05 | Métodos modelados | __ | NE-02 |
+| ALI-06 | Métodos implementados | __ | NE-03 |
+| ALI-07 | Atributos modelados | __ | NE-02 |
+| ALI-08 | Atributos implementados | __ | NE-03 |
 | ALI-09 | Cobertura do modelo (B1) | __% | Calculado |
 | ALI-10 | Implementações corretas | __ | Validação manual |
-| ALI-11 | Total de implementações | __ | [NE-03](#fonte-ne-03-parser-de-código-fonte-ast) |
+| ALI-11 | Total de implementações | __ | NE-03 |
 | ALI-12 | Precisão da implementação (B2) | __% | Calculado |
 | ALI-13 | Comportamentos divergentes | __ | Validação manual |
 | ALI-14 | Divergência semântica (B3) | __% | Calculado |
 | ALI-15 | Lista de divergências identificadas | __________ | Validação manual |
-| ALI-16 | Linhas de código não modeladas | __ LOC | [NE-03](#fonte-ne-03-parser-de-código-fonte-ast) |
-| ALI-17 | Linhas de código totais | __ LOC | [NE-03](#fonte-ne-03-parser-de-código-fonte-ast) |
+| ALI-16 | Linhas de código não modeladas | __ LOC | NE-03 |
+| ALI-17 | Linhas de código totais | __ LOC | NE-03 |
 | ALI-18 | Over-Engineering (B4) | __% | Calculado |
 | ALI-19 | Score Geral de Alinhamento (B5) | __ | Calculado |
 | ALI-20 | Total de RFs no escopo | __ | Documento de requisitos |
-| ALI-21 | RFs com rastreabilidade completa | __ | [NE-02](#fonte-ne-02-parser-de-modelos-uml-plantuml) + [NE-03](#fonte-ne-03-parser-de-código-fonte-ast) |
+| ALI-21 | RFs com rastreabilidade completa | __ | NE-02 + NE-03 |
 | ALI-22 | Rastreabilidade (B6) | __% | Calculado |
 
 ---
 
-### Checklist 3 — Registro de Configuração do Experimento
+### 17.3 Checklist 3 — Registro de Configuração do Experimento
 
 *Preenchido antes do início e atualizado quando houver mudanças.*
 
@@ -537,21 +715,7 @@ Este capítulo descreve as fontes automatizadas de coleta de dados que **não de
 
 ---
 
-## Síntese das Métricas por Sprint
-
-| Grupo | Métrica | Target | Valor | Status | Fonte |
-|-------|---------|--------|-------|--------|-------|
-| A | Precisão do QA | ≥ 0,85 | __ | 🟢/🔴 | [Checklist 1](#checklist-1--avaliação-de-audiência-do-agente-qa) |
-| A | Recall do QA | ≥ 0,80 | __ | 🟢/🔴 | [Checklist 1](#checklist-1--avaliação-de-audiência-do-agente-qa) |
-| A | F1-Score | ≥ 0,82 | __ | 🟢/🔴 | [NE-01](#fonte-ne-01-logs-do-agente-qa) |
-| A | Concordância | ≥ 0,80 | __ | 🟢/🔴 | [Checklist 1](#checklist-1--avaliação-de-audiência-do-agente-qa) |
-| B | Cobertura do Modelo | ≥ 95% | __ | 🟢/🟡/🔴 | [Checklist 2](#checklist-2--avaliação-de-alinhamento-modelo-código) |
-| B | Precisão da Implementação | ≥ 90% | __ | 🟢/🟡/🔴 | [Checklist 2](#checklist-2--avaliação-de-alinhamento-modelo-código) |
-| B | Score Geral | ≥ 75 | __ | 🟢/🟡/🔴/🔴 | Calculado |
-
----
-
-## Benefícios e Contribuições Esperadas
+## 18. Benefícios e Contribuições Esperadas
 
 | Benefício | Descrição |
 |-----------|-----------|
@@ -562,9 +726,9 @@ Este capítulo descreve as fontes automatizadas de coleta de dados que **não de
 
 ---
 
-## Limitações e Ameaças à Validade
+## 19. Limitações e Ameaças à Validade
 
-### Ameaças à validade interna
+### 19.1 Ameaças à Validade Interna
 
 | Ameaça | Mitigação |
 |--------|-----------|
@@ -572,21 +736,21 @@ Este capítulo descreve as fontes automatizadas de coleta de dados que **não de
 | Viés dos pesquisadores | Prompts baseados em literatura; registrar versões |
 | Efeito Hawthorne | Baseline com desenvolvimento sem pipeline |
 
-### Ameaças à validade externa
+### 19.2 Ameaças à Validade Externa
 
 | Ameaça | Mitigação |
 |--------|-----------|
 | Generalização | Reconhecer limitação; discutir transferabilidade |
 | Especificidade dos participantes | Reconhecer limitação; sugerir replicações |
 
-### Ameaças à validade de constructo
+### 19.3 Ameaças à Validade de Constructo
 
 | Ameaça | Mitigação |
 |--------|-----------|
 | Operacionalização inadequada | Métricas validadas na literatura |
 | Efeito de testes | Incluir baseline; tratar aprendizado como variável |
 
-### Ameaças à validade de conclusão
+### 19.4 Ameaças à Validade de Conclusão
 
 | Ameaça | Mitigação |
 |--------|-----------|
@@ -596,7 +760,7 @@ Este capítulo descreve as fontes automatizadas de coleta de dados que **não de
 
 ---
 
-## Referências
+## 20. Referências
 
 [1] SHULL, Forrest; SINGER, Janice; SJØBERG, Dag I. K. (eds.). *Guide to Advanced Empirical Software Engineering*. London: Springer-Verlag, 2008.
 
@@ -611,7 +775,3 @@ Este capítulo descreve as fontes automatizadas de coleta de dados que **não de
 [6] KITCHENHAM, Barbara et al. Preliminary guidelines for empirical research in software engineering. *IEEE TSE*, v. 28, n. 8, p. 721-734, 2002.
 
 ---
-
-**Data de elaboração:** 20/05/2026
-**Versão:** 4.0 (Escopo Reduzido)
-**Status:** Protocolo para revisão do orientador

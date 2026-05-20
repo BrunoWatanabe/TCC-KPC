@@ -1,12 +1,13 @@
 # Protocolo de Pesquisa
 
-**UNIVERSIDADE FEDERAL DE GOIÁS — INSTITUTO DE INFORMÁTICA — PROGRAMA DE PÓS-GRADUAÇÃO EM CIÊNCIA DA COMPUTAÇÃO**
+**UNIVERSIDADE FEDERAL DE GOIÁS — INSTITUTO DE INFORMÁTICA — CIÊNCIA DA COMPUTAÇÃO**
 
-**DISCIPLINA:** CCO0448 – Engenharia de Software
-**PROFESSOR:** Valdemar Vicente Graciano Neto
-**TURMA:** A
+**DISCIPLINA:** Projeto Final de Curso 2
+**PROFESSOR:** Marcelo Akira Inuzuka
 **PARTICIPANTES:** Daired
-**DATA:** 14 de maio de 2026
+**DATA ATUALIZAÇÃO:** 20/05/2026
+**Versão:** 3.0
+**Status:** Protocolo inicial a ser revisado.
 
 ---
 
@@ -892,7 +893,3 @@ Este capítulo descreve todas as fontes automatizadas de coleta de dados que **n
 [6] KITCHENHAM, Barbara et al. Preliminary guidelines for empirical research in software engineering. *IEEE TSE*, v. 28, n. 8, p. 721-734, 2002.
 
 ---
-
-**Data de elaboração:** 14 de maio de 2026
-**Versão:** 2.0 (com fontes de dados hiperlinkadas)
-**Status:** Rascunho para revisão do orientador

@@ -20,6 +20,12 @@ Descrever claramente o que deve ser implementado e por quê.
 
 [Insira descrição detalhada do objetivo]
 
+## 📚 Contexto do Protocolo
+
+- Pipeline de três agentes: Arquiteto, Desenvolvedor e QA
+- Execução em sprints com validação contínua por commit
+- Relação explícita com as métricas e checklists do protocolo experimental
+
 ---
 
 ## 📋 Requisitos Funcionais
@@ -48,6 +54,16 @@ O sistema deve [comportamento esperado].
 - [ ] Dado [contexto], quando [ação], então [resultado]
 
 **Prioridade**: Média
+
+---
+
+## 📊 Métricas e Validação
+
+- **Grupo A**: qualidade do QA
+- **Grupo B**: alinhamento modelo-código
+- **Grupo C**: qualidade de código
+- **Grupo D**: processo
+- **Checklists relacionados**: identificar quais checklists do protocolo validam esta spec
 
 ---
 
@@ -167,6 +183,7 @@ class Entidade {
 - [ ] Documentação atualizada
 - [ ] Revisão de código aprovada
 - [ ] QA validou alinhamento
+- [ ] Métricas do protocolo associadas e rastreáveis
 
 ---
 

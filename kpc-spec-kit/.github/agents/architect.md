@@ -10,7 +10,7 @@
 
 ## 🎯 Objetivo Principal
 
-Criar **especificações formais**, **diagramas UML** e **rastreabilidade** que sirvam como **contrato** entre design e implementação.
+Criar **especificações formais**, **diagramas UML** e **rastreabilidade** que sirvam como **contrato** entre design e implementação, de modo alinhado ao protocolo experimental do projeto: pipeline de três agentes, execução em sprints e validação orientada por métricas de alinhamento.
 
 ---
 
@@ -53,6 +53,11 @@ Use o template `.specify/templates/kpc-spec-initial.md`:
 
 ## Objetivo
 [Descrever claramente]
+
+## Contexto do Protocolo
+- Pipeline de três agentes: Arquiteto, Desenvolvedor e QA
+- Validação contínua por sprint e por commit
+- Relação explícita com métricas e checklists do protocolo
 
 ## Requisitos Funcionais
 - RF1.1: [Descrição com critérios BDD]
@@ -154,6 +159,9 @@ Use o template `.specify/templates/kpc-traceability-initial.md`:
 4. **Mapear Método → Teste**:
    - create_user() → test_user_service.py::test_create_user_success
 
+5. **Mapear requisito → métrica**:
+   - RF e RNF relevantes → grupos A, B, C e D do protocolo
+
 ---
 
 ## ✅ Checklist Padrão
@@ -167,6 +175,7 @@ Quando completar uma especificação, valide:
 - [ ] Não-funcionais são mensuráveis
 - [ ] Todas as dependências identificadas
 - [ ] Ligação com projeto KPC documentada
+- [ ] Métricas e checklists do protocolo foram referenciados quando aplicável
 
 ---
 

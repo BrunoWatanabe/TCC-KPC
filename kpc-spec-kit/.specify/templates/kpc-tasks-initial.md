@@ -16,6 +16,8 @@
 
 Decompor a especificação em tarefas menores, implementáveis e testáveis.
 
+As tasks devem ser pequenas o suficiente para caber em um ciclo de sprint e gerar commits validáveis pelo QA.
+
 ---
 
 ## 📋 Estrutura de Tarefas
@@ -43,12 +45,14 @@ Decompor a especificação em tarefas menores, implementáveis e testáveis.
 3. Adicionar validações de entrada
 4. Implementar testes unitários
 5. Documentar comportamento
+6. Garantir que o incremento fique pronto para validação do QA
 
 **Critérios de Aceitação**:
 - [ ] Função implementada corretamente
 - [ ] Testes passando com cobertura > 80%
 - [ ] Código revisado
 - [ ] Documentação completa
+- [ ] Commit pronto para validação do QA
 
 **Notas**:
 [Insira notas ou contexto importante]
@@ -153,6 +157,8 @@ Testes de Integração
 Validação QA
 ```
 
+Se a feature for experimental, a sequência deve preservar a relação com os grupos de métricas do protocolo e com o bloqueio de merge quando houver inconsistências.
+
 ---
 
 ## 🧪 Testes Associados
@@ -178,6 +184,7 @@ Validação QA
 - [ ] Código revisado
 - [ ] Documentação atualizada
 - [ ] QA validou alinhamento com especificação
+- [ ] Incrementos compatíveis com o fluxo por commit/sprint
 
 ---
 

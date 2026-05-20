@@ -15,6 +15,8 @@
 
 Garantir rastreabilidade completa entre requisitos, modelos, implementação e testes.
 
+Quando aplicável, incluir também a ligação com métricas, checklists e evidências de validação do protocolo.
+
 ---
 
 ## 🔄 Matriz de Rastreabilidade
@@ -26,6 +28,14 @@ Garantir rastreabilidade completa entre requisitos, modelos, implementação e t
 | RF1.1 | ClasseA | `src/modulo/classe_a.py::metodo1()` | `tests/test_metodo1.py::test_metodo1_success` |
 | RF1.1 | ClasseA | `src/modulo/classe_a.py::metodo2()` | `tests/test_metodo2.py::test_metodo2_success` |
 | RF1.2 | ClasseB | `src/modulo/classe_b.py::funcao1()` | `tests/test_funcao1.py::test_funcao1_success` |
+
+### Requisito → Métrica → Checklist
+
+| Requisito | Grupo de Métrica | Checklist | Evidência |
+|-----------|-------------------|-----------|-----------|
+| RF1.1 | Grupo B | Checklist 2 | Cobertura do modelo, precisão e divergência |
+| RF1.2 | Grupo C | Checklist 3 | Complexidade, cobertura de testes e dívida técnica |
+| RNF1 | Grupo A | Checklist 1 | Precisão/recall/F1 do QA |
 
 ---
 
@@ -150,6 +160,13 @@ class ClasseA:
 | Cenário 2 | RF1.1 | ✅ |
 | Cenário 3 | RF1.2 | ✅ |
 
+### 6. Evidências do Protocolo
+
+- Commit relacionado
+- Sprint relacionado
+- Issue aberta/fechada pelo QA
+- Grupo A/B/C/D associado
+
 ---
 
 ## 🔀 Mapeamento Reverso
@@ -236,6 +253,8 @@ tests/test_classe_a.py
 | Testes Implementados | 5/5 | ✅ 100% |
 | Cobertura de Código | 87% | ✅ |
 | Inconsistências | 0 | ✅ |
+
+| Métricas e checklists do protocolo | Vinculadas | ✅ |
 
 ---
 

@@ -569,3 +569,14 @@ Funcionalidade: Autenticação de Usuário (RF001)
 ---
 
 *Sistema de Agentes para Spec-Kit Framework — Trabalho de Conclusão de Curso (TCC)*
+
+---
+
+## 🔗 Ligação com o Protocolo
+
+- **Validação por sprint e por commit**: cada entrega deve apresentar evidência ligada ao sprint e ao(s) commit(s) correspondentes.
+- **QA como gate de merge**: o time de QA pode bloquear merge enquanto houver inconsistências abertas; sempre abrir issue(s) vinculadas aos commits/sprints afetados.
+- **Grupos de Métrica**: A — qualidade de modelo; B — alinhamento modelo↔código; C — qualidade de código; D — processo. Associe requisitos/tarefas a um grupo e registre a evidência.
+- **Rastreabilidade de Evidências**: registre IDs de commit, número da issue e sprint no campo "Evidências" das especificações e na `traceability.md`.
+- **Procedimento**: em caso de inconsistência detectada pelo QA, documentar, bloquear merge e solicitar correção via issue vinculada.
+

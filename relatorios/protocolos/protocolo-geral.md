@@ -22,7 +22,7 @@
 8. [Variáveis Independentes](#variáveis-independentes)
 9. [Variáveis Dependentes](#variáveis-dependentes)
 10. [Avaliação e Métricas](#avaliação-e-métricas)
-    - [Grupo A — Qualidade do Agente Juiz](#grupo-a--métricas-de-qualidade-do-agente-juiz)
+    - [Grupo A — Qualidade do Agente QA](#grupo-a--métricas-de-qualidade-do-agente-qa)
     - [Grupo B — Alinhamento Modelo-Código](#grupo-b--métricas-de-alinhamento-modelo-código)
     - [Grupo C — Qualidade de Código](#grupo-c--métricas-de-qualidade-de-código)
     - [Grupo D — Processo](#grupo-d--métricas-de-processo)
@@ -32,7 +32,7 @@
 14. [Tarefas Executadas](#tarefas-executadas)
 15. [Fontes de Extração de Dados Não Humanos](#fontes-de-extração-de-dados-não-humanos)
 16. [Checklists para Coleta de Dados Humanos](#checklists-para-coleta-de-dados-humanos)
-    - [Checklist 1 — Audiência do Juiz](#checklist-1--avaliação-de-audiência-do-agente-juiz)
+    - [Checklist 1 — Audiência do QA](#checklist-1--avaliação-de-audiência-do-agente-qa)
     - [Checklist 2 — Alinhamento Modelo-Código](#checklist-2--avaliação-de-alinhamento-modelo-código)
     - [Checklist 3 — Qualidade do Código](#checklist-3--avaliação-de-qualidade-do-código)
     - [Checklist 4 — Métricas de Processo](#checklist-4--métricas-de-processo)
@@ -52,8 +52,8 @@
 | Campo | Descrição |
 |-------|-----------|
 | **TÍTULO** | Ressurreição da Engenharia Orientada a Modelos com Auxílio de Agentes de IA e Desenvolvimento Orientado a Especificações – Um Estudo Experimental sobre Qualidade de Código e Redução de Dívida Técnica |
-| **TEMA** | Estudo empírico experimental sobre a combinação de Engenharia Orientada a Modelos (MDE), Desenvolvimento Orientado a Especificações (SDD) e um pipeline de três agentes de IA (Arquiteto, Developer e Juiz) para produção de código frontend de alta qualidade com redução de dívida técnica. |
-| **DESCRIÇÃO** | O intuito deste estudo consiste em investigar se a combinação de MDE com SDD, orquestrada por um pipeline de três agentes de IA, produz código frontend de maior qualidade, maior fidelidade ao modelo e menor dívida técnica em comparação ao desenvolvimento assistido por IA sem modelagem estruturada. Para isso, será realizado um experimento controlado em ciclos de sprint (Scrum), onde cada commit dispara o Agente Juiz, que verifica inconsistências entre modelo e código, abre issues para inconsistências detectadas e bloqueia o merge até a resolução. |
+| **TEMA** | Estudo empírico experimental sobre a combinação de Engenharia Orientada a Modelos (MDE), Desenvolvimento Orientado a Especificações (SDD) e um pipeline de três agentes de IA (Arquiteto, Developer e QA) para produção de código frontend de alta qualidade com redução de dívida técnica. |
+| **DESCRIÇÃO** | O intuito deste estudo consiste em investigar se a combinação de MDE com SDD, orquestrada por um pipeline de três agentes de IA, produz código frontend de maior qualidade, maior fidelidade ao modelo e menor dívida técnica em comparação ao desenvolvimento assistido por IA sem modelagem estruturada. Para isso, será realizado um experimento controlado em ciclos de sprint (Scrum), onde cada commit dispara o Agente QA, que verifica inconsistências entre modelo e código, abre issues para inconsistências detectadas e bloqueia o merge até a resolução. |
 
 ---
 
@@ -67,9 +67,9 @@ Neste contexto, esta pesquisa propõe um pipeline de três agentes de IA:
 
 1. **Agente Arquiteto**: trabalha colaborativamente com o aluno para produzir e refinar o modelo UML (diagramas de classes, sequência, atividades) a partir das especificações.
 2. **Agente Developer**: trabalha colaborativamente com o aluno para gerar código frontend a partir do modelo estabelecido.
-3. **Agente Juiz**: atua como mecanismo de verificação contínua, detectando inconsistências entre modelo e código a cada commit, conduzindo uma "audiência" entre os agentes Arquiteto e Developer para justificar decisões, e bloqueando merges até que inconsistências sejam resolvidas.
+3. **Agente QA**: atua como mecanismo de verificação contínua, detectando inconsistências entre modelo e código a cada commit, conduzindo uma "audiência" entre os agentes Arquiteto e Developer para justificar decisões, e bloqueando merges até que inconsistências sejam resolvidas.
 
-O processo ocorre em ciclos de sprint (Scrum), onde cada commit dispara o Agente Juiz. Este modelo visa não apenas melhorar a qualidade do código gerado, mas também controlar e reduzir a dívida técnica acumulada ao longo do desenvolvimento.
+O processo ocorre em ciclos de sprint (Scrum), onde cada commit dispara o Agente QA. Este modelo visa não apenas melhorar a qualidade do código gerado, mas também controlar e reduzir a dívida técnica acumulada ao longo do desenvolvimento.
 
 ---
 
@@ -77,11 +77,11 @@ O processo ocorre em ciclos de sprint (Scrum), onde cada commit dispara o Agente
 
 ### Objetivo Geral
 
-Avaliar e comparar a qualidade do código frontend gerado, a fidelidade ao modelo e a dívida técnica acumulada quando se utiliza um pipeline de três agentes de IA (Arquiteto, Developer e Juiz) baseado em MDE+SDD, em comparação com o desenvolvimento assistido por IA sem modelagem estruturada.
+Avaliar e comparar a qualidade do código frontend gerado, a fidelidade ao modelo e a dívida técnica acumulada quando se utiliza um pipeline de três agentes de IA (Arquiteto, Developer e QA) baseado em MDE+SDD, em comparação com o desenvolvimento assistido por IA sem modelagem estruturada.
 
 ### Objetivo GQM (Goal-Question-Metric)
 
-Esta pesquisa busca **analisar** o pipeline de agentes de IA com MDE+SDD com o propósito de **avaliar** a qualidade do código gerado, o alinhamento entre modelo e código, e a dívida técnica acumulada sob a perspectiva de **pesquisadores e desenvolvedores** no contexto de um **experimento controlado com ciclos de sprint**, no qual o Agente Juiz atua como mecanismo de verificação contínua e bloqueio de inconsistências.
+Esta pesquisa busca **analisar** o pipeline de agentes de IA com MDE+SDD com o propósito de **avaliar** a qualidade do código gerado, o alinhamento entre modelo e código, e a dívida técnica acumulada sob a perspectiva de **pesquisadores e desenvolvedores** no contexto de um **experimento controlado com ciclos de sprint**, no qual o Agente QA atua como mecanismo de verificação contínua e bloqueio de inconsistências.
 
 ---
 
@@ -89,15 +89,15 @@ Esta pesquisa busca **analisar** o pipeline de agentes de IA com MDE+SDD com o p
 
 ### QP1: O pipeline de agentes de IA produz código frontend de maior qualidade em comparação ao desenvolvimento assistido por IA sem modelagem estruturada?
 
-**Rationale:** Ao responder a esta pergunta, espera-se obter evidências empíricas sobre se a abordagem proposta — que combina modelagem estruturada com verificação automatizada por agente Juiz — resulta em código tecnicamente superior.
+**Rationale:** Ao responder a esta pergunta, espera-se obter evidências empíricas sobre se a abordagem proposta — que combina modelagem estruturada com verificação automatizada por agente QA — resulta em código tecnicamente superior.
 
 ### QP2: Qual é o nível de alinhamento alcançado pelo pipeline de agentes, e como esse alinhamento evolui ao longo das sprints?
 
-**Rationale:** Espera-se que a resposta forneça evidências sobre a eficácia do Agente Juiz em manter a consistência entre modelo e código.
+**Rationale:** Espera-se que a resposta forneça evidências sobre a eficácia do Agente QA em manter a consistência entre modelo e código.
 
-### QP3: O Agente Juiz é eficaz na detecção de inconsistências, com alta precisão e revocação, e sua atuação contribui para a redução da dívida técnica?
+### QP3: O Agente QA é eficaz na detecção de inconsistências, com alta precisão e revocação, e sua atuação contribui para a redução da dívida técnica?
 
-**Rationale:** Espera-se avaliar o desempenho do Agente Juiz como mecanismo de controle de qualidade e seu impacto na redução da dívida técnica.
+**Rationale:** Espera-se avaliar o desempenho do Agente QA como mecanismo de controle de qualidade e seu impacto na redução da dívida técnica.
 
 ### QP4: Quais são os pontos fortes e fracos do pipeline observados durante o processo?
 
@@ -126,7 +126,7 @@ Esta pesquisa busca **analisar** o pipeline de agentes de IA com MDE+SDD com o p
 
 | Papel | Responsabilidade |
 |-------|------------------|
-| Agente Juiz + Professores Orientadores | Validar as decisões do Agente Juiz nas audiências, atuando como árbitros humanos |
+| Agente QA + Professores Orientadores | Validar as decisões do Agente QA nas audiências, atuando como árbitros humanos |
 
 **Critérios de inclusão:** Experiência comprovada em Engenharia de Software (mínimo 5 anos), conhecimento em MDE, SDD e metodologias ágeis.
 
@@ -161,7 +161,7 @@ Esta pesquisa busca **analisar** o pipeline de agentes de IA com MDE+SDD com o p
 | Qualidade do código | Complexidade ciclomática; cobertura de testes; taxa de regressão |
 | Alinhamento modelo-código | Cobertura do modelo; precisão; divergência semântica; over-engineering |
 | Dívida técnica | Dívida por sprint; tempo de resolução de inconsistências |
-| Eficácia do Agente Juiz | Precisão; recall; F1-score; taxas de FP e FN |
+| Eficácia do Agente QA | Precisão; recall; F1-score; taxas de FP e FN |
 | Eficiência do processo | Velocidade de entrega; taxa de rejeição; churn do modelo |
 
 ---
@@ -170,44 +170,44 @@ Esta pesquisa busca **analisar** o pipeline de agentes de IA com MDE+SDD com o p
 
 ---
 
-### Grupo A — Métricas de Qualidade do Agente Juiz
+### Grupo A — Métricas de Qualidade do Agente QA
 
 ---
 
-#### A1: Matriz de Confusão do Juiz
+#### A1: Matriz de Confusão do QA
 
 | Cenário | Nome | Descrição |
 |---------|------|-----------|
-| **TP** | Verdadeiro Positivo | Juiz detectou inconsistência que realmente existe |
-| **TN** | Verdadeiro Negativo | Juiz não detectou inconsistência onde não existe |
-| **FP** | Falso Positivo | Juiz detectou inconsistência que não existia |
-| **FN** | Falso Negativo | Juiz não detectou inconsistência que existia |
+| **TP** | Verdadeiro Positivo | QA detectou inconsistência que realmente existe |
+| **TN** | Verdadeiro Negativo | QA não detectou inconsistência onde não existe |
+| **FP** | Falso Positivo | QA detectou inconsistência que não existia |
+| **FN** | Falso Negativo | QA não detectou inconsistência que existia |
 
-**Fonte dos dados:** [Checklist 1 — Avaliação de Audiência do Agente Juiz](#checklist-1--avaliação-de-audiência-do-agente-juiz) (itens AUD-06, AUD-07, AUD-08, AUD-09)
+**Fonte dos dados:** [Checklist 1 — Avaliação de Audiência do Agente QA](#checklist-1--avaliação-de-audiência-do-agente-qa) (itens AUD-06, AUD-07, AUD-08, AUD-09)
 
 ---
 
-#### A2: Precisão do Juiz (Precision)
+#### A2: Precisão do QA (Precision)
 
 `Precisão = TP / (TP + FP)`
 
 **Target:** ≥ 0,85
 
-**Fonte dos dados:** [Checklist 1 — Avaliação de Audiência do Agente Juiz](#checklist-1--avaliação-de-audiência-do-agente-juiz) (contagem de TP e FP a partir dos registros de audiência)
+**Fonte dos dados:** [Checklist 1 — Avaliação de Audiência do Agente QA](#checklist-1--avaliação-de-audiência-do-agente-qa) (contagem de TP e FP a partir dos registros de audiência)
 
 ---
 
-#### A3: Revocação do Juiz (Recall)
+#### A3: Revocação do QA (Recall)
 
 `Recall = TP / (TP + FN)`
 
 **Target:** ≥ 0,80
 
-**Fonte dos dados:** [Checklist 1 — Avaliação de Audiência do Agente Juiz](#checklist-1--avaliação-de-audiência-do-agente-juiz) (contagem de TP e FN)
+**Fonte dos dados:** [Checklist 1 — Avaliação de Audiência do Agente QA](#checklist-1--avaliação-de-audiência-do-agente-qa) (contagem de TP e FN)
 
 ---
 
-#### A4: F1-Score do Juiz
+#### A4: F1-Score do QA
 
 `F1 = 2 × (Precisão × Recall) / (Precisão + Recall)`
 
@@ -223,7 +223,7 @@ Esta pesquisa busca **analisar** o pipeline de agentes de IA com MDE+SDD com o p
 
 **Target:** ≤ 0,20
 
-**Fonte dos dados:** [Checklist 1 — Avaliação de Audiência do Agente Juiz](#checklist-1--avaliação-de-audiência-do-agente-juiz) (itens onde Juiz não detectou inconsistência existente)
+**Fonte dos dados:** [Checklist 1 — Avaliação de Audiência do Agente QA](#checklist-1--avaliação-de-audiência-do-agente-qa) (itens onde QA não detectou inconsistência existente)
 
 ---
 
@@ -233,7 +233,7 @@ Esta pesquisa busca **analisar** o pipeline de agentes de IA com MDE+SDD com o p
 
 **Target:** ≤ 0,15
 
-**Fonte dos dados:** [Checklist 1 — Avaliação de Audiência do Agente Juiz](#checklist-1--avaliação-de-audiência-do-agente-juiz) (itens onde Juiz detectou inconsistência inexistente)
+**Fonte dos dados:** [Checklist 1 — Avaliação de Audiência do Agente QA](#checklist-1--avaliação-de-audiência-do-agente-qa) (itens onde QA detectou inconsistência inexistente)
 
 ---
 
@@ -243,7 +243,7 @@ Esta pesquisa busca **analisar** o pipeline de agentes de IA com MDE+SDD com o p
 
 **Target:** ≥ 0,80
 
-**Fonte dos dados:** [Checklist 1 — Avaliação de Audiência do Agente Juiz](#checklist-1--avaliação-de-audiência-do-agente-juiz) (item AUD-08)
+**Fonte dos dados:** [Checklist 1 — Avaliação de Audiência do Agente QA](#checklist-1--avaliação-de-audiência-do-agente-qa) (item AUD-08)
 
 ---
 
@@ -354,7 +354,7 @@ Esta pesquisa busca **analisar** o pipeline de agentes de IA com MDE+SDD com o p
 
 #### C1: Dívida Técnica Acumulada por Sprint
 
-`Dívida por Sprint = Issues abertas pelo Juiz não resolvidas ao final da sprint`
+`Dívida por Sprint = Issues abertas pelo QA não resolvidas ao final da sprint`
 
 **Fonte dos dados:** [Fonte de Extração de Dados Não Humanos — Sistema de Issues](#fonte-de-extração-de-dados-não-humanos--sistema-de-issues) + [Checklist 3 — Avaliação de Qualidade do Código](#checklist-3--avaliação-de-qualidade-do-código) (itens COD-14 a COD-16)
 
@@ -449,10 +449,10 @@ Não há diferença significativa na qualidade do código gerado, no alinhamento
 Há diferença significativa na qualidade do código gerado, no alinhamento modelo-código e na dívida técnica acumulada quando se utiliza o pipeline de agentes.
 
 ### H02 (Hipótese Nula Secundária)
-O Agente Juiz não apresenta precisão e revocação superiores a 0,80.
+O Agente QA não apresenta precisão e revocação superiores a 0,80.
 
 ### HA2 (Hipótese Alternativa Secundária)
-O Agente Juiz apresenta precisão e revocação superiores a 0,80.
+O Agente QA apresenta precisão e revocação superiores a 0,80.
 
 ---
 
@@ -477,7 +477,7 @@ O Agente Juiz apresenta precisão e revocação superiores a 0,80.
 |--------|-----------|
 | Arquiteto | Few-shot com exemplos de diagramas; prompt em português; iterativo |
 | Developer | Few-shot com exemplos de código; contexto inclui modelo UML |
-| Juiz | Zero-shot inicial; aprendizado com audiências |
+| QA | Zero-shot inicial; aprendizado com audiências |
 
 ---
 
@@ -491,7 +491,7 @@ O Agente Juiz apresenta precisão e revocação superiores a 0,80.
 | Modelagem | Agente Arquiteto + Aluno X |
 | Codificação | Agente Developer + Aluno Daired |
 | Commit | Aluno Daired |
-| Verificação do Juiz | Agente Juiz |
+| Verificação do QA | Agente QA |
 | Audiência | Agentes + Professores |
 | Resolução de issues | Alunos |
 | Merge | Alunos |
@@ -514,7 +514,7 @@ Este capítulo descreve todas as fontes automatizadas de coleta de dados que **n
 | **Métricas relacionadas** | [D2 (Taxa de Rejeição de Branch)](#d2-taxa-de-rejeição-de-branch), [D3 (Churn do Modelo)](#d3-churn-do-modelo), [C2 (Tempo de Resolução)](#c2-tempo-de-resolução-de-inconsistências) |
 | **Ferramenta de extração** | `git log`, `git diff`, `git rev-list`, GitHub API |
 | **Script de automação** | `scripts/extract-git-metrics.sh` |
-| **Frequência de coleta** | A cada commit (trigger do Agente Juiz) e ao final de cada sprint |
+| **Frequência de coleta** | A cada commit (trigger do Agente QA) e ao final de cada sprint |
 | **Local de armazenamento** | Banco de dados de métricas (via script de ETL) |
 
 ---
@@ -523,12 +523,12 @@ Este capítulo descreve todas as fontes automatizadas de coleta de dados que **n
 
 | Propriedade | Descrição |
 |-------------|-----------|
-| **Descrição** | Sistema de rastreamento de issues onde o Agente Juiz registra inconsistências detectadas. |
+| **Descrição** | Sistema de rastreamento de issues onde o Agente QA registra inconsistências detectadas. |
 | **Dados extraídos** | ID da issue, data de criação, data de fechamento, status (aberta/fechada), labels, comentários, assignee. |
 | **Métricas relacionadas** | [C1 (Dívida Técnica)](#c1-dívida-técnica-acumulada-por-sprint), [C2 (Tempo de Resolução)](#c2-tempo-de-resolução-de-inconsistências) |
 | **Ferramenta de extração** | GitHub API, Jira REST API |
 | **Script de automação** | `scripts/extract-issues-metrics.py` |
-| **Frequência de coleta** | A cada interação do Agente Juiz e ao final de cada sprint |
+| **Frequência de coleta** | A cada interação do Agente QA e ao final de cada sprint |
 | **Local de armazenamento** | Banco de dados de métricas |
 
 ---
@@ -603,17 +603,17 @@ Este capítulo descreve todas as fontes automatizadas de coleta de dados que **n
 
 ---
 
-### Fonte NE-08: Logs do Agente Juiz
+### Fonte NE-08: Logs do Agente QA
 
 | Propriedade | Descrição |
 |-------------|-----------|
-| **Descrição** | Registros automáticos gerados pelo Agente Juiz durante a verificação de inconsistências. |
+| **Descrição** | Registros automáticos gerados pelo Agente QA durante a verificação de inconsistências. |
 | **Dados extraídos** | ID do commit verificado, inconsistências detectadas (tipo, localização, severidade), veredicto inicial. |
-| **Métricas relacionadas** | [A1 a A8 (todas as métricas do Grupo A)](#grupo-a--métricas-de-qualidade-do-agente-juiz) |
-| **Ferramenta de extração** | Sistema de logging do Agente Juiz (saída em JSON) |
-| **Script de automação** | `scripts/extract-juiz-logs.py` |
-| **Frequência de coleta** | A cada execução do Agente Juiz (trigger por commit) |
-| **Local de armazenamento** | Banco de dados de métricas (`juiz_audits` table) |
+| **Métricas relacionadas** | [A1 a A8 (todas as métricas do Grupo A)](#grupo-a--métricas-de-qualidade-do-agente-qa) |
+| **Ferramenta de extração** | Sistema de logging do Agente QA (saída em JSON) |
+| **Script de automação** | `scripts/extract-qa-logs.py` |
+| **Frequência de coleta** | A cada execução do Agente QA (trigger por commit) |
+| **Local de armazenamento** | Banco de dados de métricas (`qa_audits` table) |
 
 ---
 
@@ -628,7 +628,7 @@ Este capítulo descreve todas as fontes automatizadas de coleta de dados que **n
 | NE-05 | Pipeline de CI/CD | D2, C5 | API |
 | NE-06 | Parser PlantUML | B1, B2, B6 | Script |
 | NE-07 | Parser AST de Código | B1, B2, B4 | Script |
-| NE-08 | Logs do Agente Juiz | A1 a A8 | Script |
+| NE-08 | Logs do Agente QA | A1 a A8 | Script |
 
 ---
 
@@ -636,7 +636,7 @@ Este capítulo descreve todas as fontes automatizadas de coleta de dados que **n
 
 ---
 
-### Checklist 1 — Avaliação de Audiência do Agente Juiz
+### Checklist 1 — Avaliação de Audiência do Agente QA
 
 *Preenchido pelos professores para cada inconsistência detectada.*
 
@@ -647,8 +647,8 @@ Este capítulo descreve todas as fontes automatizadas de coleta de dados que **n
 | AUD-03 | Data/hora | __________ |
 | AUD-04 | Componente/arquivo | __________ |
 | AUD-05 | Tipo de inconsistência | ☐ Sintaxe ☐ Semântica ☐ Estrutural ☐ Comportamental |
-| AUD-06 | Juiz classificou corretamente o tipo? | ☐ Sim ☐ Não |
-| AUD-07 | Veredicto do Juiz | ☐ Inconsistência legítima ☐ Decisão consciente |
+| AUD-06 | QA classificou corretamente o tipo? | ☐ Sim ☐ Não |
+| AUD-07 | Veredicto do QA | ☐ Inconsistência legítima ☐ Decisão consciente |
 | AUD-08 | Árbitro concorda? | ☐ Sim ☐ Não |
 | AUD-09 | Se discordou, seu veredicto | ☐ Inconsistência legítima ☐ Decisão consciente |
 | AUD-10 | Argumento do Arquiteto (1-5) | __ |
@@ -727,15 +727,15 @@ Este capítulo descreve todas as fontes automatizadas de coleta de dados que **n
 | PRO-06 | Story points entregues | __ | Revisão da sprint |
 | PRO-07 | Velocidade (D1) | __ SP/dia | Calculado |
 | PRO-08 | Total de commits | __ | [NE-01](#fonte-ne-01-sistema-de-controle-de-versão-git) |
-| PRO-09 | Commits rejeitados | __ | [NE-08](#fonte-ne-08-logs-do-agente-juiz) |
-| PRO-10 | Commits aprovados | __ | [NE-08](#fonte-ne-08-logs-do-agente-juiz) |
+| PRO-09 | Commits rejeitados | __ | [NE-08](#fonte-ne-08-logs-do-agente-qa) |
+| PRO-10 | Commits aprovados | __ | [NE-08](#fonte-ne-08-logs-do-agente-qa) |
 | PRO-11 | Taxa de rejeição (D2) | __% | Calculado |
 | PRO-12 | Versões modelo (início) | __ | [NE-06](#fonte-ne-06-parser-de-modelos-uml-plantuml) |
 | PRO-13 | Versões modelo (final) | __ | [NE-06](#fonte-ne-06-parser-de-modelos-uml-plantuml) |
 | PRO-14 | Revisões de modelo | __ | [NE-01](#fonte-ne-01-sistema-de-controle-de-versão-git) |
 | PRO-15 | Churn do modelo (D3) | __ | Calculado |
-| PRO-16 | Número de audiências | __ | [NE-08](#fonte-ne-08-logs-do-agente-juiz) |
-| PRO-17 | Tempo total em audiências (min) | __ | [Checklist 1](#checklist-1--avaliação-de-audiência-do-agente-juiz) |
+| PRO-16 | Número de audiências | __ | [NE-08](#fonte-ne-08-logs-do-agente-qa) |
+| PRO-17 | Tempo total em audiências (min) | __ | [Checklist 1](#checklist-1--avaliação-de-audiência-do-agente-qa) |
 
 ---
 
@@ -746,7 +746,7 @@ Este capítulo descreve todas as fontes automatizadas de coleta de dados que **n
 | ID | Pergunta | Resposta |
 |----|----------|----------|
 | SAT-01 | Clareza do modelo como guia | __ |
-| SAT-02 | Utilidade do feedback do Juiz | __ |
+| SAT-02 | Utilidade do feedback do QA | __ |
 | SAT-03 | Carga cognitiva (1=pouco, 5=excessivo) | __ |
 | SAT-04 | Confiança na qualidade | __ |
 | SAT-05 | Facilidade de uso do pipeline | __ |
@@ -796,12 +796,12 @@ Este capítulo descreve todas as fontes automatizadas de coleta de dados que **n
 |----|------|-------|------|
 | CFG-01 | Versão Agente Arquiteto | __________ | ______ |
 | CFG-02 | Versão Agente Developer | __________ | ______ |
-| CFG-03 | Versão Agente Juiz | __________ | ______ |
+| CFG-03 | Versão Agente QA | __________ | ______ |
 | CFG-04 | Temperatura dos LLMs | __________ | ______ |
 | CFG-05 | max_tokens | __________ | ______ |
 | CFG-06 | Versão prompt (Arquiteto) | __________ | ______ |
 | CFG-07 | Versão prompt (Developer) | __________ | ______ |
-| CFG-08 | Versão prompt (Juiz) | __________ | ______ |
+| CFG-08 | Versão prompt (QA) | __________ | ______ |
 | CFG-09 | Framework frontend | __________ | ______ |
 | CFG-10 | Versão do framework | __________ | ______ |
 | CFG-11 | Linguagem de programação | __________ | ______ |
@@ -818,10 +818,10 @@ Este capítulo descreve todas as fontes automatizadas de coleta de dados que **n
 
 | Grupo | Métrica | Target | Valor | Status | Fonte |
 |-------|---------|--------|-------|--------|-------|
-| A | Precisão do Juiz | ≥ 0,85 | __ | 🟢/🔴 | [Checklist 1](#checklist-1--avaliação-de-audiência-do-agente-juiz) |
-| A | Recall do Juiz | ≥ 0,80 | __ | 🟢/🔴 | [Checklist 1](#checklist-1--avaliação-de-audiência-do-agente-juiz) |
-| A | F1-Score | ≥ 0,82 | __ | 🟢/🔴 | [NE-08](#fonte-ne-08-logs-do-agente-juiz) |
-| A | Concordância | ≥ 0,80 | __ | 🟢/🔴 | [Checklist 1](#checklist-1--avaliação-de-audiência-do-agente-juiz) |
+| A | Precisão do QA | ≥ 0,85 | __ | 🟢/🔴 | [Checklist 1](#checklist-1--avaliação-de-audiência-do-agente-qa) |
+| A | Recall do QA | ≥ 0,80 | __ | 🟢/🔴 | [Checklist 1](#checklist-1--avaliação-de-audiência-do-agente-qa) |
+| A | F1-Score | ≥ 0,82 | __ | 🟢/🔴 | [NE-08](#fonte-ne-08-logs-do-agente-qa) |
+| A | Concordância | ≥ 0,80 | __ | 🟢/🔴 | [Checklist 1](#checklist-1--avaliação-de-audiência-do-agente-qa) |
 | B | Cobertura do Modelo | ≥ 95% | __ | 🟢/🟡/🔴 | [Checklist 2](#checklist-2--avaliação-de-alinhamento-modelo-código) |
 | B | Precisão da Implementação | ≥ 90% | __ | 🟢/🟡/🔴 | [Checklist 2](#checklist-2--avaliação-de-alinhamento-modelo-código) |
 | B | Score Geral | ≥ 90 | __ | 🟢/🟡/🔴 | Calculado |

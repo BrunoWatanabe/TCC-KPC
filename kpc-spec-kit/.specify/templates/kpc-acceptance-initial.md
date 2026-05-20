@@ -16,6 +16,8 @@
 
 Definir testes de aceitação que validam se a implementação está alinhada com os requisitos da especificação.
 
+Quando necessário, os cenários também devem registrar o resultado esperado para o QA abrir issue, bloquear merge ou aprovar o commit.
+
 ---
 
 ## 🧪 Cenários de Testes
@@ -37,6 +39,7 @@ Definir testes de aceitação que validam se a implementação está alinhada co
 - [ ] [Verificação 1]
 - [ ] [Verificação 2]
 - [ ] [Verificação 3]
+- [ ] [Ação de QA, se houver inconsistência]
 
 **Status**: ⭕ Não Testado / ✅ Passou / ❌ Falhou
 
@@ -94,6 +97,13 @@ Definir testes de aceitação que validam se a implementação está alinhada co
 | RF1.1 | 1, 2 | ✅ | 100% |
 | RF1.2 | 3 | ⭕ | 50% |
 | RNF1 | - | ⭕ | 0% |
+
+## 📎 Associação com o Protocolo
+
+- Grupo A: métricas de qualidade do QA
+- Grupo B: alinhamento modelo-código
+- Grupo C: qualidade de código
+- Grupo D: processo
 
 ---
 
@@ -162,6 +172,7 @@ class TestAcceptance:
 - [ ] Cobertura de requisitos 100%
 - [ ] Testes automáticos implementados
 - [ ] Relatório de testes gerado
+- [ ] Ação de QA e status de merge documentados quando aplicável
 
 ---
 

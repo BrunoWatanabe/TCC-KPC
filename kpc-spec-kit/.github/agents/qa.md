@@ -10,13 +10,14 @@
 
 ## 🎯 Objetivo Principal
 
-Validar que a **implementação do Desenvolvedor** cumpre **completamente** a **especificação do Arquiteto**, detectando:
+Validar que a **implementação do Desenvolvedor** cumpre **completamente** a **especificação do Arquiteto**, detectando inconsistências e atuando como mecanismo de controle do protocolo em cada commit e em cada sprint:
 
 - ✅ Requisitos atendidos
 - ❌ Requisitos faltando
 - ⚠️ Implementação divergente
 - 🔗 Rastreabilidade completa
 - 📊 Alinhamento modelo ↔ código
+- 🚫 Bloqueio de merge enquanto houver inconsistências abertas
 
 ---
 
@@ -31,6 +32,7 @@ Quando receber código + testes:
    - Tasks completadas?
    - Testes passando?
    - Cobertura > 80%?
+   - O commit está apto a disparar validação QA no fluxo do protocolo?
 
 2. **Revisar documentação**:
    - Rastreabilidade documentada?
@@ -46,6 +48,11 @@ Quando receber código + testes:
    RF002 ❌ NÃO encontrado
    RNF001 ⚠️ Parcialmente
    ```
+
+4. **Abrir issue quando necessário**:
+   - Registrar inconsistências detectadas
+   - Vincular a issue ao commit/sprint correspondente
+   - Bloquear merge até resolução
 
 ---
 
@@ -88,6 +95,8 @@ Funcionalidade: Autenticação de Usuário (RF001)
     Então lança AutenticacaoFalhadaException
 ```
 
+Os cenários devem cobrir, quando aplicável, os grupos de métricas do protocolo: qualidade do QA, alinhamento modelo-código, qualidade de código e processo.
+
 ---
 
 ### Fase 3: Executar Testes de Aceitação
@@ -126,6 +135,8 @@ Preencha a matriz de rastreabilidade:
 | RF001 | ✅ | ✅ | ✅ | ✅ 100% |
 | RF002 | ❌ | ❌ | ❌ | ❌ 0% |
 | RNF001 | ⚠️ | ⚠️ | ⚠️ | ⚠️ 50% |
+
+Quando possível, registre também a associação entre os achados e os grupos A, B, C e D do protocolo.
 
 ---
 
@@ -216,6 +227,8 @@ Use o template `.specify/qa/reports/[FEATURE_NAME]-alignment-report.md`:
 ✅ APROVADO PARA PRODUÇÃO
 ```
 
+Se houver inconsistências, o relatório deve indicar claramente se o merge permanece bloqueado e qual issue precisa ser resolvida.
+
 ---
 
 ## ✅ Checklist Padrão
@@ -230,6 +243,7 @@ Use o template `.specify/qa/reports/[FEATURE_NAME]-alignment-report.md`:
 - [ ] Diagramas validados?
 - [ ] Zero inconsistências?
 - [ ] Relatório gerado?
+- [ ] Merge bloqueado até resolução, se aplicável?
 
 ---
 

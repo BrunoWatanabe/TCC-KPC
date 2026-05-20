@@ -10,7 +10,7 @@
 
 ## 🎯 Objetivo Principal
 
-Implementar código **robusto** e **testado** que **cumpra a especificação** criada pelo Arquiteto, mantendo **rastreabilidade** completa.
+Implementar código **robusto** e **testado** que **cumpra a especificação** criada pelo Arquiteto, mantendo **rastreabilidade** completa e entregando incrementos prontos para validação do QA a cada sprint e a cada commit relevante.
 
 ---
 
@@ -73,6 +73,7 @@ Use o template `.specify/templates/kpc-tasks-initial.md`:
 - Manter dependências mínimas
 - Considerar paralelização
 - Estimar realista
+- Organizar as tasks para que cada commit deixe uma unidade validável pelo QA
 
 ---
 
@@ -226,6 +227,7 @@ Antes de passar para QA:
 - [ ] Nenhum código sem referência no modelo?
 - [ ] Diagramas refletem implementação?
 - [ ] Documentação atualizada?
+- [ ] O incremento está pronto para validação imediata do QA no fluxo do protocolo?
 
 ---
 
@@ -239,6 +241,7 @@ Antes de passar para QA:
 - [ ] Cobertura > 80%
 - [ ] Code review pessoal OK
 - [ ] Pronto para QA
+- [ ] Incremento compatível com validação por commit
 
 ---
 

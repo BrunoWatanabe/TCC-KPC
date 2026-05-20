@@ -1,6 +1,6 @@
 # KPC Spec-Kit
 
-Framework do projeto KPC para desenvolvimento guiado por especificacao, modelagem e rastreabilidade. O objetivo e manter o alinhamento entre requisitos, modelos, implementacao, testes e validacao de qualidade.
+Framework do projeto KPC para desenvolvimento guiado por especificacao, modelagem e rastreabilidade. O objetivo e manter o alinhamento entre requisitos, modelos, implementacao, testes e validacao de qualidade, seguindo o protocolo experimental descrito em [protocolo-geral](../relatorios/protocolos/protocolo-geral.md).
 
 Este arquivo e a documentacao principal do Spec-Kit. Os READMEs antigos em subpastas foram consolidados aqui para evitar duplicidade e facilitar a navegacao.
 
@@ -37,6 +37,7 @@ O Spec-Kit organiza o trabalho em torno de quatro pilares:
 2. Modelagem formal com PlantUML e convencoes de rastreabilidade.
 3. Agentes especializados para arquiteto, desenvolvimento e QA.
 4. Validacao continua com relatorios, metadados e convencoes de nomenclatura.
+5. Fluxo por sprint e por commit com gate de QA e evidencias de alinhamento.
 
 O framework esta integrado ao ecossistema KPC e conversa com o backend em [kpc-backend](../kpc-backend) e o frontend em [kpc-frontend](../kpc-frontend).
 
@@ -140,6 +141,7 @@ Use os artefatos abaixo:
 - [qa/reports](qa/reports): relatorios e saidas de alinhamento.
 - [docs/FASE5_METRICAS.md](docs/FASE5_METRICAS.md): leitura executiva das metricas.
 - [METRICAS-ALINHAMENTO.md](METRICAS-ALINHAMENTO.md): definicao tecnica das metricas.
+- A validacao cobre os grupos A, B, C e D do protocolo geral.
 
 <a id="35-converter-tarefas-em-issues"></a>
 ### 3.5 Converter tarefas em issues
@@ -193,6 +195,7 @@ Documentacao por fase e guias estruturais do framework.
 - [docs/FASE3_INTEGRACAO.md](docs/FASE3_INTEGRACAO.md): fase 3, integracao SDD + MDE.
 - [docs/FASE5_METRICAS.md](docs/FASE5_METRICAS.md): fase 5, metricas de alinhamento.
 - [docs/AGENTS.md](docs/AGENTS.md): complementos de governanca.
+- [relatorios/protocolos/protocolo-geral.md](../relatorios/protocolos/protocolo-geral.md): base experimental e criterios de avaliacao.
 - [docs/MODELS.md](docs/MODELS.md): detalhamento adicional dos modelos.
 - [docs/NAMING-CONVENTIONS.md](docs/NAMING-CONVENTIONS.md): padroes de nomeacao.
 - [docs/TRACEABILITY-CONVENTIONS.md](docs/TRACEABILITY-CONVENTIONS.md): rastreabilidade.

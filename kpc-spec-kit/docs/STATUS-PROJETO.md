@@ -101,6 +101,8 @@ kpc-spec-kit/
 - Documentar ciclo Arquiteto → Dev → QA
 - Executar no projeto real (KPC)
 - Validar metodologia
+- Vincular commits e sprints às evidências de QA
+- Registrar bloqueios de merge e issues abertas pelo QA
 
 **Status**: ⏳ Não iniciado
 
@@ -137,6 +139,8 @@ kpc-spec-kit/
 - Experimento 1: Com agentes vs sem agentes
 - Experimento 2: Modelagem forte vs fraca
 - Experimento 3: Precisão do QA
+- Comparar resultados por sprint e por commit
+- Mapear evidências para os grupos A, B, C e D do protocolo
 
 **Status**: ⏳ Não iniciado
 
@@ -249,6 +253,12 @@ Legendas:
 | Linhas de documentação | ~8.500 |
 | Fases concluídas | 3 (FASE 1, 2, 5) |
 | Padrões definidos | 5 (Modelos, Rastreabilidade, Nomenclatura, Métricas, Agentes) |
+
+### Protocolo de Pesquisa
+
+- Validação contínua por sprint e por commit
+- QA como gate de bloqueio e abertura de issues
+- Métricas organizadas nos grupos A, B, C e D
 
 ### Cobertura
 

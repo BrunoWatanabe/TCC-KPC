@@ -17,6 +17,8 @@ A FASE 5 estabeleceu as **métricas quantitativas** para medir alinhamento:
 ✅ Integração com CI/CD (GitHub Actions)  
 ✅ Visualizações e Dashboards  
 
+Essas métricas alimentam o protocolo de pesquisa experimental e são usadas para análise por sprint, por commit e por grupo A/B/C/D.
+
 ---
 
 ## 🎯 Objetivos da FASE 5
@@ -26,6 +28,15 @@ A FASE 5 estabeleceu as **métricas quantitativas** para medir alinhamento:
 - [x] Criar validadores automáticos
 - [x] Integrar com CI/CD
 - [x] Documentar exemplos práticos
+
+## 🔗 Ligação com o Protocolo
+
+- Grupo A: métricas de qualidade do QA
+- Grupo B: alinhamento modelo-código
+- Grupo C: qualidade de código
+- Grupo D: processo
+- Cada commit relevante pode gerar nova amostra de métrica
+- Cada sprint deve consolidar evidências e tendências
 
 ---
 

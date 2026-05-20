@@ -2,7 +2,7 @@
 
 ## 📌 Visão Geral
 
-O sistema de agentes do Spec-Kit utiliza **3 agentes especializados** que trabalham em **coordenação** para manter alinhamento completo entre:
+O sistema de agentes do Spec-Kit utiliza **3 agentes especializados** que trabalham em **coordenação** para manter alinhamento completo entre os artefatos e seguir o protocolo experimental do projeto, com validação por sprint, por commit e por métricas de alinhamento:
 
 ```
 Especificação ↔ Modelo ↔ Código ↔ Testes
@@ -77,6 +77,7 @@ Especificação ↔ Modelo ↔ Código ↔ Testes
 - ✅ Validar alinhamento especificação ↔ código
 - ✅ Detectar inconsistências
 - ✅ Gerar relatórios de alinhamento
+- ✅ Bloquear merge quando houver inconsistências abertas
 
 **Entradas**:
 - Código implementado (Desenvolvedor)
@@ -137,7 +138,8 @@ Especificação ↔ Modelo ↔ Código ↔ Testes
 │    ├─ Analisa alinhamento                               │
 │    ├─ Detecta inconsistências                           │
 │    ├─ alignment-report.md                               │
-│    └─ Status: APROVADO ou CORREÇÃO NECESSÁRIA          │
+│    ├─ Abre issue e bloqueia merge quando necessário      │
+│    └─ Status: APROVADO ou CORREÇÃO NECESSÁRIA           │
 └────────────────────┬────────────────────────────────────┘
                      ↓
          ┌───────────┴────────────┐
@@ -163,6 +165,15 @@ Especificação ↔ Modelo ↔ Código ↔ Testes
 | Validar alinhamento | ✅ | ✅ | ✅ |
 | Gerar relatório | - | - | ✅ |
 | Aprovação final | ✅ | - | ✅ |
+
+## 📊 Ligação com o Protocolo
+
+- Grupo A: qualidade do Agente QA
+- Grupo B: alinhamento modelo-código
+- Grupo C: qualidade de código
+- Grupo D: processo
+- Cada commit relevante pode disparar validação do QA
+- Cada sprint deve gerar evidências rastreáveis em tarefas, testes e relatório
 
 ---
 

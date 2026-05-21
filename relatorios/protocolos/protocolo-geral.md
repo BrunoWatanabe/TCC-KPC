@@ -10,7 +10,7 @@
 
 **DATA ATUALIZAÇÃO:** 20/05/2026
 
-**Versão:** 6.0
+**Versão:** 7.0
 
 **Status:** Protocolo com escopo reduzido, para revisão do orientador
 
@@ -207,18 +207,27 @@ Todas as métricas quantitativas deste protocolo seguem a seguinte rubrica padro
 | 3 | Bom (B) | Desempenho acima do esperado; atende plenamente aos requisitos |
 | 4 | Excelente (E) | Desempenho muito acima do esperado; excede os requisitos |
 
+**Importante:** Todas as métricas descritas nesta seção são coletadas **por sprint** e consideram **apenas os artefatos (modelos e código) correspondentes às tarefas planejadas para aquela sprint específica**. Não são considerados artefatos de sprints anteriores ou do projeto como um todo, a menos que explicitamente indicado. Cada sprint possui seu próprio conjunto de:
+- Fragmentos de modelo UML (diagramas PlantUML criados ou modificados na sprint)
+- Fragmentos de código fonte (implementações correspondentes às tarefas da sprint)
+- Requisitos funcionais (RFs) atribuídos à sprint
+
 ---
 
 ### 10.2 Grupo A — Métricas de Qualidade do Agente QA
+
+As métricas deste grupo são calculadas **por sprint**, considerando exclusivamente as **audiências realizadas em decorrência de commits relacionados às tarefas da sprint corrente**. Inconsistências detectadas em artefatos de sprints anteriores não são contabilizadas nesta sprint.
 
 #### A1: Matriz de Confusão do QA
 
 | Cenário | Nome | Descrição |
 |---------|------|-----------|
-| **TP** | Verdadeiro Positivo | QA detectou inconsistência que realmente existe |
-| **TN** | Verdadeiro Negativo | QA não detectou inconsistência onde não existe |
-| **FP** | Falso Positivo | QA detectou inconsistência que não existia |
-| **FN** | Falso Negativo | QA não detectou inconsistência que existia |
+| **TP** | Verdadeiro Positivo | QA detectou inconsistência que realmente existe nos artefatos da sprint |
+| **TN** | Verdadeiro Negativo | QA não detectou inconsistência onde não existe nos artefatos da sprint |
+| **FP** | Falso Positivo | QA detectou inconsistência que não existia nos artefatos da sprint |
+| **FN** | Falso Negativo | QA não detectou inconsistência que existia nos artefatos da sprint |
+
+**Escopo de coleta:** Sprint corrente (apenas commits e artefatos relacionados às tarefas da sprint)
 
 **Fonte dos dados:** [Checklist 1 — Avaliação de Audiência do Agente QA](#171-checklist-1--avaliação-de-audiência-do-agente-qa) (itens AUD-06, AUD-07, AUD-08, AUD-09)
 
@@ -226,11 +235,11 @@ Todas as métricas quantitativas deste protocolo seguem a seguinte rubrica padro
 
 | Pontuação | Critério |
 |-----------|----------|
-| 0 | Matriz não registrada ou registros inconsistentes em mais de 50% dos casos |
-| 1 | Matriz registrada, mas com inconsistências em 25-50% dos casos |
-| 2 | Matriz completa, com consistência em 75-89% dos casos |
-| 3 | Matriz completa, com consistência em 90-94% dos casos |
-| 4 | Matriz completa, com consistência em 95-100% dos casos |
+| 0 | Matriz não registrada ou registros inconsistentes em mais de 50% dos casos da sprint |
+| 1 | Matriz registrada, mas com inconsistências em 25-50% dos casos da sprint |
+| 2 | Matriz completa, com consistência em 75-89% dos casos da sprint |
+| 3 | Matriz completa, com consistência em 90-94% dos casos da sprint |
+| 4 | Matriz completa, com consistência em 95-100% dos casos da sprint |
 
 ---
 
@@ -238,7 +247,9 @@ Todas as métricas quantitativas deste protocolo seguem a seguinte rubrica padro
 
 `Precisão = TP / (TP + FP)`
 
-**Fonte dos dados:** [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) (contagem de TP e FP)
+**Escopo de coleta:** Sprint corrente (apenas as detecções realizadas pelo QA nos artefatos da sprint)
+
+**Fonte dos dados:** [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) (contagem de TP e FP registrados na sprint)
 
 **Rubrica de Avaliação:**
 
@@ -256,7 +267,9 @@ Todas as métricas quantitativas deste protocolo seguem a seguinte rubrica padro
 
 `Recall = TP / (TP + FN)`
 
-**Fonte dos dados:** [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) (contagem de TP e FN)
+**Escopo de coleta:** Sprint corrente (apenas as inconsistências reais existentes nos artefatos da sprint)
+
+**Fonte dos dados:** [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) (contagem de TP e FN registrados na sprint)
 
 **Rubrica de Avaliação:**
 
@@ -274,7 +287,9 @@ Todas as métricas quantitativas deste protocolo seguem a seguinte rubrica padro
 
 `F1 = 2 × (Precisão × Recall) / (Precisão + Recall)`
 
-**Fonte dos dados:** Calculado a partir das métricas [A2](#a2-precisão-do-qa-precision) e [A3](#a3-revocação-do-qa-recall)
+**Escopo de coleta:** Sprint corrente (calculado a partir das métricas A2 e A3 da sprint)
+
+**Fonte dos dados:** Calculado a partir das métricas [A2](#a2-precisão-do-qa-precision) e [A3](#a3-revocação-do-qa-recall) da sprint corrente
 
 **Rubrica de Avaliação:**
 
@@ -292,7 +307,9 @@ Todas as métricas quantitativas deste protocolo seguem a seguinte rubrica padro
 
 `FNR = FN / (TP + FN)`
 
-**Fonte dos dados:** [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) (itens onde QA não detectou inconsistência existente)
+**Escopo de coleta:** Sprint corrente (apenas os casos onde o QA deixou de detectar inconsistências existentes nos artefatos da sprint)
+
+**Fonte dos dados:** [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) (itens da sprint onde QA não detectou inconsistência existente)
 
 **Rubrica de Avaliação:**
 
@@ -310,7 +327,9 @@ Todas as métricas quantitativas deste protocolo seguem a seguinte rubrica padro
 
 `FPR = FP / (FP + TN)`
 
-**Fonte dos dados:** [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) (itens onde QA detectou inconsistência inexistente)
+**Escopo de coleta:** Sprint corrente (apenas os casos onde o QA detectou inconsistências inexistentes nos artefatos da sprint)
+
+**Fonte dos dados:** [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) (itens da sprint onde QA detectou inconsistência inexistente)
 
 **Rubrica de Avaliação:**
 
@@ -328,7 +347,9 @@ Todas as métricas quantitativas deste protocolo seguem a seguinte rubrica padro
 
 `Concordância = (Veredictos alinhados com árbitros) / (Total de audiências)`
 
-**Fonte dos dados:** [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) (item AUD-08)
+**Escopo de coleta:** Sprint corrente (apenas as audiências realizadas em decorrência de commits da sprint)
+
+**Fonte dos dados:** [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) (item AUD-08 registrado na sprint)
 
 **Rubrica de Avaliação:**
 
@@ -344,7 +365,9 @@ Todas as métricas quantitativas deste protocolo seguem a seguinte rubrica padro
 
 #### A8: Qualidade da Justificativa
 
-**Fonte dos dados:** [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) (item AUD-13)
+**Escopo de coleta:** Sprint corrente (apenas as justificativas registradas nas audiências da sprint)
+
+**Fonte dos dados:** [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) (item AUD-13 registrado na sprint)
 
 **Rubrica de Avaliação:**
 
@@ -360,13 +383,23 @@ Todas as métricas quantitativas deste protocolo seguem a seguinte rubrica padro
 
 ### 10.3 Grupo B — Métricas de Alinhamento Modelo-Código
 
+As métricas deste grupo são calculadas **por sprint**, considerando **apenas os fragmentos de modelo e código correspondentes às tarefas planejadas e executadas naquela sprint**. Isso significa que:
+
+- **Modelo considerado:** Apenas os diagramas PlantUML (ou partes deles) que foram criados ou modificados para atender às tarefas da sprint
+- **Código considerado:** Apenas os arquivos/funções/métodos implementados ou modificados para atender às tarefas da sprint
+- **RFs considerados:** Apenas os requisitos funcionais atribuídos à sprint no planejamento
+
+Artefatos de sprints anteriores que não sofreram modificação na sprint corrente **não são reavaliados**, a menos que tenham sido impactados por refatorações ou correções decorrentes de inconsistências detectadas.
+
 #### B1: Cobertura do Modelo
 
 `Cobertura = (Elementos implementados / Elementos modelados) × 100`
 
 **Elementos contados:** classes, métodos, atributos, relacionamentos em PlantUML.
 
-**Fonte dos dados:** [Checklist 2 — Avaliação de Alinhamento Modelo-Código](#172-checklist-2--avaliação-de-alinhamento-modelo-código) (itens ALI-03 a ALI-09)
+**Escopo de coleta:** Sprint corrente (apenas elementos modelados que foram planejados para implementação na sprint × elementos efetivamente implementados na sprint)
+
+**Fonte dos dados:** [Checklist 2 — Avaliação de Alinhamento Modelo-Código](#172-checklist-2--avaliação-de-alinhamento-modelo-código) (itens ALI-03 a ALI-09), preenchidos com base nos artefatos da sprint
 
 **Rubrica de Avaliação:**
 
@@ -384,7 +417,9 @@ Todas as métricas quantitativas deste protocolo seguem a seguinte rubrica padro
 
 `Precisão = (Implementações corretas / Implementações totais) × 100`
 
-**Fonte dos dados:** [Checklist 2](#172-checklist-2--avaliação-de-alinhamento-modelo-código) (itens ALI-10 a ALI-12)
+**Escopo de coleta:** Sprint corrente (apenas implementações realizadas na sprint, comparadas com os elementos modelados para a sprint)
+
+**Fonte dos dados:** [Checklist 2](#172-checklist-2--avaliação-de-alinhamento-modelo-código) (itens ALI-10 a ALI-12), considerando apenas os artefatos da sprint
 
 **Rubrica de Avaliação:**
 
@@ -404,6 +439,8 @@ Todas as métricas quantitativas deste protocolo seguem a seguinte rubrica padro
 
 **Tipos de divergência:** regra funcional violada, comportamento não modelado, exceção não documentada, lógica invertida.
 
+**Escopo de coleta:** Sprint corrente (apenas comportamentos divergentes identificados nas implementações da sprint em relação às especificações/modelo da sprint)
+
 **Fonte dos dados:** [Checklist 2](#172-checklist-2--avaliação-de-alinhamento-modelo-código) (itens ALI-13 a ALI-15)
 
 **Rubrica de Avaliação:**
@@ -422,7 +459,9 @@ Todas as métricas quantitativas deste protocolo seguem a seguinte rubrica padro
 
 `Over-Engineering = (Código não modelado / Total de código) × 100`
 
-**Fonte dos dados:** [Checklist 2](#172-checklist-2--avaliação-de-alinhamento-modelo-código) (itens ALI-16 a ALI-18) + [NE-03](#163-ne-03-parser-de-código-fonte-ast)
+**Escopo de coleta:** Sprint corrente (apenas código produzido na sprint que não possui correspondência no modelo planejado para a sprint)
+
+**Fonte dos dados:** [Checklist 2](#172-checklist-2--avaliação-de-alinhamento-modelo-código) (itens ALI-16 a ALI-18) + [NE-03](#163-ne-03-parser-de-código-fonte-ast), com filtro aplicado para considerar apenas arquivos/métodos criados ou modificados na sprint
 
 **Rubrica de Avaliação:**
 
@@ -440,7 +479,9 @@ Todas as métricas quantitativas deste protocolo seguem a seguinte rubrica padro
 
 `Score = (Cobertura × 0,35) + (Precisão × 0,35) + ((100 − Divergência) × 0,20) + ((100 − Over-Engineering) × 0,10)`
 
-**Fonte dos dados:** Calculado a partir das métricas [B1](#b1-cobertura-do-modelo), [B2](#b2-precisão-da-implementação), [B3](#b3-divergência-semântica) e [B4](#b4-over-engineering)
+**Escopo de coleta:** Sprint corrente (calculado a partir das métricas B1, B2, B3, B4, cada uma já escopada para a sprint)
+
+**Fonte dos dados:** Calculado a partir das métricas [B1](#b1-cobertura-do-modelo), [B2](#b2-precisão-da-implementação), [B3](#b3-divergência-semântica) e [B4](#b4-over-engineering) da sprint corrente
 
 **Rubrica de Avaliação:**
 
@@ -458,6 +499,8 @@ Todas as métricas quantitativas deste protocolo seguem a seguinte rubrica padro
 
 `Rastreabilidade = (RFs com cadeia completa RF→Modelo→Código) / (Total de RFs) × 100`
 
+**Escopo de coleta:** Sprint corrente (apenas RFs atribuídos à sprint, considerando seus respectivos fragmentos de modelo e código implementados na sprint)
+
 **Fonte dos dados:** [Checklist 2](#172-checklist-2--avaliação-de-alinhamento-modelo-código) (itens ALI-20 a ALI-22)
 
 **Rubrica de Avaliação:**
@@ -474,22 +517,22 @@ Todas as métricas quantitativas deste protocolo seguem a seguinte rubrica padro
 
 ### 10.4 Resumo das Métricas
 
-| Grupo | ID | Métrica | Unidade | Fonte Principal | Rubrica (0-4) |
-|-------|-----|---------|---------|-----------------|----------------|
-| A | [A1](#a1-matriz-de-confusão-do-qa) | Matriz de Confusão | Qualitativo | [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) | Consistência dos registros |
-| A | [A2](#a2-precisão-do-qa-precision) | Precisão (Precision) | 0-1 | [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) | Valor da métrica |
-| A | [A3](#a3-revocação-do-qa-recall) | Revocação (Recall) | 0-1 | [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) | Valor da métrica |
-| A | [A4](#a4-f1-score-do-qa) | F1-Score | 0-1 | Calculado (A2,A3) | Valor da métrica |
-| A | [A5](#a5-taxa-de-falso-negativo-fnr) | Taxa de Falso Negativo (FNR) | 0-1 | [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) | Valor da métrica |
-| A | [A6](#a6-taxa-de-falso-positivo-fpr) | Taxa de Falso Positivo (FPR) | 0-1 | [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) | Valor da métrica |
-| A | [A7](#a7-taxa-de-concordância-na-audiência) | Taxa de Concordância | 0-1 | [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) | Valor da métrica |
-| A | [A8](#a8-qualidade-da-justificativa) | Qualidade da Justificativa | 0-4 | [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) | Rubrica específica |
-| B | [B1](#b1-cobertura-do-modelo) | Cobertura do Modelo | % | [Checklist 2](#172-checklist-2--avaliação-de-alinhamento-modelo-código) + [NE-02](#162-ne-02-parser-de-modelos-uml-plantuml)/[NE-03](#163-ne-03-parser-de-código-fonte-ast) | Valor da métrica |
-| B | [B2](#b2-precisão-da-implementação) | Precisão da Implementação | % | [Checklist 2](#172-checklist-2--avaliação-de-alinhamento-modelo-código) + [NE-03](#163-ne-03-parser-de-código-fonte-ast) | Valor da métrica |
-| B | [B3](#b3-divergência-semântica) | Divergência Semântica | % | [Checklist 2](#172-checklist-2--avaliação-de-alinhamento-modelo-código) | Valor da métrica |
-| B | [B4](#b4-over-engineering) | Over-Engineering | % | [Checklist 2](#172-checklist-2--avaliação-de-alinhamento-modelo-código) + [NE-03](#163-ne-03-parser-de-código-fonte-ast) | Valor da métrica |
-| B | [B5](#b5-score-geral-de-alinhamento) | Score Geral de Alinhamento | 0-100 | Calculado (B1-B4) | Valor do score |
-| B | [B6](#b6-rastreabilidade) | Rastreabilidade | % | [Checklist 2](#172-checklist-2--avaliação-de-alinhamento-modelo-código) | Valor da métrica |
+| Grupo | ID | Métrica | Unidade | Escopo de Coleta | Fonte Principal |
+|-------|-----|---------|---------|------------------|-----------------|
+| A | [A1](#a1-matriz-de-confusão-do-qa) | Matriz de Confusão | Qualitativo | Sprint corrente (audiências da sprint) | [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) |
+| A | [A2](#a2-precisão-do-qa-precision) | Precisão | 0-1 | Sprint corrente (detecções da sprint) | [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) |
+| A | [A3](#a3-revocação-do-qa-recall) | Revocação | 0-1 | Sprint corrente (detecções da sprint) | [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) |
+| A | [A4](#a4-f1-score-do-qa) | F1-Score | 0-1 | Sprint corrente | Calculado (A2,A3) |
+| A | [A5](#a5-taxa-de-falso-negativo-fnr) | FNR | 0-1 | Sprint corrente (falsos negativos da sprint) | [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) |
+| A | [A6](#a6-taxa-de-falso-positivo-fpr) | FPR | 0-1 | Sprint corrente (falsos positivos da sprint) | [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) |
+| A | [A7](#a7-taxa-de-concordância-na-audiência) | Concordância | 0-1 | Sprint corrente (audiências da sprint) | [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) |
+| A | [A8](#a8-qualidade-da-justificativa) | Qualidade da Justificativa | 0-4 | Sprint corrente (justificativas da sprint) | [Checklist 1](#171-checklist-1--avaliação-de-audiência-do-agente-qa) |
+| B | [B1](#b1-cobertura-do-modelo) | Cobertura do Modelo | % | Sprint corrente (modelo vs. código da sprint) | [Checklist 2](#172-checklist-2--avaliação-de-alinhamento-modelo-código) + [NE-02](#162-ne-02-parser-de-modelos-uml-plantuml)/[NE-03](#163-ne-03-parser-de-código-fonte-ast) |
+| B | [B2](#b2-precisão-da-implementação) | Precisão da Implementação | % | Sprint corrente (implementações da sprint) | [Checklist 2](#172-checklist-2--avaliação-de-alinhamento-modelo-código) + [NE-03](#163-ne-03-parser-de-código-fonte-ast) |
+| B | [B3](#b3-divergência-semântica) | Divergência Semântica | % | Sprint corrente (comportamentos da sprint) | [Checklist 2](#172-checklist-2--avaliação-de-alinhamento-modelo-código) |
+| B | [B4](#b4-over-engineering) | Over-Engineering | % | Sprint corrente (código extra da sprint) | [Checklist 2](#172-checklist-2--avaliação-de-alinhamento-modelo-código) + [NE-03](#163-ne-03-parser-de-código-fonte-ast) |
+| B | [B5](#b5-score-geral-de-alinhamento) | Score Geral | 0-100 | Sprint corrente | Calculado (B1-B4) |
+| B | [B6](#b6-rastreabilidade) | Rastreabilidade | % | Sprint corrente (RFs da sprint) | [Checklist 2](#172-checklist-2--avaliação-de-alinhamento-modelo-código) |
 
 ---
 

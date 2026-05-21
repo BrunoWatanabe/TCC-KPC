@@ -10,9 +10,9 @@
 
 **DATA ATUALIZAÇÃO:** 20/05/2026
 
-**Versão:** 5.1 (Hiperlinks Corrigidos)
+**Versão:** 6.0
 
-**Status:** Protocolo para revisão do orientador
+**Status:** Protocolo com escopo reduzido, para revisão do orientador
 
 ---
 
@@ -70,6 +70,7 @@
     - 17.1 [Checklist 1 — Audiência do QA](#171-checklist-1--avaliação-de-audiência-do-agente-qa)
     - 17.2 [Checklist 2 — Alinhamento Modelo-Código](#172-checklist-2--avaliação-de-alinhamento-modelo-código)
     - 17.3 [Checklist 3 — Configuração do Experimento](#173-checklist-3--registro-de-configuração-do-experimento)
+    - 17.4 [Resumo dos Checklists de Dados Humanos](#174-resumo-dos-checklists-de-dados-humanos)
 18. [Benefícios e Contribuições Esperadas](#18-benefícios-e-contribuições-esperadas)
 19. [Limitações e Ameaças à Validade](#19-limitações-e-ameaças-à-validade)
     - 19.1 [Ameaças à Validade Interna](#191-ameaças-à-validade-interna)
@@ -657,8 +658,6 @@ Este capítulo descreve as fontes automatizadas de coleta de dados que **não de
 | AUD-15 | Tempo da audiência (minutos) | __ |
 | AUD-16 | Comentários adicionais | __________ |
 
-**Este checklist alimenta as métricas:** [A1](#a1-matriz-de-confusão-do-qa), [A2](#a2-precisão-do-qa-precision), [A3](#a3-revocação-do-qa-recall), [A5](#a5-taxa-de-falso-negativo-fnr), [A6](#a6-taxa-de-falso-positivo-fpr), [A7](#a7-taxa-de-concordância-na-audiência), [A8](#a8-qualidade-da-justificativa)
-
 ---
 
 ### 17.2 Checklist 2 — Avaliação de Alinhamento Modelo-Código
@@ -690,8 +689,6 @@ Este capítulo descreve as fontes automatizadas de coleta de dados que **não de
 | ALI-21 | RFs com rastreabilidade completa | __ | [NE-02](#162-ne-02-parser-de-modelos-uml-plantuml) + [NE-03](#163-ne-03-parser-de-código-fonte-ast) |
 | ALI-22 | Rastreabilidade (B6) | __% | Calculado |
 
-**Este checklist alimenta as métricas:** [B1](#b1-cobertura-do-modelo), [B2](#b2-precisão-da-implementação), [B3](#b3-divergência-semântica), [B4](#b4-over-engineering), [B5](#b5-score-geral-de-alinhamento), [B6](#b6-rastreabilidade)
-
 ---
 
 ### 17.3 Checklist 3 — Registro de Configuração do Experimento
@@ -716,6 +713,16 @@ Este capítulo descreve as fontes automatizadas de coleta de dados que **não de
 | CFG-14 | Sistema de issues | __________ | ______ |
 | CFG-15 | Duração da sprint (dias) | __ | ______ |
 | CFG-16 | Total de sprints planejadas | __ | ______ |
+
+---
+
+### 17.4 Resumo dos Checklists de Dados Humanos
+
+| ID do Checklist | Nome | Métricas que Alimenta | Responsável | Frequência |
+|-----------------|------|----------------------|-------------|------------|
+| [CH-01](#171-checklist-1--avaliação-de-audiência-do-agente-qa) | Avaliação de Audiência do Agente QA | [A1](#a1-matriz-de-confusão-do-qa), [A2](#a2-precisão-do-qa-precision), [A3](#a3-revocação-do-qa-recall), [A5](#a5-taxa-de-falso-negativo-fnr), [A6](#a6-taxa-de-falso-positivo-fpr), [A7](#a7-taxa-de-concordância-na-audiência), [A8](#a8-qualidade-da-justificativa) | Professores Orientadores | A cada inconsistência |
+| [CH-02](#172-checklist-2--avaliação-de-alinhamento-modelo-código) | Avaliação de Alinhamento Modelo-Código | [B1](#b1-cobertura-do-modelo), [B2](#b2-precisão-da-implementação), [B3](#b3-divergência-semântica), [B4](#b4-over-engineering), [B5](#b5-score-geral-de-alinhamento), [B6](#b6-rastreabilidade) | Alunos (com validação dos professores) | Ao final de cada sprint |
+| [CH-03](#173-checklist-3--registro-de-configuração-do-experimento) | Registro de Configuração do Experimento | Todas (contexto) | Alunos | Antes do início e a cada mudança |
 
 ---
 

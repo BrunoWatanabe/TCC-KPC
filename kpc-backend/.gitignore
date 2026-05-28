@@ -1,4 +1,6 @@
 venv
+venv/
+.venv/
 _[0-9a-zA-Z]*
 _*.ipynb
 *.pyc
@@ -7,9 +9,17 @@ _*.ipynb
 _*.sqlite
 _ne.sql
 __pycache__
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.ipynb_checkpoints/
 .DS_Store
 *.bak
 attributions.toml
+dataset/attributions.toml
+dataset/annotations/tests/
 node_modules
 yarn.lock
 *.bkp

@@ -1,5 +1,3 @@
-.git
-.gitignore
 .DS_Store
 .vscode/
 .idea/
@@ -9,10 +7,10 @@
 node_modules/
 dist/
 dist-mvvm/
-storybook-static/
 coverage/
+storybook-static/
 .vite/
-venv/
+
 .env
 .env.local
 .env.development.local
@@ -23,8 +21,3 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-
-docs/
-launcher/
-README.md
-package_bkp.json

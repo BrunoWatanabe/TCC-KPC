@@ -19,6 +19,36 @@ hooks:
     prompt: Execute speckit.git.feature?
     description: Create feature branch before specification
     condition: null
+  - extension: arquiteto
+    command: speckit.arquiteto.specify
+    enabled: true
+    optional: false
+    prompt: Execute speckit.arquiteto.specify?
+    description: Run the architecture agent before specification
+    condition: null
+  before_implement:
+  - extension: developer
+    command: speckit.developer.implement
+    enabled: true
+    optional: false
+    prompt: Execute speckit.developer.implement?
+    description: Run the development agent before implementation
+    condition: null
+  after_implement:
+  - extension: policia
+    command: speckit.policia.inconsistencia
+    enabled: true
+    optional: false
+    prompt: Execute speckit.policia.inconsistencia?
+    description: Run the police evidence collector after implementation
+    condition: null
+  - extension: juiz
+    command: speckit.juiz.inconsistencia
+    enabled: true
+    optional: false
+    prompt: Execute speckit.juiz.inconsistencia?
+    description: Run the judge agent after implementation
+    condition: null
   before_clarify:
   - extension: git
     command: speckit.git.commit

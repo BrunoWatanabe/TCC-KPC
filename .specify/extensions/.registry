@@ -18,6 +18,62 @@
       },
       "registered_skills": [],
       "installed_at": "2026-05-28T23:49:40.568852+00:00"
+    },
+    "arquiteto": {
+      "version": "1.0.0",
+      "source": "local",
+      "manifest_hash": "sha256:f0096f3fdcb243bc350474c6eb31bfd64cb8800abc93abcee03b498d41868550",
+      "enabled": true,
+      "priority": 20,
+      "registered_commands": {
+        "copilot": [
+          "speckit.arquiteto.specify"
+        ]
+      },
+      "registered_skills": [],
+      "installed_at": "2026-06-02T00:00:00+00:00"
+    },
+    "developer": {
+      "version": "1.0.0",
+      "source": "local",
+      "manifest_hash": "sha256:6980617e0c5446790a694064999739fd7bf69b614937e893fdedef54873d1fd1",
+      "enabled": true,
+      "priority": 21,
+      "registered_commands": {
+        "copilot": [
+          "speckit.developer.implement"
+        ]
+      },
+      "registered_skills": [],
+      "installed_at": "2026-06-02T00:00:00+00:00"
+    },
+    "juiz": {
+      "version": "1.0.0",
+      "source": "local",
+      "manifest_hash": "sha256:f9275ed7feffd85ac3bf7158c61d33d6d0d76235be327056fb336cff22a726c0",
+      "enabled": true,
+      "priority": 22,
+      "registered_commands": {
+        "copilot": [
+          "speckit.juiz.inconsistencia"
+        ]
+      },
+      "registered_skills": [],
+      "installed_at": "2026-06-02T00:00:00+00:00"
+    },
+    "policia": {
+      "version": "1.0.0",
+      "source": "local",
+      "manifest_hash": "sha256:8404d8200166d247925c1ad09ff6b7390f3166b991823722042efa7cf3a3f037",
+      "enabled": true,
+      "priority": 21,
+      "registered_commands": {
+        "copilot": [
+          "speckit.policia.inconsistencia"
+        ]
+      },
+      "registered_skills": [],
+      "installed_at": "2026-06-02T00:00:00+00:00"
     }
   }
 }

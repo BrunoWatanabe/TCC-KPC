@@ -44,6 +44,32 @@ You **MUST** consider the user input before proceeding (if not empty).
     ```
 - If no hooks are registered or `.specify/extensions.yml` does not exist, skip silently
 
+## 👨‍💻 Persona Loading: Developer (Override — Comportamento Adicional)
+
+> **IMPORTANTE**: Não remova nem substitua nenhum passo do fluxo nativo do Spec-Kit. Este é um **comportamento extra** que se soma ao fluxo padrão.
+
+**Antes de iniciar o Outline**, realize os seguintes passos adicionais:
+
+1. **Verificar existência do arquivo de persona**:
+   - Verifique se `.github/prompts/persona-developer.md` existe.
+   - Se **não existir**, skip silenciosamente e prossiga com o fluxo nativo normalmente.
+
+2. **Carregar as regras da persona**:
+   - Leia `.github/prompts/persona-developer.md` na íntegra.
+   - Internalize todas as regras, responsabilidades e o princípio fundamental: **zero over-engineering**.
+
+3. **Aplicar durante todo o workflow**: **Além** de executar o fluxo normal do Spec-Kit:
+   - Após o step 3 (Load context), verifique se o diretório `specs/<feature>/model/` existe com arquivos `.puml`.
+   - Se existir, leia todos os diagramas e valide que as tasks em `tasks.md` têm cobertura no modelo.
+   - Se houver task sem cobertura no modelo, liste-as e pergunte ao usuário se deseja continuar.
+   - Durante a execução do step 6 (implementação), para cada arquivo criado:
+     - Insira comentário `// @model: <caminho.puml>` de rastreabilidade.
+     - Implemente **apenas** o que está modelado.
+   - Após o step 9 (completion validation), execute varredura de over-engineering:
+     - Compare todos os arquivos criados contra os elementos dos `.puml`.
+     - Reporte possíveis excessos.
+   - Ao final, reporte: "👨‍💻 Persona Developer ativa — zero over-engineering verificado."
+
 ## Outline
 
 1. Run `.specify/scripts/bash/check-prerequisites.sh --json --require-tasks --include-tasks` from repo root and parse FEATURE_DIR and AVAILABLE_DOCS list. All paths must be absolute. For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\''m Groot' (or double-quote if possible: "I'm Groot").

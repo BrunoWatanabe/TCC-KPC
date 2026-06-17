@@ -64,7 +64,7 @@ networkx==3.4.2
 numpy>=1.26.0,<2.0.0
 openai==1.72.0
 packaging==25.0
-pandas==2.0.3
+pandas==2.1.4
 parso==0.8.5
 passlib==1.7.4
 pexpect==4.9.0

@@ -16,8 +16,13 @@ atuam **em conjunto** no fluxo de desenvolvimento.
 
 ```mermaid
 flowchart LR
+    subgraph "Fundação (Sprint 0)"
+        CONST[/speckit.constitution<br/>Constituição\\]
+    end
+
     subgraph "Comandos Spec-Kit (Nativos)"
-        A[/speckit.specify<br/>Especificação\\] --> B[/speckit.plan<br/>Planejamento\\]
+        CONST --> A[/speckit.specify<br/>Especificação\\]
+        A --> B[/speckit.plan<br/>Planejamento\\]
         B --> C[/speckit.tasks<br/>Tarefas\\]
         C --> D[/speckit.implement<br/>Implementação\\]
         D --> E[/speckit.analyze<br/>Análise\\]
@@ -30,9 +35,6 @@ flowchart LR
         E2 -->|automático| F[⚖️ Juiz<br/>Julga direto]
         F --> G[verdict/verdict.md]
     end
-
-    E2 --> F[⚖️ Juiz<br/>Manual via Chat<br/>Lê .md direto]
-    F --> G[verdict/verdict.md]
 ```
 
 ---
@@ -41,6 +43,7 @@ flowchart LR
 
 | Prefixo | Onde | Exemplo | Descrição |
 |---------|------|---------|-----------|
+| `CONST-` | constitution.md | CONST-R1 | Princípio/norma da constituição do projeto |
 | `RF-` | spec.md | RF-001 | Requisito funcional |
 | `EVD-` | evidence/inconsistencies.md | EVD-SPRINT01-001 | Evidência de inconsistência |
 | `ARG-` | evidence/inconsistencies.md | ARG-SPRINT01-001 | Depoimento do Arquiteto |
@@ -52,6 +55,38 @@ flowchart LR
 ---
 
 ## Passo a Passo: Sprint 01 (Exemplo — Componente de Login)
+
+### Passo 0: Constituição do Projeto (Sprint 0)
+
+**Primeiro passo — antes de qualquer especificação ou modelagem.**
+
+```
+> /speckit.constitution
+```
+
+**O que acontece:** Cria a constituição do projeto, que define os princípios, regras e gates que toda sprint deve seguir. Este arquivo é lido por todos os comandos subsequentes (`/speckit.plan`, `/speckit.implement`, `/speckit.analyze`) para validação automática.
+
+| Ação | Artefato | Conteúdo |
+|------|----------|----------|
+| Definir princípios do projeto | `.specify/memory/constitution.md` | `CONST-R1` a `CONST-R5` com regras MUST/SHOULD |
+
+**O que a Constituição contém:**
+
+| ID | Princípio | Exemplo |
+|----|-----------|---------|
+| CONST-R1 | Stack tecnológica | TypeScript + React 18+ |
+| CONST-R2 | Zero over-engineering | Código apenas se modelado |
+| CONST-R3 | Testes obrigatórios | TDD: testes antes do código |
+| CONST-R4 | Rastreabilidade | Todo elemento deve ter RF associado |
+| CONST-R5 | Commits atômicos | Um commit por funcionalidade |
+
+**Exemplo de criação:**
+> **Daired:** `/speckit.constitution` — Crie a constituição do projeto frontend.
+> **🤖 Spec-Kit:** "Constituição criada em `.specify/memory/constitution.md` com 5 princípios (CONST-R1 a CONST-R5)."
+
+**Impacto:** A constituição é validada automaticamente em todo `speckit.plan` (Constitution Check gate) e em todo `speckit.analyze` (Constitution Alignment detection pass).
+
+---
 
 ### Passo 1: Especificação
 
@@ -195,6 +230,7 @@ Salvo em: `specs/<feature>/verdict/verdict.md`
 
 | Comando | Persona | Arquivo | Gatilho | Gera |
 |---------|---------|---------|---------|------|
+| `/speckit.constitution` | — | — | Sprint 0 (único) | `.specify/memory/constitution.md` (CONST-R\*) |
 | `/speckit.plan` | 🏗️ Arquiteto | `persona-arquiteto.md` | Automático | `model/*.puml` com `@rf:` |
 | `/speckit.implement` | 👨‍💻 Developer | `persona-developer.md` | Automático | Código + `// @model:` |
 | `/speckit.analyze` | 👮‍♂️ Polícia + ⚖️ Juiz | `persona-policia.md` + `persona-juiz.md` | Automático (em série) | `evidence/inconsistencies.md` (EVD-/ARG-/DEP-) + `verdict/verdict.md` (VER-) |
@@ -204,6 +240,10 @@ Salvo em: `specs/<feature>/verdict/verdict.md`
 ## Estrutura de Artefatos (por Sprint)
 
 ```text
+.specify/
+└── memory/
+    └── constitution.md              # CONST-R1, CONST-R2...
+
 specs/<feature>/
 ├── spec.md                          # RF-001, RF-002...
 ├── plan.md                          # Plano de implementação
@@ -226,8 +266,12 @@ specs/<feature>/
 > Elas são uma **camada adicional de comportamento** que se soma ao fluxo padrão,
 > adicionando rigor de modelagem, contenção de over-engineering e verificação de consistência.
 >
-> **O pipeline é FULLY AUTOMATED:** `/speckit.analyze` executa:
-> 1. Análise nativa Spec-Kit
+> **A Constituição é o primeiro passo.** Antes de qualquer especificação ou modelagem,
+> execute `/speckit.constitution` para definir os princípios que governarão todo o projeto.
+> Os comandos subsequentes a validam automaticamente.
+>
+> **O pipeline de verificação é FULLY AUTOMATED:** `/speckit.analyze` executa:
+> 1. Análise nativa Spec-Kit (incluindo Constitution Alignment check)
 > 2. 👮‍♂️ Polícia → `evidence/inconsistencies.md` (com EVD- + ARG- + DEP-)
 > 3. ⚖️ Juiz → `verdict/verdict.md` (com VER-)
 >

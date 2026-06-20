@@ -14,7 +14,7 @@ export { Cluster } from './entities/Cluster.js';
 // ============================================================================
 // SERVICES - Serviços de dados e APIs
 // ============================================================================
-export { AuthService, authService } from './services/AuthService.js';
+export { AuthService } from './services/AuthService.js';
 export { TopicService, topicService } from './services/TopicService.js';
 export { KeyphraseService, keyphraseService } from './services/KeyphraseService.js';
 export { ClusterService, clusterService } from './services/ClusterService.js';
@@ -42,7 +42,6 @@ export const entities = {
 
 // Todas as instâncias de serviços (singletons)
 export const services = {
-  auth: authService,
   topic: topicService,
   keyphrase: keyphraseService,
   cluster: clusterService,

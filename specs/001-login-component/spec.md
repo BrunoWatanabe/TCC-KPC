@@ -4,9 +4,31 @@
 
 **Created**: 2026-06-19
 
-**Status**: Draft
+**Status**: Draft — Correções R1 → R2
 
 **Input**: User description: "Crie a especificação funcional para o componente de Login do sistema KPC (Keyphrase Curation). Sprint 01 do experimento — primeira funcionalidade do frontend MVVM. Stack: React 18 + Material UI 5 + Zustand + Axios. Arquitetura MVVM."
+
+---
+
+## Correções da Rodada 1 (Pós-Veredito)
+
+**Data**: 2026-06-20
+**Rodada Anterior**: R1 (encerrada em 2026-06-19)
+**Veredito de Referência**: `verdict/verdict.md` — 6 evidências DE (Developer Errado), 0 AE, 0 NE
+**Natureza**: Apenas correções de conformidade (CONST-R2, CONST-R3). Nenhum novo RF de funcionalidade.
+
+### Resumo das Correções
+
+| RF de Correção | Descrição | Evidência Origem | Prioridade |
+|----------------|-----------|-----------------|------------|
+| RF-001-C1 | Refatorar `User.js` para escopo mínimo: remover atributos e métodos não modelados | EVD-001-R1-003 — OVER_ENGINEERING | P1 |
+| RF-001-C2 | Refatorar `AuthService.js` para expor apenas `login()` como método público | EVD-001-R1-004 — OVER_ENGINEERING | P1 |
+| RF-001-C3 | Refatorar `useAuthStore` removendo ações não modeladas; manter apenas `login`, `logout`, `clearError` | EVD-001-R1-005 — OVER_ENGINEERING | P2 |
+| RF-001-C4 | Adicionar `// @model:` em `shared/config.js` apontando para `login-classes.puml` | EVD-001-R1-001 — TAG_MODEL_AUSENTE | P2 |
+| RF-001-C5 | Corrigir `ReferenceError` de `maxRows` em `TextField.jsx` | EVD-001-R1-006 — BUG_CODIGO | P1 |
+| RF-001-C6 | Alinhar nomenclatura do hook: renomear `useLoginViewModel` para `useAuth` | EVD-001-R1-002 — NOME_DIVERGENTE | P3 |
+
+> **Nota:** RFs originais (RF-001 a RF-010) permanecem inalterados. Esta atualização adiciona apenas RFs de correção com sufixo `-C`.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -43,12 +65,33 @@ Um usuário que já foi autenticado anteriormente recarrega a página ou retorna
 
 ---
 
+### User Story 3 — Correção de conformidade pós-veredito (Priority: P1)
+
+Após a Rodada 1 do pipeline de verificação, o Juiz identificou 6 evidências de não conformidade — sendo 3 de over-engineering (violação de CONST-R2), 1 de tag ausente (violação de CONST-R3), 1 de nomenclatura divergente e 1 bug de código. O Developer precisa executar as correções determinadas para alinhar o código ao modelo existente, sem introduzir novas funcionalidades.
+
+**Why this priority**: P1 — Over-engineering e bugs bloqueiam o merge (GATE-03). As correções são pré-requisito para avançar para a Rodada 2 de verificação.
+
+**Independent Test**: Pode ser testado reexecutando `/speckit.analyze` e verificando que as 6 evidências originais foram resolvidas (status RESOLVIDA) e nenhuma nova evidência de mesma natureza foi gerada.
+
+**Acceptance Scenarios**:
+
+1. **Given** o arquivo `models/entities/User.js`, **When** refatorado conforme RF-001-C1, **Then** contém APENAS os atributos `username` e `token` e o método `fromApiResponse()`, e o fluxo de login continua funcionando.
+2. **Given** o arquivo `models/services/AuthService.js`, **When** refatorado conforme RF-001-C2, **Then** expõe APENAS `login()` como método público, e a chamada `POST /users/login` continua funcionando.
+3. **Given** o arquivo `viewmodels/hooks/useLoginViewModel.js` (ou `useAuth`), **When** o hook for renomeado conforme RF-001-C6, **Then** o nome do hook (arquivo e função) corresponde ao nome `useAuth` do modelo.
+4. **Given** o arquivo `shared/config.js`, **When** corrigido conforme RF-001-C4, **Then** contém `// @model:` no topo apontando para `specs/001-login-component/model/login-classes.puml`.
+5. **Given** a View `LoginView.jsx`, **When** a refatoração dos RFs de correção for concluída, **Then** o formulário de login continua renderizando e funcionando como especificado nos RFs originais.
+6. **Given** o pipeline de verificação executado após as correções, **When** `/speckit.analyze` é chamado, **Then** as 6 evidências originais estão resolvidas e GATE-03 está aprovado.
+
+---
+
 ### Edge Cases
 
 - O usuário pressiona Enter no formulário — deve submeter a requisição da mesma forma que clicar em "Entrar".
 - O usuário cola um texto muito longo no campo de username — o campo deve respeitar os limites do input padrão sem quebrar o layout.
 - Múltiplos cliques rápidos no botão "Entrar" enquanto a requisição está em andamento — o estado desabilitado impede submissões duplicadas.
 - O token armazenado em localStorage é corrompido ou manualmente alterado — na inicialização, o sistema detecta formato inválido e redireciona ao login.
+- **Correção (RF-001-C5)**: O componente `TextField.jsx` não recebe `maxRows` como prop em nenhum cenário do RF-001 — a correção deve garantir que a prop seja opcional com valor padrão `undefined`, evitando `ReferenceError` sem quebrar usos futuros.
+- **Correção (RF-001-C6)**: Após renomear o hook para `useAuth`, todos os imports em `LoginView.jsx` e demais dependentes devem ser atualizados — a correção deve garantir que nenhum `import` quebrado permaneça.
 
 ## Requirements *(mandatory)*
 
@@ -65,11 +108,23 @@ Um usuário que já foi autenticado anteriormente recarrega a página ou retorna
 - **RF-009**: O sistema DEVE, ao inicializar, verificar se existe um token de autenticação válido no estado persistido — se existir, restaurar o estado de autenticação sem redirecionar ao login.
 - **RF-010**: O campo de senha DEVE ter o tipo `password` (mascarado) para proteger a entrada visual do usuário.
 
+### RFs de Correção (Rodada 1 → Rodada 2)
+
+Estes requisitos são correções de conformidade determinadas pelo Juiz no veredito da Rodada 1. Nenhum introduz nova funcionalidade.
+
+- **RF-001-C1** (P1 — Over-engineering): O sistema DEVE refatorar `models/entities/User.js` para conter APENAS os atributos `username` (string) e `token` (string) e o método `fromApiResponse()`. Todos os demais atributos e métodos não modelados DEVEM ser removidos. *Origem: EVD-001-R1-003.*
+- **RF-001-C2** (P1 — Over-engineering): O sistema DEVE refatorar `models/services/AuthService.js` para expor APENAS `login(username, password)` como método público. Métodos internos/privados são permitidos desde que não sejam exportados. *Origem: EVD-001-R1-004.*
+- **RF-001-C3** (P2 — Over-engineering): O sistema DEVE refatorar `viewmodels/stores/useAuthStore.js` para conter APENAS as ações `login`, `logout` e `clearError`. Ações não modeladas (`updateUser`, `getCurrentUser`, `getToken`, `canAccessTopic`, `isAdmin`, `getAuthHeaders`, `reset` etc.) DEVEM ser removidas. *Origem: EVD-001-R1-005.*
+- **RF-001-C4** (P2 — Tag ausente): O sistema DEVE adicionar o comentário `// @model: specs/001-login-component/model/login-classes.puml` na primeira linha de `shared/config.js`. *Origem: EVD-001-R1-001.*
+- **RF-001-C5** (P1 — Bug): O sistema DEVE corrigir o `ReferenceError: maxRows is not defined` em `views/components/TextField.jsx`, adicionando `maxRows` à desestruturação de props com valor padrão `undefined` ou removendo a referência. *Origem: EVD-001-R1-006.*
+- **RF-001-C6** (P3 — Nomenclatura): O sistema DEVE renomear o hook `useLoginViewModel` para `useAuth`, incluindo nome do arquivo (`viewmodels/hooks/useLoginViewModel.js` → `useAuth.js`), nome da função exportada e todos os imports em dependentes. *Origem: EVD-001-R1-002.*
+
 ### Key Entities *(include if feature involves data)*
 
-- **User**: Entidade que representa o usuário autenticado. Contém as propriedades `username` (nome de usuário, string) e `token` (string de autenticação JWT). É criada após login bem-sucedido e armazenada no estado global.
-- **AuthState**: Estado de autenticação gerenciado pela ViewModel (Zustand store). Contém `user` (User ou null), `isAuthenticated` (booleano derivado), `isLoading` (booleano de controle de UI), `error` (mensagem de erro ou null). Expõe ações `login(username, password)` e `logout()`.
+- **User**: Entidade que representa o usuário autenticado. Contém APENAS as propriedades `username` (nome de usuário, string) e `token` (string de autenticação JWT). Método `fromApiResponse(response)` para construção a partir da resposta da API. Nenhum outro atributo ou método público deve existir — correção determinada por RF-001-C1.
+- **AuthState**: Estado de autenticação gerenciado pela ViewModel (Zustand store). Contém `user` (User ou null), `isAuthenticated` (booleano derivado), `isLoading` (booleano de controle de UI), `error` (mensagem de erro ou null). Expõe APENAS as ações `login(username, password)`, `logout()` e `clearError()` — correção determinada por RF-001-C3.
 - **LoginCredentials**: Dados de entrada do formulário de login. Contém `username` (string) e `password` (string). Usado como payload da requisição para `POST /users/login`.
+- **AuthService**: Serviço de autenticação. Expõe APENAS o método público `login(username, password): Promise<string>` — correção determinada por RF-001-C2.
 
 ## Success Criteria *(mandatory)*
 
@@ -79,6 +134,8 @@ Um usuário que já foi autenticado anteriormente recarrega a página ou retorna
 - **SC-002**: 100% das tentativas de login com credenciais inválidas exibem mensagem de erro visível no formulário, sem redirecionamento.
 - **SC-003**: 0% de envios duplicados — a combinação de campos desabilitados e botão com estado de loading previne múltiplas submissões.
 - **SC-004**: Usuários autenticados que recarregam a página permanecem na sessão atual sem necessidade de reautenticação.
+- **SC-005** (Correção): 100% dos RFs de correção (RF-001-C1 a RF-001-C6) implementados resultam em veredito NE (Ninguém Errado) na Rodada 2 do pipeline.
+- **SC-006** (Correção): O GATE-03 (Over-engineering Bloqueia Merge) transiciona de NEGADO para APROVADO após a execução das correções.
 
 ## Assumptions
 
@@ -90,3 +147,6 @@ Um usuário que já foi autenticado anteriormente recarrega a página ou retorna
 - O formulário utiliza componentes Material UI 5 (TextField, Button, Alert, CircularProgress).
 - A ViewModel utiliza Zustand com middleware `persist` para salvar o estado em localStorage.
 - A comunicação HTTP é feita via Axios, configurado com a base URL definida em `shared/config.js`.
+- **Correções**: Os arquivos refatorados (RF-001-C1 a RF-001-C3) terão seus testes manuais validados antes da Rodada 2.
+- **Correções**: A renomeação do hook (RF-001-C6) requer atualização de imports em `LoginView.jsx` e em qualquer outro arquivo que importe `useLoginViewModel`.
+- **Correções**: O bug `maxRows` (RF-001-C5) só ocorre quando a prop não é passada — a correção com valor padrão `undefined` é suficiente e não altera comportamento existente.

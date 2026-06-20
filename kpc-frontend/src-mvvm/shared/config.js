@@ -1,3 +1,6 @@
+// @model: specs/001-login-component/model/login-classes.puml
+// RF: RF-001, RF-005 — Configuração compartilhada
+
 /**
  * config.js - Sistema de configuração para replicar config do ReactPy
  * Centraliza configurações do sistema como no backend ReactPy

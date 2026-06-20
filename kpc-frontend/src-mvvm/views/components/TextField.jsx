@@ -1,3 +1,6 @@
+// @model: specs/001-login-component/model/login-classes.puml
+// RF: RF-001, RF-010 — Componente TextField MUI
+
 /**
  * TextField.jsx - Componente de campo de texto reutilizável MVVM
  * Baseado no Material-UI TextField com props padronizadas
@@ -20,7 +23,7 @@ const TextField = ({
   size = 'medium',
   multiline = false,
   rows,
-  maxRows,
+  maxRows = undefined,
   autoFocus = false,
   autoComplete,
   InputProps,

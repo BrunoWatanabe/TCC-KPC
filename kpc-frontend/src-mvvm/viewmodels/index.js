@@ -27,7 +27,7 @@ export { useFlowStore } from './stores/useFlowStore.js';
 // ============================================================================
 
 // 1. Login e autenticação
-export { useLoginViewModel } from './hooks/useLoginViewModel.js';
+export { useAuth } from './hooks/useAuth.js';
 
 // 2. Seleção de tópico
 export { useTopicSelectionViewModel } from './hooks/useTopicSelectionViewModel.js';
@@ -115,7 +115,7 @@ export const VIEWMODELS_INFO = {
     'useFlowStore'
   ],
   hooks: [
-    'useLoginViewModel',
+    'useAuth',
     'useTopicSelectionViewModel',
     'useKeyphraseClusteringViewModel',
     'useKeyphraseClustersViewModel',

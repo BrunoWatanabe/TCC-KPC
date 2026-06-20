@@ -4,9 +4,9 @@ agent: speckit.plan.override
 extends: speckit.plan
 ---
 
-# Implementation Plan: Login Component (Sprint 01) — Com Modelagem Arquitetural 🏗️
+# Implementation Plan: Login Component (Sprint 01) — Correções Rodada 1 → Rodada 2 🏗️
 
-**Branch**: `001-login-component` | **Date**: 2026-06-19 | **Spec**: `specs/001-login-component/spec.md`
+**Branch**: `001-login-component` | **Date**: 2026-06-20 | **Spec**: `specs/001-login-component/spec.md`
 
 **Input**: Feature specification from `/specs/001-login-component/spec.md`
 
@@ -30,7 +30,17 @@ extends: speckit.plan
 
 ## Summary
 
-Implementar o componente de Login do sistema KPC (Keyphrase Curation) seguindo a arquitetura MVVM no frontend React 18 + TypeScript + Vite. O componente deve consumir o endpoint `POST /users/login` do backend FastAPI, autenticar o usuário, persistir o token via Zustand com middleware `persist` em localStorage, e redirecionar para a rota `/topics`. Abordagem técnica: View pura (React funcional sem lógica), ViewModel (Zustand store com persist), Model (AuthService + entidade User + config compartilhada).
+**Contexto**: Rodada 1 de verificação concluída com 6 evidências DE (Developer Errado). Modelo PlantUML validado como correto pelo Juiz. Agora é necessário planejar a implementação das correções determinadas pelo veredito, ajustando o código para alinhar ao modelo existente.
+
+**Escopo das correções**:
+- RF-001-C1: Refatorar `User.js` para escopo mínimo (2 atributos + 1 método)
+- RF-001-C2: Refatorar `AuthService.js` — expor apenas `login()` como público
+- RF-001-C3: Refatorar `useAuthStore` — remover ações não modeladas
+- RF-001-C4: Adicionar `// @model:` em `shared/config.js`
+- RF-001-C5: Corrigir `ReferenceError: maxRows` em `TextField.jsx`
+- RF-001-C6: Renomear `useLoginViewModel` → `useAuth` (código, não modelo)
+
+**Decisão Arquitetural (RF-001-C6)**: **Opção A** — renomear o código (`useLoginViewModel` → `useAuth`) para alinhar ao modelo existente. O modelo PlantUML permanece inalterado. Esta é a abordagem recomendada por simplicidade: o modelo já foi aprovado pelo Juiz, e apenas o código precisa se alinhar.
 
 ## Technical Context
 
@@ -54,30 +64,79 @@ Implementar o componente de Login do sistema KPC (Keyphrase Curation) seguindo a
 - Arquitetura MVVM com camadas rigidamente separadas (CONST-R4)
 - Rastreabilidade obrigatória RF ↔ modelo ↔ código (CONST-R3)
 - Zero over-engineering — apenas o que está modelado (CONST-R2)
+- **Pós-Rodada 1**: 3 evidências de over-engineering a serem corrigidas (RF-001-C1, C2, C3)
+- **Pós-Rodada 1**: 1 bug a corrigir (RF-001-C5), 1 tag ausente (RF-001-C4), 1 nome divergente (RF-001-C6)
+- GATE-03 bloqueia merge até over-engineering ser resolvido
 
-**Scale/Scope**: Sprint 01 — componente de login individual, sem dashboard ou outras telas
+**Scale/Scope**: Sprint 01 — Correções da Rodada 1. Nenhuma nova funcionalidade. Apenas refatoração de conformidade (CONST-R2, CONST-R3).
 
 ## Constitution Check
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
+### Status Pós-Rodada 1
+
 | Gate | Status | Justificativa |
 |------|--------|---------------|
-| **GATE-01 — Planejamento Obrigatório** | ✅ APROVADO | `/speckit.specify` já executado. Spec em `specs/001-login-component/spec.md` com RF-001 a RF-010. `/speckit.plan` em execução — diagramas serão gerados na Fase 1. |
-| **GATE-02 — Análise Pré-Merge** | ⏳ N/A (pós-implementação) | Será verificado após implementação via `/speckit.analyze`. |
-| **GATE-03 — Over-engineering Bloqueia Merge** | ⏳ N/A (pós-implementação) | Será verificado pelo pipeline Polícia + Juiz. |
+| **GATE-01 — Planejamento Obrigatório** | ✅ APROVADO | `/speckit.specify` executado. Spec em `specs/001-login-component/spec.md` com RF-001 a RF-010 + RF-001-C1 a RF-001-C6. `/speckit.plan` executado. Diagramas `.puml` gerados e validados. |
+| **GATE-02 — Análise Pré-Merge** | ❌ NEGADO | Foi executado `/speckit.analyze` (Rodada 1), mas o veredito apontou 6 DE. Merge bloqueado até correções. Será reavaliado na Rodada 2. |
+| **GATE-03 — Over-engineering Bloqueia Merge** | ❌ NEGADO | 3 evidências de OVER_ENGINEERING (EVD-001-R1-003, EVD-001-R1-004, EVD-001-R1-005). CONST-R2 violada. Merge bloqueado até resolução. |
+
+### Ações para Reverter Gates Negados
+
+| Gate | Ação Necessária | Critério de Aprovação |
+|------|----------------|----------------------|
+| GATE-02 | Executar `/speckit.analyze` após correções | Veredito NE (Ninguém Errado) na Rodada 2 |
+| GATE-03 | Implementar RF-001-C1, RF-001-C2, RF-001-C3 | Evidências RESOLVIDAS na Rodada 2 |
 
 **Princípios Constitucionais Aplicáveis**:
-- ✅ **CONST-R1 — MDE+SDD First**: Spec existe, modelagem ocorrerá na Fase 1
-- ✅ **CONST-R2 — Zero Over-Engineering**: Tasks serão limitadas ao modelado
-- ✅ **CONST-R3 — Rastreabilidade Obrigatória**: Tags `@rf:` nos diagramas, `// @model:` no código
+- ✅ **CONST-R1 — MDE+SDD First**: Spec e modelo existem e foram validados
+- ✅ **CONST-R2 — Zero Over-Engineering**: Correções RF-001-C1/C2/C3 visam restaurar conformidade
+- ✅ **CONST-R3 — Rastreabilidade Obrigatória**: Correção RF-001-C4 adiciona tag ausente
 - ✅ **CONST-R4 — Arquitetura MVVM**: Três camadas separadas conforme spec
-- ✅ **CONST-R5 — Pipeline de Verificação**: Será executado após implementação
-- ✅ **CONST-R6 — Constituição como Árbitro Final**: Conflitos resolvidos por esta carta
+- ✅ **CONST-R5 — Pipeline de Verificação**: Rodada 1 concluída, Rodada 2 pendente
+- ✅ **CONST-R6 — Constituição como Árbitro Final**: Veredito respeitou princípios constitucionais
 
 ---
 
-## 📐 Artefatos de Modelagem (Override — Persona Arquiteto)
+## � Correções da Rodada 1 (Pós-Veredito)
+
+### Status do Veredito
+
+6 evidências **DE (Developer Errado)**, 0 AE, 0 NE, 0 AMBOS. Modelo PlantUML validado como correto em todas as evidências.
+
+| Evidência | Tipo | Severidade | RF Correção | Ação |
+|-----------|------|------------|-------------|------|
+| EVD-001-R1-001 | TAG_MODEL_AUSENTE | Média | RF-001-C4 | Adicionar `// @model:` em `shared/config.js` |
+| EVD-001-R1-002 | NOME_DIVERGENTE | Média | RF-001-C6 | Renomear `useLoginViewModel` → `useAuth` (código) |
+| EVD-001-R1-003 | OVER_ENGINEERING | Alta | RF-001-C1 | Refatorar `User.js` para escopo mínimo |
+| EVD-001-R1-004 | OVER_ENGINEERING | Alta | RF-001-C2 | Refatorar `AuthService.js` — só `login()` público |
+| EVD-001-R1-005 | OVER_ENGINEERING | Média | RF-001-C3 | Remover ações não modeladas do store |
+| EVD-001-R1-006 | BUG_CODIGO | Alta | RF-001-C5 | Corrigir `ReferenceError: maxRows` |
+
+### Decisões Arquiteturais (Pós-R1)
+
+1. **Nomenclatura do hook** (RF-001-C6): **Opção A** — Renomear código (`useLoginViewModel` → `useAuth`) para alinhar ao modelo. Modelo permanece inalterado (já aprovado pelo Juiz). Isso evita retrabalho nos diagramas `.puml` e mantém a consistência com a nomenclatura aprovada.
+
+2. **Escopo mínimo de `User.js`** (RF-001-C1): Manter APENAS `username` (string), `token` (string), e `fromApiResponse(username, accessToken)`. Métodos legados (`canAccessTopic`, `isAdmin`, `getAssignedTopics`, etc.) serão removidos ou movidos para branch separada. Atende CONST-R2.
+
+3. **Contrato mínimo de `AuthService.js`** (RF-001-C2): Expor apenas `login(username, password): Promise<string>` como método público. `makeRequest` pode permanecer como privado (não exportado). `getCurrentToken()` pode permanecer como utilidade interna não exportada. Demais métodos (`basicLogin`, `logout`, `whoami`, `listUsers`, etc.) serão removidos.
+
+4. **Store mínimo** (RF-001-C3): Manter APENAS as ações `login`, `logout`, `clearError`. Remover `updateUser`, `getCurrentUser`, `getToken`, `canAccessTopic`, `isAdmin`, `getAuthHeaders`, `reset`, `initialize` etc.
+
+5. **Bug `maxRows`** (RF-001-C5): Adicionar `maxRows` à desestruturação de props com valor padrão `undefined`. Não altera comportamento existente e previne `ReferenceError`.
+
+### Impacto nos Diagramas
+
+| Diagrama | Ação | Justificativa |
+|----------|------|---------------|
+| `login-classes.puml` | ✅ **Manter** | Modelo correto — código será alinhado (Opção A) |
+| `login-components.puml` | ✅ **Manter** | Modelo correto — código será alinhado (Opção A) |
+| `login-sequence.puml` | ✅ **Manter** | Fluxo permanece o mesmo |
+
+---
+
+## �📐 Artefatos de Modelagem (Override — Persona Arquiteto)
 
 Esta seção é **adicional** ao template nativo. Ela documenta os artefatos PlantUML que serão gerados durante a Fase 1 (Design).
 
@@ -91,18 +150,24 @@ Esta seção é **adicional** ao template nativo. Ela documenta os artefatos Pla
 
 ### Rastreabilidade RF → Modelo
 
-| RF | Elemento Modelado | Diagrama |
-|----|-------------------|----------|
-| RF-001 | `LoginView`, `useAuthStore`, `AuthService` | login-classes.puml, login-components.puml |
-| RF-002 | Validação client-side em `LoginView` | login-classes.puml |
-| RF-003 | `loading` state + disabled props | login-classes.puml, login-sequence.puml |
-| RF-004 | Botão com "Entrando..." | login-classes.puml, login-sequence.puml |
-| RF-005 | `AuthService.login()` → POST `/users/login` | login-classes.puml, login-sequence.puml |
-| RF-006 | Zustand persist (localStorage) | login-classes.puml, login-sequence.puml |
-| RF-007 | Redirecionamento para `/topics` | login-sequence.puml |
-| RF-008 | Tratamento de erro com Alert MUI | login-classes.puml, login-sequence.puml |
-| RF-009 | Verificação de token na inicialização | login-sequence.puml |
-| RF-010 | Campo password do tipo password | login-classes.puml |
+| RF | Elemento Modelado | Diagrama | Observação |
+|----|-------------------|----------|------------|
+| RF-001 | `LoginView`, `useAuthStore`, `AuthService` | login-classes.puml, login-components.puml | |
+| RF-002 | Validação client-side em `LoginView` | login-classes.puml | |
+| RF-003 | `loading` state + disabled props | login-classes.puml, login-sequence.puml | |
+| RF-004 | Botão com "Entrando..." | login-classes.puml, login-sequence.puml | |
+| RF-005 | `AuthService.login()` → POST `/users/login` | login-classes.puml, login-sequence.puml | |
+| RF-006 | Zustand persist (localStorage) | login-classes.puml, login-sequence.puml | |
+| RF-007 | Redirecionamento para `/topics` | login-sequence.puml | |
+| RF-008 | Tratamento de erro com Alert MUI | login-classes.puml, login-sequence.puml | |
+| RF-009 | Verificação de token na inicialização | login-sequence.puml | |
+| RF-010 | Campo password do tipo password | login-classes.puml | |
+| RF-001-C1 | Escopo mínimo de `User.js` | login-classes.puml | Correção — modelo já reflete o escopo mínimo |
+| RF-001-C2 | `AuthService.login()` apenas | login-classes.puml | Correção — modelo já especifica só `login()` |
+| RF-001-C3 | Store com 3 ações apenas | login-classes.puml | Correção — modelo já especifica só 3 ações |
+| RF-001-C4 | Tag `// @model:` em config.js | login-classes.puml | Correção — não altera modelo |
+| RF-001-C5 | Bug `maxRows` | N/A | Correção — não afeta modelo |
+| RF-001-C6 | Renomear `useLoginViewModel` → `useAuth` | login-classes.puml | Correção — modelo já usa `useAuth`, código que se alinha |
 
 ### Regras Aplicadas
 
@@ -122,16 +187,21 @@ A store Zustand usa `persist` middleware com `localStorage` como storage. O toke
 
 ```text
 specs/001-login-component/
-├── spec.md               # Especificação funcional
-├── plan.md               # Este arquivo (output do /speckit.plan)
+├── spec.md               # Especificação funcional (RF-001 a RF-010 + RF-001-C1 a RF-001-C6)
+├── plan.md               # Este arquivo (output do /speckit.plan — versão R1→R2)
 ├── model/                # 📐 Artefatos de modelagem (Persona Arquiteto)
-│   ├── login-classes.puml
-│   ├── login-components.puml
-│   └── login-sequence.puml
+│   ├── login-classes.puml      # ✅ Mantido (modelo correto)
+│   ├── login-components.puml   # ✅ Mantido (modelo correto)
+│   └── login-sequence.puml     # ✅ Mantido (fluxo inalterado)
+├── evidence/
+│   └── inconsistencies.md      # 🔵 Rodada 1 — 6 evidências (NÃO ALTERAR)
+├── verdict/
+│   └── verdict.md              # ⚖️ Rodada 1 — 6 DE (NÃO ALTERAR)
 ├── research.md           # Phase 0 output
 ├── data-model.md         # Phase 1 output
 ├── quickstart.md         # Phase 1 output
 ├── contracts/            # Phase 1 output
+│   └── auth-api.md
 └── tasks.md              # Phase 2 output
 ```
 

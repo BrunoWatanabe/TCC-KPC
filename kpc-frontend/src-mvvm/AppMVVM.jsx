@@ -26,7 +26,7 @@ import {
 // ViewModels
 import {
   useAuthStore,
-  useLoginViewModel,
+  useAuth,
   useTopicSelectionViewModel,
   useKeyphraseClusteringViewModel,
   useKeyphraseClustersViewModel,
@@ -88,10 +88,10 @@ function PrivateRoute({ children }) {
 // ============================================================================
 
 /**
- * LoginPage - Conecta LoginView com useLoginViewModel
+ * LoginPage - Conecta LoginView com useAuth
  */
 function LoginPage() {
-  const viewModel = useLoginViewModel();
+  const viewModel = useAuth();
   
   return <LoginView {...viewModel} />;
 }

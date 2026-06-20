@@ -1,11 +1,43 @@
 # Veredicto — Login Component
 
 **Feature:** 001-login-component
-**Total de Rodadas:** 1
+**Total de Rodadas:** 2
 
 ---
 
-## 🔵 Rodada Atual: R1
+## 🔵 Rodada Atual: R2
+
+**Data:** 2026-06-19
+**Rodada Anterior:** R1
+
+### Sumário da Rodada
+
+| Métrica | Valor |
+|---------|-------|
+| Total Evidências Julgadas | 6 |
+| Evidências RESOLVIDAS | 6 |
+| Evidências PERSISTEM | 0 |
+| DE (Developer Errado) | 0 |
+| AE (Arquiteto Errado) | 0 |
+| AMBOS | 0 |
+| NE (Ninguém Errado) | 6 |
+| Gates Aprovados | 2 |
+| Gates Negados | 0 |
+
+### Árvore de Veredictos
+
+| Rodada Anterior | Decisão Ant. | Status | Rodada Atual | Decisão Atual |
+|----------------|--------------|--------|--------------|---------------|
+| VER-001-R1-001 | DE | ✅ RESOLVIDA | VER-001-R2-001 | NE |
+| VER-001-R1-002 | DE | ✅ RESOLVIDA | VER-001-R2-002 | NE |
+| VER-001-R1-003 | DE | ✅ RESOLVIDA | VER-001-R2-003 | NE |
+| VER-001-R1-004 | DE | ✅ RESOLVIDA | VER-001-R2-004 | NE |
+| VER-001-R1-005 | DE | ✅ RESOLVIDA | VER-001-R2-005 | NE |
+| VER-001-R1-006 | DE | ✅ RESOLVIDA | VER-001-R2-006 | NE |
+
+---
+
+## 🔵 Rodada 1: R1
 
 **Data:** 2026-06-19
 **Rodadas Anteriores:** Nenhuma (rodada inicial)
@@ -179,3 +211,164 @@ Modelo especifica 3 ações. Código tem 13. Getters não modelados violam CONST
 |------|--------|
 | GATE-01 — Planejamento Obrigatório | ✅ APROVADO |
 | GATE-03 — Over-engineering Bloqueia Merge | ❌ NEGADO (3 over-engineering) |
+
+---
+
+## 🔵 Rodada 2: R2
+
+**Data:** 2026-06-19
+**Rodada Anterior:** R1
+
+### Sumário da Rodada
+
+| Métrica | Valor |
+|---------|-------|
+| Total Evidências Julgadas | 6 |
+| Evidências RESOLVIDAS | 6 |
+| Evidências PERSISTEM | 0 |
+| DE (Developer Errado) | 0 |
+| AE (Arquiteto Errado) | 0 |
+| AMBOS | 0 |
+| NE (Ninguém Errado) | 6 |
+| Gates Aprovados | 2 (GATE-01, GATE-03) |
+| Gates Negados | 0 |
+
+### Árvore de Veredictos (R2)
+
+| Evidência R1 | Decisão R1 | Status | Veredicto R2 | Decisão R2 |
+|--------------|------------|--------|--------------|------------|
+| EVD-001-R1-001 | DE | ✅ RESOLVIDA | VER-001-R2-001 | NE |
+| EVD-001-R1-002 | DE | ✅ RESOLVIDA | VER-001-R2-002 | NE |
+| EVD-001-R1-003 | DE | ✅ RESOLVIDA | VER-001-R2-003 | NE |
+| EVD-001-R1-004 | DE | ✅ RESOLVIDA | VER-001-R2-004 | NE |
+| EVD-001-R1-005 | DE | ✅ RESOLVIDA | VER-001-R2-005 | NE |
+| EVD-001-R1-006 | DE | ✅ RESOLVIDA | VER-001-R2-006 | NE |
+
+---
+
+### VER-001-R2-001 — Julgamento de EVD-001-R2-001
+
+| Campo | Valor |
+|-------|-------|
+| **parent** | VER-001-R1-001 |
+| **Evidência** | EVD-001-R2-001 — TAG_MODEL_AUSENTE |
+| **Status Evidência** | RESOLVIDA |
+| **RF Associado** | RF-001, RF-005 (RF-001-C4) |
+| **Depoimento Arquiteto** | ARG-001-R2-001 |
+| **Depoimento Developer** | DEP-001-R2-001 |
+
+**Decisão:** `NE — Ninguém Errado`
+
+**Fundamentação:**
+A evidência EVD-001-R1-001 (tag ausente) foi verificado em R2. O código `shared/config.js:1` agora contém `// @model: specs/001-login-component/model/login-classes.puml` conforme exigido por CONST-R3 e RF-001-C4. O modelo (`login-classes.puml:117`) permanece inalterado e correto. Ambos os lados estão consistentes. O depoimento do Arquiteto (ARG-001-R2-001) confirma a correção. O Depoimento do Developer (DEP-001-R2-001) confirma que a tag foi adicionada.
+
+**Sentença:** Nenhuma ação necessária. A correção foi aplicada com sucesso.
+
+---
+
+### VER-001-R2-002 — Julgamento de EVD-001-R2-002
+
+| Campo | Valor |
+|-------|-------|
+| **parent** | VER-001-R1-002 |
+| **Evidência** | EVD-001-R2-002 — NOME_HOOK_DIVERGENTE |
+| **Status Evidência** | RESOLVIDA |
+| **RF Associado** | RF-001 (RF-001-C6) |
+| **Depoimento Arquiteto** | ARG-001-R2-002 |
+| **Depoimento Developer** | DEP-001-R2-002 |
+
+**Decisão:** `NE — Ninguém Errado`
+
+**Fundamentação:**
+A evidência EVD-001-R1-002 (nome divergente) foi verificado em R2. O hook foi renomeado de `useLoginViewModel` para `useAuth` — arquivo renomeado para `viewmodels/hooks/useAuth.js`, função exportada como `useAuth`, todos os imports em `AppMVVM.jsx` e `viewmodels/index.js` atualizados. O nome agora corresponde exatamente ao modelado em `login-classes.puml:64-72`. Não há referências remanescentes a `useLoginViewModel`. O depoimento do Arquiteto (ARG-001-R2-002) confirma alinhamento. Developer (DEP-001-R2-002) confirma correção.
+
+**Sentença:** Nenhuma ação necessária. A correção foi aplicada com sucesso.
+
+---
+
+### VER-001-R2-003 — Julgamento de EVD-001-R2-003
+
+| Campo | Valor |
+|-------|-------|
+| **parent** | VER-001-R1-003 |
+| **Evidência** | EVD-001-R2-003 — OVER_ENGINEERING_ENTITY_USER |
+| **Status Evidência** | RESOLVIDA |
+| **RF Associado** | RF-001, RF-006 (RF-001-C1) |
+| **Depoimento Arquiteto** | ARG-001-R2-003 |
+| **Depoimento Developer** | DEP-001-R2-003 |
+
+**Decisão:** `NE — Ninguém Errado`
+
+**Fundamentação:**
+A evidência EVD-001-R1-003 (over-engineering em User.js) foi verificada em R2. O arquivo `models/entities/User.js` foi refatorado para conter APENAS `constructor(username, token)`, atributos `username` e `token`, e método `fromApiResponse(username, accessToken)`. Todos os atributos extras (`attributions`) e métodos extras (`canAccessTopic`, `getAssignedTopics`, `isAdmin`, `toAuthHeaders`, `getAnnotationFiles`, `getAnnotationProfile`, `isValid`, `toJSON`, `fromJSON`) foram removidos. O código corresponde exatamente ao modelado em `login-classes.puml:105-109`. CONST-R2 restaurada.
+
+**Sentença:** Nenhuma ação necessária. CONST-R2 restaurada para a entidade User.
+
+---
+
+### VER-001-R2-004 — Julgamento de EVD-001-R2-004
+
+| Campo | Valor |
+|-------|-------|
+| **parent** | VER-001-R1-004 |
+| **Evidência** | EVD-001-R2-004 — OVER_ENGINEERING_AUTH_SERVICE |
+| **Status Evidência** | RESOLVIDA |
+| **RF Associado** | RF-001, RF-005 (RF-001-C2) |
+| **Depoimento Arquiteto** | ARG-001-R2-004 |
+| **Depoimento Developer** | DEP-001-R2-004 |
+
+**Decisão:** `NE — Ninguém Errado`
+
+**Fundamentação:**
+A evidência EVD-001-R1-004 (over-engineering em AuthService.js) foi verificada em R2. O arquivo `models/services/AuthService.js` foi refatorado para expor APENAS `login(username, password)` como método público. Os métodos `getCurrentToken()` e `makeRequest()` permanecem como privados (uso interno de `login()`), o que é aceitável pois não violam o contrato público modelado. Métodos removidos: `basicLogin`, `logout`, `whoami`, `validatePassword`, `listUsers`, `isAuthenticated`, `clearAuthentication`, `saveAuthenticationToken`, `getAuthenticatedUser`, `updateAuthenticatedUser`. Singleton `authService` removido. CONST-R2 restaurada.
+
+**Sentença:** Nenhuma ação necessária. CONST-R2 restaurada para AuthService.
+
+---
+
+### VER-001-R2-005 — Julgamento de EVD-001-R2-005
+
+| Campo | Valor |
+|-------|-------|
+| **parent** | VER-001-R1-005 |
+| **Evidência** | EVD-001-R2-005 — OVER_ENGINEERING_USE_AUTH_STORE |
+| **Status Evidência** | RESOLVIDA |
+| **RF Associado** | RF-001, RF-006 (RF-001-C3) |
+| **Depoimento Arquiteto** | ARG-001-R2-005 |
+| **Depoimento Developer** | DEP-001-R2-005 |
+
+**Decisão:** `NE — Ninguém Errado`
+
+**Fundamentação:**
+A evidência EVD-001-R1-005 (over-engineering em useAuthStore) foi verificada em R2. O store `useAuthStore.js` agora expõe APENAS as 3 ações modeladas: `login`, `logout`, `clearError`. As ações `updateUser`, `getCurrentUser`, `getToken`, `getIsAuthenticated`, `getCurrentUsername`, `canAccessTopic`, `isAdmin`, `getAuthHeaders`, `reset` foram removidas. A ação `initialize` foi mantida com documentação explícita (`@note`) explicando sua necessidade para `onRehydrateStorage` do Zustand, o que é aceitável como exceção documentada (conforme sentença do veredito R1). CONST-R2 restaurada.
+
+**Sentença:** Nenhuma ação necessária. CONST-R2 restaurada para useAuthStore. Recomenda-se que o Arquiteto atualize o modelo para incluir `initialize` como ação interna.
+
+---
+
+### VER-001-R2-006 — Julgamento de EVD-001-R2-006
+
+| Campo | Valor |
+|-------|-------|
+| **parent** | VER-001-R1-006 |
+| **Evidência** | EVD-001-R2-006 — BUG_MAX_ROWS_TEXFIELD |
+| **Status Evidência** | RESOLVIDA |
+| **RF Associado** | RF-001 (RF-001-C5) |
+| **Depoimento Arquiteto** | ARG-001-R2-006 |
+| **Depoimento Developer** | DEP-001-R2-006 |
+
+**Decisão:** `NE — Ninguém Errado`
+
+**Fundamentação:**
+A evidência EVD-001-R1-006 (bug maxRows) foi verificada em R2. O componente `TextField.jsx` agora inclui `maxRows = undefined` na desestruturação de props (linha 23). O `ReferenceError` está resolvido. O componente aceita `maxRows` como opcional com valor padrão `undefined`, que é o comportamento esperado. O depoimento do Developer (DEP-001-R2-006) confirma a correção. O depoimento do Arquiteto (ARG-001-R2-006) confirma que a correção é satisfatória.
+
+**Sentença:** Nenhuma ação necessária. Bug corrigido.
+
+---
+
+### Gates da Constituição — Rodada 2
+
+| Gate | Status | Justificativa |
+|------|--------|---------------|
+| GATE-01 — Planejamento Obrigatório | ✅ APROVADO | `/speckit.plan` executado antes do implement. |
+| GATE-03 — Over-engineering Bloqueia Merge | ✅ **APROVADO** | Todas as 3 evidências de over-engineering (EVD-001-R1-003, EVD-001-R1-004, EVD-001-R1-005) foram corrigidas e verificadas como RESOLVIDAS em R2. CONST-R2 restaurada. Merge liberado. |

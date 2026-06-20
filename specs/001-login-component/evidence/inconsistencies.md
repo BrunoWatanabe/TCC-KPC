@@ -1,11 +1,38 @@
 # Relatório de Evidências — Login Component
 
 **Feature:** 001-login-component
-**Total de Rodadas:** 1
+**Total de Rodadas:** 2
 
 ---
 
-## 🔵 Rodada Atual: R1
+## 🔵 Rodada Atual: R2
+
+**Data:** 2026-06-19
+**Rodada Anterior:** R1
+
+### Sumário da Rodada
+
+| Métrica | Valor |
+|---------|-------|
+| Evidências NOVAS | 0 |
+| Evidências PERSISTEM | 0 |
+| Evidências RESOLVIDAS | 6 |
+| Evidências REABERTAS | 0 |
+
+### Árvore de Evidências
+
+| Rodada Anterior | Status | Rodada Atual |
+|----------------|--------|--------------|
+| EVD-001-R1-001 | ✅ RESOLVIDA | EVD-001-R2-001 |
+| EVD-001-R1-002 | ✅ RESOLVIDA | EVD-001-R2-002 |
+| EVD-001-R1-003 | ✅ RESOLVIDA | EVD-001-R2-003 |
+| EVD-001-R1-004 | ✅ RESOLVIDA | EVD-001-R2-004 |
+| EVD-001-R1-005 | ✅ RESOLVIDA | EVD-001-R2-005 |
+| EVD-001-R1-006 | ✅ RESOLVIDA | EVD-001-R2-006 |
+
+---
+
+## 🔵 Rodada 1: R1
 
 **Data:** 2026-06-19
 **Rodadas Anteriores:** Nenhuma (rodada inicial)
@@ -193,3 +220,188 @@
 | CHK-SEQ-01 | Fluxos modelados → implementados | ✅ |
 | CHK-DEP-01 | Tags `// @model:` presentes | ❌ config.js (EVD-R1-001) |
 | CHK-DEP-02 | Depoimentos coletados | ✅ |
+
+---
+
+## 🔵 Rodada 2: R2
+
+**Data:** 2026-06-19
+**Rodada Anterior:** R1
+
+### Sumário da Rodada
+
+| Métrica | Valor |
+|---------|-------|
+| Evidências NOVAS | 0 |
+| Evidências PERSISTEM | 0 |
+| Evidências RESOLVIDAS | 6 |
+| Evidências REABERTAS | 0 |
+
+### Árvore de Evidências
+
+| Rodada Anterior | Status | Rodada Atual |
+|----------------|--------|--------------|
+| EVD-001-R1-001 | ✅ RESOLVIDA | EVD-001-R2-001 |
+| EVD-001-R1-002 | ✅ RESOLVIDA | EVD-001-R2-002 |
+| EVD-001-R1-003 | ✅ RESOLVIDA | EVD-001-R2-003 |
+| EVD-001-R1-004 | ✅ RESOLVIDA | EVD-001-R2-004 |
+| EVD-001-R1-005 | ✅ RESOLVIDA | EVD-001-R2-005 |
+| EVD-001-R1-006 | ✅ RESOLVIDA | EVD-001-R2-006 |
+
+### Evidências da Rodada
+
+### EVD-001-R2-001 — TAG_MODEL_AUSENTE (RESOLVIDA) {#evd-R2-001}
+
+| Campo | Valor |
+|-------|-------|
+| **parent** | EVD-001-R1-001 |
+| **status** | RESOLVIDA |
+| **tipo** | TAG_MODEL_AUSENTE |
+| **severidade** | N/A (resolvida) |
+| **RF Associado** | RF-001, RF-005 |
+| **descrição** | Tag `// @model:` adicionada em `shared/config.js:1` apontando para `login-classes.puml`. |
+| **localização_modelo** | `login-classes.puml:117` — classe `Config` |
+| **localização_código** | `shared/config.js:1` — `// @model: specs/001-login-component/model/login-classes.puml` |
+| **detalhes** | A correção foi aplicada conforme RF-001-C4. O arquivo agora inicia com o comentário de rastreabilidade. |
+
+#### Depoimento Arquiteto (ARG-001-R2-001)
+> **Posição:** Correção satisfatória.
+> **Justificativa:** A tag `// @model:` foi adicionada conforme exigido por CONST-R3 e RF-001-C4. A cadeia de rastreabilidade está completa.
+
+#### Depoimento Developer (DEP-001-R2-001)
+> **Posição:** Correção aplicada.
+> **Justificativa:** Adicionou `// @model: specs/001-login-component/model/login-classes.puml` na primeira linha de `shared/config.js`.
+
+---
+
+### EVD-001-R2-002 — NOME_HOOK_DIVERGENTE (RESOLVIDA) {#evd-R2-002}
+
+| Campo | Valor |
+|-------|-------|
+| **parent** | EVD-001-R1-002 |
+| **status** | RESOLVIDA |
+| **tipo** | NOME_DIVERGENTE |
+| **severidade** | N/A (resolvida) |
+| **RF Associado** | RF-001 |
+| **descrição** | Hook renomeado de `useLoginViewModel` para `useAuth` conforme modelo. |
+| **localização_modelo** | `login-classes.puml:64-72` — `useAuth` |
+| **localização_código** | `viewmodels/hooks/useAuth.js` — função `useAuth` |
+| **detalhes** | Arquivo renomeado para `useAuth.js`, função exportada como `useAuth`, `AppMVVM.jsx` e `viewmodels/index.js` atualizados. Nenhuma referência a `useLoginViewModel` permanece. |
+
+#### Depoimento Arquiteto (ARG-001-R2-002)
+> **Posição:** Correção satisfatória.
+> **Justificativa:** O nome do hook agora corresponde exatamente ao modelado (`useAuth`). A rastreabilidade entre modelo e código foi restaurada.
+
+#### Depoimento Developer (DEP-001-R2-002)
+> **Posição:** Correção aplicada.
+> **Justificativa:** Renomeou arquivo, função e todos os imports dependentes conforme RF-001-C6.
+
+---
+
+### EVD-001-R2-003 — OVER_ENGINEERING_ENTITY_USER (RESOLVIDA) {#evd-R2-003}
+
+| Campo | Valor |
+|-------|-------|
+| **parent** | EVD-001-R1-003 |
+| **status** | RESOLVIDA |
+| **tipo** | OVER_ENGINEERING |
+| **severidade** | N/A (resolvida) |
+| **RF Associado** | RF-001, RF-006 |
+| **descrição** | `User.js` refatorado para escopo mínimo: apenas `username`, `token`, `constructor()` e `fromApiResponse()`. |
+| **localização_modelo** | `login-classes.puml:105-109` — 2 attr + 1 método |
+| **localização_código** | `models/entities/User.js:7-42` — escopo mínimo |
+| **detalhes** | Atributos `attributions` e método `canAccessTopic`, `getAssignedTopics`, `isAdmin`, `toAuthHeaders`, `getAnnotationFiles`, `getAnnotationProfile`, `isValid`, `toJSON` e `fromJSON` removidos. Apenas `username`, `token`, `constructor(username, token)` e `fromApiResponse(username, accessToken)` permanecem. |
+
+#### Depoimento Arquiteto (ARG-001-R2-003)
+> **Posição:** Correção satisfatória.
+> **Justificativa:** A entidade `User` agora reflete exatamente o modelado. CONST-R2 restaurada para esta entidade.
+
+#### Depoimento Developer (DEP-001-R2-003)
+> **Posição:** Correção aplicada.
+> **Justificativa:** Removeu todos os atributos e métodos não modelados conforme RF-001-C1. Mantida estritamente a interface modelada.
+
+---
+
+### EVD-001-R2-004 — OVER_ENGINEERING_AUTH_SERVICE (RESOLVIDA) {#evd-R2-004}
+
+| Campo | Valor |
+|-------|-------|
+| **parent** | EVD-001-R1-004 |
+| **status** | RESOLVIDA |
+| **tipo** | OVER_ENGINEERING |
+| **severidade** | N/A (resolvida) |
+| **RF Associado** | RF-001, RF-005 |
+| **descrição** | `AuthService.js` refatorado: apenas `login()` como método público. |
+| **localização_modelo** | `login-classes.puml:96-98` — apenas `login()` |
+| **localização_código** | `models/services/AuthService.js` — `login()` público, `getCurrentToken()` e `makeRequest()` privados |
+| **detalhes** | Métodos `basicLogin`, `logout`, `whoami`, `validatePassword`, `listUsers`, `isAuthenticated`, `clearAuthentication`, `saveAuthenticationToken`, `getAuthenticatedUser`, `updateAuthenticatedUser` removidos. Singleton `authService` removido. Métodos `getCurrentToken()` e `makeRequest()` mantidos como privados (uso interno de `login()`). |
+
+#### Depoimento Arquiteto (ARG-001-R2-004)
+> **Posição:** Correção satisfatória.
+> **Justificativa:** A API pública do `AuthService` agora expõe apenas `login()`, conforme modelado. Métodos privados de suporte são aceitáveis. CONST-R2 restaurada.
+
+#### Depoimento Developer (DEP-001-R2-004)
+> **Posição:** Correção aplicada.
+> **Justificativa:** Removeu todos os métodos não modelados conforme RF-001-C2. `getCurrentToken()` e `makeRequest()` mantidos como privados por serem necessários internamente para `login()`.
+
+---
+
+### EVD-001-R2-005 — OVER_ENGINEERING_USE_AUTH_STORE (RESOLVIDA) {#evd-R2-005}
+
+| Campo | Valor |
+|-------|-------|
+| **parent** | EVD-001-R1-005 |
+| **status** | RESOLVIDA |
+| **tipo** | OVER_ENGINEERING |
+| **severidade** | N/A (resolvida) |
+| **RF Associado** | RF-001, RF-006 |
+| **descrição** | `useAuthStore.js` refatorado: ações `login`, `logout`, `clearError` mantidas; `initialize` preservada para `onRehydrateStorage` com documentação. |
+| **localização_modelo** | `login-classes.puml:48-60` — 3 ações |
+| **localização_código** | `viewmodels/stores/useAuthStore.js` — 3 ações modeladas + `initialize` documentada |
+| **detalhes** | Ações `updateUser`, `getCurrentUser`, `getToken`, `getIsAuthenticated`, `getCurrentUsername`, `canAccessTopic`, `isAdmin`, `getAuthHeaders`, `reset` removidas. Ação `initialize` mantida com comentário documentando sua necessidade para `onRehydrateStorage`. |
+
+#### Depoimento Arquiteto (ARG-001-R2-005)
+> **Posição:** Correção satisfatória com ressalva aceitável.
+> **Justificativa:** O store agora expõe apenas as 3 ações modeladas. A ação `initialize` é aceitável como interna necessária para o middleware `persist` do Zustand, desde que documentada. Recomenda-se que o Arquiteto atualize o modelo para incluir `initialize` como ação interna.
+
+#### Depoimento Developer (DEP-001-R2-005)
+> **Posição:** Correção aplicada.
+> **Justificativa:** Removeu ações não modeladas conforme RF-001-C3. `initialize()` foi mantida com documentação `@note` explicando que é necessária para `onRehydrateStorage`.
+
+---
+
+### EVD-001-R2-006 — BUG_MAX_ROWS_TEXFIELD (RESOLVIDA) {#evd-R2-006}
+
+| Campo | Valor |
+|-------|-------|
+| **parent** | EVD-001-R1-006 |
+| **status** | RESOLVIDA |
+| **tipo** | BUG_CODIGO |
+| **severidade** | N/A (resolvida) |
+| **RF Associado** | RF-001 |
+| **descrição** | `TextField.jsx` corrigido: `maxRows = undefined` adicionado à desestruturação de props. |
+| **localização_modelo** | `login-classes.puml:28-34` — sem `maxRows` |
+| **localização_código** | `views/components/TextField.jsx:23` — `maxRows = undefined` na desestruturação |
+| **detalhes** | A prop `maxRows` foi adicionada à desestruturação com valor padrão `undefined`. O `ReferenceError` está resolvido. O componente aceita `maxRows` como opcional sem quebrar. |
+
+#### Depoimento Arquiteto (ARG-001-R2-006)
+> **Posição:** Correção satisfatória.
+> **Justificativa:** O bug foi corrigido sem impacto no modelo. A prop `maxRows` agora é opcional com valor padrão `undefined`, que é o comportamento esperado.
+
+#### Depoimento Developer (DEP-001-R2-006)
+> **Posição:** Correção aplicada.
+> **Justificativa:** Adicionou `maxRows = undefined` à lista de props desestruturadas conforme RF-001-C5.
+
+---
+
+### Checklist de Verificação — Rodada 2
+
+| ID | Item | Status |
+|----|------|--------|
+| CHK-CLASS-01 | Classes modeladas → implementadas | ✅ Todas presentes |
+| CHK-CLASS-03 | Classes no código sem modelo | ✅ Nenhuma |
+| CHK-METH-01 | Métodos modelados → implementados | ✅ Apenas os modelados |
+| CHK-ATTR-01 | Atributos modelados → props | ✅ |
+| CHK-SEQ-01 | Fluxos modelados → implementados | ✅ |
+| CHK-DEP-01 | Tags `// @model:` presentes | ✅ Todos os 7 arquivos |
+| CHK-DEP-02 | Depoimentos coletados R2 | ✅ |

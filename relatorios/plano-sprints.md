@@ -70,91 +70,59 @@ flowchart LR
 
 ---
 
-## Sprint 02 — Cluster de Keyphrases
+## Sprint 02 — Correção de Serialização: Pairwise Similarity
 
-**Escopo:** Visualização dos clusters de keyphrases para o tópico selecionado.
+**Escopo:** Corrigir `500 Internal Server Error` no endpoint `GET /topic/clusters/{username}/{topic}/pairwise_similarity`.
+
+**Causa raiz:** O backend retorna `numpy.int64` na resposta JSON, que o Pydantic/FastAPI não consegue serializar (`PydanticSerializationError: Unable to serialize unknown type: <class 'numpy.int64'>`).
+
+**Backend:** `kpc-backend/` — endpoint em `src/keyphrase_curation/`
 
 ### RFs da Sprint
 
 | RF | Descrição | Prioridade |
 |----|-----------|------------|
-| RF-003 | Exibir lista de clusters do tópico selecionado | P1 |
-| RF-004 | Exibir keyphrases dentro de cada cluster | P2 |
+| RF-003 | Corrigir serialização do endpoint pairwise_similarity | P1 |
 
 ### O que precisa ser feito
 
 | Tarefa | Backend | Frontend | Artefato Esperado |
 |--------|---------|----------|-------------------|
-| **T003** | ✅ (endpoint `/clusters/{topic}` existe) | Criar `KeyphraseClustersView.jsx` com store `useClusterStore` | `specs/sprint-02/model/clusters.puml` → `views/pages/KeyphraseClustersView.jsx` |
-| **T004** | ✅ (endpoint `/keyphrases/{cluster}` existe) | Componente `ClusterCard.jsx` com lista de keyphrases | `specs/sprint-02/model/keyphrases.puml` → `views/components/ClusterCard.jsx` |
+| **T002** | 🔴 Corrigir endpoint `/topic/clusters/{username}/{topic}/pairwise_similarity` — converter `numpy.int64` para `int` antes de serializar a resposta. A correção pode ser feita com encoder customizado no JSONResponse ou convertendo os valores numpy no retorno da rota. Testar com `curl` ou navegador após correção. | N/A (frontend apenas consome) | `curl http://localhost:3132/topic/clusters/daired/cloning/pairwise_similarity` retorna 200 |
 
-### Arquivos impactados (frontend)
+### Arquivos impactados (backend)
 
 | Arquivo | Ação |
 |---------|------|
-| `views/pages/KeyphraseClustersView.jsx` | Criar ou refatorar |
-| `views/components/ClusterCard.jsx` | Refatorar para receber keyphrases por props |
-| `views/components/KeyphraseItem.jsx` | Ajustar exibição |
-| `models/services/ClusterService.js` | Verificar parâmetros da rota |
-| `models/services/KeyphraseService.js` | Verificar parâmetros |
+| `src/keyphrase_curation/controller/` | Localizar endpoint pairwise_similarity e adicionar conversão numpy → int |
+| `src/keyphrase_curation/view/` | Possível serializador/response model |
 
 ---
 
-## Sprint 03 — Curadoria e Anotação
+## Sprint 03 — Correção de Serialização: Centroid Similarity
 
-**Escopo:** Funcionalidade de curadoria (aprovar/rejeitar keyphrases) + anotação manual.
+**Escopo:** Corrigir `500 Internal Server Error` no endpoint `GET /topic/clusters/{username}/{topic}/centroid_similarity`.
 
-### RFs da Sprint
-
-| RF | Descrição | Prioridade |
-|----|-----------|------------|
-| RF-005 | Aprovar/rejeitar keyphrase individualmente | P1 |
-| RF-006 | Adicionar anotação textual a uma keyphrase | P2 |
-
-### O que precisa ser feito
-
-| Tarefa | Backend | Frontend | Artefato Esperado |
-|--------|---------|----------|-------------------|
-| **T005** | ✅ (endpoint `/curate/{keyphrase}` existe) | Criar `CuratedKeyphrasesView.jsx` com controles de aprovação | `specs/sprint-03/model/curation.puml` → `views/pages/CuratedKeyphrasesView.jsx` |
-| **T006** | ✅ (endpoint `/annotate/{keyphrase}` existe) | Componente `Dialog.jsx` para anotação textual | `specs/sprint-03/model/annotation.puml` → `views/components/Dialog.jsx` |
-
-### Arquivos impactados (frontend)
-
-| Arquivo | Ação |
-|---------|------|
-| `views/pages/CuratedKeyphrasesView.jsx` | Criar ou refatorar |
-| `views/components/Dialog.jsx` | Adaptar para formulário de anotação |
-| `viewmodels/stores/useFlowStore.js` | Adicionar estado de curadoria |
-| `models/services/AnnotationService.js` | Verificar contrato |
-
----
-
-## Sprint 04 — Navegação e Fluxo Completo
-
-**Escopo:** Roteamento entre telas, breadcrumb, estado global de sessão e sincronia.
+**Causa raiz:** Mesmo erro da Sprint 02 — `numpy.int64` não serializável pelo Pydantic.
 
 ### RFs da Sprint
 
 | RF | Descrição | Prioridade |
 |----|-----------|------------|
-| RF-007 | Navegação entre telas (login → tópicos → clusters → curadoria) | P1 |
-| RF-008 | Barra de progresso / breadcrumb do fluxo | P2 |
+| RF-004 | Corrigir serialização do endpoint centroid_similarity | P1 |
 
 ### O que precisa ser feito
 
 | Tarefa | Backend | Frontend | Artefato Esperado |
 |--------|---------|----------|-------------------|
-| **T007** | N/A | Configurar `react-router-dom` com rotas protegidas | `specs/sprint-04/model/navigation.puml` → `AppMVVM.jsx` (rotas) |
-| **T008** | N/A | Componente `Breadcrumb.jsx` no layout principal | `specs/sprint-04/model/layout.puml` → `views/components/Breadcrumb.jsx` |
+| **T003** | 🔴 Corrigir endpoint `/topic/clusters/{username}/{topic}/centroid_similarity` — mesma correção: garantir que todos os valores numpy sejam convertidos para tipos nativos Python antes da serialização. Se o encoder customizado foi criado na Sprint 02, reutilizá-lo aqui. | N/A (frontend apenas consome) | `curl http://localhost:3132/topic/clusters/daired/cloning/centroid_similarity` retorna 200 |
 
-### Arquivos impactados (frontend)
+### Arquivos impactados (backend)
 
 | Arquivo | Ação |
 |---------|------|
-| `AppMVVM.jsx` | Adicionar React Router com rotas |
-| `views/components/index.js` | Exportar novos componentes |
-| `viewmodels/stores/useFlowStore.js` | Gerenciar etapa atual do fluxo |
-| `shared/config.js` | Adicionar constantes de rota |
+| `src/keyphrase_curation/controller/` | Localizar endpoint centroid_similarity e aplicar mesma correção |
+| `src/keyphrase_curation/view/` | Mesmo serializador/response model da Sprint 02 |
 
 ---
 
@@ -162,19 +130,15 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    S1[Sprint 01<br/>Login + Tópicos] --> S2[Sprint 02<br/>Clusters + Keyphrases]
-    S2 --> S3[Sprint 03<br/>Curadoria + Anotação]
-    S1 --> S4[Sprint 04<br/>Navegação + Fluxo]
-    S2 --> S4
-    S3 --> S4
+    S1[Sprint 01<br/>Login + Refinar<br/>✅ Concluída] --> S2[Sprint 02<br/>Bug pairwise<br/>similarity]
+    S2 --> S3[Sprint 03<br/>Bug centroid<br/>similarity]
 ```
 
 | Sprint | Depende de | É pré-requisito para |
 |--------|-----------|----------------------|
-| 01 — Login + Tópicos | — | 02, 04 |
-| 02 — Clusters + Keyphrases | 01 | 03, 04 |
-| 03 — Curadoria + Anotação | 02 | 04 |
-| 04 — Navegação + Fluxo | 01, 02, 03 | — |
+| 01 — Login + Refinar | — | 02 |
+| 02 — Bug pairwise_similarity | 01 | 03 |
+| 03 — Bug centroid_similarity | 02 | — |
 
 ---
 
@@ -182,9 +146,8 @@ flowchart LR
 
 | Sprint | RFs | Tarefas | Frontend | Backend |
 |--------|-----|---------|----------|---------|
-| Sprint 01 | RF-001, RF-002 | T001, T002 | Refatorar 4 arquivos | Nenhum (já existe) |
-| Sprint 02 | RF-003, RF-004 | T003, T004 | Criar/refatorar 4 arquivos | Nenhum (já existe) |
-| Sprint 03 | RF-005, RF-006 | T005, T006 | Criar/refatorar 4 arquivos | Nenhum (já existe) |
-| Sprint 04 | RF-007, RF-008 | T007, T008 | Configurar roteamento + 2 componentes | N/A |
+| Sprint 01 | RF-001, RF-002 | T001 + ST001.1 + ST001.2 | Refatorar 4 arquivos | Nenhum |
+| Sprint 02 | RF-003 | T002 | N/A | Corrigir serialização pairwise |
+| Sprint 03 | RF-004 | T003 | N/A | Corrigir serialização centroid |
 
 > **Nota:** O backend (`kpc-backend`) já está implementado e funcional. As sprints focam exclusivamente no frontend (`kpc-frontend/src-mvvm/`), consumindo as APIs existentes.

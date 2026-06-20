@@ -92,6 +92,18 @@ bash launcher/stop.sh
 
 Se `start.sh` for executado sem argumento, ele exibirá um menu interativo para escolher o modo.
 
+<a id="acesso-ao-fastapi"></a>
+### Acessando o FastAPI
+
+Com o backend em execução, a API estará disponível nos seguintes endereços (padrão: `http://127.0.0.1:3132`):
+
+| Recurso               | URL                                     |
+|-----------------------|-----------------------------------------|
+| **Swagger UI** (docs) | `http://127.0.0.1:3132/api/docs`        |
+| **OpenAPI spec**      | `http://127.0.0.1:3132/openapi.json`    |
+
+> A porta pode ser alterada definindo a variável `KPC_PORT` (ex.: `export KPC_PORT=8000`) antes de iniciar.
+
 <a id="inicializacao-via-docker"></a>
 3) Inicialização via Docker (resumo)
 

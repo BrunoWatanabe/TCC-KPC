@@ -1,15 +1,15 @@
 ---
-description: "Task list for Sprint 01 — Login Component: implementação original (T001) + correções Rodada 1 (T-C)"
+description: "Task list for Sprint 01 — Login Component: implementação original (T001) + correções Rodada 1 (T-C) + correção runtime ST001.2 (T-C9..T-C15)"
 feature: 001-login-component
 ---
 
-# Tasks: Login Component (Sprint 01) — Correções Rodada 1
+# Tasks: Login Component (Sprint 01) — Correções Rodada 1 + Runtime ST001.2
 
 **Input**: Design documents from `/specs/001-login-component/`
 
 **Feature**: 001-login-component | **Branch**: `001-login-component` | **Data**: 2026-06-20
 
-**Contexto**: Rodada 1 de verificação concluída com 6 evidências DE. Tasks T001.1 a T001.7 já implementadas e marcadas como concluídas. Tasks T-C1 a T-C8 implementam as correções determinadas pelo veredito para alinhar o código ao modelo PlantUML.
+**Contexto**: Rodada 1 de verificação concluída com 6 evidências DE. Tasks T001.1 a T001.7 já implementadas e marcadas como concluídas. Tasks T-C1 a T-C8 implementam as correções determinadas pelo veredito. **ST001.2**: Tasks T-C9 a T-C15 corrigem runtime errors causados pela refatoração de escopo mínimo em arquivos legados.
 
 **Stack**: React 18 + Material UI 5 + Zustand 5 + Axios + React Router 6
 
@@ -148,6 +148,65 @@ feature: 001-login-component
 
 ---
 
+## Phase 6: Correção de Runtime — Imports Legados (ST001.2)
+
+**Purpose**: Corrigir `SyntaxError` em runtime causados por exports removidos na refatoração de escopo mínimo (T-C1, T-C2, T-C3). Arquivos legados em `src-mvvm/` fora do escopo da Sprint 01 ainda importam `authService` (singleton removido) e chamam `getCurrentUser()`, `getCurrentUsername()`, `getIsAuthenticated()` (métodos removidos do store).
+
+**Problema principal**: `Uncaught SyntaxError: The requested module '/models/services/AuthService.js' does not provide an export named 'authService'`
+
+**RF associado**: RF-001-C2, RF-001-C3 (efeitos colaterais da refatoração)
+
+### T-C9 — models/services/index.js
+
+- [X] T-C9 [P] Corrigir re-export em `models/services/index.js` linha 13: `export { AuthService, authService } from './AuthService.js'` → remover `authService` do re-export: `export { AuthService } from './AuthService.js'`
+
+### T-C10 — viewmodels/hooks/useTopicSelectionViewModel.js (4 quebras)
+
+- [X] T-C10 Corrigir imports e chamadas quebradas em `viewmodels/hooks/useTopicSelectionViewModel.js`:
+  - **Linha 12**: `import { authService } from '../../models/services/AuthService.js'` → remover este import (ou substituir por `import { AuthService }` se necessário localmente)
+  - **Linha 33**: `authStore.getCurrentUser()` → `authStore.user`
+  - **Linha 34**: `authStore.getCurrentUsername()` → `authStore.user?.username`
+  - **Linha 35**: `authStore.getIsAuthenticated()` → `authStore.isAuthenticated`
+  - **Linha 77**: `authService.listUsers()` → substituir por alternativa que não dependa do singleton removido (ex.: usar `new AuthService().makeRequest('/users/list')` com try/catch, ou simplificar a lógica de validação para verificar apenas `authStore.token` + `authStore.user`)
+  - **Linha 358**: `authStore.getCurrentUsername()` → `authStore.user?.username`
+  - **Linha 359**: `authStore.getCurrentUser()` → `authStore.user`
+
+### T-C11 — viewmodels/hooks/useKeyphraseClusteringViewModel.js (2 quebras)
+
+- [X] T-C11 [P] Corrigir chamadas quebradas em `viewmodels/hooks/useKeyphraseClusteringViewModel.js`:
+  - **Linha 50**: `authStore.getCurrentUser()` → `authStore.user`
+  - **Linha 51**: `authStore.getCurrentUsername()` → `authStore.user?.username`
+
+### T-C12 — viewmodels/hooks/useKeyphraseClustersViewModel.js (2 quebras)
+
+- [X] T-C12 [P] Corrigir chamadas quebradas em `viewmodels/hooks/useKeyphraseClustersViewModel.js`:
+  - **Linha 55**: `authStore.getCurrentUser()` → `authStore.user`
+  - **Linha 56**: `authStore.getCurrentUsername()` → `authStore.user?.username`
+
+### T-C13 — viewmodels/hooks/useCuratedKeyphrasesViewModel.js (2 quebras)
+
+- [X] T-C13 [P] Corrigir chamadas quebradas em `viewmodels/hooks/useCuratedKeyphrasesViewModel.js`:
+  - **Linha 57**: `authStore.getCurrentUser()` → `authStore.user`
+  - **Linha 58**: `authStore.getCurrentUsername()` → `authStore.user?.username`
+
+### T-C14 — AppMVVM.jsx (2 quebras)
+
+- [X] T-C14 Corrigir chamadas quebradas em `AppMVVM.jsx`:
+  - **Linha 119**: `authStore.getCurrentUser()` → `authStore.user`
+  - **Linha 200**: `authStore.getCurrentUser()` → `authStore.user`
+
+### T-C15 — Validação runtime
+
+- [X] T-C15 Validar que todas as correções resolvem os erros de runtime:
+  - Executar `npm run dev` em `kpc-frontend/`
+  - Verificar console do navegador limpo (sem `SyntaxError` ou `ReferenceError`)
+  - Testar fluxo completo: login → redirecionamento para `/topics`
+  - Verificar que telas de clustering, clusters e curated keyphrases carregam sem erros
+
+**Checkpoint**: Runtime sem erros — todos os imports e chamadas de métodos legados corrigidos.
+
+---
+
 ## Dependências & Ordem de Execução
 
 ### Dependências entre Fases (Correções)
@@ -158,6 +217,7 @@ graph TD
     Phase2 --> Phase3["Phase 3: Over-Engineering ViewModel (T-C3)"]
     Phase3 --> Phase4["Phase 4: Bug + Nome (T-C5, T-C6)"]
     Phase4 --> Phase5["Phase 5: Validação (T-C7, T-C8)"]
+    Phase5 --> Phase6["Phase 6: Runtime Imports (T-C9..T-C15)"]
 ```
 
 ### Dependências Detalhadas
@@ -172,6 +232,13 @@ graph TD
 | T-C6 | T-C3 | Renomear hook depende do store refatorado |
 | T-C7 | T-C1, T-C2, T-C3, T-C4, T-C5, T-C6 | Validação funcional depende de TODAS as correções |
 | T-C8 | T-C1, T-C2, T-C3, T-C4, T-C5, T-C6 | Verificação de tags depende de TODAS as correções |
+| T-C9 | T-C2 | Re-export de AuthService depende da refatoração de T-C2 |
+| T-C10 | T-C2, T-C3 | useTopicSelectionViewModel depende de AuthService + useAuthStore |
+| T-C11 | T-C3 | useKeyphraseClusteringViewModel depende de useAuthStore |
+| T-C12 | T-C3 | useKeyphraseClustersViewModel depende de useAuthStore |
+| T-C13 | T-C3 | useCuratedKeyphrasesViewModel depende de useAuthStore |
+| T-C14 | T-C3 | AppMVVM depende de useAuthStore |
+| T-C15 | T-C9, T-C10, T-C11, T-C12, T-C13, T-C14 | Validação runtime depende de TODAS as correções de imports |
 
 ### Oportunidades de Paralelismo
 
@@ -179,6 +246,9 @@ graph TD
 - **T-C3**: Depende de T-C1 (`User` entity)
 - **T-C6**: Depende de T-C3 (store refatorada)
 - **T-C7, T-C8**: Dependem de todas as correções, podem rodar em paralelo entre si
+- **T-C9**: Depende de T-C2, pode rodar em paralelo com T-C10..T-C14
+- **T-C11, T-C12, T-C13**: Dependem de T-C3, podem rodar em paralelo entre si
+- **T-C10, T-C14**: Dependem de T-C2 e T-C3
 
 ### Exemplo de Execução Paralela
 
@@ -186,7 +256,10 @@ graph TD
 Lote 1: T-C4 [P] + T-C1 [P] + T-C2 [P] + T-C5 [P] (4 pessoas em paralelo)
 Lote 2: T-C3 (após T-C1)
 Lote 3: T-C6 (após T-C3)
-Lote 4: T-C7 [P] + T-C8 [P] (após todas as correções)
+Lote 4: T-C7 [P] + T-C8 [P] (após todas as correções estruturais)
+Lote 5: T-C9 [P] + T-C11 [P] + T-C12 [P] + T-C13 [P] (4 em paralelo, após T-C2 + T-C3)
+Lote 6: T-C10 + T-C14 (após T-C2 + T-C3)
+Lote 7: T-C15 (validação runtime final)
 ```
 
 ---
@@ -216,7 +289,8 @@ Lote 4: T-C7 [P] + T-C8 [P] (após todas as correções)
 ✅ T-C1 a T-C6 concluídas → código alinhado ao modelo (zero over-engineering, tags presentes, bug corrigido, nomenclatura consistente)
 ✅ T-C7 — validação manual do fluxo completo de login
 ✅ T-C8 — `// @model:` presente em todos os arquivos tocados
-➡️ Próximo passo: `git commit` (ação humana) → `/speckit.analyze` (Rodada 2)
+✅ T-C15 — validação runtime sem `SyntaxError`
+➡️ Próximo passo: `git commit` → verificar frontend funcional → progressão para sprint seguinte
 
 ---
 
@@ -229,9 +303,130 @@ Lote 4: T-C7 [P] + T-C8 [P] (após todas as correções)
 | Phase 3: Over-Engineering — ViewModel | T-C3 | P2 |
 | Phase 4: Bug + Nomenclatura | T-C5, T-C6 | P1/P3 |
 | Phase 5: Validação | T-C7, T-C8 | — |
+| Phase 6: Correção de Runtime — Imports Legados | T-C9, T-C10, T-C11, T-C12, T-C13, T-C14, T-C15 | P1 |
 
-**Total de tasks de correção**: 8
-**Tasks paralelizáveis [P]**: 5 (T-C4, T-C1, T-C2, T-C5, T-C7, T-C8)
-**Tasks sequenciais**: 3 (T-C3, T-C6)
+**Total de tasks de correção**: 15 (T-C1 a T-C15)
+**Tasks originais mantidas**: 7 (T001.1 a T001.7 — ✅ concluídas)
+**Evidências resolvidas**: 6 (EVD-001-R1-001 a EVD-001-R1-006)
+**Arquivos legados corrigidos (Phase 6)**: 6 (models/services/index.js, 4 hooks, AppMVVM.jsx)
+**Tasks paralelizáveis [P]**: 12 (T-C4, T-C1, T-C2, T-C5, T-C7, T-C8, T-C9, T-C11, T-C12, T-C13)
+**Tasks sequenciais**: 3 (T-C3, T-C6, T-C10)
 **Evidências resolvidas**: 6 (EVD-001-R1-001 a EVD-001-R1-006)
 **Gates desbloqueados**: GATE-02, GATE-03 (após Rodada 2)
+**Imports legados corrigidos**: 6 arquivos (T-C9 a T-C14)
+
+---
+
+## 🩹 Phase 6: Correção de Runtime — Imports Legados Quebrados (ST001.2)
+
+**Purpose**: Corrigir `SyntaxError: does not provide an export named 'authService'` e demais imports quebrados em arquivos legados, causados pela refatoração de escopo mínimo.
+
+**Contexto**: A ST001.1 removeu o singleton `authService`, métodos `getCurrentUser()`, `getCurrentUsername()` e `getIsAuthenticated()` do `useAuthStore`. Arquivos em `src-mvvm/` que estavam fora do escopo da Sprint 01 quebraram. A correção deve ser feita **nos consumidores**, não restaurando métodos (CONST-R2).
+
+**Path base**: `kpc-frontend/src-mvvm/`
+
+**RF associado**: Nenhum novo RF — correção de runtime em arquivos legados (fora do modelo da Sprint 01).
+
+### T-C9 — Corrigir export quebrado em `models/services/index.js`
+
+- [ ] T-C9 [P] Corrigir `models/services/index.js`:
+  - Linha 13: `export { AuthService, authService } from './AuthService.js';`
+  - `authService` (instância singleton) não é mais exportada por `AuthService.js` — foi removida na ST001.1
+  - **Correção**: Remover `authService` do re-export: `export { AuthService } from './AuthService.js';`
+  - Verificar se algum outro arquivo importa `authService` de `models/services/index.js` (já mapeado em T-C10)
+  - **Não adicionar** tag `// @model:` pois este arquivo não faz parte do modelo da Sprint 01
+
+### T-C10 — Corrigir `useTopicSelectionViewModel.js` (3 imports quebrados)
+
+- [ ] T-C10 Corrigir `viewmodels/hooks/useTopicSelectionViewModel.js`:
+  - **Linha 12**: `import { authService } from '../../models/services/AuthService.js';`
+    - `authService` não é mais exportado
+    - **Correção**: Remover este import. O `authService.listUsers()` (linha 77) deve ser substituído — em vez de chamar `listUsers()`, usar uma verificação mais simples como tentar carregar tópicos e capturar erro 401/403
+  - **Linha 33**: `const user = authStore.getCurrentUser();`
+    - Método removido do store
+    - **Correção**: Substituir por `const user = authStore.user;`
+  - **Linha 34**: `const username = authStore.getCurrentUsername();`
+    - Método removido do store
+    - **Correção**: Substituir por `const username = authStore.user?.username || '';`
+  - **Linha 358-359**: Usos de `authStore.getCurrentUsername()` e `authStore.getCurrentUser()` — mesmas correções
+  - **Linha 77**: `await authService.listUsers();` — sem substituto direto. Pode ser substituído por um try/catch que verifica conectividade, ou removido se não for estritamente necessário para o fluxo de seleção de tópicos
+
+### T-C11 — Corrigir `useKeyphraseClusteringViewModel.js` (2 quebras)
+
+- [ ] T-C11 [P] Corrigir `viewmodels/hooks/useKeyphraseClusteringViewModel.js`:
+  - **Linha 50**: `const user = authStore.getCurrentUser();`
+    - **Correção**: `const user = authStore.user;`
+  - **Linha 51**: `const username = authStore.getCurrentUsername();`
+    - **Correção**: `const username = authStore.user?.username || '';`
+
+### T-C12 — Corrigir `useKeyphraseClustersViewModel.js` (2 quebras)
+
+- [ ] T-C12 [P] Corrigir `viewmodels/hooks/useKeyphraseClustersViewModel.js`:
+  - **Linha 55**: `const user = authStore.getCurrentUser();`
+    - **Correção**: `const user = authStore.user;`
+  - **Linha 56**: `const username = authStore.getCurrentUsername();`
+    - **Correção**: `const username = authStore.user?.username || '';`
+
+### T-C13 — Corrigir `useCuratedKeyphrasesViewModel.js` (2 quebras)
+
+- [ ] T-C13 [P] Corrigir `viewmodels/hooks/useCuratedKeyphrasesViewModel.js`:
+  - **Linha 57**: `const user = authStore.getCurrentUser();`
+    - **Correção**: `const user = authStore.user;`
+  - **Linha 58**: `const username = authStore.getCurrentUsername();`
+    - **Correção**: `const username = authStore.user?.username || '';`
+
+### T-C14 — Corrigir `AppMVVM.jsx` (2 quebras)
+
+- [ ] T-C14 [P] Corrigir `AppMVVM.jsx`:
+  - **Linha 119**: `user={authStore.getCurrentUser()}`
+    - **Correção**: `user={authStore.user}`
+  - **Linha 200**: `user={authStore.getCurrentUser()}`
+    - **Correção**: `user={authStore.user}`
+
+### T-C15 — Validar runtime pós-correção
+
+- [ ] T-C15 Validar que o frontend carrega sem `SyntaxError`:
+  - Executar `npm run dev` (ou comando equivalente) no diretório `kpc-frontend/`
+  - Abrir `http://localhost:5173` (ou porta configurada)
+  - Verificar que **nenhum** erro de import/export aparece no console do navegador
+  - Testar o fluxo de login manualmente (end-to-end) para garantir que a funcionalidade principal não foi afetada
+  - Caso algum erro persista, identificar o arquivo e repetir a correção
+
+**Checkpoint**: Frontend carrega sem `SyntaxError`. Login + tópicos funcionais.
+
+---
+
+## Dependências Atualizadas (com Phase 6)
+
+```mermaid
+graph TD
+    Phase1["Phase 1: Foundation (T-C4)"] --> Phase2["Phase 2: Over-Engineering Model (T-C1, T-C2)"]
+    Phase2 --> Phase3["Phase 3: Over-Engineering ViewModel (T-C3)"]
+    Phase3 --> Phase4["Phase 4: Bug + Nome (T-C5, T-C6)"]
+    Phase4 --> Phase5["Phase 5: Validação (T-C7, T-C8)"]
+    Phase5 --> Phase6a["Phase 6: Runtime (T-C9..T-C14)"]
+    Phase6a --> Phase6b["Phase 6: Validação (T-C15)"]
+```
+
+### Dependências Detalhadas (atualizado)
+
+| Task | Depende de | Descrição |
+|------|-----------|-----------|
+| T-C4 | — | Tag em config.js |
+| T-C1 | — | Refatorar User.js |
+| T-C2 | — | Refatorar AuthService.js |
+| T-C3 | T-C1 | useAuthStore depende de `User` entity |
+| T-C5 | — | Corrigir TextField.jsx |
+| T-C6 | T-C3 | Renomear hook depende do store |
+| T-C9..T-C14 | T-C2, T-C3, T-C6 | Imports corrigidos APÓS AuthService e store refatorados |
+| T-C15 | T-C9..T-C14 | Validação runtime |
+
+### Ordem de Execução Recomendada
+
+```
+Lote 1: T-C4 [P] + T-C1 [P] + T-C2 [P] + T-C5 [P] (paralelo)
+Lote 2: T-C3 (após T-C1)
+Lote 3: T-C6 (após T-C3)
+Lote 4: T-C9 [P] + T-C10 + T-C11 [P] + T-C12 [P] + T-C13 [P] + T-C14 [P] (paralelo — após T-C2, T-C3, T-C6)
+Lote 5: T-C15 (após lote 4)
+```

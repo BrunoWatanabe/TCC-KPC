@@ -44,9 +44,9 @@ extends: speckit.plan
 
 ## Technical Context
 
-**Language/Version**: TypeScript 5.x, React 18+, Vite 5.x
+**Language/Version**: JavaScript (ES modules), React 18+, Vite 5.x
 
-**Primary Dependencies**: Material UI 5 (TextField, Button, Alert, CircularProgress, AuthLayout), Zustand 4.x com middleware `persist`, Axios 1.x, React Router 6.x, TypeScript 5.x
+**Primary Dependencies**: Material UI 5 (TextField, Button, Alert, CircularProgress, AuthLayout), Zustand 4.x com middleware `persist`, Axios 1.x, React Router 6.x
 
 **Modeling Tool**: PlantUML (diagramas em `specs/001-login-component/model/`)
 
@@ -56,7 +56,7 @@ extends: speckit.plan
 
 **Target Platform**: Navegador (frontend web — Chrome, Firefox, Edge)
 
-**Project Type**: Frontend application MVVM (React + TypeScript)
+**Project Type**: Frontend application MVVM (React + JavaScript)
 
 **Performance Goals**: Login completo em < 10s (preenchimento + latência de rede)
 
@@ -74,20 +74,21 @@ extends: speckit.plan
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-### Status Pós-Rodada 1
+### Status Pós-Rodada 2 (ST001.1 concluída)
 
 | Gate | Status | Justificativa |
 |------|--------|---------------|
 | **GATE-01 — Planejamento Obrigatório** | ✅ APROVADO | `/speckit.specify` executado. Spec em `specs/001-login-component/spec.md` com RF-001 a RF-010 + RF-001-C1 a RF-001-C6. `/speckit.plan` executado. Diagramas `.puml` gerados e validados. |
-| **GATE-02 — Análise Pré-Merge** | ❌ NEGADO | Foi executado `/speckit.analyze` (Rodada 1), mas o veredito apontou 6 DE. Merge bloqueado até correções. Será reavaliado na Rodada 2. |
-| **GATE-03 — Over-engineering Bloqueia Merge** | ❌ NEGADO | 3 evidências de OVER_ENGINEERING (EVD-001-R1-003, EVD-001-R1-004, EVD-001-R1-005). CONST-R2 violada. Merge bloqueado até resolução. |
+| **GATE-02 — Análise Pré-Merge** | ✅ APROVADO (Rodada 2) | Rodada 2 do pipeline concluída. Código da Sprint 01 alinhado ao modelo. |
+| **GATE-03 — Over-engineering Bloqueia Merge** | ✅ APROVADO (Rodada 2) | Evidências de over-engineering resolvidas na ST001.1. CONST-R2 restaurada. |
 
-### Ações para Reverter Gates Negados
+### Pendência ST001.2 — Runtime em arquivos legados
 
-| Gate | Ação Necessária | Critério de Aprovação |
-|------|----------------|----------------------|
-| GATE-02 | Executar `/speckit.analyze` após correções | Veredito NE (Ninguém Errado) na Rodada 2 |
-| GATE-03 | Implementar RF-001-C1, RF-001-C2, RF-001-C3 | Evidências RESOLVIDAS na Rodada 2 |
+Apesar dos gates estarem aprovados para o código da Sprint 01, a refatoração de escopo mínimo quebrou imports em **arquivos legados** (`src-mvvm/`) que estão fora do modelo da Sprint 01. Isso causa `SyntaxError` em runtime.
+
+**Risco**: O frontend não carrega. Bloqueia validação manual e progresso para sprints seguintes.
+
+**Plano de ação**: Corrigir imports nos arquivos consumidores (não restaurar métodos) — ver seção "🩹 Correção de Runtime pós-R2 (ST001.2)".
 
 **Princípios Constitucionais Aplicáveis**:
 - ✅ **CONST-R1 — MDE+SDD First**: Spec e modelo existem e foram validados
@@ -135,7 +136,67 @@ extends: speckit.plan
 | `login-sequence.puml` | ✅ **Manter** | Fluxo permanece o mesmo |
 
 ---
+## 🩹 Correção de Runtime pós-R2 (ST001.2)
 
+### Contexto
+
+A ST001.1 refatorou `AuthService.js`, `User.js` e `useAuthStore.js` para escopo mínimo — removendo o singleton `authService`, métodos públicos extras e ações não modeladas. A Rodada 2 do `/speckit.analyze` verificou que o código está alinhado ao modelo, mas **não detectou** que outros arquivos em `kpc-frontend/src-mvvm/` (fora do escopo da Sprint 01) ainda importam esses exports removidos. O runtime quebra com `SyntaxError: does not provide an export named 'authService'`.
+
+### Análise de Impacto — Imports Quebrados
+
+Foram identificados **4 arquivos** com imports quebrados e **1 arquivo** com export removido:
+
+#### 1. `models/services/index.js` — Export quebrado
+- `export { AuthService, authService } from './AuthService.js';`
+- `authService` (instância singleton) não é mais exportada por `AuthService.js`
+
+#### 2. `viewmodels/hooks/useTopicSelectionViewModel.js` — 3 quebras
+- `import { authService } from '../../models/services/AuthService.js';`
+- `authStore.getCurrentUser()` — método removido do store
+- `authStore.getCurrentUsername()` — método removido do store
+
+#### 3. `viewmodels/hooks/useKeyphraseClusteringViewModel.js` — 2 quebras
+- `authStore.getCurrentUser()` — método removido
+- `authStore.getCurrentUsername()` — método removido
+
+#### 4. `viewmodels/hooks/useKeyphraseClustersViewModel.js` — 2 quebras
+- `authStore.getCurrentUser()` — método removido
+- `authStore.getCurrentUsername()` — método removido
+
+#### 5. `viewmodels/hooks/useCuratedKeyphrasesViewModel.js` — 2 quebras
+- `authStore.getCurrentUser()` — método removido
+- `authStore.getCurrentUsername()` — método removido
+
+#### 6. `AppMVVM.jsx` — 2 quebras
+- `authStore.getCurrentUser()` (linhas 119, 200) — método removido
+
+### Decisão Arquitetural
+
+Em vez de restaurar métodos no `AuthService` ou `useAuthStore` (o que violaria CONST-R2 — zero over-engineering), **os imports nos arquivos consumidores devem ser corrigidos** para usar a nova API pública.
+
+**Padrão a ser aplicado**: Substituir chamadas como `authStore.getCurrentUser()` por acesso direto ao estado: `authStore.user`. O estado `user` e `isAuthenticated` são campos públicos do store Zustand e continuam disponíveis.
+
+### Tasks de Correção
+
+| ID | Arquivo | O que corrigir | Abordagem |
+|----|---------|---------------|-----------|
+| T-C7 | `models/services/index.js` | Export `authService` quebrado | Remover `authService` do re-export |
+| T-C8 | `useTopicSelectionViewModel.js` | 3 imports quebrados | `authStore.user` no lugar de `getCurrentUser()`, `authStore.isAuthenticated` no lugar de `getIsAuthenticated()` |
+| T-C9 | `useKeyphraseClusteringViewModel.js` | 2 chamadas quebradas | `authStore.user` → `user`, `authStore.user?.username` → `username` |
+| T-C10 | `useKeyphraseClustersViewModel.js` | 2 chamadas quebradas | `authStore.user` → `user`, `authStore.user?.username` → `username` |
+| T-C11 | `useCuratedKeyphrasesViewModel.js` | 2 chamadas quebradas | `authStore.user` → `user`, `authStore.user?.username` → `username` |
+| T-C12 | `AppMVVM.jsx` | 2 chamadas quebradas | `authStore.user` no lugar de `getCurrentUser()` |
+| T-C13 | Validação pós-correção | Testar runtime | `npm run dev` sem erros de SyntaxError |
+
+### Impacto nos Diagramas
+
+| Diagrama | Ação | Justificativa |
+|----------|------|---------------|
+| `login-classes.puml` | ✅ **Manter** | Correções são em arquivos legados fora do modelo |
+| `login-components.puml` | ✅ **Manter** | Correções são em arquivos legados fora do modelo |
+| `login-sequence.puml` | ✅ **Manter** | Fluxo de login não é alterado |
+
+---
 ## �📐 Artefatos de Modelagem (Override — Persona Arquiteto)
 
 Esta seção é **adicional** ao template nativo. Ela documenta os artefatos PlantUML que serão gerados durante a Fase 1 (Design).

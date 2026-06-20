@@ -4,31 +4,54 @@
 
 **Created**: 2026-06-19
 
-**Status**: Draft — Correções R1 → R2
+**Status**: Draft — Correções R1 → R2 → R3 (Runtime Fixes)
 
 **Input**: User description: "Crie a especificação funcional para o componente de Login do sistema KPC (Keyphrase Curation). Sprint 01 do experimento — primeira funcionalidade do frontend MVVM. Stack: React 18 + Material UI 5 + Zustand + Axios. Arquitetura MVVM."
 
 ---
 
-## Correções da Rodada 1 (Pós-Veredito)
+## Correções da Rodada 2 → R3 (Runtime Pós-R2)
 
 **Data**: 2026-06-20
-**Rodada Anterior**: R1 (encerrada em 2026-06-19)
-**Veredito de Referência**: `verdict/verdict.md` — 6 evidências DE (Developer Errado), 0 AE, 0 NE
-**Natureza**: Apenas correções de conformidade (CONST-R2, CONST-R3). Nenhum novo RF de funcionalidade.
+**Rodada Anterior**: R2 (encerrada em 2026-06-19) — 6 evidências RESOLVIDAS, veredito NE
+**Natureza**: Correção de runtime — imports quebrados em arquivos fora do escopo original da Sprint 01
+
+### Problema
+
+A ST001.1 refatorou `AuthService.js`, `User.js` e `useAuthStore.js` para escopo mínimo (RFs RF-001-C1 a RF-001-C3), removendo métodos e exports não modelados. No entanto, outros arquivos em `src-mvvm/` que não faziam parte do escopo original da Sprint 01 ainda importam esses métodos/exports removidos, causando `SyntaxError` em runtime. A Polícia (R2) não detectou esses bugs porque sua análise foca em modelo-vs-código, não em consistência interna do código legado.
+
+### Mapeamento de Imports Quebrados
+
+| Arquivo | Linha | Símbolo Quebrado | Problema |
+|---------|-------|-----------------|----------|
+| `models/services/index.js` | 13 | `authService` | Re-exporta `authService` que não existe mais em `AuthService.js` |
+| `viewmodels/hooks/useTopicSelectionViewModel.js` | 12 | `authService` | Importa `{ authService }` — export removido |
+| `viewmodels/hooks/useTopicSelectionViewModel.js` | 33 | `getCurrentUser()` | Método removido da store |
+| `viewmodels/hooks/useTopicSelectionViewModel.js` | 34 | `getCurrentUsername()` | Método removido da store |
+| `viewmodels/hooks/useTopicSelectionViewModel.js` | 35 | `getIsAuthenticated()` | Método removido da store |
+| `viewmodels/hooks/useTopicSelectionViewModel.js` | 77 | `listUsers()` | Método removido de AuthService |
+| `viewmodels/hooks/useTopicSelectionViewModel.js` | 358 | `getCurrentUsername()` | Método removido da store |
+| `viewmodels/hooks/useTopicSelectionViewModel.js` | 359 | `getCurrentUser()` | Método removido da store |
+| `AppMVVM.jsx` | 119 | `getCurrentUser()` | Método removido da store |
+| `AppMVVM.jsx` | 200 | `getCurrentUser()` | Método removido da store |
+| `useKeyphraseClusteringViewModel.js` | 50 | `getCurrentUser()` | Método removido da store |
+| `useKeyphraseClusteringViewModel.js` | 51 | `getCurrentUsername()` | Método removido da store |
+| `useCuratedKeyphrasesViewModel.js` | 57 | `getCurrentUser()` | Método removido da store |
+| `useCuratedKeyphrasesViewModel.js` | 58 | `getCurrentUsername()` | Método removido da store |
+| `useKeyphraseClustersViewModel.js` | 55 | `getCurrentUser()` | Método removido da store |
+| `useKeyphraseClustersViewModel.js` | 56 | `getCurrentUsername()` | Método removido da store |
+
+Total: **16 ocorrências** em **5 arquivos**.
 
 ### Resumo das Correções
 
-| RF de Correção | Descrição | Evidência Origem | Prioridade |
-|----------------|-----------|-----------------|------------|
-| RF-001-C1 | Refatorar `User.js` para escopo mínimo: remover atributos e métodos não modelados | EVD-001-R1-003 — OVER_ENGINEERING | P1 |
-| RF-001-C2 | Refatorar `AuthService.js` para expor apenas `login()` como método público | EVD-001-R1-004 — OVER_ENGINEERING | P1 |
-| RF-001-C3 | Refatorar `useAuthStore` removendo ações não modeladas; manter apenas `login`, `logout`, `clearError` | EVD-001-R1-005 — OVER_ENGINEERING | P2 |
-| RF-001-C4 | Adicionar `// @model:` em `shared/config.js` apontando para `login-classes.puml` | EVD-001-R1-001 — TAG_MODEL_AUSENTE | P2 |
-| RF-001-C5 | Corrigir `ReferenceError` de `maxRows` em `TextField.jsx` | EVD-001-R1-006 — BUG_CODIGO | P1 |
-| RF-001-C6 | Alinhar nomenclatura do hook: renomear `useLoginViewModel` para `useAuth` | EVD-001-R1-002 — NOME_DIVERGENTE | P3 |
+| RF | Descrição | Prioridade |
+|----|-----------|------------|
+| RF-001-R3-C1 | Corrigir import `{ authService }` em `useTopicSelectionViewModel.js` e `models/services/index.js` | P1 (crítico) |
+| RF-001-R3-C2 | Substituir chamadas a `getCurrentUser()`, `getCurrentUsername()`, `getIsAuthenticated()` por acesso direto a propriedades da store em todos os 5 arquivos | P1 (crítico) |
+| RF-001-R3-C3 | Manter método `initialize()` em `useAuthStore` para `onRehydrateStorage` (já existe — documentar como exceção justificada) | P2 |
 
-> **Nota:** RFs originais (RF-001 a RF-010) permanecem inalterados. Esta atualização adiciona apenas RFs de correção com sufixo `-C`.
+> **Nota:** RFs originais (RF-001 a RF-010) e RFs de correção R1 (RF-001-C1 a RF-001-C6) permanecem inalterados. Esta atualização adiciona RFs de correção runtime com sufixo `-R3-C`.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -84,7 +107,20 @@ Após a Rodada 1 do pipeline de verificação, o Juiz identificou 6 evidências 
 
 ---
 
-### Edge Cases
+### User Story 4 — Correção de runtime pós-refatoração (Priority: P1)
+
+Após as correções de conformidade da Rodada 1 (RFs RF-001-C1 a RF-001-C6), o código refatorado quebrou imports em arquivos legados de `src-mvvm/` que ainda referenciavam métodos e exports removidos de `AuthService.js`, `User.js` e `useAuthStore.js`. O usuário vê um `SyntaxError` no console ao carregar a aplicação, impedindo o fluxo completo de login → tópicos. O Developer precisa restaurar a consistência interna do código restaurando imports quebrados ou substituindo chamadas a métodos removidos por acesso direto a propriedades equivalentes.
+
+**Why this priority**: P1 — Runtime `SyntaxError` impede completamente o uso da aplicação. Nenhum fluxo funcional é possível enquanto os imports quebrados persistirem.
+
+**Independent Test**: Pode ser testado abrindo a aplicação no navegador e verificando que não há `SyntaxError` no console do desenvolvedor, e que o fluxo de login → tópicos funciona sem erros.
+
+**Acceptance Scenarios**:
+
+1. **Given** a aplicação carregada no navegador após as correções, **When** o console do desenvolvedor é verificado, **Then** não há `SyntaxError` ou `ReferenceError` relacionado a imports de `AuthService`, `User` ou `useAuthStore`.
+2. **Given** `useTopicSelectionViewModel.js` após correção (RF-001-R3-C1), **When** o hook é carregado, **Then** não lança `SyntaxError: does not provide an export named 'authService'`.
+3. **Given** qualquer arquivo de ViewModel em `src-mvvm/` que acessava `getCurrentUser()`, `getCurrentUsername()` ou `getIsAuthenticated()` (RF-001-R3-C2), **When** o hook é carregado, **Then** as chamadas foram substituídas por acesso direto a `authStore.user`, `authStore.user?.username`, ou `authStore.isAuthenticated`.
+4. **Given** o fluxo completo de login → seleção de tópicos após as correções, **When** o usuário se autentica e é redirecionado para `/topics`, **Then** a tela de tópicos carrega sem erros no console.
 
 - O usuário pressiona Enter no formulário — deve submeter a requisição da mesma forma que clicar em "Entrar".
 - O usuário cola um texto muito longo no campo de username — o campo deve respeitar os limites do input padrão sem quebrar o layout.
@@ -92,6 +128,8 @@ Após a Rodada 1 do pipeline de verificação, o Juiz identificou 6 evidências 
 - O token armazenado em localStorage é corrompido ou manualmente alterado — na inicialização, o sistema detecta formato inválido e redireciona ao login.
 - **Correção (RF-001-C5)**: O componente `TextField.jsx` não recebe `maxRows` como prop em nenhum cenário do RF-001 — a correção deve garantir que a prop seja opcional com valor padrão `undefined`, evitando `ReferenceError` sem quebrar usos futuros.
 - **Correção (RF-001-C6)**: Após renomear o hook para `useAuth`, todos os imports em `LoginView.jsx` e demais dependentes devem ser atualizados — a correção deve garantir que nenhum `import` quebrado permaneça.
+- **Correção Runtime (RF-001-R3-C1)**: `models/services/index.js` re-exporta `{ authService }` que não existe mais — a correção deve remover essa re-exportação e corrigir o import em `useTopicSelectionViewModel.js`.
+- **Correção Runtime (RF-001-R3-C2)**: Em `useTopicSelectionViewModel.js`, `authStore.getCurrentUser()` deve ser substituído por `authStore.user`, `getCurrentUsername()` por `authStore.user?.username`, e `getIsAuthenticated()` por `authStore.isAuthenticated`. O mesmo padrão se aplica a `useKeyphraseClusteringViewModel.js`, `useCuratedKeyphrasesViewModel.js`, `useKeyphraseClustersViewModel.js` e `AppMVVM.jsx` — 16 ocorrências ao total.
 
 ## Requirements *(mandatory)*
 
@@ -119,6 +157,21 @@ Estes requisitos são correções de conformidade determinadas pelo Juiz no vere
 - **RF-001-C5** (P1 — Bug): O sistema DEVE corrigir o `ReferenceError: maxRows is not defined` em `views/components/TextField.jsx`, adicionando `maxRows` à desestruturação de props com valor padrão `undefined` ou removendo a referência. *Origem: EVD-001-R1-006.*
 - **RF-001-C6** (P3 — Nomenclatura): O sistema DEVE renomear o hook `useLoginViewModel` para `useAuth`, incluindo nome do arquivo (`viewmodels/hooks/useLoginViewModel.js` → `useAuth.js`), nome da função exportada e todos os imports em dependentes. *Origem: EVD-001-R1-002.*
 
+### RFs de Correção (Rodada 2 → Rodada 3 — Runtime)
+
+Estes requisitos corrigem `SyntaxError` em runtime causados pela refatoração de escopo mínimo da Rodada 1. A Polícia não detectou esses bugs porque sua análise foca em modelo-vs-código, não em consistência interna do código legado.
+
+- **RF-001-R3-C1** (P1 — SyntaxError): O sistema DEVE corrigir o import `{ authService }` em `viewmodels/hooks/useTopicSelectionViewModel.js` — substituir por import da classe `AuthService` e instanciação local, OU por acesso ao singleton já existente em `useAuthStore`. Em `models/services/index.js`, DEVE remover a re-exportação `authService` da linha 13, mantendo apenas `AuthService` se necessário.
+- **RF-001-R3-C2** (P1 — SyntaxError): O sistema DEVE substituir TODAS as chamadas a `authStore.getCurrentUser()`, `authStore.getCurrentUsername()` e `authStore.getIsAuthenticated()` nos 5 arquivos abaixo por acesso direto a propriedades da store:
+  - `viewmodels/hooks/useTopicSelectionViewModel.js` (linhas 33, 34, 35, 358, 359)
+  - `viewmodels/hooks/useKeyphraseClusteringViewModel.js` (linhas 50, 51)
+  - `viewmodels/hooks/useCuratedKeyphrasesViewModel.js` (linhas 57, 58)
+  - `viewmodels/hooks/useKeyphraseClustersViewModel.js` (linhas 55, 56)
+  - `AppMVVM.jsx` (linhas 119, 200)
+  
+  **Padrão de substituição**: `authStore.getCurrentUser()` → `authStore.user`, `authStore.getCurrentUsername()` → `authStore.user?.username`, `authStore.getIsAuthenticated()` → `authStore.isAuthenticated`.
+- **RF-001-R3-C3** (P2 — Documentação): O sistema DEVE manter o método `initialize()` em `viewmodels/stores/useAuthStore.js` e documentar como exceção justificada (necessário para `onRehydrateStorage` do Zustand persist middleware — fora do modelo, mas essencial para hidratação). *Nota: `initialize()` já existe e não deve ser removido.*
+
 ### Key Entities *(include if feature involves data)*
 
 - **User**: Entidade que representa o usuário autenticado. Contém APENAS as propriedades `username` (nome de usuário, string) e `token` (string de autenticação JWT). Método `fromApiResponse(response)` para construção a partir da resposta da API. Nenhum outro atributo ou método público deve existir — correção determinada por RF-001-C1.
@@ -136,6 +189,8 @@ Estes requisitos são correções de conformidade determinadas pelo Juiz no vere
 - **SC-004**: Usuários autenticados que recarregam a página permanecem na sessão atual sem necessidade de reautenticação.
 - **SC-005** (Correção): 100% dos RFs de correção (RF-001-C1 a RF-001-C6) implementados resultam em veredito NE (Ninguém Errado) na Rodada 2 do pipeline.
 - **SC-006** (Correção): O GATE-03 (Over-engineering Bloqueia Merge) transiciona de NEGADO para APROVADO após a execução das correções.
+- **SC-007** (Runtime R3): 0 erros de `SyntaxError` relacionados a imports no console do navegador ao carregar a aplicação.
+- **SC-008** (Runtime R3): Fluxo completo de login → tópicos executa sem erros após as correções de imports.
 
 ## Assumptions
 
@@ -150,3 +205,5 @@ Estes requisitos são correções de conformidade determinadas pelo Juiz no vere
 - **Correções**: Os arquivos refatorados (RF-001-C1 a RF-001-C3) terão seus testes manuais validados antes da Rodada 2.
 - **Correções**: A renomeação do hook (RF-001-C6) requer atualização de imports em `LoginView.jsx` e em qualquer outro arquivo que importe `useLoginViewModel`.
 - **Correções**: O bug `maxRows` (RF-001-C5) só ocorre quando a prop não é passada — a correção com valor padrão `undefined` é suficiente e não altera comportamento existente.
+- **Correções Runtime R3**: A store `useAuthStore` expõe `user` (objeto com `.username`), `isAuthenticated` (booleano) e `token` diretamente como propriedades do estado — acessíveis sem getters.
+- **Correções Runtime R3**: Os arquivos `useTopicSelectionViewModel.js`, `useKeyphraseClusteringViewModel.js`, `useCuratedKeyphrasesViewModel.js`, `useKeyphraseClustersViewModel.js` e `AppMVVM.jsx` são os únicos em `src-mvvm/` com imports quebrados (verificado via grep em 2026-06-20).

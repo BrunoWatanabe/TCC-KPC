@@ -1,7 +1,50 @@
 # Veredicto — Login Component
 
 **Feature:** 001-login-component
-**Total de Rodadas:** 2
+**Total de Rodadas:** 3
+
+---
+
+## 🔵 Rodada Atual: R3
+
+**Data:** 2026-06-20
+**Rodada Anterior:** R2
+
+### Observação
+
+Rodada 3 focou exclusivamente em correção de runtime (ST001.2) em **arquivos legados** de `src-mvvm/` que estavam **fora do escopo do modelo** da Sprint 01. Seis arquivos consumidores legados tiveram seus imports corrigidos (T-C9 a T-C15). Nenhum arquivo modelado foi alterado. Nenhuma evidência nova foi gerada. Nenhuma evidência anterior foi reaberta.
+
+### Sumário da Rodada
+
+| Métrica | Valor |
+|---------|-------|
+| Total Evidências Julgadas (novas) | 0 |
+| Evidências RESOLVIDAS R1 | 6 (todas mantidas) |
+| Evidências PERSISTEM | 0 |
+| Evidências REABERTAS | 0 |
+| DE (Developer Errado) | 0 |
+| AE (Arquiteto Errado) | 0 |
+| AMBOS | 0 |
+| NE (Ninguém Errado) | N/A (sem novas evidências) |
+| Gates Aprovados | 2 (GATE-01 ✅, GATE-03 ✅) |
+| Gates Negados | 0 |
+
+### Árvore de Veredictos (R3)
+
+| Evidência R1 | Decisão R1 | Decisão R2 | Status R3 |
+|--------------|------------|------------|-----------|
+| EVD-001-R1-001 | DE | NE | ✅ AINDA RESOLVIDA |
+| EVD-001-R1-002 | DE | NE | ✅ AINDA RESOLVIDA |
+| EVD-001-R1-003 | DE | NE | ✅ AINDA RESOLVIDA |
+| EVD-001-R1-004 | DE | NE | ✅ AINDA RESOLVIDA |
+| EVD-001-R1-005 | DE | NE | ✅ AINDA RESOLVIDA |
+| EVD-001-R1-006 | DE | NE | ✅ AINDA RESOLVIDA |
+
+### Decisão Consolidada
+
+Nenhuma evidência nova para julgar. A Rodada 3 foi uma correção de runtime sem impacto no alinhamento modelo-vs-código. Os 6 vereditos NE da Rodada 2 permanecem válidos. O GATE-03 permanece ✅ APROVADO.
+
+**Sentença consolidada:** Nenhuma ação adicional necessária. O alinhamento modelo-código está preservado.
 
 ---
 
@@ -372,3 +415,32 @@ A evidência EVD-001-R1-006 (bug maxRows) foi verificada em R2. O componente `Te
 |------|--------|---------------|
 | GATE-01 — Planejamento Obrigatório | ✅ APROVADO | `/speckit.plan` executado antes do implement. |
 | GATE-03 — Over-engineering Bloqueia Merge | ✅ **APROVADO** | Todas as 3 evidências de over-engineering (EVD-001-R1-003, EVD-001-R1-004, EVD-001-R1-005) foram corrigidas e verificadas como RESOLVIDAS em R2. CONST-R2 restaurada. Merge liberado. |
+
+---
+
+## 🔵 Rodada 3: R3
+
+**Data:** 2026-06-20
+**Rodada Anterior:** R2
+
+### Julgamento Consolidado
+
+A Rodada 3 não gerou novas evidências. As correções de runtime (ST001.2) foram em arquivos legados fora do escopo do modelo da Sprint 01. Nenhum arquivo modelado foi alterado. Todas as 6 evidências da Rodada 1 permanecem RESOLVIDAS.
+
+| Veredito R2 | Evidência | Status R3 |
+|-------------|-----------|-----------|
+| VER-001-R2-001 (NE) | EVD-001-R2-001 — TAG_MODEL_AUSENTE | ✅ AINDA RESOLVIDA |
+| VER-001-R2-002 (NE) | EVD-001-R2-002 — NOME_HOOK_DIVERGENTE | ✅ AINDA RESOLVIDA |
+| VER-001-R2-003 (NE) | EVD-001-R2-003 — OVER_ENGINEERING_USER | ✅ AINDA RESOLVIDA |
+| VER-001-R2-004 (NE) | EVD-001-R2-004 — OVER_ENGINEERING_AUTH_SERVICE | ✅ AINDA RESOLVIDA |
+| VER-001-R2-005 (NE) | EVD-001-R2-005 — OVER_ENGINEERING_STORE | ✅ AINDA RESOLVIDA |
+| VER-001-R2-006 (NE) | EVD-001-R2-006 — BUG_MAX_ROWS | ✅ AINDA RESOLVIDA |
+
+**Decisão:** Nenhum novo julgamento necessário. Verificado que o estado de integridade dos arquivos modelados permanece intacto.
+
+### Gates da Constituição — Rodada 3
+
+| Gate | Status |
+|------|--------|
+| GATE-01 — Planejamento Obrigatório | ✅ APROVADO |
+| GATE-03 — Over-engineering Bloqueia Merge | ✅ APROVADO (mantido) |

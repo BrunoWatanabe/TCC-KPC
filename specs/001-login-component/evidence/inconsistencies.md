@@ -1,7 +1,34 @@
 # Relatório de Evidências — Login Component
 
 **Feature:** 001-login-component
-**Total de Rodadas:** 2
+**Total de Rodadas:** 3
+
+---
+
+## 🔵 Rodada Atual: R3
+
+**Data:** 2026-06-20
+**Rodada Anterior:** R2
+
+### Sumário da Rodada
+
+| Métrica | Valor |
+|---------|-------|
+| Evidências NOVAS | 0 |
+| Evidências PERSISTEM | 0 |
+| Evidências RESOLVIDAS | 6 (todas as R1/R2 permanecem) |
+| Evidências REABERTAS | 0 |
+
+### Árvore de Evidências
+
+| Rodada Anterior | Status | Rodada Atual |
+|----------------|--------|--------------|
+| EVD-001-R1-001 | ✅ AINDA RESOLVIDA | — |
+| EVD-001-R1-002 | ✅ AINDA RESOLVIDA | — |
+| EVD-001-R1-003 | ✅ AINDA RESOLVIDA | — |
+| EVD-001-R1-004 | ✅ AINDA RESOLVIDA | — |
+| EVD-001-R1-005 | ✅ AINDA RESOLVIDA | — |
+| EVD-001-R1-006 | ✅ AINDA RESOLVIDA | — |
 
 ---
 
@@ -405,3 +432,51 @@
 | CHK-SEQ-01 | Fluxos modelados → implementados | ✅ |
 | CHK-DEP-01 | Tags `// @model:` presentes | ✅ Todos os 7 arquivos |
 | CHK-DEP-02 | Depoimentos coletados R2 | ✅ |
+
+---
+
+## 🔵 Rodada 3: R3
+
+**Data:** 2026-06-20
+**Rodada Anterior:** R2
+
+### Observação
+
+Rodada 3 focou exclusivamente em correção de runtime (ST001.2) em **arquivos legados** de `src-mvvm/` que estavam **fora do escopo do modelo** da Sprint 01. As correções envolveram ajustes de imports quebrados em consumidores legados dos métodos removidos durante a refatoração de escopo mínimo (ST001.1). Nenhum arquivo modelado foi alterado nesta rodada.
+
+### Sumário da Rodada
+
+| Métrica | Valor |
+|---------|-------|
+| Evidências NOVAS | 0 |
+| Evidências PERSISTEM | 0 |
+| Evidências RESOLVIDAS | 6 (todas as R1/R2 permanecem) |
+| Evidências REABERTAS | 0 |
+
+### Árvore de Evidências
+
+| Rodada Anterior | Status | Rodada Atual |
+|----------------|--------|--------------|
+| EVD-001-R1-001 | ✅ AINDA RESOLVIDA | — |
+| EVD-001-R1-002 | ✅ AINDA RESOLVIDA | — |
+| EVD-001-R1-003 | ✅ AINDA RESOLVIDA | — |
+| EVD-001-R1-004 | ✅ AINDA RESOLVIDA | — |
+| EVD-001-R1-005 | ✅ AINDA RESOLVIDA | — |
+| EVD-001-R1-006 | ✅ AINDA RESOLVIDA | — |
+
+### Verificação de Integridade — Arquivos Modelados (Sprint 01)
+
+| Arquivo | Tag `// @model:` | Escopo Mínimo | Status |
+|---------|-----------------|---------------|--------|
+| `shared/config.js` | ✅ | N/A (config) | ✅ Íntegro |
+| `models/entities/User.js` | ✅ | ✅ Apenas `username`, `token`, `fromApiResponse()` | ✅ Íntegro |
+| `models/services/AuthService.js` | ✅ | ✅ Apenas `login()` público | ✅ Íntegro |
+| `viewmodels/stores/useAuthStore.js` | ✅ | ✅ Apenas `login`, `logout`, `clearError` + `initialize` | ✅ Íntegro |
+| `viewmodels/hooks/useAuth.js` | ✅ | ✅ Hook renomeado conforme modelo | ✅ Íntegro |
+| `views/pages/LoginView.jsx` | ✅ | ✅ View pura sem lógica | ✅ Íntegro |
+| `views/components/TextField.jsx` | ✅ | ✅ `maxRows` com valor padrão | ✅ Íntegro |
+| `AppMVVM.jsx` | ✅ | ✅ Importa `useAuth` | ✅ Íntegro |
+
+### Conclusão da Rodada
+
+> Rodada 3 focou em correção de runtime em arquivos legados — nenhuma nova inconsistência modelo-vs-código detectada. As 6 evidências da Rodada 1 permanecem RESOLVIDAS. Nenhum arquivo modelado foi alterado. O alinhamento entre modelo e código está preservado.

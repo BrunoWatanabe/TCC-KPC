@@ -2,7 +2,7 @@
 
 **Purpose**: Validate specification completeness and quality before proceeding to planning
 **Created**: 2026-06-19
-**Updated**: 2026-06-20 (Após correções R1 → R2)
+**Updated**: 2026-06-20 (Após correções R1 → R2 → R3 Runtime)
 **Feature**: [specs/001-login-component/spec.md](specs/001-login-component/spec.md)
 
 ## Content Quality
@@ -34,6 +34,16 @@
 - [x] User Story 3 cobre cenários de correção pós-veredito
 - [x] Success Criteria incluem métricas de verificação (SC-005, SC-006)
 
+## Corrections Completeness (R2 → R3 Runtime)
+
+- [x] RF-001-R3-C1 a RF-001-R3-C3 estão presentes com mapeamento exato de arquivos/linhas
+- [x] Problema de runtime está claramente explicado (imports quebrados não detectados pela Polícia)
+- [x] Mapeamento de 16 ocorrências em 5 arquivos está documentado
+- [x] Padrão de substituição (`getCurrentUser()` → `user`) está especificado
+- [x] RF-001-R3-C3 documenta exceção justificada (`initialize()`)
+- [x] User Story 4 cobre cenários de correção runtime
+- [x] Success Criteria incluem métricas de runtime (SC-007, SC-008)
+
 ## Feature Readiness
 
 - [x] All functional requirements have clear acceptance criteria
@@ -44,5 +54,6 @@
 ## Notes
 
 - All checklist items pass. No [NEEDS CLARIFICATION] markers found.
-- Spec atualizada com correções da Rodada 1 (6 RFs de correção).
-- Pronto para `/speckit.plan` (Rodada 2).
+- Spec atualizada com correções da Rodada 1 (6 RFs) + Rodada 2→R3 Runtime (3 RFs).
+- Total de RFs: 10 originais + 6 C + 3 R3-C = 19 requisitos funcionais.
+- Pronto para implementação das correções runtime.

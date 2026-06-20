@@ -116,7 +116,7 @@ function KeyphraseCurationPage() {
   
   return (
     <MainLayout
-      user={authStore.getCurrentUser()}
+      user={authStore.user}
       currentTopic={clustersVM?.topicName || 'Keyphrase Curation'}
       currentStep="Keyphrase Curation"
       onLogout={() => authStore.logout()}
@@ -197,7 +197,7 @@ function CuratedKeyphrasesPage() {
   
   return (
     <MainLayout
-      user={authStore.getCurrentUser()}
+      user={authStore.user}
       currentTopic={curatedVM?.topicName || 'Alias Management'}
       currentStep="Alias Management"
       onLogout={() => authStore.logout()}

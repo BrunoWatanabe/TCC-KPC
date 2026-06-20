@@ -1,3 +1,6 @@
+// @model: specs/001-login-component/model/login-classes.puml
+// RF: RF-001, RF-005, RF-006, RF-008, RF-009 — Store de autenticação
+
 /**
  * useAuthStore - Store Zustand simplificado para autenticação
  * Baseado em src/stores/useAuthStore.js com arquitetura MVVM
@@ -5,6 +8,9 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { User } from '../../models/entities/User.js';
+import { AuthService } from '../../models/services/AuthService.js';
+
+const authService = new AuthService();
 
 export const useAuthStore = create(
   persist(
@@ -13,7 +19,7 @@ export const useAuthStore = create(
       // ESTADO DE AUTENTICAÇÃO
       // ============================================================================
       isAuthenticated: false,
-      user: null,           // Instância da entidade User
+      user: null,
       token: null,
       error: null,
       loading: false,
@@ -23,29 +29,46 @@ export const useAuthStore = create(
       // ============================================================================
 
       /**
-       * Efetua login com dados do usuário
+       * Efetua login — chama AuthService, trata sucesso/erro, persiste
        */
-      login: (userData, token) => {
-        
-        // Converter userData para entidade User se necessário
-        const userEntity = userData instanceof User 
-          ? userData 
-          : User.fromApiResponse(userData);
+      login: async (username, password) => {
+        set({ loading: true, error: null });
 
-        const newState = {
-          isAuthenticated: true,
-          user: userEntity,
-          token: token,
-          error: null,
-          loading: false,
-        };
+        try {
+          const response = await authService.login(username, password);
 
-        set(newState);
-        
-        // Verificar se foi salvo
-        setTimeout(() => {
-          const saved = localStorage.getItem('auth-storage-mvvm');
-        }, 100);
+          // A API retorna { access_token, token_type, username }
+          const token = response.access_token;
+
+          // Criar entidade User
+          const userEntity = User.fromApiResponse({
+            username: response.username || username,
+            token,
+          });
+
+          set({
+            isAuthenticated: true,
+            user: userEntity,
+            token,
+            error: null,
+            loading: false,
+          });
+        } catch (err) {
+          let errorMsg = 'Credenciais inválidas';
+
+          if (err.message?.includes('Network error') || err.message?.includes('Failed to fetch')) {
+            errorMsg = 'Não foi possível conectar ao servidor. Verifique sua conexão.';
+          } else if (err.message?.includes('401') || err.message?.includes('422')) {
+            errorMsg = 'Credenciais inválidas';
+          } else if (err.message) {
+            errorMsg = err.message;
+          }
+
+          set({
+            loading: false,
+            error: errorMsg,
+          });
+        }
       },
 
       /**
@@ -59,20 +82,6 @@ export const useAuthStore = create(
           error: null,
           loading: false,
         });
-      },
-
-      /**
-       * Define estado de loading
-       */
-      setLoading: (loading) => {
-        set({ loading });
-      },
-
-      /**
-       * Define erro e para loading
-       */
-      setError: (error) => {
-        set({ error, loading: false });
       },
 
       /**
@@ -92,10 +101,6 @@ export const useAuthStore = create(
 
         set({ user: userEntity });
       },
-
-      // ============================================================================
-      // GETTERS CONVENIENTES
-      // ============================================================================
 
       /**
        * Obtém usuário atual

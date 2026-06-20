@@ -4,6 +4,18 @@
  */
 
 /**
+ * URL base da API do backend KPC
+ */
+export const API_BASE_URL = 'http://localhost:3132';
+
+/**
+ * Endpoints da API
+ */
+export const ENDPOINTS = {
+  LOGIN: '/users/login',
+};
+
+/**
  * Configurações principais do sistema (baseadas no backend ReactPy)
  */
 export const config = {
@@ -16,7 +28,7 @@ export const config = {
   similarity_threshold: 0.5,
   
   // Configurações de API
-  api_base_url: 'http://localhost:3132',
+  api_base_url: API_BASE_URL,
   api_timeout: 30000,
   
   // Configurações de autenticação

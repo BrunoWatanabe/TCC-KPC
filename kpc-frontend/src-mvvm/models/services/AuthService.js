@@ -1,12 +1,16 @@
+// @model: specs/001-login-component/model/login-classes.puml
+// RF: RF-001, RF-005, RF-006 — Serviço de autenticação
+
 /**
  * AuthService - Serviço responsável por autenticação e gerenciamento de usuários
  * Distribui as 6 APIs do grupo USERS do apiService.js
  */
 import { User } from '../entities/User.js';
+import { API_BASE_URL, ENDPOINTS } from '../../shared/config.js';
 
 export class AuthService {
   constructor() {
-    this.apiBaseUrl = 'http://localhost:3132';
+    this.apiBaseUrl = API_BASE_URL;
   }
 
     /**
@@ -79,7 +83,7 @@ export class AuthService {
     formData.append('username', username);
     formData.append('password', password);
 
-    const url = `${this.apiBaseUrl}/users/login`;
+    const url = `${this.apiBaseUrl}${ENDPOINTS.LOGIN}`;
     
     const response = await fetch(url, {
       method: 'POST',

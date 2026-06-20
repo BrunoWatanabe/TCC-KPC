@@ -1,3 +1,6 @@
+// @model: specs/001-login-component/model/login-classes.puml
+// RF: RF-001, RF-006 — Entidade User
+
 /**
  * Entidade User - baseada no backend ReactPy (user_attribution.py) e useAuthStore.js
  * Representa um usuário do sistema com suas atribuições e permissões

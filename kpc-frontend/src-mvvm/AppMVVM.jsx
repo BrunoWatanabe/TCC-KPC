@@ -1,3 +1,6 @@
+// @model: specs/001-login-component/model/login-classes.puml
+// RF: RF-001, RF-007 — Aplicação principal — integração MVVM
+
 /**
  * App.jsx - Aplicação principal MVVM
  * Conecta Views com ViewModels seguindo arquitetura MVVM

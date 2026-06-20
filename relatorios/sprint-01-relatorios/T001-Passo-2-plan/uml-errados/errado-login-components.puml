@@ -1,0 +1,197 @@
+@startuml
+' /specs/001-login-component/model/login-components.puml
+' Sprint: 01 | RF: RF-001 a RF-010
+' Diagrama de Componentes — Arquitetura MVVM do Login
+
+title "Diagrama de Componentes — Login Component (MVVM)\nSprint 01 | RF-001 a RF-010"
+
+!define RF_COMP(x) note right of x : @rf: RF-001\n@rf: RF-002\n@rf: RF-003\n@rf: RF-004\n@rf: RF-005\n@rf: RF-006\n@rf: RF-007\n@rf: RF-008\n@rf: RF-009\n@rf: RF-010
+
+' ============================================================
+' CAMADA 1 — VIEW (UI)
+' ============================================================
+
+package "View Layer (UI) #LightBlue" as VIEW_LAYER {
+  component "LoginView" <<React Component>> as LOGIN_VIEW
+  note right of LOGIN_VIEW
+    Página de login
+    Props: username, password, loading,
+    error, onUsernameChange,
+    onPasswordChange, onSubmit
+    Estados: idle | loading | error | success
+    Renderiza formulário com validação
+    @rf: RF-001 — Formulário de login
+    @rf: RF-003 — Disabled durante loading
+    @rf: RF-004 — "Entrando..." no botão
+    @rf: RF-010 — Password masked
+  end note
+
+  component "AuthLayout" <<React Component>> as AUTH_LAYOUT
+  note right of AUTH_LAYOUT
+    Layout de autenticação
+    Wrapper visual para tela de login
+    @rf: RF-001 — Container
+  end note
+
+  component "TextField" <<MUI Component>> as TEXT_FIELD
+  note right of TEXT_FIELD
+    Campo de texto MUI
+    Usado para username e password
+    @rf: RF-001 — Campo de entrada
+  end note
+
+  component "Button" <<MUI Component>> as BTN
+  note right of BTN
+    Botão de submissão MUI
+    Com estado de loading
+    @rf: RF-004 — "Entrando..."
+  end note
+
+  component "Alert" <<MUI Component>> as ALERT
+  note right of ALERT
+    Alerta MUI para erros
+    severity="error"
+    @rf: RF-008 — Exibição de erro
+  end note
+}
+
+' ============================================================
+' CAMADA 2 — VIEWMODEL
+' ============================================================
+
+package "ViewModel Layer #LightGreen" as VM_LAYER {
+  component "useAuthStore" <<Zustand Store>> as AUTH_STORE
+  note right of AUTH_STORE
+    Store global de autenticação
+    Estado: isAuthenticated, user, token,
+    loading, error
+    Ações: login, logout, clearError
+    Persist: localStorage
+    @rf: RF-006 — Persistência
+    @rf: RF-009 — Restauração sessão
+  end note
+
+  component "useAuth" <<Custom Hook>> as USE_AUTH
+  note right of USE_AUTH
+    Hook personalizado
+    Gerencia estado local do formulário
+    Conecta View ao Store
+    @rf: RF-001 — Interface View→ViewModel
+  end note
+
+  component "localStorage" <<Browser API>> as LOCAL_STORAGE
+  note right of LOCAL_STORAGE
+    Storage do navegador
+    Chave: "auth-storage"
+    @rf: RF-006 — Persistência
+    @rf: RF-009 — Hidratação
+  end note
+}
+
+' ============================================================
+' CAMADA 3 — MODEL / SERVICES
+' ============================================================
+
+package "Model Layer #LightCoral" as MODEL_LAYER {
+  component "AuthService" <<Axios Service>> as AUTH_SERVICE
+  note right of AUTH_SERVICE
+    Serviço HTTP de autenticação
+    login(username, password) → Promise<string>
+    POST /users/login (x-www-form-urlencoded)
+    @rf: RF-005 — Chamada à API
+  end note
+
+  component "User" <<Entity>> as USER_ENTITY
+  note right of USER_ENTITY
+    Entidade de domínio
+    username: string
+    token: string
+    fromApiResponse() factory
+    @rf: RF-006 — Entidade User
+  end note
+
+  component "Config" <<Config>> as CONFIG
+  note right of CONFIG
+    Configuração compartilhada
+    API_BASE_URL = "http://localhost:3132"
+  end note
+}
+
+' ============================================================
+' BACKEND (EXTERNO)
+' ============================================================
+
+package "Backend (FastAPI) #LightGray" as BACKEND {
+  component "POST /users/login" <<Endpoint>> as API_ENDPOINT
+  note right of API_ENDPOINT
+    Endpoint de autenticação
+    Content-Type: x-www-form-urlencoded
+    Body: username + password
+    200: { access_token: string }
+    401/422: { detail: string }
+    @rf: RF-005 — Endpoint
+  end note
+}
+
+' ============================================================
+' RELACIONAMENTOS ENTRE COMPONENTES
+' ============================================================
+
+' View → View Components
+LOGIN_VIEW --> AUTH_LAYOUT : <<usa>>
+note on link @rf: RF-001
+
+LOGIN_VIEW --> TEXT_FIELD : <<usa>> 2x
+note on link @rf: RF-001 — username + password
+
+LOGIN_VIEW --> BTN : <<usa>>
+note on link @rf: RF-004
+
+LOGIN_VIEW --> ALERT : <<usa>>
+note on link @rf: RF-008
+
+' View → ViewModel
+LOGIN_VIEW --> USE_AUTH : <<usa>>
+note on link @rf: RF-001 — Props vindas do hook
+
+' ViewModel interno
+USE_AUTH --> AUTH_STORE : <<acessa>>
+note on link @rf: RF-006 — Lê estado + chama ações
+
+AUTH_STORE --> LOCAL_STORAGE : <<persiste / hidrata>>
+note on link @rf: RF-006 — Zustand persist middleware
+@rf: RF-009 — Restauração
+
+' ViewModel → Model
+AUTH_STORE --> AUTH_SERVICE : <<chama>>
+note on link @rf: RF-005 — login(username, password)
+
+' Model interno
+AUTH_SERVICE --> USER_ENTITY : <<cria>>
+note on link @rf: RF-006 — Factory
+
+AUTH_SERVICE --> CONFIG : <<lê>>
+note on link : API_BASE_URL
+
+' Model → Backend
+AUTH_SERVICE --> API_ENDPOINT : <<HTTP POST>>
+note on link @rf: RF-005 — x-www-form-urlencoded
+
+' ============================================================
+' LEGENDA — Dependências entre Camadas
+' ============================================================
+
+legend top left
+  MVVM Data Flow (unidirectional):
+  View --> ViewModel --> Model --> API
+  
+  <<Dependency>>
+  View depende apenas do ViewModel (props/hooks)
+  ViewModel depende do Model (services)
+  Model depende do backend (API calls)
+  
+  View NÃO chama Model diretamente
+  Model NÃO depende de View ou ViewModel
+end legend
+
+@enduml

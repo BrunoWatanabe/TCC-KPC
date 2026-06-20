@@ -44,6 +44,60 @@ You **MUST** consider the user input before proceeding (if not empty).
     ```
 - If no hooks are registered or `.specify/extensions.yml` does not exist, skip silently
 
+## 👮‍♂️ Persona Loading: Polícia de Inconsistências (Override — Comportamento Adicional)
+
+> **IMPORTANTE**: Não remova nem substitua nenhum passo do fluxo nativo do Spec-Kit. Este é um **comportamento extra** que se soma ao fluxo padrão.
+
+**Antes de iniciar a execução do Goal**, realize os seguintes passos adicionais:
+
+1. **Verificar existência do arquivo de persona**:
+   - Verifique se `.github/prompts/persona-policia.md` existe.
+   - Se **não existir**, skip silenciosamente e prossiga com o fluxo nativo normalmente.
+
+2. **Carregar as regras da persona**:
+   - Leia `.github/prompts/persona-policia.md` na íntegra.
+   - Internalize todos os princípios: imparcialidade, exaustividade, rastreabilidade e objetividade.
+
+3. **Aplicar durante todo o workflow**: **Além** de executar o fluxo normal do Spec-Kit, você deve:
+   - Após o step 2 (Load Artifacts), verificar se existe o diretório `specs/<feature>/model/` com arquivos `.puml`.
+   - Se existir, realize a **investigação modelo-vs-código** conforme o checklist da persona Polícia.
+   - Se **não existir**, registre uma observação de que o modelo UML não foi encontrado e prossiga com a análise nativa normalmente.
+   - Para cada evidência encontrada, **colete automaticamente os depoimentos**:
+     - Leia `.github/prompts/persona-arquiteto.md` e simule o depoimento ARG-<feature>-<número>.
+     - Leia `.github/prompts/persona-developer.md` e simule o depoimento DEP-<feature>-<número>.
+   - Após o step 6 (Produce Analysis Report), **adicionalmente**:
+     - Gere o arquivo `specs/<feature>/evidence/inconsistencies.md` com as evidências e depoimentos.
+     - Se o diretório `evidence/` não existir, crie-o.
+   - Inclua no relatório final uma seção "👮 Relatório da Polícia de Inconsistências" com:
+     - Resumo das evidências encontradas.
+     - Contagem de depoimentos ARG- e DEP-.
+     - Link para o arquivo `.md` gerado.
+     - Checklist de verificação (preenchido).
+   - Ao final, reporte: "👮‍♂️ Persona Polícia ativa — relatório de evidências em `specs/<feature>/evidence/inconsistencies.md` com N depoimentos coletados"
+
+### ⚖️ Persona Loading: Juiz (Execução Automática — Pipeline Completo)
+
+> Após a Polícia concluir sua investigação e gerar o relatório, o **Juiz é automaticamente invocado** para julgar as evidências. Não é necessário comando separado.
+
+**Imediatamente após a conclusão da etapa da Polícia (step 3 acima), execute:**
+
+1. **Verificar existência do arquivo de persona**:
+   - Verifique se `.github/prompts/persona-juiz.md` existe.
+   - Se **não existir**, skip silenciosamente e reporte apenas a análise da Polícia.
+
+2. **Carregar as regras da persona**:
+   - Leia `.github/prompts/persona-juiz.md` na íntegra.
+   - Internalize os tipos de decisão (DE, AE, AMBOS, NE) e a árvore de decisão.
+
+3. **Executar o julgamento**:
+   - Leia o arquivo `specs/<feature>/evidence/inconsistencies.md` recém-gerado pela Polícia.
+   - Para cada evidência EVD- encontrada, leia os depoimentos ARG- e DEP- já inclusos.
+   - Aplique a árvore de decisão para cada evidência.
+   - Gere o arquivo `specs/<feature>/verdict/verdict.md`.
+   - Se o diretório `verdict/` não existir, crie-o.
+
+4. **Relatar ao final**: "⚖️ Persona Juiz ativa — julgamento concluído em `specs/<feature>/verdict/verdict.md` com N vereditos"
+
 ## Goal
 
 Identify inconsistencies, duplications, ambiguities, and underspecified items across the three core artifacts (`spec.md`, `plan.md`, `tasks.md`) before implementation. This command MUST run only after `/speckit.tasks` has successfully produced a complete `tasks.md`.

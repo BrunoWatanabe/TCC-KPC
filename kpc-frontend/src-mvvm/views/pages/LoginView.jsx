@@ -1,3 +1,6 @@
+// @model: specs/001-login-component/model/login-classes.puml
+// RF: RF-001, RF-002, RF-003, RF-004, RF-008, RF-010
+
 /**
  * LoginView.jsx - View pura para login MVVM
  * UI pura sem lógica de negócio, recebe tudo via props do ViewModel

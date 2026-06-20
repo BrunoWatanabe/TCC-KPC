@@ -1,0 +1,145 @@
+@startuml
+' /specs/001-login-component/model/login-classes.puml
+' Sprint: 01 | RF: RF-001 a RF-010
+' Diagrama de Classes — Camadas MVVM do componente de Login
+
+!define RF(x) note right of x : @rf: RF-001\n@rf: RF-002\n@rf: RF-003\n@rf: RF-004\n@rf: RF-005\n@rf: RF-006\n@rf: RF-007\n@rf: RF-008\n@rf: RF-009\n@rf: RF-010
+
+title "Diagrama de Classes — Login Component (MVVM)\nSprint 01 | RF-001 a RF-010"
+
+' ============================================================
+' PACOTES (Camadas)
+' ============================================================
+
+package "View (UI) #LightBlue" as VIEW {
+  class "LoginView" as LoginView {
+    + username: string
+    + password: string
+    + loading: boolean
+    + error: string | null
+    + onUsernameChange(e: Event): void
+    + onPasswordChange(e: Event): void
+    + onSubmit(): void
+    + render(): JSX.Element
+  }
+  note right of LoginView : Componente funcional React puro\n@rf: RF-001 — Exibe formulário\n@rf: RF-003 — Disabled durante loading\n@rf: RF-004 — "Entrando..." no botão\n@rf: RF-010 — Campo password mascarado
+
+  class "TextField" as TextField {
+    + label: string
+    + type: string
+    + value: string
+    + onChange: Handler
+    + disabled: boolean
+    + error: boolean
+    + helperText: string
+  }
+  note right of TextField : UI Component MUI\n@rf: RF-001 — Campos do formulário
+
+  class "Button" as Button {
+    + label: string
+    + disabled: boolean
+    + loading: boolean
+    + onClick: Handler
+  }
+  note right of Button : UI Component MUI\n@rf: RF-004 — Estado loading
+
+  class "Alert" as Alert {
+    + severity: "error" | "success" | "info"
+    + message: string
+    + onClose: Handler
+  }
+  note right of Alert : UI Component MUI\n@rf: RF-008 — Exibição de erro
+
+  class "AuthLayout" as AuthLayout {
+    + children: ReactNode
+    + render(): JSX.Element
+  }
+  note right of AuthLayout : Layout de autenticação\n@rf: RF-001 — Container da tela
+}
+
+package "ViewModel (Store) #LightGreen" as VM {
+  class "useAuthStore" as AuthStore {
+    + isAuthenticated: boolean
+    + user: User | null
+    + token: string | null
+    + loading: boolean
+    + error: string | null
+    + login(username: string, password: string): Promise<void>
+    + logout(): void
+    + clearError(): void
+  }
+  note right of AuthStore : Zustand Store com persist\n@rf: RF-006 — Persistência em localStorage\n@rf: RF-009 — Restauração na inicialização
+
+  class "useAuth" as UseAuthHook {
+    + username: string
+    + password: string
+    + loading: boolean
+    + error: string | null
+    + handleUsernameChange(e: Event): void
+    + handlePasswordChange(e: Event): void
+    + handleSubmit(): void
+    + isAuthenticated: boolean
+  }
+  note right of UseAuthHook : Hook personalizado\nConecta View ao Store\nGerencia estado local do formulário
+}
+
+package "Model / Services #LightCoral" as MODEL {
+  class "AuthService" as AuthService {
+    + {static} login(username: string, password: string): Promise<string>
+  }
+  note right of AuthService : Serviço HTTP (Axios)\n@rf: RF-005 — POST /users/login\n@rf: RF-005 — Content-Type: x-www-form-urlencoded
+
+  class "User" as User {
+    + username: string
+    + token: string
+    + {static} fromApiResponse(username: string, accessToken: string): User
+  }
+  note right of User : Entidade de domínio\n@rf: RF-006 — Criado após login
+
+  class "Config" as Config {
+    + {static} API_BASE_URL: string
+  }
+  note right of Config : Configuração compartilhada\nURL base: http://localhost:3132
+}
+
+' ============================================================
+' RELACIONAMENTOS
+' ============================================================
+
+' View → ViewModel
+LoginView --> UseAuthHook : <<usa>>
+note on link : @rf: RF-001 — View consome hook do ViewModel
+
+' View → UI Components
+LoginView *--> TextField : <<renderiza>> 2x
+note on link : @rf: RF-001 — username + password
+
+LoginView *--> Button : <<renderiza>>
+note on link : @rf: RF-004 — Botão "Entrar"
+
+LoginView *--> Alert : <<renderiza>>
+note on link : @rf: RF-008 — Mensagem de erro
+
+LoginView *--> AuthLayout : <<renderiza>>
+note on link : @rf: RF-001 — Layout wrapper
+
+' ViewModel → ViewModel
+UseAuthHook --> AuthStore : <<acessa>>
+note on link : @rf: RF-006 — Hook lê/escreve no store
+
+' ViewModel → Model
+AuthStore --> AuthService : <<chama>>
+note on link : @rf: RF-005 — Store invoca serviço HTTP
+
+' Model → Model
+AuthService --> User : <<cria>>
+note on link : @rf: RF-006 — Factory fromApiResponse()
+
+AuthService --> Config : <<lê>>
+note on link : Config.API_BASE_URL
+
+' Persistência
+AuthStore --> "localStorage" : <<persiste>>
+note on link : @rf: RF-006 — Zustand persist middleware
+
+@enduml

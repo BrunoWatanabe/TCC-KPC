@@ -10,7 +10,7 @@
 // ============================================================================
 
 // Serviço de autenticação
-export { AuthService, authService } from './AuthService.js';
+export { AuthService } from './AuthService.js';
 
 // Serviço de tópicos
 export { TopicService, topicService } from './TopicService.js';

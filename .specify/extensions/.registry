@@ -1,79 +1,19 @@
 {
   "schema_version": "1.0",
   "extensions": {
-    "git": {
+    "agent-context": {
       "version": "1.0.0",
       "source": "local",
-      "manifest_hash": "sha256:9731aa8143a72fbebfdb440f155038ab42642517c2b2bdbbf67c8fdbe076ed79",
+      "manifest_hash": "sha256:9a1dc02d2d0139bb03860392ecacef79183be2c442feda2f9ccaa4e5907b1e47",
       "enabled": true,
       "priority": 10,
       "registered_commands": {
         "copilot": [
-          "speckit.git.feature",
-          "speckit.git.validate",
-          "speckit.git.remote",
-          "speckit.git.initialize",
-          "speckit.git.commit"
+          "speckit.agent-context.update"
         ]
       },
       "registered_skills": [],
-      "installed_at": "2026-05-28T23:49:40.568852+00:00"
-    },
-    "arquiteto": {
-      "version": "1.0.0",
-      "source": "local",
-      "manifest_hash": "sha256:f0096f3fdcb243bc350474c6eb31bfd64cb8800abc93abcee03b498d41868550",
-      "enabled": true,
-      "priority": 20,
-      "registered_commands": {
-        "copilot": [
-          "speckit.arquiteto.specify"
-        ]
-      },
-      "registered_skills": [],
-      "installed_at": "2026-06-02T00:00:00+00:00"
-    },
-    "developer": {
-      "version": "1.0.0",
-      "source": "local",
-      "manifest_hash": "sha256:6980617e0c5446790a694064999739fd7bf69b614937e893fdedef54873d1fd1",
-      "enabled": true,
-      "priority": 21,
-      "registered_commands": {
-        "copilot": [
-          "speckit.developer.implement"
-        ]
-      },
-      "registered_skills": [],
-      "installed_at": "2026-06-02T00:00:00+00:00"
-    },
-    "juiz": {
-      "version": "1.0.0",
-      "source": "local",
-      "manifest_hash": "sha256:f9275ed7feffd85ac3bf7158c61d33d6d0d76235be327056fb336cff22a726c0",
-      "enabled": true,
-      "priority": 22,
-      "registered_commands": {
-        "copilot": [
-          "speckit.juiz.inconsistencia"
-        ]
-      },
-      "registered_skills": [],
-      "installed_at": "2026-06-02T00:00:00+00:00"
-    },
-    "policia": {
-      "version": "1.0.0",
-      "source": "local",
-      "manifest_hash": "sha256:8404d8200166d247925c1ad09ff6b7390f3166b991823722042efa7cf3a3f037",
-      "enabled": true,
-      "priority": 21,
-      "registered_commands": {
-        "copilot": [
-          "speckit.policia.inconsistencia"
-        ]
-      },
-      "registered_skills": [],
-      "installed_at": "2026-06-02T00:00:00+00:00"
+      "installed_at": "2026-06-17T22:33:48.932707+00:00"
     }
   }
 }

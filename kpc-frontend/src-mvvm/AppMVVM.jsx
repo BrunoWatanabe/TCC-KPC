@@ -1,3 +1,6 @@
+// @model: specs/001-login-component/model/login-classes.puml
+// RF: RF-001, RF-007 — Aplicação principal — integração MVVM
+
 /**
  * App.jsx - Aplicação principal MVVM
  * Conecta Views com ViewModels seguindo arquitetura MVVM
@@ -23,7 +26,7 @@ import {
 // ViewModels
 import {
   useAuthStore,
-  useLoginViewModel,
+  useAuth,
   useTopicSelectionViewModel,
   useKeyphraseClusteringViewModel,
   useKeyphraseClustersViewModel,
@@ -85,10 +88,10 @@ function PrivateRoute({ children }) {
 // ============================================================================
 
 /**
- * LoginPage - Conecta LoginView com useLoginViewModel
+ * LoginPage - Conecta LoginView com useAuth
  */
 function LoginPage() {
-  const viewModel = useLoginViewModel();
+  const viewModel = useAuth();
   
   return <LoginView {...viewModel} />;
 }
@@ -113,7 +116,7 @@ function KeyphraseCurationPage() {
   
   return (
     <MainLayout
-      user={authStore.getCurrentUser()}
+      user={authStore.user}
       currentTopic={clustersVM?.topicName || 'Keyphrase Curation'}
       currentStep="Keyphrase Curation"
       onLogout={() => authStore.logout()}
@@ -194,7 +197,7 @@ function CuratedKeyphrasesPage() {
   
   return (
     <MainLayout
-      user={authStore.getCurrentUser()}
+      user={authStore.user}
       currentTopic={curatedVM?.topicName || 'Alias Management'}
       currentStep="Alias Management"
       onLogout={() => authStore.logout()}

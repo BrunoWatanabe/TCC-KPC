@@ -1,0 +1,207 @@
+@startuml
+' /specs/001-login-component/model/login-sequence.puml
+' Sprint: 01 | RF: RF-001 a RF-010
+' Diagrama de Sequência — Fluxo Completo de Autenticação
+
+title "Diagrama de Sequência — Fluxo de Login\nSprint 01 | RF-001 a RF-010"
+
+' ============================================================
+' ATORES E PARTICIPANTES
+' ============================================================
+
+actor "Usuário" as User
+participant "LoginView.jsx" as View #LightBlue
+participant "useAuth.js\n(Hook)" as Hook #LightGreen
+participant "useAuthStore.js\n(Zustand)" as Store #LightGreen
+participant "localStorage" as Storage #LightYellow
+participant "AuthService.js" as Service #LightCoral
+participant "POST /users/login\n(FastAPI)" as API #LightGray
+
+' ============================================================
+' CENÁRIO: Login Bem-Sucedido
+' ============================================================
+
+== Fluxo Principal: Login Bem-Sucedido ==
+
+User -> View: Preenche username e password
+note right : @rf: RF-001 — Campos do formulário
+
+User -> View: Clica em "Entrar" (ou Enter)
+note right : @rf: RF-007 — Submissão do formulário
+
+View -> Hook: handleSubmit()
+note right : @rf: RF-002 — Valida campos não vazios
+
+alt Campos vazios
+    Hook -> View: erro de validação
+    note right : @rf: RF-002 — Validação client-side
+    View -> User: Exibe "Campo obrigatório" no TextField
+else Campos preenchidos
+    Hook -> Store: login(username, password)
+    note right : @rf: RF-005 — Store inicia autenticação
+
+    Store -> Store: set loading = true
+    note right : @rf: RF-003 — Desabilita UI
+
+    Store --> View: loading = true
+    View -> View: Desabilita campos + "Entrando..."
+    note right : @rf: RF-003 — UI reflete loading\n@rf: RF-004 — Texto do botão
+
+    Store -> Service: login(username, password)
+    note right : @rf: RF-005 — Chama serviço HTTP
+
+    Service -> Service: Monta body x-www-form-urlencoded
+    note right : @rf: RF-005 — Content-Type adequado
+
+    Service -> API: POST /users/login
+    note right : @rf: RF-005 — Requisição HTTP
+
+    API --> Service: 200 { "access_token": "jwt..." }
+    note right : @rf: RF-006 — Resposta de sucesso
+
+    Service --> Store: token (string)
+    note right : @rf: RF-006 — Token extraído
+
+    Store -> Store: User.fromApiResponse(username, token)
+    note right : @rf: RF-006 — Cria entidade User
+
+    Store -> Storage: Persiste { user, token }
+    note right : @rf: RF-006 — Zustand persist middleware\nsalva em localStorage
+
+    alt Persistência corrompida
+        Storage --> Store: erro
+        Store -> Store: Trata como falha
+        Store -> Store: set error = "Erro ao salvar sessão"
+        Store --> View: error
+        View -> User: Exibe Alert de erro
+    else Persistência OK
+        Storage --> Store: ok
+    end
+
+    Store -> Store: set isAuthenticated = true
+    note right : @rf: RF-006 — Estado de autenticação
+
+    Store -> Store: set loading = false
+    Store -> Store: set error = null
+
+    Store --> View: { loading: false, isAuthenticated: true, error: null }
+    note right : @rf: RF-007 — View reflete
+
+    View -> View: Redireciona para /topics
+    note right : @rf: RF-007 — useNavigate('/topics')
+end
+note right : @rf: RF-007 — Usuário redirecionado
+
+' ============================================================
+' CENÁRIO: Credenciais Inválidas
+' ============================================================
+
+== Fluxo Alternativo: Credenciais Inválidas (HTTP 401/422) ==
+
+User -> View: Preenche credenciais inválidas
+View -> Hook: handleSubmit()
+Hook -> Store: login(username, password)
+Store -> Service: login(username, password)
+Service -> API: POST /users/login
+note right : @rf: RF-008 — Requisição com credenciais inválidas
+
+API --> Service: 401 { "detail": "Credenciais inválidas" }
+note right : @rf: RF-008 — Erro de autenticação
+
+Service --> Store: throw Error("Credenciais inválidas")
+
+Store -> Store: set loading = false
+Store -> Store: set error = "Credenciais inválidas"
+note right : @rf: RF-008 — Erro amigável
+
+Store --> View: { loading: false, error: "Credenciais inválidas" }
+
+View -> View: Permanece na tela de login
+note right : @rf: RF-008 — Sem redirecionamento
+
+View -> User: Exibe Alert com mensagem de erro
+note right : @rf: RF-008 — Componente Alert MUI\nCampos permanecem preenchidos
+
+' ============================================================
+' CENÁRIO: Falha de Rede
+' ============================================================
+
+== Fluxo Alternativo: Falha de Rede ==
+
+User -> View: Preenche credenciais
+View -> Hook: handleSubmit()
+Hook -> Store: login(username, password)
+Store -> Service: login(username, password)
+Service -> API: POST /users/login
+
+Service <--x API: Falha de rede (timeout / conexão recusada)
+note right : @rf: RF-008 — Erro de conexão
+
+Service --> Store: throw Error("Falha de conexão")
+
+Store -> Store: set loading = false
+Store -> Store: set error = "Não foi possível conectar ao servidor. Verifique sua conexão."
+note right : @rf: RF-008 — Mensagem amigável
+
+Store --> View: { loading: false, error: "Não foi possível..." }
+
+View -> View: Reativa campos + botão
+note right : @rf: RF-003 — UI reativada
+
+View -> User: Exibe Alert de erro de conexão
+
+' ============================================================
+' CENÁRIO: Restauração de Sessão
+' ============================================================
+
+== Fluxo de Inicialização: Restauração de Sessão ==
+
+note over View : Aplicação carrega
+
+Store -> Storage: Hidrata estado persistido
+note right : @rf: RF-009 — Zustand lê localStorage
+
+alt Token válido encontrado
+    Storage --> Store: { user, token }
+    Store -> Store: set isAuthenticated = true
+    note right : @rf: RF-009 — Sessão restaurada
+    Store --> View: { isAuthenticated: true }
+    View -> View: Permanece na rota atual
+    note right : @rf: RF-009 — Sem redirecionamento
+else Nenhum token
+    Storage --> Store: null
+    Store -> Store: set isAuthenticated = false
+    Store --> View: { isAuthenticated: false }
+    View -> View: Renderiza LoginView
+    note right : @rf: RF-009 — Tela de login
+else Token corrompido
+    Storage --> Store: Dados inválidos
+    Store -> Store: clear() + set isAuthenticated = false
+    note right : @rf: RF-009 — Remove dados corrompidos
+    Store --> View: { isAuthenticated: false }
+    View -> User: Redireciona para login
+end
+
+' ============================================================
+' CENÁRIO: Logout
+' ============================================================
+
+== Fluxo: Logout ==
+
+User -> View: Clica em "Sair"
+View -> Store: logout()
+note right : @rf: RF-009 — Ação de logout
+
+Store -> Store: set user = null
+Store -> Store: set token = null
+Store -> Store: set isAuthenticated = false
+note right : @rf: RF-009 — Limpa estado
+
+Store -> Storage: Remove dados persistidos
+note right : @rf: RF-009 — Limpa localStorage
+
+Store --> View: { isAuthenticated: false }
+View -> View: Redireciona para /login
+note right : @rf: RF-009 — Retorna ao login
+
+@enduml

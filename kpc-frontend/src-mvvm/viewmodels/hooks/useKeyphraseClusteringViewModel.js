@@ -47,8 +47,8 @@ export const useKeyphraseClusteringViewModel = () => {
   const triggerSync = useSyncStore(state => state.triggerSync);
 
   // Dados derivados
-  const user = authStore.getCurrentUser();
-  const username = authStore.getCurrentUsername();
+  const user = authStore.user;
+  const username = authStore.user?.username;
   const selectedTopic = topicStore.getSelectedTopic();
   const topicName = selectedTopic?.name || selectedTopic?.id;
 

@@ -52,6 +52,27 @@ You **MUST** consider the user input before proceeding (if not empty).
     ```
 - If no hooks are registered or `.specify/extensions.yml` does not exist, skip silently
 
+## 🏗️ Persona Loading: Arquiteto (Override — Comportamento Adicional)
+
+> **IMPORTANTE**: Não remova nem substitua nenhum passo do fluxo nativo do Spec-Kit. Este é um **comportamento extra** que se soma ao fluxo padrão.
+
+**Antes de iniciar o Outline**, realize os seguintes passos adicionais:
+
+1. **Verificar existência do arquivo de persona**: 
+   - Verifique se `.github/prompts/persona-arquiteto.md` existe.
+   - Se **não existir**, skip silenciosamente e prossiga com o fluxo nativo normalmente.
+
+2. **Carregar as regras da persona**:
+   - Leia `.github/prompts/persona-arquiteto.md` na íntegra.
+   - Internalize todas as regras, princípios e responsabilidades descritas.
+
+3. **Aplicar durante todo o workflow**: A partir deste ponto, **além** de executar o fluxo normal do Spec-Kit:
+   - Extraia RFs da especificação para modelagem.
+   - Durante a **Fase 1 (Design)**, obrigatoriamente gere artefatos em `specs/<feature>/model/`.
+   - Cada elemento modelado deve conter tag `@rf:<ID>`.
+   - Inclua a seção "📐 Artefatos de Modelagem" no plan.md.
+   - Ao final, reporte: "🏗️ Persona Arquiteto ativa — diagramas em `specs/<feature>/model/`"
+
 ## Outline
 
 1. **Setup**: Run `.specify/scripts/bash/setup-plan.sh --json` from repo root and parse JSON for FEATURE_SPEC, IMPL_PLAN, SPECS_DIR, BRANCH. For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\''m Groot' (or double-quote if possible: "I'm Groot").
@@ -67,36 +88,42 @@ You **MUST** consider the user input before proceeding (if not empty).
    - Phase 1: Update agent context by running the agent script
    - Re-evaluate Constitution Check post-design
 
-4. **Stop and report**: Command ends after Phase 2 planning. Report branch, IMPL_PLAN path, and generated artifacts.
+## Mandatory Post-Execution Hooks
 
-5. **Check for extension hooks**: After reporting, check if `.specify/extensions.yml` exists in the project root.
-   - If it exists, read it and look for entries under the `hooks.after_plan` key
-   - If the YAML cannot be parsed or is invalid, skip hook checking silently and continue normally
-   - Filter out hooks where `enabled` is explicitly `false`. Treat hooks without an `enabled` field as enabled by default.
-   - For each remaining hook, do **not** attempt to interpret or evaluate hook `condition` expressions:
-     - If the hook has no `condition` field, or it is null/empty, treat the hook as executable
-     - If the hook defines a non-empty `condition`, skip the hook and leave condition evaluation to the HookExecutor implementation
-   - For each executable hook, output the following based on its `optional` flag:
-     - **Optional hook** (`optional: true`):
-       ```
-       ## Extension Hooks
+**You MUST complete this section before reporting completion to the user.**
 
-       **Optional Hook**: {extension}
-       Command: `/{command}`
-       Description: {description}
+Check if `.specify/extensions.yml` exists in the project root.
+- If it does not exist, or no hooks are registered under `hooks.after_plan`, skip to the Completion Report.
+- If it exists, read it and look for entries under the `hooks.after_plan` key.
+- If the YAML cannot be parsed or is invalid, skip hook checking silently and continue to the Completion Report.
+- Filter out hooks where `enabled` is explicitly `false`. Treat hooks without an `enabled` field as enabled by default.
+- For each remaining hook, do **not** attempt to interpret or evaluate hook `condition` expressions:
+  - If the hook has no `condition` field, or it is null/empty, treat the hook as executable
+  - If the hook defines a non-empty `condition`, skip the hook and leave condition evaluation to the HookExecutor implementation
+- For each executable hook, output the following based on its `optional` flag:
+  - **Mandatory hook** (`optional: false`) — **You MUST emit `EXECUTE_COMMAND:` for each mandatory hook**:
+    ```
+    ## Extension Hooks
 
-       Prompt: {prompt}
-       To execute: `/{command}`
-       ```
-     - **Mandatory hook** (`optional: false`):
-       ```
-       ## Extension Hooks
+    **Automatic Hook**: {extension}
+    Executing: `/{command}`
+    EXECUTE_COMMAND: {command}
+    ```
+  - **Optional hook** (`optional: true`):
+    ```
+    ## Extension Hooks
 
-       **Automatic Hook**: {extension}
-       Executing: `/{command}`
-       EXECUTE_COMMAND: {command}
-       ```
-   - If no hooks are registered or `.specify/extensions.yml` does not exist, skip silently
+    **Optional Hook**: {extension}
+    Command: `/{command}`
+    Description: {description}
+
+    Prompt: {prompt}
+    To execute: `/{command}`
+    ```
+
+## Completion Report
+
+Command ends after Phase 2 planning. Report branch, IMPL_PLAN path, and generated artifacts.
 
 ## Phases
 
@@ -138,7 +165,14 @@ You **MUST** consider the user input before proceeding (if not empty).
    - Examples: public APIs for libraries, command schemas for CLI tools, endpoints for web services, grammars for parsers, UI contracts for applications
    - Skip if project is purely internal (build scripts, one-off tools, etc.)
 
-3. **Agent context update**:
+3. **Create quickstart validation guide** → `quickstart.md`:
+   - Document runnable validation scenarios that prove the feature works end-to-end
+   - Include prerequisites, setup commands, test/run commands, and expected outcomes
+   - Use links or references to contracts and data model details instead of duplicating them
+   - Do not include full implementation code, model/service/controller bodies, migrations, or complete test suites
+   - Keep this artifact as a validation/run guide; implementation details belong in `tasks.md` and the implementation phase
+
+4. **Agent context update**:
    - Update the plan reference between the `<!-- SPECKIT START -->` and `<!-- SPECKIT END -->` markers in `.github/copilot-instructions.md` to point to the plan file created in step 1 (the IMPL_PLAN path)
 
 **Output**: data-model.md, /contracts/*, quickstart.md, updated agent context file
@@ -147,3 +181,9 @@ You **MUST** consider the user input before proceeding (if not empty).
 
 - Use absolute paths for filesystem operations; use project-relative paths for references in documentation and agent context files
 - ERROR on gate failures or unresolved clarifications
+
+## Done When
+
+- [ ] Plan workflow executed and design artifacts generated
+- [ ] Extension hooks dispatched or skipped according to the rules in Mandatory Post-Execution Hooks above
+- [ ] Completion reported to user with branch, plan path, and generated artifacts

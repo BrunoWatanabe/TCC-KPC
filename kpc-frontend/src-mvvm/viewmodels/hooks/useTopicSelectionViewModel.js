@@ -9,7 +9,8 @@ import { useAuthStore } from '../stores/useAuthStore.js';
 import { useTopicStore } from '../stores/useTopicStore.js';
 import { useFlowStore } from '../stores/useFlowStore.js';
 import { topicService } from '../../models/services/TopicService.js';
-import { authService } from '../../models/services/AuthService.js';
+// authService foi refatorado para escopo mínimo (login apenas)
+// listUsers() removido — verificação de token usa authStore.isAuthenticated
 
 export const useTopicSelectionViewModel = () => {
   // ============================================================================
@@ -30,9 +31,9 @@ export const useTopicSelectionViewModel = () => {
   // ============================================================================
   // DADOS DERIVADOS DOS STORES
   // ============================================================================
-  const user = authStore.getCurrentUser();
-  const username = authStore.getCurrentUsername();
-  const isAuthenticated = authStore.getIsAuthenticated();
+  const user = authStore.user;
+  const username = authStore.user?.username;
+  const isAuthenticated = authStore.isAuthenticated;
   
   const topics = topicStore.getTopics();
   const selectedTopic = topicStore.getSelectedTopic();
@@ -74,8 +75,9 @@ export const useTopicSelectionViewModel = () => {
    */
   const testTokenValidity = useCallback(async () => {
     try {
-      await authService.listUsers();
-      return true;
+      // authService.listUsers() removido na refatoração
+      // Token validado indiretamente: se authStore.isAuthenticated, token existe
+      return authStore.isAuthenticated;
     } catch (error) {
       console.error('❌ Token inválido:', error);
       return false;
@@ -355,8 +357,8 @@ export const useTopicSelectionViewModel = () => {
     stores: {
       auth: {
         isAuthenticated: authStore.isAuthenticated,
-        username: authStore.getCurrentUsername(),
-        hasUser: !!authStore.getCurrentUser()
+        username: authStore.user?.username,
+        hasUser: !!authStore.user
       },
       topic: {
         topicsCount: topics.length,

@@ -1,0 +1,172 @@
+@startuml
+' /relatorios/sprint3-t007/model/sequence.puml
+' Sprint 03 | Análise Retroativa T007
+' RF: RF-008 (Agrupar pares recíprocos no pairwise_similarity)
+
+title Agrupamento de pares recíprocos — RF-008
+
+' === LEGENDA ===
+legend top left
+  <#LightCoral>  @rf: RF-008 (Pares Recíprocos)
+end legend
+
+participant "Cliente HTTP" as Client
+participant "api/topic.py\n:list_keyphrase_clusters()" as TopicAPI
+participant "controller/annotation.py\n:AnnotationController" as Controller
+participant "model/annotation.py\n:ClusterAnnotation" as ClusterAnnotation
+participant "model/cluster.py\n:KeyphraseClustering" as KClustering
+participant "model/cluster.py\n:to_list()" as ToList
+participant "algoritmo T007\n: dados locais" as T007
+
+' ==========================================
+' Fluxo Principal — RF-008
+' ==========================================
+
+== RF-008: GET /topic/keyphrase_clustering/daired/cloning/pairwise_similarity ==
+
+Client -> TopicAPI ++ : GET /topic/keyphrase_clustering\n/daired/cloning/pairwise_similarity
+
+note right #LightCoral
+  RF-008: Parâmetro keyphrase_order
+  = 'pairwise_similarity'
+end note
+
+TopicAPI -> TopicAPI : valida token, tópico e parâmetro
+
+TopicAPI -> Controller ++ : get_keyphrase_clustering(\nsort_by=KeyphraseSorting.PAIRWISE_SIMILARITY)
+
+Controller -> ClusterAnnotation ++ : get_keyphrase_descriptions(\nsort_by=PAIRWISE_SIMILARITY)
+
+ClusterAnnotation -> KClustering ++ : get_keyphrase_descriptions(\nsort_by=PAIRWISE_SIMILARITY)
+
+KClustering -> KClustering : get_keyphrase_list(\nsort_by=PAIRWISE_SIMILARITY)
+
+KClustering -> ToList ++ : to_list(sort_column=3,\nreverse=True)
+
+note right #LightCoral
+  RF-008: to_list() retorna rows
+  ordenadas por similarity DESC.
+  Cada row = [id, content,
+  best_pair_id, similarity,
+  cluster_most_similar, ...]
+end note
+
+ToList --> KClustering -- : keyphrase_list: list[list]
+
+' ==========================================
+' ETAPA 1 — Construir temp_list
+' ==========================================
+
+== ETAPA 1: Construir temp_list ==
+
+note over KClustering #LightCoral
+  RF-008: T007 — Algoritmo de pós-processamento
+  Etapa 1: Itera sobre keyphrase_list e
+  constrói temp_list com tuplas
+  (id, description, best_pair_id, similarity)
+end note
+
+group loop para cada keyphrase em keyphrase_list
+  KClustering -> KClustering : format("({}, {:.2f})",\nkeyphrase[2], keyphrase[3])
+
+  KClustering -> KClustering : get_keyphrase_by_id(_id)
+
+  KClustering -> KClustering : get_description(similar_cluster)
+
+  KClustering -> T007 : temp_list.append((_id, description,\nbest_pair_id, similarity))
+end
+
+T007 --> KClustering -- : temp_list preenchida
+
+' ==========================================
+' ETAPA 2 — Agrupar pares recíprocos
+' ==========================================
+
+== ETAPA 2: Agrupar pares recíprocos ==
+
+note over KClustering #LightCoral
+  RF-008: T007 — Algoritmo de pós-processamento
+  Etapa 2: Reconhece e agrupa pares recíprocos
+  id_to_data = dict lookup
+  visited = controle de visitados
+  grouped_list = resultado final
+end note
+
+KClustering -> T007 : id_to_data = {item[0]: item\nfor item in temp_list}
+
+KClustering -> T007 : visited = set()
+
+KClustering -> T007 : grouped_list = []
+
+group loop para cada item A em temp_list
+  note right #LightCoral
+    RF-008: Para cada item A não visitado:
+    - best_pair_id = A[2]
+    - Se B existe, não visitado, e
+      B[2] == A[0] (recíproco):
+      → grouped_list += [A, B]
+      → visited += {A, B}
+    - Se não: grouped_list += [A]
+  end note
+
+  T007 -> T007 : kid = item[0]\nbest_pair_id = item[2]
+
+  T007 -> T007 : kid in visited? → skip
+
+  alt best_pair_id existe, != 0, e best_pair não visitado
+    T007 -> T007 : best_data = id_to_data[best_pair_id]
+
+    alt best_data[2] == kid (RECÍPROCO!)
+      T007 -> T007 : grouped_list.append(A)\ngrouped_list.append(B)\nvisited.add(best_pair_id)
+      note right #LightCoral
+        RF-008: ✅ Par recíproco detectado!
+        A e B são inseridos adjacentes
+        Ex: genetic(94) ↔ genetic(137)
+      end note
+    else (NÃO recíproco)
+      T007 -> T007 : grouped_list.append(A) solo
+    end
+  else (sem par ou já visitado)
+    T007 -> T007 : grouped_list.append(A) solo
+  end
+end
+
+T007 --> KClustering -- : grouped_list finalizada
+
+' ==========================================
+' ETAPA 3 — Montar dicionário ordenado
+' ==========================================
+
+== ETAPA 3: Montar dicionário ordenado ==
+
+note over KClustering #LightCoral
+  RF-008: T007 — Algoritmo de pós-processamento
+  Etapa 3: Converte grouped_list em
+  dicionário mantendo a ordem de inserção
+  keyphrase_descriptions = {id: desc for
+  item in grouped_list}
+end note
+
+KClustering -> KClustering : keyphrase_descriptions =\n{item[0]: item[1]\nfor item in grouped_list}
+
+KClustering --> ClusterAnnotation -- : {id: description}\n(pares recíprocos adjacentes)
+
+ClusterAnnotation --> Controller -- : {id: {description, clustering}}
+
+Controller -> Controller : Monta array [{id, description,\nclustering}...]
+
+Controller --> TopicAPI -- : keyphrase_clustering (dict → array)
+
+TopicAPI -> TopicAPI : Converte dict para array\n(mantém ordem)
+
+TopicAPI --> Client -- : {sorting: 'pairwise_similarity',\nclusters: [...]}
+
+note over Client #LightCoral
+  RF-008: Resultado verificado:
+  140 keyphrases
+  19 pares recíprocos
+  100% adjacentes
+  Ex: genetic(94) ↔ genetic(137)
+end note
+
+@enduml

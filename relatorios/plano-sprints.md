@@ -54,7 +54,6 @@ flowchart LR
 | RF | Descrição | Prioridade | Status |
 |----|-----------|------------|--------|
 | RF-001 | Login com e-mail e senha via API | P1 | ✅ Concluído |
-| RF-002 | Seletor de tópicos carregado do backend | P1 | 🟡 Pendente |
 
 ### O que precisa ser feito
 
@@ -127,9 +126,9 @@ flowchart LR
 | RF-006 | Ordenar centroid_similarity do maior para o menor | P1 | ✅ Concluído |
 | RF-007 | Padronizar labels do order by "Source Keyphrases" com enum `KeyphraseSortingLabels` | P2 | ✅ Concluído |
 | RF-008 | Agrupar pares recíprocos no pairwise_similarity do backend | P2 | ✅ Concluído |
-| RF-009 | Análise retroativa com personas (T004+T005) — gerar artefatos de modelagem, evidências e veredito | P3 | 🟡 Pendente |
-| RF-010 | Análise retroativa com personas (T006) — gerar artefatos de modelagem, evidências e veredito | P3 | 🟡 Pendente |
-| RF-011 | Análise retroativa com personas (T007) — gerar artefatos de modelagem, evidências e veredito | P3 | 🟡 Pendente |
+| RF-009 | Análise retroativa com personas (T004+T005) — gerar artefatos de modelagem, evidências e veredito | P3 | ✅ Concluído — 1 rodada, 5 evidências NE. Veredito: `/relatorios/sprint3-t004-t005/verdict/verdict.md` |
+| RF-010 | Análise retroativa com personas (T006) — gerar artefatos de modelagem, evidências e veredito | P3 | ✅ Concluído — 1 rodada, 5 evidências NE. Veredito: `/relatorios/sprint3-t006/verdict/verdict.md` |
+| RF-011 | Análise retroativa com personas (T007) — gerar artefatos de modelagem, evidências e veredito | P3 | ✅ Concluído — 1 rodada, 5 evidências NE. Veredito: `/relatorios/sprint3-t007/verdict/verdict.md` |
 
 ### O que precisa ser feito
 
@@ -139,9 +138,9 @@ flowchart LR
 | **T005** | `model/cluster.py`: `reverse=False` → `reverse=True` no `sorted()` de `centroid_similarity` | N/A | `curl centroid_similarity` → ordem descendente | ✅ **Concluído** — Testado: `[1.0, 1.0, 1.0, 0.92, 0.75, 0.74, ...]` |
 | **T006** | N/A | `KeyphraseSorting.js`: criar `KeyphraseSortingLabels`. `KeyphraseClusteringView.jsx`: substituir labels hardcoded pelo enum | Select de ordenação padronizado via enum | ✅ **Concluído** — Log: `relatorios/log-copilot-sprint3-t006.md` |
 | **T007** | `model/cluster.py`: pós-processamento em `get_keyphrase_descriptions()` p/ agrupar pares recíprocos adjacentes | N/A | Pares recíprocos adjacentes no pairwise_similarity | ✅ **Concluído** — Testado: 140/140 pares adjacentes. Log: `relatorios/log-copilot-sprint3-t007.md` |
-| **T008** | 🏗️👮‍♂️⚖️ Aplicar personas (Arquiteto, Polícia, Juiz) nas correções **T004+T005**. Base: `/relatorios/sprint3-t004-t005/log-copilot-sprint3-t004-t005.md`. Para gerar: `/relatorios/sprint3-t004-t005/model/*.puml`, `/relatorios/sprint3-t004-t005/evidence/inconsistencies.md`, `/relatorios/sprint3-t004-t005/verdict/verdict.md` | N/A | Artefatos de modelagem + evidências + veredito para as correções de ordenação | 🟡 Pendente |
-| **T009** | 🏗️👮‍♂️⚖️ Aplicar personas (Arquiteto, Polícia, Juiz) na correção **T006**. Base: `/relatorios/sprint3-t006/log-copilot-sprint3-t006.md`. Para gerar: `/relatorios/sprint3-t006/model/*.puml`, `/relatorios/sprint3-t006/evidence/inconsistencies.md`, `/relatorios/sprint3-t006/verdict/verdict.md` | N/A | Artefatos de modelagem + evidências + veredito para padronização de labels | 🟡 Pendente |
-| **T010** | 🏗️👮‍♂️⚖️ Aplicar personas (Arquiteto, Polícia, Juiz) na correção **T007**. Base: `/relatorios/sprint3-t007/log-copilot-sprint3-t007.md`. Para gerar: `/relatorios/sprint3-t007/model/*.puml`, `/relatorios/sprint3-t007/evidence/inconsistencies.md`, `/relatorios/sprint3-t007/verdict/verdict.md` | N/A | Artefatos de modelagem + evidências + veredito para pareamento de pares recíprocos | 🟡 Pendente |
+| **T008** | 🏗️👮‍♂️⚖️ Aplicar personas (Arquiteto, Polícia, Juiz) nas correções **T004+T005**. Base: `/relatorios/sprint3-t004-t005/log-copilot-sprint3-t004-t005.md`. Para gerar: `/relatorios/sprint3-t004-t005/model/*.puml`, `/relatorios/sprint3-t004-t005/evidence/inconsistencies.md`, `/relatorios/sprint3-t004-t005/verdict/verdict.md` | N/A | Artefatos de modelagem + evidências + veredito para as correções de ordenação | ✅ **Concluído** — R1: 5 evidências (2 TAG_MODEL_AUSENTE, 3 METODO_EXTRAS), 5 vereditos NE. Gates: 3✅ 1❌. 1 rodada finalizada |
+| **T009** | 🏗️👮‍♂️⚖️ Aplicar personas (Arquiteto, Polícia, Juiz) na correção **T006**. Base: `/relatorios/sprint3-t006/log-copilot-sprint3-t006.md`. Para gerar: `/relatorios/sprint3-t006/model/*.puml`, `/relatorios/sprint3-t006/evidence/inconsistencies.md`, `/relatorios/sprint3-t006/verdict/verdict.md` | N/A | Artefatos de modelagem + evidências + veredito para padronização de labels | ✅ **Concluído** — R1: 5 evidências (3 TAG_MODEL_AUSENTE, 1 METODO_EXTRAS, 1 ATRIBUTO_EXTRAS), 5 vereditos NE. Gates: 3✅ 1❌. 1 rodada finalizada |
+| **T010** | 🏗️👮‍♂️⚖️ Aplicar personas (Arquiteto, Polícia, Juiz) na correção **T007**. Base: `/relatorios/sprint3-t007/log-copilot-sprint3-t007.md`. Para gerar: `/relatorios/sprint3-t007/model/*.puml`, `/relatorios/sprint3-t007/evidence/inconsistencies.md`, `/relatorios/sprint3-t007/verdict/verdict.md` | N/A | Artefatos de modelagem + evidências + veredito para pareamento de pares recíprocos | ✅ **Concluído** — R1: 5 evidências (3 TAG_MODEL_AUSENTE, 2 METODO_EXTRAS), 5 vereditos NE. Gates: 3✅ 1❌. 1 rodada finalizada |
 
 ### Status Geral da Sprint
 
@@ -151,9 +150,9 @@ flowchart LR
 | RF-006 (centroid_similarity descendente) | ✅ OK — `reverse=True` em `model/cluster.py:410` |
 | RF-007 (labels do order by Source Keyphrases) | ✅ OK — `KeyphraseSortingLabels` criado em `KeyphraseSorting.js`, aplicado em ambos selects |
 | RF-008 (pares pairwise adjacentes) | ✅ OK — Algoritmo de pós-processamento agrupa pares recíprocos. Testado: 140/140 adjacentes |
-| RF-009 (análise retroativa T004+T005) | 🟡 Pendente — aguardando execução do pipeline Spec-Kit |
-| RF-010 (análise retroativa T006) | 🟡 Pendente — aguardando execução do pipeline Spec-Kit |
-| RF-011 (análise retroativa T007) | 🟡 Pendente — aguardando execução do pipeline Spec-Kit |
+| RF-009 (análise retroativa T004+T005) | ✅ OK — 1 rodada concluída. 5 vereditos NE. GATE-03 ✅, GATE-04 ❌ (esperado) |
+| RF-010 (análise retroativa T006) | ✅ OK — 1 rodada concluída. 5 vereditos NE. GATE-03 ✅, GATE-04 ❌ (esperado) |
+| RF-011 (análise retroativa T007) | ✅ OK — 1 rodada concluída. 5 vereditos NE. GATE-03 ✅, GATE-04 ❌ (esperado) |
 | Teste HTTP 200 | ✅ Todos os endpoints retornam 200 |
 | Log experimental | ✅ `relatorios/log-copilot-sprint3-t004.md`, `t006.md`, `t007.md` |
 | Tempo total | ~1h (T004+T005: 25min, T006: 15min, T007: 20min) |
@@ -166,9 +165,9 @@ flowchart LR
 | `kpc-backend/src/keyphrase_curation/model/cluster.py` | ✅ Pares recíprocos agrupados em `get_keyphrase_descriptions()` p/ PAIRWISE_SIMILARITY (T007) |
 | `kpc-frontend/src-mvvm/shared/enums/KeyphraseSorting.js` | ✅ `KeyphraseSortingLabels` criado como alias PascalCase (T006) |
 | `kpc-frontend/src-mvvm/views/pages/KeyphraseClusteringView.jsx` | ✅ Labels hardcoded substituídos por `KeyphraseSortingLabels` (T006) |
-| `specs/003-ordenacao-clusters/` | 🟡 Gerar — artefatos de modelagem + evidências + veredito (T008) |
-| `specs/004-keyphrase-sorting-labels/` | 🟡 Gerar — artefatos de modelagem + evidências + veredito (T009) |
-| `specs/005-pairwise-reciprocal-pairs/` | 🟡 Gerar — artefatos de modelagem + evidências + veredito (T010) |
+| `/relatorios/sprint3-t004-t005/` | ✅ Gerado — classes.puml, sequence.puml, components.puml, evidence/inconsistencies.md, verdict/verdict.md (T008) |
+| `/relatorios/sprint3-t006/` | ✅ Gerado — classes.puml, sequence.puml, components.puml, evidence/inconsistencies.md, verdict/verdict.md (T009) |
+| `/relatorios/sprint3-t006/` | ✅ Gerado — classes.puml, sequence.puml, components.puml, evidence/inconsistencies.md, verdict/verdict.md (T010) |
 
 ---
 

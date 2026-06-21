@@ -1,0 +1,124 @@
+@startuml
+' /relatorios/sprint3-t006/model/components.puml
+' Sprint 03 | Análise Retroativa T006
+' RF: RF-007 (Padronizar labels do order by "Source Keyphrases")
+
+title Arquitetura MVVM — Padronização de Labels (RF-007)
+
+!define RF(x) note right of x : @rf: RF-007
+
+skinparam component {
+  BackgroundColor #FEFEFE
+  BorderColor #333333
+  FontSize 12
+}
+
+' === VIEW LAYER ===
+package "View Layer\n(views/pages/)" as ViewLayer {
+  [KeyphraseClusteringView.jsx] as ViewComponent <<React Component>>
+  note right of ViewComponent
+    Props:
+    - keyphraseOrder (string)
+    - onKeyphraseOrderChange (callback)
+    - embedded (boolean)
+    
+    Consome KeyphraseSortingLabels
+    para renderizar 2 selects:
+    1. "Ordenação das Keyphrases"
+       (view principal)
+    2. "Order by"
+       (view embedded / embedded=true)
+  end note
+}
+RF(ViewComponent)
+
+' === VIEWMODEL / STORES LAYER ===
+package "ViewModel / Stores Layer\n(viewmodels/stores/)" as VM {
+  [useTopicStore.js] as TopicStore <<Store>>
+  note right of TopicStore
+    Gerencia estado global do tópico
+    - keyphraseOrder
+    - fornece props para as views
+  end note
+}
+
+' === MODEL / BUSINESS LAYER ===
+package "Model / Business Layer\n(models/business/)" as BusinessLayer {
+  [KeyphraseSortingModel.js] as SortingModel <<Business Model>>
+  note right of SortingModel
+    KeyphraseSortingModel
+    - sortedKeyphrases: objeto com
+      as 4 ordenações pré-carregadas
+    - initialize(username, topic)
+    - getKeyphrasesBySorting(type)
+    
+    Importa KeyphraseSorting e
+    KEYPHRASE_SORTING_TYPES
+  end note
+}
+RF(SortingModel)
+
+' === SHARED / ENUMS LAYER ===
+package "Shared / Enums Layer\n(shared/enums/)" as EnumsLayer {
+  [KeyphraseSorting.js] as KeyphraseSortingEnum <<Enum>>
+  note right of KeyphraseSortingEnum
+    KeyphraseSorting (enum com 4 valores)
+    KEYPHRASE_SORTING_TYPES (array)
+    KEYPHRASE_SORTING_LABELS (labels)
+    KeyphraseSortingLabels (alias PascalCase)
+    isValidKeyphraseSorting(validador)
+    getDefaultKeyphraseSorting(padrão)
+  end note
+  RF(KeyphraseSortingEnum)
+
+  [ClusterSorting.js] as ClusterSortingEnum <<Enum>>
+  note right of ClusterSortingEnum
+    ClusterSorting (enum com 5 valores)
+    ClusterSortingLabels (labels)
+    
+    Padrão de nomenclatura seguido
+    pelo KeyphraseSortingLabels (T006)
+  end note
+}
+
+' === SERVICES LAYER ===
+package "Services Layer\n(models/services/)" as ServicesLayer {
+  [TopicService.js] as TopicService <<Service>>
+  note right of TopicService
+    Serviço HTTP consumido
+    por KeyphraseSortingModel
+    para obter dados do backend
+  end note
+}
+
+' === RELACIONAMENTOS (RF-007) ===
+
+ViewComponent --> EnumsLayer : <<import>>\nKeyphraseSortingLabels
+RF(ViewComponent)
+
+KeyphraseSortingEnum ..> ClusterSortingEnum : <<segue padrão>>\nClusterSortingLabels
+
+ViewComponent --> VM : <<props>>\nkeyphraseOrder, onKeyphraseOrderChange
+
+VM --> BusinessLayer : <<usa>>\nKeyphraseSortingModel
+
+SortingModel --> EnumsLayer : <<import>>\nKeyphraseSorting,\nKEYPHRASE_SORTING_TYPES
+RF(SortingModel)
+
+SortingModel --> ServicesLayer : <<usa>>\ntopicService
+
+note bottom of KeyphraseSortingEnum
+  RP-007 (T006):
+  Adicionado KeyphraseSortingLabels
+  como alias PascalCase de
+  KEYPHRASE_SORTING_LABELS,
+  seguindo ClusterSortingLabels.
+  
+  Benefícios:
+  - Elimina duplicação (8 strings → 1)
+  - Consistência entre views
+  - UX melhorada no select embedded
+  - Retrocompatibilidade mantida
+end note
+
+@enduml

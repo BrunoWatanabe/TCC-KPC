@@ -1,0 +1,115 @@
+@startuml
+' /relatorios/sprint3-t006/model/sequence.puml
+' Sprint 03 | Análise Retroativa T006
+' RF: RF-007 (Padronizar labels do order by "Source Keyphrases")
+
+title Padronização de labels de ordenação — RF-007
+
+' === LEGENDA ===
+legend top left
+  <#LightYellow>  @rf: RF-007 (KeyphraseSortingLabels)
+end legend
+
+participant "Usuário" as User
+participant "KeyphraseClusteringView\n(React Component)" as View
+participant "shared/enums\nKeyphraseSorting.js" as Enums
+participant "MenuItem\n(Material-UI)" as MenuItem
+participant "onKeyphraseOrderChange\n(callback via props)" as Callback
+
+' ==========================================
+' Fluxo 1 — Renderização da View Principal
+' ==========================================
+
+== Fluxo 1 — Renderização da View Principal ==
+
+note over View #LightYellow
+  RF-007: O componente recebe
+  keyphraseOrder via props do ViewModel
+end note
+
+View -> Enums ++ : import { KeyphraseSortingLabels }\nfrom '...enums/KeyphraseSorting.js'
+
+note right #LightYellow
+  RF-007: KeyphraseSortingLabels é um alias
+  PascalCase de KEYPHRASE_SORTING_LABELS,
+  seguindo o padrão ClusterSortingLabels
+end note
+
+Enums --> View -- : {ALPHABETICAL → 'Alfabética',\n NUMERICAL → 'Numérica',\n CLUSTER_SIMILARITY → 'Similaridade de Cluster',\n PAIRWISE_SIMILARITY → 'Similaridade Par a Par'}
+
+View -> View : Object.entries(KeyphraseSortingLabels)
+
+group loop para cada [value, label] em KeyphraseSortingLabels
+  View -> MenuItem ++ : <MenuItem key={value}\nvalue={value}>{label}</MenuItem>
+
+  note right #LightYellow
+    RF-007: Ambos os selects usam o MESMO
+    Object.entries(KeyphraseSortingLabels)
+    — view principal e embedded
+  end note
+
+  MenuItem --> View -- : renderizado
+end
+
+note over View
+  Select "Ordenação das Keyphrases"
+  (view principal, embedded=false)
+  exibe todos os labels em português
+end note
+
+' ==========================================
+' Fluxo 2 — Interação do Usuário
+' ==========================================
+
+== Fluxo 2 — Interação do Usuário ==
+
+User -> View : seleciona\n"Similaridade de Cluster"
+
+View -> Callback ++ : onKeyphraseOrderChange('cluster_similarity')
+
+note right #LightYellow
+  RF-007: O valor passado ao callback
+  é a CHAVE do enum ('cluster_similarity'),
+  NÃO o label ('Similaridade de Cluster')
+end note
+
+Callback --> View -- : keyphraseOrder = 'cluster_similarity'
+
+View -> View : re-renderiza com nova ordenação
+
+' ==========================================
+' Fluxo 3 — Renderização da View Embedded
+' ==========================================
+
+== Fluxo 3 — Renderização da View Embedded ==
+
+note over View #LightYellow
+  RF-007: A view embedded (embedded=true)
+  usa EXATAMENTE o mesmo código para
+  popular o select "Order by"
+end note
+
+View -> Enums ++ : Object.entries(KeyphraseSortingLabels)
+
+Enums --> View -- : mesmos pares [value, label]
+
+group loop para cada [value, label]
+  View -> MenuItem ++ : <MenuItem key={value}\nvalue={value}>{label}</MenuItem>
+
+  note right #LightYellow
+    RF-007: Antes exibia valor cru ('alphabetical'),
+    agora exibe label em português ('Alfabética')
+    — melhoria de UX
+  end note
+
+  MenuItem --> View -- : renderizado
+end
+
+note over View
+  Antes (T006): view embedded exibia
+  valores crus do enum em inglês.
+  Depois (T006): exibe labels padronizados
+  em português via KeyphraseSortingLabels.
+end note
+
+@enduml

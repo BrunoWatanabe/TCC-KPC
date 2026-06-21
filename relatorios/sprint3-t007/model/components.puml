@@ -1,0 +1,142 @@
+@startuml
+' /relatorios/sprint3-t007/model/components.puml
+' Sprint 03 | Análise Retroativa T007
+' RF: RF-008 (Agrupar pares recíprocos no pairwise_similarity)
+
+title Arquitetura de Componentes — Agrupamento de Pares Recíprocos (RF-008)
+
+!define RF(x) note right of x : @rf: RF-008
+
+skinparam component {
+  BackgroundColor #FEFEFE
+  BorderColor #333333
+  FontSize 12
+}
+
+' === CAMADA 1: API Layer ===
+package "API Layer\n(api/)" as APILayer {
+  [api/topic.py] as TopicComponent <<FastAPI Router>>
+  note right of TopicComponent
+    Endpoints REST:
+    GET /keyphrase_clustering/{user}/{topic}/
+      {keyphrase_order}
+
+    Valida autenticação, tópico,
+    converte parâmetro para enum,
+    retorna {sorting, clusters}
+  end note
+}
+
+' === CAMADA 2: Controller Layer ===
+package "Controller Layer\n(controller/)" as ControllerLayer {
+  [controller/annotation.py] as AnnotationComponent <<Controller>>
+  note right of AnnotationComponent
+    AnnotationController
+    - get_keyphrase_clustering(sort_by)
+    - Constrói response com
+      {id: {description, clustering}}
+    - Orquestra chamada ao model
+  end note
+}
+RF(AnnotationComponent)
+
+' === CAMADA 3: Model / Domain Layer ===
+package "Model / Domain Layer\n(model/)" as ModelLayer {
+  [model/annotation.py] as ClusterAnnotationComponent <<Domain Model>>
+  note right of ClusterAnnotationComponent
+    ClusterAnnotation
+    extends KeyphraseClustering
+    - get_keyphrase_descriptions(sort_by)
+    - clustering: list (herdado)
+  end note
+  RF(ClusterAnnotationComponent)
+
+  [model/cluster.py] as ClusterComponent <<Domain Model>>
+  note right of ClusterComponent
+    KeyphraseClustering
+    - get_keyphrase_list(sort_by) → lista
+      ordenada por similarity DESC
+    - get_keyphrase_descriptions(sort_by) → dict
+
+    ⭐ T007 — Algoritmo de pós-processamento:
+    1. temp_list: monta tuplas
+       (id, desc, best_pair_id, similarity)
+    2. grouped_list: itera detectando
+       reciprocidade (best_data[2] == kid)
+    3. dict comprehension mantendo ordem
+
+    to_list(sort_column=3, reverse=True)
+  end note
+  RF(ClusterComponent)
+
+  [model/keyphrase.py] as KeyphraseComponent <<Entity>>
+  note right of KeyphraseComponent
+    Keyphrase
+    - get_description(complement)
+    - id, content, preprocessed_content
+
+    KeyphraseSorting (enum):
+    ALPHABETICAL, NUMERICAL,
+    CLUSTER_SIMILARITY,
+    PAIRWISE_SIMILARITY
+
+    KeyphraseEmbeddings
+    - similarity_matrix
+    - get_similarity(kp1, kp2)
+  end note
+  RF(KeyphraseComponent)
+}
+
+' === CAMADA 4: Utility Layer ===
+package "Utility Layer\n(util/)" as UtilLayer {
+  [util/pairwise_similarity.py] as PairwiseComponent <<Utility>>
+  note right of PairwiseComponent
+    PairwiseSimilarity
+    - get_pairwise_similarity()
+    - Matriz de similaridade entre
+      keyphrases
+  end note
+}
+
+' === RELACIONAMENTOS ===
+
+TopicComponent --> AnnotationComponent : <<calls>>\nget_keyphrase_clustering(sorting)
+RF(TopicComponent)
+
+AnnotationComponent --> ClusterAnnotationComponent : <<delegates>>\nget_keyphrase_descriptions(sort_by)
+
+ClusterAnnotationComponent -up-|> ClusterComponent : extends
+RF(ClusterAnnotationComponent)
+RF(ClusterComponent)
+
+ClusterComponent --> KeyphraseComponent : <<imports>>\nKeyphraseSorting,\nKeyphrase\nKeyphraseEmbeddings
+RF(ClusterComponent)
+RF(KeyphraseComponent)
+
+ClusterComponent --> PairwiseComponent : <<uses>>\nPairwiseSimilarity
+RF(ClusterComponent)
+
+' === Destaque do algoritmo T007 ===
+
+note bottom of ClusterComponent
+  ╔══════════════════════════════════════════╗
+  ║      RF-008 — Algoritmo T007 (3etapas)    ║
+  ╠══════════════════════════════════════════╣
+  ║ 1. temp_list:                             ║
+  ║    (id, desc, best_pair_id, similarity)    ║
+  ║                                           ║
+  ║ 2. grouped_list:                          ║
+  ║    Para cada A não visitado:              ║
+  ║    if B existe, não visitado,             ║
+  ║       e best_data[2] == A[0]:             ║
+  ║         [A, B] adjacentes  ←  RECÍPROCO  ║
+  ║    else:                                  ║
+  ║         [A] solo                          ║
+  ║                                           ║
+  ║ 3. keyphrase_descriptions =               ║
+  ║    {item[0]: item[1]                      ║
+  ║     for item in grouped_list}             ║
+  ╚══════════════════════════════════════════╝
+end note
+
+@enduml

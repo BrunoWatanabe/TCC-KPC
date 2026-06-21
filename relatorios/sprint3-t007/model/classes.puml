@@ -1,0 +1,192 @@
+@startuml
+' /relatorios/sprint3-t007/model/classes.puml
+' Sprint 03 | Análise Retroativa T007
+' RF: RF-008 (Agrupar pares recíprocos no pairwise_similarity)
+
+!define RF(x) note right of x : @rf: RF-008
+
+package "api" {
+  class "api/topic.py" as TopicAPI <<FastAPI Router>> {
+    + list_keyphrase_clusters(username, topic, keyphrase_order) : dict
+  }
+  RF(TopicAPI)
+}
+
+package "controller" {
+  class AnnotationController {
+    + get_keyphrase_clustering(sort_by: KeyphraseSorting) : dict
+    + get_cluster_selection() : dict
+    + get_keyphrases_selection() : dict
+    + get_keyphrases_aliases() : dict
+    + get_curated_keyphrases() : dict
+    + get_clusters(sort_by: ClusterSorting) : tuple
+    - cluster_annotation: ClusterAnnotation
+    - cluster_selection_annotation: ClusterSelectionAnnotation
+    - keyphrase_selection_annotation: KeyphraseSelectionAnnotation
+    - keyphrase_alias_annotation: KeyphraseAliasAnnotation
+  }
+  RF(AnnotationController)
+}
+
+package "model" {
+  enum KeyphraseSorting {
+    ALPHABETICAL
+    CLUSTER_SIMILARITY
+    PAIRWISE_SIMILARITY  @rf: RF-008
+    NUMERICAL
+    ..
+    + by_value(value) : KeyphraseSorting
+    + is_member(value) : bool
+  }
+  RF(KeyphraseSorting)
+
+  class KeyphraseClustering {
+    + cluster_set_size: int
+    + clustering: list
+    + clusters: Dict[int, Cluster]
+    ..
+    + get_keyphrase_list(sort_by: KeyphraseSorting) : list
+    + get_keyphrase_descriptions(sort_by: KeyphraseSorting) : dict  @rf: RF-008
+    + to_list(header, sort_column, reverse) : list
+    + get_keyphrase_by_id(id) : Keyphrase
+    + get_similarity(kp1, kp2) : float
+    + get_clusters(sort_by: ClusterSorting) : tuple
+  }
+  RF(KeyphraseClustering)
+
+  class KeyphraseEmbeddings <<abstract>> {
+    + topic: str
+    + embeddings_path: str
+    + keyphrases: list
+    ..
+    + to_list() : list
+    + get_keyphrase_by_id(id) : Keyphrase
+    + get_similarity(kp1, kp2) : float
+  }
+
+  class ClusterAnnotation {
+    + get_keyphrase_descriptions(sort_by) : dict
+    + get_clusters(sort_by) : tuple
+    + clustering: list
+  }
+  RF(ClusterAnnotation)
+
+  class Keyphrase {
+    + id: int
+    + content: str
+    + preprocessed_content: str
+    ..
+    + get_description(complement, show_id) : str
+  }
+
+  class Cluster {
+    + id: int
+    + alias: str
+    ..
+    + get_keyphrase_ids() : list
+    + get_cohesion() : float
+    + get_descriptions(sort_by, show_ids) : list
+    + get_centrality_scores() : dict
+  }
+}
+
+package "util" {
+  class PairwiseSimilarity {
+    + get_pairwise_similarity() : list
+  }
+}
+
+' === Estruturas de dados do algoritmo T007 ===
+package "algoritmo RF-008" {
+  class "temp_list" as TempList <<list[tuple]>> {
+    + item[0]: id (int)
+    + item[1]: description (str)
+    + item[2]: best_pair_id (int)
+    + item[3]: similarity (float)
+  }
+  RF(TempList)
+
+  class "id_to_data" as IdToData <<dict[int, tuple]>> {
+    + key: id
+    + value: (id, description, best_pair_id, similarity)
+  }
+  RF(IdToData)
+
+  class "visited" as Visited <<set[int]]>> {
+    + IDs já processados
+  }
+  RF(Visited)
+
+  class "grouped_list" as GroupedList <<list[tuple]>> {
+    + pares recíprocos adjacentes
+    + itens solo mantidos
+  }
+  RF(GroupedList)
+
+  note right of GroupedList
+    Se A→B e B→A:
+      [A, B] adjacentes
+    Se não:
+      [A] solo
+
+    Verificação:
+    best_data[2] == kid
+  end note
+}
+
+' === Relacionamentos ===
+
+KeyphraseClustering -up-|> KeyphraseEmbeddings : extends
+RF(KeyphraseClustering)
+
+KeyphraseClustering *- Cluster : contains
+RF(KeyphraseClustering)
+
+KeyphraseClustering --> KeyphraseSorting : <<uses>>
+RF(KeyphraseClustering)
+RF(KeyphraseSorting)
+
+AnnotationController --> ClusterAnnotation : delegates
+RF(AnnotationController)
+RF(ClusterAnnotation)
+
+ClusterAnnotation --> KeyphraseClustering : calls
+RF(ClusterAnnotation)
+RF(KeyphraseClustering)
+
+TopicAPI --> AnnotationController : calls
+RF(TopicAPI)
+RF(AnnotationController)
+
+KeyphraseClustering --> Keyphrase : <<uses>>
+RF(KeyphraseClustering)
+
+KeyphraseClustering --> PairwiseSimilarity : <<uses>>
+RF(KeyphraseClustering)
+
+KeyphraseClustering ..> TempList : gera >
+RF(KeyphraseClustering)
+RF(TempList)
+
+TempList ..> IdToData : lookup >
+RF(IdToData)
+
+TempList ..> Visited : controle >
+RF(Visited)
+
+TempList ..> GroupedList : resultado >
+RF(GroupedList)
+
+' --- Fixed note: attach to the class instead of the method ---
+note bottom of KeyphraseClustering
+  Algoritmo T007 (RF-008) — get_keyphrase_descriptions:
+  3 etapas:
+  1. temp_list: (id, desc, best_pair, sim)
+  2. Para cada item A não visitado:
+     - Se B recíproco (B→A):
+       grouped_list += [A, B] adjacentes
+     - Se não: grouped_list += [A]
+  3. dict comprehension {id: desc}
+end note
+
+@enduml

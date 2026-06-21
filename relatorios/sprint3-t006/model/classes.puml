@@ -1,0 +1,142 @@
+@startuml
+' /relatorios/sprint3-t006/model/classes.puml
+' Sprint 03 | Análise Retroativa T006
+' RF: RF-007 (Padronizar labels do order by "Source Keyphrases")
+
+!define RF(x) note right of x : @rf: RF-007
+
+package "views/pages" {
+  class KeyphraseClusteringView <<React Component>> {
+    + props: KeyphraseClusteringViewProps
+    ..
+    - renderKeyphrasesList() : JSX
+    - renderContent() : JSX
+  }
+  RF(KeyphraseClusteringView)
+
+  note left of KeyphraseClusteringView::renderContent
+    Select "Ordenação das Keyphrases" (view principal)
+    {Object.entries(KeyphraseSortingLabels)
+      .map(([value, label]) =>
+        MenuItem key=value value=value)
+      }
+  end note
+
+  note right of KeyphraseClusteringView
+    View embedded: Select "Order by"
+    {Object.entries(KeyphraseSortingLabels)
+      .map(([value, label]) =>
+        MenuItem key=value value=value)
+      }
+  end note
+
+  class KeyphraseClusteringViewProps {
+    + keyphrases: array
+    + clusters: object
+    + hideClusteredState: boolean
+    + keyphraseOrder: string
+    + loading: boolean
+    + error: string
+    + user: object
+    + currentTopic: object
+    + onKeyphraseOrderChange: function
+    + onHideClusteredChange: function
+    + onMoveKeyphrase: function
+    + title: string
+    + embedded: boolean
+  }
+  RF(KeyphraseClusteringViewProps)
+}
+
+package "shared/enums" {
+  class KeyphraseSorting {
+    + {static} ALPHABETICAL: string
+    + {static} NUMERICAL: string
+    + {static} CLUSTER_SIMILARITY: string
+    + {static} PAIRWISE_SIMILARITY: string
+  }
+  RF(KeyphraseSorting)
+
+  class "KeyphraseSortingLabels\n(alias de KEYPHRASE_SORTING_LABELS)" as Labels {
+    + {static} [KeyphraseSorting.ALPHABETICAL]: 'Alfabética'
+    + {static} [KeyphraseSorting.NUMERICAL]: 'Numérica'
+    + {static} [KeyphraseSorting.CLUSTER_SIMILARITY]: 'Similaridade de Cluster'
+    + {static} [KeyphraseSorting.PAIRWISE_SIMILARITY]: 'Similaridade Par a Par'
+  }
+  RF(Labels)
+
+  class KEYPHRASE_SORTING_TYPES {
+    + {static} ordenação canônica dos tipos
+  }
+
+  class isValidKeyphraseSorting {
+    + {static} valida se valor pertence ao enum
+  }
+
+  class getDefaultKeyphraseSorting {
+    + {static} retorna ALPHABETICAL como padrão
+  }
+
+  class ClusterSorting {
+    + {static} NUMERICAL: string
+    + {static} CLUSTER_COHESION: string
+    + {static} PAIRWISE_SIMILARITY: string
+    + {static} CENTROID_SIMILARITY: string
+    + {static} CLUES_FROM_OTHER_ANNOTATORS: string
+  }
+
+  class ClusterSortingLabels {
+    + {static} [ClusterSorting.NUMERICAL]: 'Numérica'
+    + {static} [ClusterSorting.CLUSTER_COHESION]: 'Coesão do Cluster'
+    + {static} [ClusterSorting.PAIRWISE_SIMILARITY]: 'Similaridade Par a Par'
+    + {static} [ClusterSorting.CENTROID_SIMILARITY]: 'Similaridade do Centroide'
+    + {static} [ClusterSorting.CLUES_FROM_OTHER_ANNOTATORS]: 'Dicas de Outros Anotadores'
+  }
+
+  note right of Labels
+    T006: Alias PascalCase adicionado
+    para seguir o padrão de
+    ClusterSortingLabels.
+    Retrocompatível com
+    KEYPHRASE_SORTING_LABELS.
+  end note
+}
+
+package "models/business" {
+  class KeyphraseSortingModel {
+    - sortedKeyphrases: object
+    - username: string
+    - topicName: string
+    - isLoading: boolean
+    ..
+    + initialize(username, topicName): Promise
+    + getKeyphrasesBySorting(sortingType): array
+  }
+  RF(KeyphraseSortingModel)
+}
+
+' === Relacionamentos ===
+
+KeyphraseClusteringView --> Labels : usa >
+RF(KeyphraseClusteringView)
+RF(Labels)
+
+KeyphraseClusteringView ..> KeyphraseClusteringViewProps : <<props>>
+RF(KeyphraseClusteringView)
+
+Labels --> KeyphraseSorting : chaves computadas >
+RF(Labels)
+RF(KeyphraseSorting)
+
+KeyphraseSortingModel --> KeyphraseSorting : usa >
+RF(KeyphraseSortingModel)
+RF(KeyphraseSorting)
+
+note bottom of Labels
+  Padrão seguido:
+  ClusterSortingLabels em ClusterSorting.js
+  utiliza o mesmo padrão de
+  chaves computadas [Enum.VALUE]: 'Label'
+end note
+
+@enduml

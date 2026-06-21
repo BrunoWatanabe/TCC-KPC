@@ -1,7 +1,7 @@
 # Plano de Sprints — Keyphrase Curation (KPC)
 
 **Projeto:** Frontend MVVM de curadoria de keyphrases com backend FastAPI
-**Total de Sprints:** 4 sprints
+**Total de Sprints:** 3 sprints
 **Ritmo:** 1 sprint por dia útil (~4h/dia)
 
 ---
@@ -13,7 +13,6 @@
 | **Sprint 01** | 🏗️ **MDE+SDD (Spec-Kit + 4 Personas)** | Teste do pipeline Spec-Kit com Arquitetura, Developer, Polícia e Juiz — componente de Login | ✅ Concluída |
 | **Sprint 02** | 🏗️ **MDE+SDD (Spec-Kit + 4 Personas)** | Teste do pipeline Spec-Kit — correção de serialização numpy no backend | ✅ Concluída |
 | **Sprint 03** | 🤖 **Copilot (sem metodologia)** + 🏗️👨‍💻👮‍♂️⚖️ **Análise retroativa Spec-Kit** | Correção de ordenação + labels + pareamento via Copilot, seguido de análise retroativa com as 4 personas do Spec-Kit | ✅ Concluída |
-| **Sprint 04** | ⚡ **Copilot + RTK (Redux Toolkit)** | Teste do Copilot com RTK — implementação de nova funcionalidade completa no frontend | ⬜ Planejada |
 
 ---
 
@@ -23,14 +22,25 @@ A Sprint 01 e Sprint 02 deste plano executa **obrigatoriamente** o pipeline comp
 
 ```mermaid
 flowchart LR
-    A[/speckit.specify\\] --> B[/speckit.plan\\]
-    B --> C[/speckit.tasks\\]
-    C --> D[/speckit.implement\\]
-    D --> E[\Commit\]
-    E --> F[/speckit.analyze\\]
-    B -.->|+ Arquiteto| B2
-    D -.->|+ Developer| D2
-    F -.->|Polícia ➡ Juiz| F2
+    subgraph "Fundação (Sprint 0)"
+        CONST[/speckit.constitution<br/>Constituição\\]
+    end
+
+    subgraph "Comandos Spec-Kit (Nativos)"
+        CONST --> A[/speckit.specify<br/>Especificação\\]
+        A --> B[/speckit.plan<br/>Planejamento\\]
+        B --> C[/speckit.tasks<br/>Tarefas\\]
+        C --> D[/speckit.implement<br/>Implementação\\]
+        D --> E[/speckit.analyze<br/>Análise\\]
+    end
+
+    subgraph "Personas (Camada Adicional)"
+        B -.->|+ 🏗️ Arquiteto| B2[Gera model/*.puml<br/>com RF tags]
+        D -.->|+ 👨‍💻 Developer| D2[Valida fidelidade<br/>+ @model tags]
+        E -.->|+ 👮‍♂️ Polícia| E2[Gera .md + depoimentos<br/>ARG-/DEP- automáticos]
+        E2 -->|automático| F[⚖️ Juiz<br/>Julga direto]
+        F --> G[verdict/verdict.md]
+    end
 ```
 
 | Passo | Comando | Persona | Artefato |
@@ -40,8 +50,7 @@ flowchart LR
 | 2 | `/speckit.plan` | 🏗️ Arquiteto | `specs/<feature>/model/*.puml` com `@rf:` |
 | 3 | `/speckit.tasks` | — | `specs/<feature>/tasks.md` |
 | 4 | `/speckit.implement` | 👨‍💻 Developer | Código com `// @model:` |
-| 5 | `git commit` | Humano | Commit |
-| 6 | `/speckit.analyze` | 👮‍♂️ Polícia + ⚖️ Juiz | `evidence/inconsistencies.md` + `verdict/verdict.md` |
+| 5 | `/speckit.analyze` | 👮‍♂️ Polícia + ⚖️ Juiz | `evidence/inconsistencies.md` + `verdict/verdict.md` |
 
 ---
 
@@ -171,52 +180,20 @@ flowchart LR
 
 ---
 
-## Sprint 04 — Implementação de Funcionalidade Completa — ⚡ Copilot + RTK
-
-**Natureza:** Experimento **Copilot com RTK (Redux Toolkit)** — implementar uma nova funcionalidade completa no frontend utilizando RTK para gerenciamento de estado global. O objetivo é testar a eficácia do Copilot auxiliado por RTK vs Spec-Kit.
-
-**Escopo:** Implementar uma nova funcionalidade de curadoria de keyphrases no frontend, consumindo a API existente do backend.
-
-**Frontend:** `kpc-frontend/src-mvvm/`
-
-### RFs da Sprint
-
-| RF | Descrição | Prioridade | Status |
-|----|-----------|------------|--------|
-| RF-012 | Implementar tela de curadoria de keyphrases com RTK (selecionar, anotar, salvar) | P1 | ⬜ Planejado |
-
-### O que precisa ser feito
-
-| Tarefa | Backend | Frontend | Artefato Esperado | Status |
-|--------|---------|----------|-------------------|--------|
-| **T011** | N/A (API já existe) | Criar store RTK (global, slices, thunks), páginas, componentes, serviços HTTP | Tela funcional de curadoria com RTK | ⬜ Planejado |
-
-### Arquivos impactados (frontend)
-
-| Arquivo | Ação |
-|---------|------|
-| `src-mvvm/store/` | Criar — estrutura RTK (store, slices, thunks) |
-| `src-mvvm/views/pages/` | Criar — tela de curadoria |
-| `src-mvvm/views/components/` | Criar — componentes de anotação |
-| `src-mvvm/models/services/` | Criar — serviço HTTP para keyphrases |
-
----
-
 ## Mapa de Dependências entre Sprints
 
 ```mermaid
 flowchart LR
     S1[Sprint 01<br/>MDE+SDD Login<br/>✅ Concluída] --> S2[Sprint 02<br/>MDE+SDD Serialização<br/>✅ Concluída]
     S2 --> S3[Sprint 03<br/>🤖 Copilot + Análise<br/>✅ Concluída]
-    S3 --> S4[Sprint 04<br/>⚡ Copilot+RTK Funcionalidade<br/>⬜ Planejada]
+    S3
 ```
 
 | Sprint | Metodologia | Depende de | É pré-requisito para |
 |--------|-------------|-----------|----------------------|
 | 01 — Login + Refinar | 🏗️ MDE+SDD (Spec-Kit) | — | 02 |
 | 02 — Serialização (pairwise + centroid) | 🏗️ MDE+SDD (Spec-Kit) | 01 | 03 |
-| 03 — Ordenação + Labels + Pareamento + Análise | 🤖 Copilot + 🏗️👨‍💻👮‍♂️⚖️ Análise | 02 | 04 |
-| 04 — Funcionalidade RTK | ⚡ Copilot + RTK | 03 | — |
+| 03 — Ordenação + Labels + Pareamento + Análise | 🤖 Copilot + 🏗️👨‍💻👮‍♂️⚖️ Análise | 02 | — |
 
 ---
 
@@ -227,4 +204,3 @@ flowchart LR
 | Sprint 01 | 🏗️ MDE+SDD (Spec-Kit) | RF-001, RF-002 | T001 + ST001.1 + ST001.2 | Refatorar 4 arquivos | Nenhum |
 | Sprint 02 | 🏗️ MDE+SDD (Spec-Kit) | RF-003, RF-004 | T002 + ST002.1 + T003 | N/A | `json_encoder.py` (criar), `api/topic.py` (modificar) |
 | Sprint 03 | 🤖 Copilot (sem metodologia) + análise retroativa Spec-Kit | RF-005 a RF-011 | T004 + T005 + T006 + T007 + T008 + T009 + T010 | `KeyphraseSorting.js` (criar labels enum), `KeyphraseClusteringView.jsx` (usar enum) | `model/cluster.py` (corrigir ordenação + parear pares) |
-| Sprint 04 | ⚡ Copilot + RTK | RF-012 | T011 | Criar store RTK + páginas + componentes + serviços | N/A |

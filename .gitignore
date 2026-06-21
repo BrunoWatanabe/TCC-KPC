@@ -37,4 +37,15 @@ kpc-backend/run.log
 kpc-backend/*.sqlite
 kpc-backend/*_ne.sql
 kpc-backend/*.bak
-kpc-backend/*.bkp
+kpc-backend/**/*.bkp*
+kpc-backend/**/*.backup
+
+# Credenciais e dados sensíveis
+kpc-backend/login_response.json
+kpc-backend/notebooks/token.json
+kpc-backend/notebooks/attributions.json
+kpc-backend/cloning_agreement.tsv
+kpc-backend/dataset/annotations/new/
+
+# Lockfiles de especificação
+.specify/*.lock

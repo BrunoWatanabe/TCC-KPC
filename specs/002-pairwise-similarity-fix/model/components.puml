@@ -1,0 +1,133 @@
+@startuml
+' /specs/002-pairwise-similarity-fix/model/components.puml
+' Sprint: 02 | RF: RF-003
+' Diagrama de Componentes — Arquitetura de Serialização Backend
+
+title "Diagrama de Componentes — Serialização Pairwise Similarity\nSprint 02 | RF-003"
+
+!define RF_COMP(x) note right of x : @rf: RF-003
+
+' ============================================================
+' COMPONENTES
+' ============================================================
+
+package "API Layer" as API_LAYER {
+  component "FastAPI App\napi/main.py" as FASTAPI_APP
+  RF_COMP(FASTAPI_APP)
+  note right of FASTAPI_APP
+    Configuração do servidor
+    Registra routers e middlewares
+    app = FastAPI()
+  end note
+
+  component "TopicRouter\napi/topic.py" as TOPIC_ROUTER
+  RF_COMP(TOPIC_ROUTER)
+  note right of TOPIC_ROUTER
+    Rotas de tópicos e clusters
+    list_clusters() → GET /topic/clusters/...
+    Retorna clusters + clusters_meta_info
+    🔧 APÓS correção: aplica NumpyConverter
+    antes de retornar
+  end note
+
+  component "JSONResponse\nFastAPI" as JSON_RESPONSE
+  RF_COMP(JSON_RESPONSE)
+  note right of JSON_RESPONSE
+    Resposta HTTP com JSON
+    FastAPI serializa automaticamente
+  end note
+}
+
+package "Controller Layer" as CTRL_LAYER {
+  component "AnnotationController\ncontroller/annotation.py" as ANNOTATION_CTRL
+  RF_COMP(ANNOTATION_CTRL)
+  note right of ANNOTATION_CTRL
+    Controlador de anotações
+    get_clusters() → delega para
+    ClusterAnnotation
+    Monta clusters_meta_info
+  end note
+}
+
+package "Model Layer" as MODEL_LAYER {
+  component "ClusterAnnotation\nmodel/annotation.py" as CLUSTER_ANN
+  RF_COMP(CLUSTER_ANN)
+  note right of CLUSTER_ANN
+    Anotação de clusters
+    Gerencia clustering de keyphrases
+  end note
+
+  component "KeyphraseClustering\nmodel/cluster.py" as KEYPHRASE_CLUST
+  RF_COMP(KEYPHRASE_CLUST)
+  note right of KEYPHRASE_CLUST
+    Clustering de keyphrases
+    get_pairwise_cluster_similarity()
+    Gera clusters_meta_info com numpy
+  end note
+
+  component "PairwiseSimilarity\nutil/pairwise_similarity.py" as PAIRWISE_SIM
+  RF_COMP(PAIRWISE_SIM)
+  note right of PAIRWISE_SIM
+    🔴 FONTE DO BUG
+    get_pairwise_similarity()
+    Retorna [numpy.int64, numpy.int64, numpy.float64]
+  end note
+}
+
+package "Utility" as UTIL_LAYER {
+  component "NumpyConverter\nutil/json_encoder.py" as NUMPY_CONVERTER
+  note right of NUMPY_CONVERTER
+    @rf: RF-003
+    🔧 NOVO
+    to_native(obj) → converte
+    numpy → Python nativo
+    Recursivo: percorre dicts/lists
+  end note
+}
+
+' ============================================================
+' RELACIONAMENTOS
+' ============================================================
+
+' API → Controller
+TOPIC_ROUTER --> ANNOTATION_CTRL : <<chama>>
+note on link : @rf: RF-003 — get_clusters(sort_by)
+
+' Controller → Model
+ANNOTATION_CTRL --> CLUSTER_ANN : <<delega>>
+note on link : @rf: RF-003 — get_clusters()
+
+CLUSTER_ANN --> KEYPHRASE_CLUST : <<usa>>
+note on link : @rf: RF-003 — get_pairwise_cluster_similarity()
+
+KEYPHRASE_CLUST --> PAIRWISE_SIM : <<usa>>
+note on link : @rf: RF-003 — get_pairwise_similarity()
+
+' Conversão (CORREÇÃO)
+TOPIC_ROUTER --> NUMPY_CONVERTER : <<aplica>>
+note on link : @rf: RF-003 — to_native() no dicionário\ncompleto de retorno\n{clusters, clusters_meta_info}
+
+' Resposta
+TOPIC_ROUTER --> JSON_RESPONSE : <<retorna>>
+note on link : @rf: RF-003 — HTTP 200 com JSON
+
+' Registro
+FASTAPI_APP --> TOPIC_ROUTER : <<registra>>
+note on link : @rf: RF-003 — app.include_router(topic.router)
+
+' ============================================================
+' LEGENDA
+' ============================================================
+
+legend top left
+  🔴 ANTES: PairwiseSimilarity → TopicRouter → FastAPI → ❌ 500
+  ✅ DEPOIS: PairwiseSimilarity → TopicRouter → NumpyConverter → FastAPI → ✅ 200
+  
+  <<chama>> = chamada de método
+  <<delega>> = delegação de responsabilidade
+  <<usa>> = uso de serviço/utilitário
+  <<aplica>> = transformação de dados
+  <<retorna>> = resposta HTTP
+end legend
+
+@enduml

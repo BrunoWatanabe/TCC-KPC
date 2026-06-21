@@ -74,15 +74,15 @@ flowchart LR
 
 | ID | Princípio | Exemplo |
 |----|-----------|---------|
-| CONST-R1 | Stack tecnológica | TypeScript + React 18+ |
+| CONST-R1 | MDE+SDD First | Modelagem cobre frontend + backend |
 | CONST-R2 | Zero over-engineering | Código apenas se modelado |
-| CONST-R3 | Testes obrigatórios | TDD: testes antes do código |
-| CONST-R4 | Rastreabilidade | Todo elemento deve ter RF associado |
-| CONST-R5 | Commits atômicos | Um commit por funcionalidade |
+| CONST-R3 | Rastreabilidade | `@rf:`, `// @model:`, `# @model:` |
+| CONST-R4 | Arquitetura MVVM + FastAPI | Camadas separadas frontend e backend |
+| CONST-R5 | Pipeline de Verificação | Polícia + Juiz automáticos |
 
 **Exemplo de criação:**
-> **Daired:** `/speckit.constitution` — Crie a constituição do projeto frontend.
-> **🤖 Spec-Kit:** "Constituição criada em `.specify/memory/constitution.md` com 5 princípios (CONST-R1 a CONST-R5)."
+> **Daired:** `/speckit.constitution` — Crie a constituição do projeto frontend e backend do KPC.
+> **🤖 Spec-Kit:** "Constituição criada em `.specify/memory/constitution.md` com 6 princípios (CONST-R1 a CONST-R6), cobrindo `kpc-frontend/` e `kpc-backend/`."
 
 **Impacto:** A constituição é validada automaticamente em todo `speckit.plan` (Constitution Check gate) e em todo `speckit.analyze` (Constitution Alignment detection pass).
 
@@ -114,8 +114,8 @@ flowchart LR
 | 🟩 **+ Arquiteto** | Lê persona-arquiteto.md, modela diagramas PlantUML com tags `@rf:` | `specs/<feature>/model/classes.puml` |
 
 **Exemplo de diálogo no chat:**
-> **Daired:** "Notei que no `class-diagram.puml` não temos um estado para mensagens de erro."
-> **🤖 Arquiteto:** "Atualizando o modelo para incluir `errorMessage: String` na classe `LoginForm`, mantendo `@rf: RF-001`."
+> **Daired:** "Notei que no `class-diagram.puml` não temos um estado para mensagens de erro no frontend, e no backend falta modelar o endpoint de login."
+> **🤖 Arquiteto:** "Atualizando o modelo para incluir `errorMessage: String` na classe `LoginForm` (frontend) e o endpoint `POST /users/login` no diagrama de componentes do backend, ambos com `@rf: RF-001`."
 
 ---
 
@@ -232,7 +232,7 @@ Salvo em: `specs/<feature>/verdict/verdict.md`
 |---------|---------|---------|---------|------|
 | `/speckit.constitution` | — | — | Sprint 0 (único) | `.specify/memory/constitution.md` (CONST-R\*) |
 | `/speckit.plan` | 🏗️ Arquiteto | `persona-arquiteto.md` | Automático | `model/*.puml` com `@rf:` |
-| `/speckit.implement` | 👨‍💻 Developer | `persona-developer.md` | Automático | Código + `// @model:` |
+| `/speckit.implement` | 👨‍💻 Developer | `persona-developer.md` | Automático | Código + `// @model:` / `# @model:` (frontend + backend) |
 | `/speckit.analyze` | 👮‍♂️ Polícia + ⚖️ Juiz | `persona-policia.md` + `persona-juiz.md` | Automático (em série) | `evidence/inconsistencies.md` (EVD-/ARG-/DEP-) + `verdict/verdict.md` (VER-) |
 
 ---

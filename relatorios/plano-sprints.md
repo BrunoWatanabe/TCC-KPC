@@ -1,15 +1,25 @@
 # Plano de Sprints — Keyphrase Curation (KPC)
 
 **Projeto:** Frontend MVVM de curadoria de keyphrases com backend FastAPI
-**Pipeline:** Spec-Kit + 4 Personas (Arquiteto, Developer, Polícia, Juiz)
 **Total de Sprints:** 4 sprints
 **Ritmo:** 1 sprint por dia útil (~4h/dia)
 
 ---
 
-## Convenções do Pipeline
+## Natureza dos Experimentos
 
-Cada sprint deste plano executa **obrigatoriamente** o pipeline completo:
+| Sprint | Metodologia | Descrição | Status |
+|--------|-------------|-----------|--------|
+| **Sprint 01** | 🏗️ **MDE+SDD (Spec-Kit + 4 Personas)** | Teste do pipeline Spec-Kit com Arquitetura, Developer, Polícia e Juiz — componente de Login | ✅ Concluída |
+| **Sprint 02** | 🏗️ **MDE+SDD (Spec-Kit + 4 Personas)** | Teste do pipeline Spec-Kit — correção de serialização numpy no backend | ✅ Concluída |
+| **Sprint 03** | 🤖 **Copilot (sem metodologia)** | Teste do Copilot puro, sem Spec-Kit, sem personas, sem pipeline — correção de ordenação via chat direto | 🟡 Pendente |
+| **Sprint 04** | ⚡ **Copilot + RTK (Redux Toolkit)** | Teste do Copilot com RTK — implementação de nova funcionalidade completa no frontend | ⬜ Planejada |
+
+---
+
+## Convenções do Pipeline da Sprint 01 e Sprint 02
+
+A Sprint 01 e Sprint 02 deste plano executa **obrigatoriamente** o pipeline completo:
 
 ```mermaid
 flowchart LR
@@ -70,11 +80,11 @@ flowchart LR
 
 ---
 
-## Sprint 02 — Correção de Serialização: Pairwise Similarity
+## Sprint 02 — Correção de Serialização: Pairwise + Centroid Similarity
 
-**Escopo:** Corrigir `500 Internal Server Error` no endpoint `GET /topic/clusters/{username}/{topic}/pairwise_similarity`.
+**Escopo:** Corrigir `500 Internal Server Error` nos endpoints `GET /topic/clusters/{username}/{topic}/pairwise_similarity` e `GET /topic/clusters/{username}/{topic}/centroid_similarity`.
 
-**Causa raiz:** O backend retorna `numpy.int64` na resposta JSON, que o Pydantic/FastAPI não consegue serializar (`PydanticSerializationError: Unable to serialize unknown type: <class 'numpy.int64'>`).
+**Causa raiz:** O backend retorna `numpy.int64` na resposta JSON, que o Pydantic/FastAPI não consegue serializar (`PydanticSerializationError: Unable to serialize unknown type: <class 'numpy.int64'>`). A solução foi criar o `NumpyConverter.to_native()` em `util/json_encoder.py` e aplicá-lo no retorno da API.
 
 **Backend:** `kpc-backend/` — endpoint em `src/keyphrase_curation/`
 
@@ -83,46 +93,84 @@ flowchart LR
 | RF | Descrição | Prioridade |
 |----|-----------|------------|
 | RF-003 | Corrigir serialização do endpoint pairwise_similarity | P1 |
+| RF-004 | Corrigir serialização do endpoint centroid_similarity (resolvido pelo NumpyConverter da T002) | P1 |
 
 ### O que precisa ser feito
 
 | Tarefa | Backend | Frontend | Artefato Esperado |
 |--------|---------|----------|-------------------|
-| **T002** | 🔴 Corrigir endpoint `/topic/clusters/{username}/{topic}/pairwise_similarity` — converter `numpy.int64` para `int` antes de serializar a resposta. A correção pode ser feita com encoder customizado no JSONResponse ou convertendo os valores numpy no retorno da rota. Testar com `curl` ou navegador após correção. | N/A (frontend apenas consome) | `curl http://localhost:3132/topic/clusters/daired/cloning/pairwise_similarity` retorna 200 |
+| **T002** | 🟢 **Concluída** — `NumpyConverter.to_native()` criado em `util/json_encoder.py` e aplicado no retorno completo de `list_clusters()` em `api/topic.py:268`. | N/A | `curl http://localhost:3132/topic/clusters/daired/cloning/pairwise_similarity` → HTTP 200 ✅ |
+| **Status** | 🟢 Concluída | **2 rodadas completas:** R1 (2 evidências — 1 AMBOS, 1 AE), R2 (2 RESOLVIDAS — ambas NE). GATES aprovados. SC-001 (HTTP 200) alcançado. |
+| **ST002.1** | 🟢 **Concluída** — Corrigir alcance do `NumpyConverter.to_native()` — aplicado em TODO o dicionário de retorno (`return NumpyConverter.to_native({...})`). Modelo (`sequence.puml`, `classes.puml`, `components.puml`) atualizado com `@rf: RF-003-C1`. | N/A | `curl` → HTTP 200. Veredito R2: NE (Ninguém Errado). |
+| **T003** | 🟢 **Concluída** — Resolvida automaticamente pelo `NumpyConverter` da T002. O endpoint `centroid_similarity` passa pelo mesmo `list_clusters()` que aplica `NumpyConverter.to_native()` em todo o dicionário. | N/A | `curl http://localhost:3132/topic/clusters/daired/cloning/centroid_similarity` → HTTP 200 ✅ |
 
 ### Arquivos impactados (backend)
 
 | Arquivo | Ação |
 |---------|------|
-| `src/keyphrase_curation/controller/` | Localizar endpoint pairwise_similarity e adicionar conversão numpy → int |
-| `src/keyphrase_curation/view/` | Possível serializador/response model |
+| `src/keyphrase_curation/util/json_encoder.py` | Criado — `NumpyConverter.to_native()` |
+| `src/keyphrase_curation/api/topic.py` | Modificado — `return NumpyConverter.to_native({...})` |
 
 ---
 
-## Sprint 03 — Correção de Serialização: Centroid Similarity
+## Sprint 03 — Correção de Ordenação de Clusters — 🤖 Copilot (sem metodologia)
 
-**Escopo:** Corrigir `500 Internal Server Error` no endpoint `GET /topic/clusters/{username}/{topic}/centroid_similarity`.
+**Natureza:** Experimento **Copilot puro** — sem Spec-Kit, sem personas, sem pipeline MDE+SDD. O objetivo é testar a produtividade e qualidade do Copilot agindo livremente, sem amarras metodológicas.
 
-**Causa raiz:** Mesmo erro da Sprint 02 — `numpy.int64` não serializável pelo Pydantic.
+**Escopo:** Corrigir a ordenação dos endpoints `cluster_cohesion` e `centroid_similarity` — atualmente retornam do menor para o maior, mas devem retornar do maior para o menor.
+
+**Backend:** `kpc-backend/` — `src/keyphrase_curation/model/cluster.py`
 
 ### RFs da Sprint
 
 | RF | Descrição | Prioridade |
 |----|-----------|------------|
-| RF-004 | Corrigir serialização do endpoint centroid_similarity | P1 |
+| RF-005 | Ordenar cluster_cohesion do maior para o menor | P1 |
+| RF-006 | Ordenar centroid_similarity do maior para o menor | P1 |
 
 ### O que precisa ser feito
 
 | Tarefa | Backend | Frontend | Artefato Esperado |
 |--------|---------|----------|-------------------|
-| **T003** | 🔴 Corrigir endpoint `/topic/clusters/{username}/{topic}/centroid_similarity` — mesma correção: garantir que todos os valores numpy sejam convertidos para tipos nativos Python antes da serialização. Se o encoder customizado foi criado na Sprint 02, reutilizá-lo aqui. | N/A (frontend apenas consome) | `curl http://localhost:3132/topic/clusters/daired/cloning/centroid_similarity` retorna 200 |
+| **T004** | 🤖 Corrigir ordenação do endpoint `/topic/clusters/{username}/{topic}/cluster_cohesion` — atualmente retorna da **coesão mais baixa para a mais alta** (ascendente). Deve retornar da **coesão mais alta para a mais baixa** (descendente). Localizar a lógica de ordenação em `model/cluster.py` e inverter o `reverse` ou o sorting key. | N/A (frontend apenas consome) | `curl http://localhost:3132/topic/clusters/daired/cloning/cluster_cohesion` retorna clusters ordenados do maior valor de coesão para o menor |
+| **T005** | 🤖 Corrigir ordenação do endpoint `/topic/clusters/{username}/{topic}/centroid_similarity` — atualmente retorna da **similaridade mais baixa para a mais alta** (ascendente). Deve retornar da **similaridade mais alta para a mais baixa** (descendente). Como o `NumpyConverter` já resolveu a serialização, o foco é apenas inverter a ordenação. | N/A (frontend apenas consome) | `curl http://localhost:3132/topic/clusters/daired/cloning/centroid_similarity` retorna clusters ordenados do maior valor de similaridade para o menor |
 
 ### Arquivos impactados (backend)
 
 | Arquivo | Ação |
 |---------|------|
-| `src/keyphrase_curation/controller/` | Localizar endpoint centroid_similarity e aplicar mesma correção |
-| `src/keyphrase_curation/view/` | Mesmo serializador/response model da Sprint 02 |
+| `src/keyphrase_curation/model/cluster.py` | Localizar lógica de ordenação de `cluster_cohesion` e `centroid_similarity` e inverter ordem (ascendente → descendente) |
+
+---
+
+## Sprint 04 — Implementação de Funcionalidade Completa — ⚡ Copilot + RTK
+
+**Natureza:** Experimento **Copilot com RTK (Redux Toolkit)** — implementar uma nova funcionalidade completa no frontend utilizando RTK para gerenciamento de estado global. O objetivo é testar a eficácia do Copilot auxiliado por RTK vs Spec-Kit.
+
+**Escopo:** Implementar uma nova funcionalidade de curadoria de keyphrases no frontend, consumindo a API existente do backend.
+
+**Frontend:** `kpc-frontend/src-mvvm/`
+
+### RFs da Sprint
+
+| RF | Descrição | Prioridade |
+|----|-----------|------------|
+| RF-007 | Implementar tela de curadoria de keyphrases com RTK (selecionar, anotar, salvar) | P1 |
+
+### O que precisa ser feito
+
+| Tarefa | Backend | Frontend | Artefato Esperado |
+|--------|---------|----------|-------------------|
+| **T006** | N/A (API já existe) | ⚡ **Criar funcionalidade completa de curadoria de keyphrases** utilizando **RTK (Redux Toolkit)** para gerenciamento de estado: store global, slices, thunks assíncronos, componentes conectados. A funcionalidade deve consumir endpoints existentes do backend para listar, selecionar e salvar anotações de keyphrases por tópico. Incluir feedback visual (loading, sucesso, erro). | Tela funcional de curadoria com RTK — store, slice, thunks e UI conectada |
+
+### Arquivos impactados (frontend)
+
+| Arquivo | Ação |
+|---------|------|
+| `src-mvvm/store/` | Criar — estrutura RTK (store, slices, thunks) |
+| `src-mvvm/views/pages/` | Criar — tela de curadoria |
+| `src-mvvm/views/components/` | Criar — componentes de anotação |
+| `src-mvvm/models/services/` | Criar — serviço HTTP para keyphrases |
 
 ---
 
@@ -130,24 +178,25 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    S1[Sprint 01<br/>Login + Refinar<br/>✅ Concluída] --> S2[Sprint 02<br/>Bug pairwise<br/>similarity]
-    S2 --> S3[Sprint 03<br/>Bug centroid<br/>similarity]
+    S1[Sprint 01<br/>MDE+SDD Login<br/>✅ Concluída] --> S2[Sprint 02<br/>MDE+SDD Serialização<br/>✅ Concluída]
+    S2 --> S3[Sprint 03<br/>🤖 Copilot Ordenação<br/>🟡 Pendente]
+    S3 --> S4[Sprint 04<br/>⚡ Copilot+RTK Funcionalidade<br/>⬜ Planejada]
 ```
 
-| Sprint | Depende de | É pré-requisito para |
-|--------|-----------|----------------------|
-| 01 — Login + Refinar | — | 02 |
-| 02 — Bug pairwise_similarity | 01 | 03 |
-| 03 — Bug centroid_similarity | 02 | — |
+| Sprint | Metodologia | Depende de | É pré-requisito para |
+|--------|-------------|-----------|----------------------|
+| 01 — Login + Refinar | 🏗️ MDE+SDD (Spec-Kit) | — | 02 |
+| 02 — Serialização (pairwise + centroid) | 🏗️ MDE+SDD (Spec-Kit) | 01 | 03 |
+| 03 — Ordenação de clusters | 🤖 Copilot (sem metodologia) | 02 | 04 |
+| 04 — Funcionalidade RTK | ⚡ Copilot + RTK | 03 | — |
 
 ---
 
 ## Resumo de Esforço por Sprint
 
-| Sprint | RFs | Tarefas | Frontend | Backend |
-|--------|-----|---------|----------|---------|
-| Sprint 01 | RF-001, RF-002 | T001 + ST001.1 + ST001.2 | Refatorar 4 arquivos | Nenhum |
-| Sprint 02 | RF-003 | T002 | N/A | Corrigir serialização pairwise |
-| Sprint 03 | RF-004 | T003 | N/A | Corrigir serialização centroid |
-
-> **Nota:** O backend (`kpc-backend`) já está implementado e funcional. As sprints focam exclusivamente no frontend (`kpc-frontend/src-mvvm/`), consumindo as APIs existentes.
+| Sprint | Metodologia | RFs | Tarefas | Frontend | Backend |
+|--------|-------------|-----|---------|----------|---------|
+| Sprint 01 | 🏗️ MDE+SDD (Spec-Kit) | RF-001, RF-002 | T001 + ST001.1 + ST001.2 | Refatorar 4 arquivos | Nenhum |
+| Sprint 02 | 🏗️ MDE+SDD (Spec-Kit) | RF-003, RF-004 | T002 + ST002.1 + T003 | N/A | `json_encoder.py` (criar), `api/topic.py` (modificar) |
+| Sprint 03 | 🤖 Copilot (sem metodologia) | RF-005, RF-006 | T004 + T005 | N/A | `model/cluster.py` (corrigir ordenação) |
+| Sprint 04 | ⚡ Copilot + RTK | RF-007 | T006 | Criar store RTK + páginas + componentes + serviços | N/A |

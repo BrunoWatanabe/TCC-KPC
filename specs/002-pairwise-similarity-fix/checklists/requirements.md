@@ -2,6 +2,7 @@
 
 **Purpose**: Validate specification completeness and quality before proceeding to planning
 **Created**: 2026-06-20
+**Updated**: 2026-06-20 (Após correções R1 → R2)
 **Feature**: [specs/002-pairwise-similarity-fix/spec.md](specs/002-pairwise-similarity-fix/spec.md)
 
 ## Content Quality
@@ -22,6 +23,16 @@
 - [x] Scope is clearly bounded
 - [x] Dependencies and assumptions identified
 
+## Corrections Completeness (R1 → R2)
+
+- [x] RF-003-C1 e RF-003-C2 estão presentes e vinculados à evidência de origem
+- [x] Veredito de referência (AMBOS + AE) está alinhado com as ações corretivas
+- [x] User Story 3 cobre correção pós-veredito com 3 acceptance scenarios
+- [x] Edge cases incluem cenários de correção (NumpyConverter com dados vazios, modelo sequence.puml)
+- [x] Success Criteria incluem métricas de verificação (SC-006, SC-007)
+- [x] Ponto de correção exato especificado (return inteiro em api/topic.py)
+- [x] RF-003-C2 especifica atualização do modelo (sequence.puml) com @rf: RF-003-C1
+
 ## Feature Readiness
 
 - [x] All functional requirements have clear acceptance criteria
@@ -32,12 +43,6 @@
 ## Notes
 
 - All checklist items pass. No [NEEDS CLARIFICATION] markers found.
-- Causa raiz completamente mapeada:
-  - `util/pairwise_similarity.py:69-99` → `get_pairwise_similarity()` retorna numpy.int64/float64
-  - `model/cluster.py:332-348` → `get_pairwise_cluster_similarity()` propaga sem conversão
-  - `controller/annotation.py:82-92` → monta clusters_meta_info
-  - `api/topic.py:214-258` → rota `/clusters/{username}/{topic}/{cluster_order}` retorna na resposta
-- **Rota real**: `api/topic.py:214` — `/clusters/{username}/{topic}/{cluster_order}` (não é rota `/pairwise_similarity` dedicada)
-- **Ponto de correção recomendado**: `model/cluster.py:332-348` — converter `int()`/`float()` nos valores de `get_pairwise_cluster_similarity()`
-- RF-003 a RF-007 mapeiam correção sem alterar contrato da API.
-- Nenhuma alteração de frontend ou modelo PlantUML necessária.
+- Causa raiz completamente mapeada com pipeline de dados linha a linha.
+- Spec refinada com correções da Rodada 1 (2 RFs de correção: RF-003-C1, RF-003-C2).
+- Pronto para Rodada 2 — implementar RF-003-C1 no código e RF-003-C2 no modelo.

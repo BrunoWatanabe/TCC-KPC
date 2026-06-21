@@ -264,14 +264,12 @@ async def list_clusters(
         raise HTTPException(status_code=500, detail=str(e))
 
     # @model: specs/002-pairwise-similarity-fix/model/classes.puml
-    # RF: RF-003, RF-004 — Converter tipos numpy para Python nativos antes da serialização
-    clusters_meta_info = NumpyConverter.to_native(clusters_meta_info)
-
-    return {
+    # RF: RF-003-C1 — Converter tipos numpy em TODO o dicionário de retorno
+    return NumpyConverter.to_native({
         "sorting_applied": sorting.value,
         "clusters": clusters,
         "clusters_meta_info": clusters_meta_info
-    }
+    })
 
 
 @router.get("/cluster_selection/{username}/{topic}")

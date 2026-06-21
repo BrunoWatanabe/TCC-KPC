@@ -89,6 +89,8 @@ flowchart LR
 | Tarefa | Backend | Frontend | Artefato Esperado |
 |--------|---------|----------|-------------------|
 | **T002** | 🔴 Corrigir endpoint `/topic/clusters/{username}/{topic}/pairwise_similarity` — converter `numpy.int64` para `int` antes de serializar a resposta. A correção pode ser feita com encoder customizado no JSONResponse ou convertendo os valores numpy no retorno da rota. Testar com `curl` ou navegador após correção. | N/A (frontend apenas consome) | `curl http://localhost:3132/topic/clusters/daired/cloning/pairwise_similarity` retorna 200 |
+| **Status** | 🟡 Em desenvolvimento | Rodada 1 concluída com 2 evidências (1 CRÍTICA, 1 ALTA). Pendente implementação de correções. |
+| **ST002.1** | 🟡 Corrigir alcance do `NumpyConverter.to_native()` — aplicar conversão em TODO o dicionário de retorno (não apenas `clusters_meta_info`). O veredito da Rodada 1 (`specs/002-pairwise-similarity-fix/verdict/verdict.md`) apontou AMBOS (EVD-002-R1-001) e AE (EVD-002-R1-002). Correções: (1) **Código:** aplicar `NumpyConverter.to_native()` no `return` inteiro do endpoint, ou em ambos `clusters` e `clusters_meta_info`. (2) **Modelo (`Arquiteto`):** atualizar `sequence.puml` e `classes.puml` para cobrir conversão em toda a estrutura de retorno. (3) **Validação:** `curl` retornar HTTP 200 sem `PydanticSerializationError`. | Executar novo ciclo: `commit` → `/speckit.analyze` |
 
 ### Arquivos impactados (backend)
 

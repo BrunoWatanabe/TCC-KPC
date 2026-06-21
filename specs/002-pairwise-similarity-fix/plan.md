@@ -30,9 +30,9 @@ extends: speckit.plan
 
 ## Summary
 
-Corrigir o erro `PydanticSerializationError: Unable to serialize unknown type: <class 'numpy.int64'>` no endpoint `GET /topic/clusters/{username}/{topic}/pairwise_similarity` do backend FastAPI. O erro ocorre porque a rota retorna `clusters_meta_info` contendo valores numpy (`numpy.int64`, `numpy.float64`) que o Pydantic/FastAPI não consegue serializar. A solução é criar um conversor `NumpyConverter.to_native()` que percorre recursivamente a estrutura de dados convertendo tipos numpy para tipos Python nativos.
+Corrigir o erro `PydanticSerializationError: Unable to serialize unknown type: <class 'numpy.int64'>` no endpoint `GET /topic/clusters/{username}/{topic}/pairwise_similarity` do backend FastAPI. O erro ocorre porque a rota retorna dados contendo valores numpy (`numpy.int64`, `numpy.float64`) que o Pydantic/FastAPI não consegue serializar — tanto em `clusters_meta_info` quanto em `clusters`. A solução é aplicar `NumpyConverter.to_native()` no **dicionário completo de retorno**, cobrindo todo o `{"sorting_applied", "clusters", "clusters_meta_info"}`.
 
-**CONST-R1 atualizada**: A constituição agora exige modelagem MDE+SDD também para o backend. Esta sprint gera diagramas PlantUML para o fluxo de serialização.
+**Rodada 1**: 2 evidências (EVD-002-R1-001 — AMBOS, EVD-002-R1-002 — AE). Escopo da conversão era insuficiente (focava apenas `clusters_meta_info`). Modelo e código corrigidos na ST002.1.
 
 ## Technical Context
 
@@ -78,6 +78,33 @@ Corrigir o erro `PydanticSerializationError: Unable to serialize unknown type: <
 
 ---
 
+## 🩹 Correções da Rodada 2 — ST002.1
+
+### Status do Veredito (Rodada 1)
+
+2 evidências: 1 AMBOS (EVD-002-R1-001), 1 AE (EVD-002-R1-002). Ambos apontam para o mesmo problema: o escopo da conversão `to_native()` estava restrito a `clusters_meta_info`, mas `clusters` também contém valores numpy propagados via `cluster_data`, `cluster_selection`, `keyphrases_selection`.
+
+| Evidência | Tipo | Severidade | Decisão | RF Correção |
+|-----------|------|------------|---------|-------------|
+| EVD-002-R1-001 | CORRECAO_INCOMPLETA | Crítica | AMBOS | RF-003-C1 |
+| EVD-002-R1-002 | MODELO_INSUFICIENTE | Alta | AE | RF-003-C2 |
+
+### Decisões Arquiteturais (Pós-R1)
+
+1. **Escopo da conversão**: Aplicar `NumpyConverter.to_native()` no **dicionário completo de retorno** (`return NumpyConverter.to_native({...})`), não apenas em `clusters_meta_info`. Solução mais robusta que aplicar campo a campo.
+2. **Modelo atualizado**: Os 3 diagramas foram atualizados para refletir o escopo completo da conversão.
+3. **Reúso**: Mesma abordagem será usada na Sprint 03 para `centroid_similarity`.
+
+### Impacto nos Diagramas
+
+| Diagrama | Ação | Justificativa |
+|----------|------|---------------|
+| `classes.puml` | 🟡 **Atualizado** | Associação `to_native(resultado_completo)` + nota explicativa sobre escopo total |
+| `sequence.puml` | 🟡 **Atualizado** | Etapa `to_native(clusters_meta_info)` substituída por `to_native(resultado_completo)` no dicionário completo |
+| `components.puml` | 🟡 **Atualizado** | Nota da dependência reflete escopo completo |
+
+---
+
 ## 📐 Artefatos de Modelagem (Override — Persona Arquiteto)
 
 Esta seção é **adicional** ao template nativo. Ela documenta os artefatos PlantUML que serão gerados durante a Fase 1 (Design).
@@ -99,6 +126,8 @@ Esta seção é **adicional** ao template nativo. Ela documenta os artefatos Pla
 | RF-003 | Fluxo serialização (antes/depois) | sequence.puml |
 | RF-003 | `PairwiseSimilarity.get_pairwise_similarity()` | classes.puml |
 | RF-003 | `JSONResponse` (FastAPI) | components.puml |
+| RF-003-C1 | Escopo completo `to_native(resultado_completo)` | classes.puml, sequence.puml, components.puml |
+| RF-003-C2 | Conversão abrange `clusters` + `clusters_meta_info` | classes.puml, sequence.puml |
 
 ### Regras Aplicadas
 

@@ -1,7 +1,30 @@
 # Relatório de Evidências — Pairwise Similarity Serialization Fix
 
 **Feature:** 002-pairwise-similarity-fix
-**Total de Rodadas:** 1
+**Total de Rodadas:** 2
+
+---
+
+## 🔵 Rodada Atual: R2
+
+**Data:** 2026-06-21
+**Rodada Anterior:** R1
+
+### Sumário da Rodada
+
+| Métrica | Valor |
+|---------|-------|
+| Evidências NOVAS | 0 |
+| Evidências PERSISTEM | 0 |
+| Evidências RESOLVIDAS | 2 |
+| Evidências REABERTAS | 0 |
+
+### Árvore de Evidências
+
+| Rodada Anterior | Status | Rodada Atual |
+|----------------|--------|--------------|
+| EVD-002-R1-001 | ✅ RESOLVIDA | EVD-002-R2-001 |
+| EVD-002-R1-002 | ✅ RESOLVIDA | EVD-002-R2-002 |
 
 ---
 
@@ -103,3 +126,100 @@
 | Severidade CRITICA | 1 (EVD-002-R1-001 — correção incompleta) |
 | Severidade ALTA | 1 (EVD-002-R1-002 — modelo insuficiente) |
 | CHK-INT-01 (validação curl) | ❌ HTTP 500 — `numpy.int64` não serializado |
+
+---
+
+## 🔵 Rodada 2: R2
+
+**Data:** 2026-06-21
+**Rodada Anterior:** R1
+
+### Sumário da Rodada
+
+| Métrica | Valor |
+|---------|-------|
+| Evidências NOVAS | 0 |
+| Evidências PERSISTEM | 0 |
+| Evidências RESOLVIDAS | 2 |
+| Evidências REABERTAS | 0 |
+
+### Árvore de Evidências
+
+| Rodada Anterior | Status | Rodada Atual |
+|----------------|--------|--------------|
+| EVD-002-R1-001 | ✅ RESOLVIDA | EVD-002-R2-001 |
+| EVD-002-R1-002 | ✅ RESOLVIDA | EVD-002-R2-002 |
+
+### Evidências da Rodada
+
+### EVD-002-R2-001 — CORRECAO_INCOMPLETA_CLUSTERS (RESOLVIDA) {#evd-R2-001}
+
+| Campo | Valor |
+|-------|-------|
+| **parent** | EVD-002-R1-001 |
+| **status** | RESOLVIDA |
+| **tipo** | CORRECAO_INCOMPLETA |
+| **severidade** | N/A (resolvida) |
+| **RF Associado** | RF-003, RF-004, RF-003-C1 |
+| **descrição** | `api/topic.py:266-270` agora aplica `NumpyConverter.to_native()` no dicionário COMPLETO de retorno (`{sorting_applied, clusters, clusters_meta_info}`). |
+| **localização_modelo** | `classes.puml` — nota `to_native(resultado_completo)` com `@rf: RF-003-C1` |
+| **localização_código** | `api/topic.py:268` — `return NumpyConverter.to_native({...})` |
+| **detalhes** | A linha `clusters_meta_info = NumpyConverter.to_native(clusters_meta_info)` foi removida. Substituída por `return NumpyConverter.to_native({...})` envelopando o dicionário COMPLETO. Teste com `curl` confirma HTTP 200 com JSON válido e todos os tipos Python nativos. `clusters_meta_info` com 33 itens, todos `int` e `float` nativos. Demais ordenações (NUMERICAL, CLUSTER_COHESION, CENTROID_SIMILARITY) também retornam HTTP 200 — sem regressão (RF-007). |
+
+#### Depoimento Arquiteto (ARG-002-R2-001)
+> **Posição:** Correção satisfatória.
+> **Justificativa:** A correção aplica `NumpyConverter.to_native()` em TODO o dicionário de retorno, conforme recomendado no veredito R1. O modelo (`classes.puml`, `sequence.puml`, `components.puml`) foi atualizado com `@rf: RF-003-C1` e escopo completo. A validação com `curl` confirma HTTP 200 com tipos nativos. CONST-R1 e CONST-R3 estão preservadas.
+
+#### Depoimento Developer (DEP-002-R2-001)
+> **Posição:** Correção aplicada.
+> **Justificativa:** Substituiu a conversão parcial (`clusters_meta_info = NumpyConverter.to_native(...)`) pela conversão no `return` inteiro conforme sentença do veredito R1. Validou com `curl` que o endpoint retorna HTTP 200 com JSON válido. As demais 3 ordenações permanecem funcionais (RF-007).
+
+---
+
+### EVD-002-R2-002 — MODELO_FOCA_APENAS_META_INFO (RESOLVIDA) {#evd-R2-002}
+
+| Campo | Valor |
+|-------|-------|
+| **parent** | EVD-002-R1-002 |
+| **status** | RESOLVIDA |
+| **tipo** | MODELO_INSUFICIENTE |
+| **severidade** | N/A (resolvida) |
+| **RF Associado** | RF-003, RF-003-C1 |
+| **descrição** | `classes.puml`, `sequence.puml` e `components.puml` atualizados para escopo completo de conversão. |
+| **localização_modelo** | `classes.puml` — nota `NumpyConverter` com `@rf: RF-003-C1`; `sequence.puml` — fluxo "Depois" com `NumpyConverter.to_native(resultado)`; `components.puml` — nota `to_native() no dicionário completo de retorno` |
+| **localização_código** | `api/topic.py:268` — `return NumpyConverter.to_native({...})` |
+| **detalhes** | Todos os 3 diagramas foram atualizados: (1) `classes.puml` - nota do `NumpyConverter` e relação `TopicRouter --> NumpyConverter` com `to_native(resultado_completo)` e `@rf: RF-003-C1`; nota do `AnnotationController` menciona que AMBOS `clusters` e `clusters_meta_info` contêm numpy; (2) `sequence.puml` - fluxo "Depois" mostra `NumpyConverter.to_native(resultado)` convertendo TODO o dicionário, com nota `RF-003-C1`; (3) `components.puml` - nota na relação `TopicRouter --> NumpyConverter` com `to_native() no dicionário completo de retorno {clusters, clusters_meta_info}`. |
+
+#### Depoimento Arquiteto (ARG-002-R2-002)
+> **Posição:** Modelo atualizado e alinhado ao código.
+> **Justificativa:** O Arquiteto atualizou os 3 diagramas para refletir a conversão em escopo completo. A tag `@rf: RF-003-C1` foi adicionada conforme especificação atualizada. O modelo agora cobre a realidade da implementação: `NumpyConverter.to_native()` aplicado em TODO o dicionário de retorno.
+
+#### Depoimento Developer (DEP-002-R2-002)
+> **Posição:** Código alinhado ao modelo atualizado.
+> **Justificativa:** A implementação em `api/topic.py:268` (`return NumpyConverter.to_native({...})`) corresponde exatamente ao que os diagramas agora especificam. CONST-R2 (fidelidade ao modelo) preservada.
+
+---
+
+### Checklist de Verificação — Rodada 2
+
+| ID | Item | Status |
+|----|------|--------|
+| CHK-CLASS-01 | Classes modeladas → implementadas | ✅ `NumpyConverter` existe |
+| CHK-METH-01 | Métodos modelados → implementados | ✅ `to_native()`, `_convert_value()` |
+| CHK-SEQ-01 | Fluxo modelado → implementado | ✅ `return NumpyConverter.to_native({...})` no código corresponde ao fluxo "Depois" do modelo |
+| CHK-DEP-01 | Tags `# @model:` presentes | ✅ `api/topic.py:266`, `util/json_encoder.py:1` |
+| CHK-INT-01 | Endpoint retorna HTTP 200 | ✅ **HTTP 200 — JSON válido — tipos nativos** |
+| CHK-REG-01 | Demais ordenações sem regressão | ✅ NUMERICAL=200, CLUSTER_COHESION=200, CENTROID_SIMILARITY=200 |
+| CHK-OVER-01 | Sem over-engineering | ✅ Nenhum arquivo novo além dos previstos |
+
+---
+
+## Resumo da Rodada 2
+
+| Métrica | R1 | R2 |
+|---------|----|----|
+| Total de Evidências | 2 | 2 (resolvidas) |
+| Severidade CRITICA | 1 | 0 |
+| Severidade ALTA | 1 | 0 |
+| CHK-INT-01 (validação curl) | ❌ HTTP 500 | ✅ **HTTP 200** |
+| CHK-REG-01 (regressão) | N/A | ✅ Sem regressão |

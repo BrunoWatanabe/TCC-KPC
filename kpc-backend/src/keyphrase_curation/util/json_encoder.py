@@ -1,9 +1,10 @@
 # @model: specs/002-pairwise-similarity-fix/model/classes.puml
-# RF: RF-003, RF-004, RF-006 — Conversão global de tipos numpy para Python nativos
+# RF: RF-003-C1 — Conversão global de tipos numpy para Python nativos
 #
 # NumpyConverter.to_native()
 # Percorre recursivamente dicts/lists/sets convertendo tipos numpy
 # para tipos Python nativos (int, float, list, bool).
+# ATENÇÃO: também converte CHAVES de dict que sejam numpy (RF-003-C1).
 #
 # Nota: `get_cluster_centrality_scores()` em model/cluster.py também pode
 # gerar valores numpy — reavaliar na Sprint 03 (centroid_similarity).
@@ -20,19 +21,19 @@ class NumpyConverter:
     evitando PydanticSerializationError com tipos como numpy.int64.
 
     Exemplo:
-        >>> data = {"a": np.int64(1), "b": [np.float64(2.5)]}
+        >>> data = {np.int64(1): {"a": np.int64(2)}}
         >>> NumpyConverter.to_native(data)
-        {'a': 1, 'b': [2.5]}
+        {1: {'a': 2}}
     """
 
     @staticmethod
     def to_native(obj: Any) -> Any:
         """
         Converte recursivamente todos os valores numpy em obj para
-        tipos Python nativos.
+        tipos Python nativos. Converte também chaves de dicionários.
 
         Suporta:
-        - dict  → {k: to_native(v) for k, v in obj.items()}
+        - dict  → {_native_key(k): to_native(v) for k, v in obj.items()}
         - list  → [to_native(v) for v in obj]
         - tuple → list(to_native(v) for v in obj)
         - set   → {to_native(v) for v in obj}
@@ -43,13 +44,25 @@ class NumpyConverter:
         - demais tipos retornados sem alteração
         """
         if isinstance(obj, dict):
-            return {k: NumpyConverter.to_native(v) for k, v in obj.items()}
+            return {
+                NumpyConverter._native_key(k): NumpyConverter.to_native(v)
+                for k, v in obj.items()
+            }
         elif isinstance(obj, (list, tuple)):
             return [NumpyConverter.to_native(v) for v in obj]
         elif isinstance(obj, set):
             return {NumpyConverter.to_native(v) for v in obj}
         else:
             return NumpyConverter._convert_value(obj)
+
+    @staticmethod
+    def _native_key(key: Any) -> Any:
+        """Converte chave numpy para tipo Python nativo se necessário."""
+        if isinstance(key, np.integer):
+            return int(key)
+        elif isinstance(key, np.floating):
+            return float(key)
+        return key
 
     @staticmethod
     def _convert_value(value: Any) -> Any:

@@ -1,7 +1,35 @@
 # Veredicto — Pairwise Similarity Serialization Fix
 
 **Feature:** 002-pairwise-similarity-fix
-**Total de Rodadas:** 1
+**Total de Rodadas:** 2
+
+---
+
+## 🔵 Rodada Atual: R2
+
+**Data:** 2026-06-21
+**Rodada Anterior:** R1
+
+### Sumário da Rodada
+
+| Métrica | Valor |
+|---------|-------|
+| Total Evidências Julgadas | 2 |
+| Evidências RESOLVIDAS | 2 |
+| Evidências PERSISTEM | 0 |
+| DE (Developer Errado) | 0 |
+| AE (Arquiteto Errado) | 0 |
+| AMBOS | 0 |
+| NE (Ninguém Errado) | 2 |
+| Gates Aprovados | 3 |
+| Gates Negados | 0 |
+
+### Árvore de Veredictos
+
+| Rodada Anterior | Decisão Ant. | Status | Rodada Atual | Decisão Atual |
+|----------------|--------------|--------|--------------|---------------|
+| VER-002-R1-001 | AMBOS | ✅ RESOLVIDA | VER-002-R2-001 | NE |
+| VER-002-R1-002 | AE | ✅ RESOLVIDA | VER-002-R2-002 | NE |
 
 ---
 
@@ -97,3 +125,91 @@ O modelo (`sequence.puml:78`, `classes.puml`) especifica aplicação de `NumpyCo
 | CONST-R1 — MDE+SDD First | ⚠️ **PARCIAL** | Modelo existe, mas não cobriu todo o escopo necessário (EVD-002-R1-002) |
 | CONST-R3 — Tags `# @model:` | ✅ PRESENTES | `util/json_encoder.py` e `api/topic.py` com tags |
 | SC-001 — Endpoint HTTP 200 | ❌ **FALHOU** | Retorna HTTP 500 — `numpy.int64` não convertido |
+
+---
+
+## 🔵 Rodada 2: R2
+
+**Data:** 2026-06-21
+**Rodada Anterior:** R1
+
+### Sumário da Rodada
+
+| Métrica | Valor |
+|---------|-------|
+| Total Evidências Julgadas | 2 |
+| Evidências RESOLVIDAS | 2 |
+| Evidências PERSISTEM | 0 |
+| DE (Developer Errado) | 0 |
+| AE (Arquiteto Errado) | 0 |
+| AMBOS | 0 |
+| NE (Ninguém Errado) | 2 |
+| Gates Aprovados | 3 |
+| Gates Negados | 0 |
+
+### Árvore de Veredictos (R2)
+
+| Evidência R1 | Decisão R1 | Status | Veredicto R2 | Decisão R2 |
+|--------------|------------|--------|--------------|------------|
+| EVD-002-R1-001 | AMBOS | ✅ RESOLVIDA | VER-002-R2-001 | NE |
+| EVD-002-R1-002 | AE | ✅ RESOLVIDA | VER-002-R2-002 | NE |
+
+---
+
+### VER-002-R2-001 — Julgamento de EVD-002-R2-001
+
+| Campo | Valor |
+|-------|-------|
+| **parent** | VER-002-R1-001 |
+| **Evidência** | EVD-002-R2-001 — CORRECAO_INCOMPLETA_CLUSTERS |
+| **Status Evidência** | RESOLVIDA |
+| **RF Associado** | RF-003, RF-004, RF-003-C1 |
+| **Depoimento Arquiteto** | ARG-002-R2-001 |
+| **Depoimento Developer** | DEP-002-R2-001 |
+
+**Decisão:** `NE — Ninguém Errado`
+
+**Fundamentação:**
+A evidência EVD-002-R1-001 foi verificada em R2. O código `api/topic.py:268` agora aplica `return NumpyConverter.to_native({...})` no dicionário COMPLETO de retorno. A linha anterior `clusters_meta_info = NumpyConverter.to_native(clusters_meta_info)` foi removida. O modelo (`classes.puml`, `sequence.puml`, `components.puml`) foi atualizado com `@rf: RF-003-C1` e escopo completo. A validação com `curl` confirmou: HTTP 200, JSON válido, todos os tipos Python nativos (`int`, `float`). As demais 3 ordenações (NUMERICAL, CLUSTER_COHESION, CENTROID_SIMILARITY) também retornam HTTP 200 — sem regressão (RF-007). O depoimento do Arquiteto (ARG-002-R2-001) confirma a correção. O depoimento do Developer (DEP-002-R2-001) confirma a aplicação.
+
+**Sentença:** Nenhuma ação necessária. Correção aplicada com sucesso. SC-001 alcançado.
+
+---
+
+### VER-002-R2-002 — Julgamento de EVD-002-R2-002
+
+| Campo | Valor |
+|-------|-------|
+| **parent** | VER-002-R1-002 |
+| **Evidência** | EVD-002-R2-002 — MODELO_FOCA_APENAS_META_INFO |
+| **Status Evidência** | RESOLVIDA |
+| **RF Associado** | RF-003, RF-003-C1 |
+| **Depoimento Arquiteto** | ARG-002-R2-002 |
+| **Depoimento Developer** | DEP-002-R2-002 |
+
+**Decisão:** `NE — Ninguém Errado`
+
+**Fundamentação:**
+A evidência EVD-002-R1-002 foi verificada em R2. Os 3 diagramas foram atualizados: (1) `classes.puml` — nota do `NumpyConverter` com `@rf: RF-003-C1` e relação `TopicRouter --> NumpyConverter` com `to_native(resultado_completo)`; nota do `AnnotationController` esclarece que AMBOS `clusters` e `clusters_meta_info` contêm numpy; (2) `sequence.puml` — fluxo "Depois" mostra `NumpyConverter.to_native(resultado)` com nota `RF-003-C1`; (3) `components.puml` — nota na relação cita `dicionário completo de retorno {clusters, clusters_meta_info}`. O modelo agora cobre o escopo total da correção. O depoimento do Arquiteto (ARG-002-R2-002) confirma a atualização. O depoimento do Developer (DEP-002-R2-002) confirma alinhamento código-modelo.
+
+**Sentença:** Nenhuma ação necessária. Modelo atualizado e alinhado ao código.
+
+---
+
+### Ações Corretivas — Rodada 2
+
+Nenhuma ação corretiva necessária. Todas as evidências da Rodada 1 foram resolvidas.
+
+---
+
+### Gates da Constituição — Rodada 2
+
+| Gate | Status | Justificativa |
+|------|--------|---------------|
+| GATE-01 — Planejamento Obrigatório | ✅ APROVADO | `/speckit.plan` executado com diagramas |
+| GATE-03 — Over-engineering Bloqueia Merge | ✅ APROVADO (N/A) | Correção de bug |
+| CONST-R1 — MDE+SDD First | ✅ **APROVADO** | Modelo atualizado cobre escopo completo com `@rf: RF-003-C1` |
+| CONST-R3 — Tags `# @model:` | ✅ PRESENTES | Ambos os arquivos com tags |
+| **SC-001 — Endpoint HTTP 200** | ✅ **APROVADO** | HTTP 200 com JSON válido e tipos nativos |
+| SC-002 — 0 erros PydanticSerializationError | ✅ **APROVADO** | Log sem erros após correção |
+| SC-004 — Sem regressão | ✅ **APROVADO** | 3 ordenações testadas — todas HTTP 200 |

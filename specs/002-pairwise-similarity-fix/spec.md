@@ -4,9 +4,38 @@
 
 **Created**: 2026-06-20
 
-**Status**: Draft
+**Status**: Draft — Correções R1 → R2
 
 **Input**: Sprint 02 do experimento KPC. Correção de bug no backend (`kpc-backend/`) — endpoint `GET /topic/clusters/{username}/{topic}/{cluster_order}` com `cluster_order=pairwise_similarity` retorna 500 por falha de serialização de tipos numpy.
+
+---
+
+## Correções da Rodada 1 (Pós-Veredito)
+
+**Data**: 2026-06-20
+**Rodada Anterior**: R1 (encerrada em 2026-06-20)
+**Veredito de Referência**: `verdict/verdict.md` — 1 evidência AMBOS (Developer + Arquiteto), 1 evidência AE (Arquiteto)
+**Natureza**: Correção de alcance do `NumpyConverter.to_native()` — aplicação incompleta no retorno da API
+
+### Problema
+
+O `NumpyConverter.to_native()` foi aplicado APENAS em `clusters_meta_info` (conforme modelo original), mas o campo `clusters` do retorno também contém valores numpy propagados via `cluster_data`, `cluster_selection` e `keyphrases_selection`. O log do servidor confirma que `PydanticSerializationError: numpy.int64` AINDA OCORRE após a correção original. O Juiz decidiu AMBOS (Developer + Arquiteto) para a correção incompleta e AE (Arquiteto) para o modelo insuficiente.
+
+### Evidências
+
+| ID | Tipo | Decisão | Descrição |
+|----|------|---------|-----------|
+| EVD-002-R1-001 | CORRECAO_INCOMPLETA | **AMBOS** | `NumpyConverter` aplicado apenas em `clusters_meta_info`, mas `clusters` também contém numpy |
+| EVD-002-R1-002 | MODELO_INSUFICIENTE | **AE** | Modelo `sequence.puml` especifica conversão apenas em `clusters_meta_info`, não em toda a estrutura de retorno |
+
+### Resumo das Correções
+
+| RF | Descrição | Decisão | Prioridade |
+|----|-----------|---------|------------|
+| RF-003-C1 | Aplicar `NumpyConverter.to_native()` em **todo o dicionário de retorno** do endpoint — não apenas em `clusters_meta_info`. A conversão deve cobrir a estrutura completa: `return {"sorting_applied": ..., "clusters": ..., "clusters_meta_info": ...}`. | AMBOS | P1 (crítico) |
+| RF-003-C2 | Atualizar diagrama de sequência `sequence.puml` para mostrar conversão aplicada em todo o dicionário de retorno, não apenas em `clusters_meta_info`. Adicionar `@rf: RF-003-C1` na etapa de conversão. | AE | P1 |
+
+> **Nota:** RFs originais (RF-003 a RF-007) permanecem inalterados. Esta atualização adiciona apenas RFs de correção com sufixo `-C`.
 
 ---
 
@@ -65,12 +94,30 @@ As demais ordenações de clusters (NUMERICAL, CLUSTER_COHESION, CENTROID_SIMILA
 
 ---
 
+### User Story 3 — Correção de alcance do NumpyConverter pós-veredito (Priority: P1)
+
+Após a Rodada 1 do pipeline de verificação, o Juiz identificou que o `NumpyConverter.to_native()` foi aplicado apenas em `clusters_meta_info`, mas `clusters` também contém valores numpy propagados via `cluster_data`, `cluster_selection` e `keyphrases_selection`. O endpoint ainda retorna HTTP 500. O Developer precisa aplicar a conversão em todo o dicionário de retorno, e o Arquiteto precisa atualizar o modelo para refletir o escopo correto.
+
+**Why this priority**: P1 — O endpoint AINDA retorna 500 após a correção original. Sem esta correção, o GATE-03 (SC-001) continua falhando e o merge é bloqueado.
+
+**Independent Test**: Pode ser testado chamando `curl http://localhost:3132/topic/clusters/daired/cloning/pairwise_similarity` e verificando HTTP 200 + JSON sem tipos numpy.
+
+**Acceptance Scenarios**:
+
+1. **Given** o endpoint `list_clusters()` em `api/topic.py`, **When** o `NumpyConverter.to_native()` é aplicado a todo o dicionário de retorno (RF-003-C1), **Then** o `PydanticSerializationError` não ocorre mais.
+2. **Given** o código corrigido, **When** `curl http://localhost:3132/topic/clusters/daired/cloning/pairwise_similarity` é chamado, **Then** retorna HTTP 200 com JSON contendo apenas tipos nativos Python em TODOS os campos (`sorting_applied`, `clusters`, `clusters_meta_info`).
+3. **Given** o modelo `sequence.puml` (RF-003-C2), **When** a etapa de conversão é atualizada para `to_native(result)` ou `to_native(clusters) + to_native(clusters_meta_info)`, **Then** o diagrama reflete o escopo completo da correção.
+
+---
+
 ### Edge Cases
 
 - O endpoint é chamado sem dados de clustering disponíveis (tópico vazio ou sem clusters) — deve retornar 200 com lista/clusters vazios.
 - A matriz de similaridade contém apenas valores `-inf` (todos os elementos resetados) — `numpy.argmax` e `numpy.unravel_index` podem retornar `(0, 0)`; o tratamento em `get_max_pair_similarity` já lida com este caso retornando `None`, e a resposta final não deve conter valores numpy.
 - Cenário em que há elementos não pareados (apenas 1 elemento restante) — o código atual trata este caso com `row = [id, -1, 0]` onde `id` é `numpy.int64` da iteração anterior. A correção precisa garantir que este `id` seja convertido para `int` nativo.
 - API chamada com token inválido ou expirado — deve retornar 403 (comportamento existente, não alterado).
+- **Correção (RF-003-C1)**: Se `NumpyConverter.to_native()` for aplicado a todo o dicionário de retorno, a conversão deve funcionar mesmo se `clusters` ou `clusters_meta_info` estiverem vazios.
+- **Correção (RF-003-C2)**: O modelo `sequence.puml` deve refletir o escopo completo — não deve mostrar conversão apenas em `clusters_meta_info`.
 
 ## Requirements *(mandatory)*
 
@@ -81,6 +128,13 @@ As demais ordenações de clusters (NUMERICAL, CLUSTER_COHESION, CENTROID_SIMILA
 - **RF-005**: A estrutura do JSON de resposta (`{"clusters": ..., "clusters_meta_info": ...}`) DEVE permanecer idêntica — o contrato da API não DEVE ser alterado, apenas os tipos internos dos valores são convertidos.
 - **RF-006**: A correção DEVE ser aplicada exclusivamente no backend (`kpc-backend/src/keyphrase_curation/`). Nenhuma alteração no frontend (`kpc-frontend/`) é necessária.
 - **RF-007**: As demais ordenações de clusters (NUMERICAL, CLUSTER_COHESION, CENTROID_SIMILARITY) NÃO DEVEM ser afetadas pela correção — DEVEM continuar retornando HTTP 200 com JSON válido.
+
+### RFs de Correção (Rodada 1 → Rodada 2)
+
+Estes requisitos são correções determinadas pelo Juiz no veredito da Rodada 1.
+
+- **RF-003-C1** (P1 — Correção incompleta): O sistema DEVE aplicar `NumpyConverter.to_native()` em **todo o dicionário de retorno** do endpoint `list_clusters()` em `api/topic.py`, não apenas em `clusters_meta_info`. A conversão DEVE cobrir a estrutura completa do `return` (campos `sorting_applied`, `clusters` e `clusters_meta_info`). A abordagem recomendada é aplicar `NumpyConverter.to_native()` diretamente no dicionário de retorno. *Origem: EVD-002-R1-001 (AMBOS).*
+- **RF-003-C2** (P1 — Modelo insuficiente): O sistema (Arquiteto) DEVE atualizar o diagrama de sequência `sequence.puml` para mostrar a conversão aplicada em toda a estrutura de retorno, não apenas em `clusters_meta_info`. A etapa de conversão DEVE ser renomeada para refletir o escopo completo (`to_native(result)` ou `to_native(clusters) + to_native(clusters_meta_info)`), com tag `@rf: RF-003-C1`. *Origem: EVD-002-R1-002 (AE).*
 
 ### Key Entities *(include if feature involves data)*
 
@@ -96,49 +150,15 @@ As demais ordenações de clusters (NUMERICAL, CLUSTER_COHESION, CENTROID_SIMILA
 - **SC-003**: O JSON de resposta, quando processado por `json.loads()`, contém apenas tipos nativos Python (`int`, `float`, `str`, `list`, `dict`, `bool`, `None`).
 - **SC-004**: As outras 3 ordenações de clusters permanecem funcionais — nenhuma regressão é introduzida.
 - **SC-005**: Nenhuma alteração no frontend é necessária — a aplicação continua funcionando sem modificações no lado cliente.
+- **SC-006** (Correção R1→R2): O endpoint retorna HTTP 200 com JSON válido APÓS aplicar `NumpyConverter.to_native()` em todo o dicionário de retorno.
+- **SC-007** (Correção R1→R2): GATE-03 (SC-001) transiciona de FALHOU para APROVADO após RF-003-C1.
 
 ## Assumptions
 
 - A raiz do problema está nos valores `numpy.int64` e `numpy.float64` gerados em `util/pairwise_similarity.py:69-99` (`get_pairwise_similarity()`) que propagam via `model/cluster.py:332-348` (`get_pairwise_cluster_similarity()`) até o retorno da API.
 - A rota real afetada é `api/topic.py:214` (`/clusters/{username}/{topic}/{cluster_order}`) com `cluster_order=pairwise_similarity` — não uma rota `/pairwise_similarity` dedicada.
 - O `clusters_meta_info` retornado por `get_clusters()` em `model/cluster.py` é incluído diretamente na resposta JSON da API (`"clusters_meta_info": clusters_meta_info`), o que expõe os valores numpy à serialização.
-- **Ponto de correção recomendado**: método `get_pairwise_cluster_similarity()` em `model/cluster.py:332-348`, convertendo cada valor com `int()` e `float()` antes de inserir no dicionário. Esta abordagem é localizada, de baixo risco e não afeta outros endpoints.
+- **Ponto de correção recomendado**: aplicar `NumpyConverter.to_native()` no dicionário completo de retorno em `api/topic.py`. Esta abordagem cobre todos os campos de uma vez.
 - O backend utiliza Python com NumPy, FastAPI e Pydantic.
 - Os arquivos em `view/` (ipywidgets) não fazem parte da API REST e não precisam de alteração.
-- A classe `PairwiseSimilarity` em `util/pairwise_similarity.py` é usada exclusivamente para o cálculo de pairwise similarity e também para `centroid_similarity` — alterações nela podem afetar ambas as funcionalidades. Prefere-se converter apenas no método consumidor (`get_pairwise_cluster_similarity`).
-
-## Requirements *(mandatory)*
-
-### Functional Requirements
-
-- **RF-003**: O endpoint `GET /topic/clusters/{username}/{topic}/pairwise_similarity` DEVE retornar HTTP 200 com JSON válido, sem erros de serialização.
-- **RF-004**: Todos os valores do tipo `numpy.int64`, `numpy.float32` e `numpy.float64` presentes nos dados de resposta DEVEM ser convertidos para seus equivalentes Python nativos (`int`, `float`) antes da serialização.
-- **RF-005**: A estrutura do JSON de resposta DEVE permanecer idêntica — o contrato da API não DEVE ser alterado, apenas os tipos internos dos valores são convertidos.
-- **RF-006**: O sistema DEVE garantir que a conversão de tipos numpy ocorra em nível global (encoder JSON customizado registrado no FastAPI) OU no ponto de origem dos dados (`get_pairwise_cluster_similarity` em `model/cluster.py`). A solução DEVE evitar converter manualmente em cada rota.
-- **RF-007**: As demais ordenações de clusters (NUMERICAL, CLUSTER_COHESION, CENTROID_SIMILARITY) NÃO DEVEM ser afetadas pela correção — DEVEM continuar retornando HTTP 200 com JSON válido.
-- **RF-008**: Nenhuma alteração no frontend é necessária — a correção é exclusivamente no backend (`kpc-backend/`).
-
-### Key Entities *(include if feature involves data)*
-
-- **ClusterMetaInfo**: Dicionário que armazena metadados sobre pares de clusters. Para pairwise similarity, contém `similar_cluster` (ID do cluster similar — deve ser `int` nativo) e `similarity` (valor de similaridade — deve ser `float` nativo). Provém de `get_pairwise_cluster_similarity()`.
-- **PairwiseSimilarity**: Serviço utilitário que calcula pares de similaridade a partir de uma matriz. Método `get_pairwise_similarity()` retorna lista de tripletos `[elemento_a, elemento_b, similaridade]`. Os valores de `elemento_a`, `elemento_b` e `similaridade` podem ser tipos numpy (`numpy.int64`, `numpy.float64`) e precisam de conversão.
-
-## Success Criteria *(mandatory)*
-
-### Measurable Outcomes
-
-- **SC-001**: O endpoint `GET /topic/clusters/{username}/{topic}/pairwise_similarity` retorna HTTP 200 com JSON válido em 100% das chamadas com dados válidos.
-- **SC-002**: 0 erros de `PydanticSerializationError` ou `TypeError` relacionados a tipos numpy no backend após a correção.
-- **SC-003**: O JSON de resposta, quando processado por `json.loads()`, contém apenas tipos nativos Python (`int`, `float`, `str`, `list`, `dict`, `bool`, `None`).
-- **SC-004**: As outras 3 ordenações de clusters permanecem funcionais — nenhuma regressão é introduzida.
-- **SC-005**: Nenhuma alteração no frontend é necessária — a aplicação continua funcionando sem modificações no lado cliente.
-
-## Assumptions
-
-- A raiz do problema está nos valores `numpy.int64` e `numpy.float64` gerados em `get_pairwise_similarity()` no arquivo `util/pairwise_similarity.py` e que propagam via `get_pairwise_cluster_similarity()` em `model/cluster.py` até o retorno da API.
-- A classe `PairwiseSimilarity` em `util/pairwise_similarity.py` é usada exclusivamente para o cálculo de pairwise similarity — alterações nela não afetam outras funcionalidades.
-- O `clusters_meta_info` retornado por `get_clusters()` em `model/cluster.py` é incluído diretamente na resposta JSON da API (`"clusters_meta_info": clusters_meta_info`), o que expõe os valores numpy à serialização.
-- A solução de encoder JSON customizado (`json_encoder` no FastAPI ou conversão via `default` do `json.dumps`) é preferível por ser global e não exigir alterações manuais em cada ponto de dados.
-- O FastAPI app está definido em `api/main.py` e aceita registro de `default_class` via `FastAPI(default_response_class=...)` ou encoder customizado via `app.json_encoder` (FastAPI < 0.100) ou conversão em rota específica.
-- Alternativamente, a conversão pode ser feita no método `get_pairwise_cluster_similarity()` em `model/cluster.py`, convertendo os valores com `int(pair[0]+1)`, `int(pair[1]+1)`, `float(pair[2])` antes de retornar. Esta abordagem é mais localizada e de menor risco.
-- O backend utiliza Python com NumPy, FastAPI e Pydantic.
+- **Correções**: O `NumpyConverter` já existe em `util/json_encoder.py` e suporta conversão recursiva de dicts, lists, tuples, sets — aplicar no `return` inteiro é suficiente e não exige novas implementações.

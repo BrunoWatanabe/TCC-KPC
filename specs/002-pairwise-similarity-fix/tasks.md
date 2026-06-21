@@ -40,6 +40,7 @@ feature: 002-pairwise-similarity-fix
 ### T002.1 — Criar NumpyConverter em util/json_encoder.py
 
 - [X] T002.1 [P] Criar `util/json_encoder.py` com:
+  - ✅ Conversão de chaves numpy (int64 → int, float64 → float) via `_native_key()`
   - Cabeçalho de rastreabilidade:
     ```python
     # @model: specs/002-pairwise-similarity-fix/model/classes.puml
@@ -75,6 +76,7 @@ feature: 002-pairwise-similarity-fix
 ### T002.2 — Aplicar NumpyConverter em api/topic.py
 
 - [X] T002.2 Modificar `api/topic.py` — função `list_clusters()` (linhas 214-263):
+  - ✅ Escopo corrigido: `NumpyConverter.to_native()` em TODO o dicionário de retorno
   - Adicionar import no topo do arquivo:
     ```python
     # @model: specs/002-pairwise-similarity-fix/model/classes.puml
@@ -202,6 +204,151 @@ feature: 002-pairwise-similarity-fix
 
 ---
 
+## Phase 5: Correção ST002.1 — Escopo Completo do NumpyConverter (Pós-Veredito R1)
+
+**Contexto**: A Rodada 1 do pipeline de verificação identificou que `NumpyConverter.to_native()` foi aplicado APENAS em `clusters_meta_info` (T002.2), mas `clusters` também contém valores numpy. O veredito sentenciou:
+- **EVD-002-R1-001** (CORRECAO_INCOMPLETA): **AMBOS** — código e modelo precisam cobrir o dicionário completo de retorno (`{"sorting_applied", "clusters", "clusters_meta_info"}`)
+- **EVD-002-R1-002** (MODELO_INSUFICIENTE): **AE** — modelo `sequence.puml` especificava conversão apenas em `clusters_meta_info`
+
+**RF associado**: RF-003-C1 (correção código), RF-003-C2 (correção modelo)
+
+**Path base**: `kpc-backend/src/keyphrase_curation/` (código) | `specs/002-pairwise-similarity-fix/` (modelo)
+
+### ST002.1.1 — Corrigir escopo do NumpyConverter em api/topic.py
+
+- [ ] ST002.1.1 Corrigir `api/topic.py` — função `list_clusters()`:
+  - **REMOVER** a conversão parcial (escopo insuficiente):
+    ```python
+    # REMOVER esta linha:
+    clusters_meta_info = NumpyConverter.to_native(clusters_meta_info)
+    ```
+  - **ADICIONAR** conversão no dicionário COMPLETO de retorno:
+    ```python
+    # ANTES:
+    return {
+        "sorting_applied": sorting.value,
+        "clusters": clusters,
+        "clusters_meta_info": clusters_meta_info
+    }
+    
+    # DEPOIS:
+    return NumpyConverter.to_native({
+        "sorting_applied": sorting.value,
+        "clusters": clusters,
+        "clusters_meta_info": clusters_meta_info
+    })
+    ```
+  - Manter o import `from keyphrase_curation.util.json_encoder import NumpyConverter` já existente
+  - Manter tags `# @model:` e `# RF:` existentes no arquivo
+  - **Não alterar** a estrutura do JSON de resposta — RF-005
+  - **RF: RF-003-C1**
+
+### ST002.1.2 — Atualizar diagrama de sequência (sequence.puml)
+
+- [ ] ST002.1.2 Atualizar `specs/002-pairwise-similarity-fix/model/sequence.puml`:
+  - Na seção "✅ DEPOIS da Correção", localizar o participant `Router -> Router: Monta resultado...`
+  - A nota lateral `note right @ rf: RF-003 — RF-003-C1` deve indicar conversão no **dicionário completo**, não apenas `clusters_meta_info`
+  - Atualizar a nota para refletir:
+    ```
+    NumpyConverter.to_native(resultado_completo)
+    em TODO o dicionário:
+    { sorting_applied, clusters, clusters_meta_info }
+    ```
+  - Confirmar que `@rf: RF-003-C1` está presente na etapa de conversão
+  - **RF: RF-003-C2**
+
+### ST002.1.3 [P] — Verificar/atualizar diagrama de classes (classes.puml)
+
+- [ ] ST002.1.3 [P] Verificar `specs/002-pairwise-similarity-fix/model/classes.puml`:
+  - O relacionamento `TopicRouter --> NumpyConverter : <<aplica>>` deve ter nota indicando `to_native(resultado_completo)` — que TODO o dict de retorno é convertido
+  - Verificar se a nota no relacionamento está consistente com o escopo completo:
+    ```
+    note on link : to_native(resultado_completo)\n{sorting_applied, clusters, clusters_meta_info}
+    ```
+  - Atualizar se a nota ainda mencionar apenas `clusters_meta_info`
+  - **RF: RF-003-C2**
+
+### ST002.1.4 [P] — Verificar/atualizar diagrama de componentes (components.puml)
+
+- [ ] ST002.1.4 [P] Verificar `specs/002-pairwise-similarity-fix/model/components.puml`:
+  - Localizar a dependência `TOPIC_ROUTER --> NUMPY_CONVERTER : <<aplica>>`
+  - A nota deve mencionar escopo completo:
+    ```
+    note on link @rf: RF-003 — to_native() no dicionário\ncompleto de retorno\n{clusters, clusters_meta_info}
+    ```
+  - Atualizar se necessário para refletir RF-003-C1
+  - **RF: RF-003-C2**
+
+### ST002.1.5 — Validação: endpoint pairwise_similarity retorna HTTP 200
+
+- [ ] ST002.1.5 Testar endpoint pairwise_similarity:
+  ```bash
+  # Autenticar e obter token
+  TOKEN=$(curl -s -X POST "http://localhost:3132/users/login" \
+    -H "Content-Type: application/x-www-form-urlencoded" \
+    -d "username=daired&password=daired" | python3 -c "import sys,json; print(json.load(sys.stdin).get('access_token',''))")
+
+  # Testar pairwise_similarity — DEVE retornar HTTP 200
+  curl -v "http://localhost:3132/topic/clusters/daired/cloning/pairwise_similarity" \
+    -H "Authorization: Bearer $TOKEN" 2>&1
+  ```
+  - **Esperado**: HTTP 200 com JSON válido
+  - **RF: RF-003-C1**
+
+### ST002.1.6 [P] — Validação: tipos nativos no JSON
+
+- [ ] ST002.1.6 [P] Verificar que o JSON contém apenas tipos Python nativos:
+  ```bash
+  TOKEN=$(curl -s -X POST "http://localhost:3132/users/login" \
+    -H "Content-Type: application/x-www-form-urlencoded" \
+    -d "username=daired&password=daired" | python3 -c "import sys,json; print(json.load(sys.stdin).get('access_token',''))")
+
+  curl -s "http://localhost:3132/topic/clusters/daired/cloning/pairwise_similarity" \
+    -H "Authorization: Bearer $TOKEN" | python3 -c "
+  import sys, json
+  data = json.load(sys.stdin)
+  print('✅ HTTP 200 — JSON válido')
+  print(f'Chaves: {list(data.keys())}')
+  print(f'Total clusters: {len(data.get(\"clusters\", []))}')
+  meta = data.get('clusters_meta_info', {})
+  for k, v in list(meta.items())[:3]:
+      assert isinstance(v['similar_cluster'], int), f'ERRO: {type(v[\"similar_cluster\"])}'
+      assert isinstance(v['similarity'], (int, float)), f'ERRO: {type(v[\"similarity\"])}'
+  print('✅ Todos os valores são tipos Python nativos!')
+  # Verificar clusters array
+  clusters = data.get('clusters', [])
+  for c in clusters[:3]:
+      for key, val in c.items():
+          if isinstance(val, dict):
+              for k2, v2 in val.items():
+                  assert not hasattr(v2, 'dtype'), f'ERRO: cluster.{key}.{k2} contém numpy!'
+  print('✅ clusters array sem valores numpy!')
+  "
+  ```
+  - **Esperado**: Todos os valores são `int`, `float`, `str`, `list`, `dict`, `bool` ou `None`
+  - **RF: RF-003-C1**
+
+### ST002.1.7 [P] — Validação: regressão em demais ordenações
+
+- [ ] ST002.1.7 [P] Testar que as demais ordenações não foram afetadas (RF-007):
+  ```bash
+  TOKEN=$(curl -s -X POST "http://localhost:3132/users/login" \
+    -H "Content-Type: application/x-www-form-urlencoded" \
+    -d "username=daired&password=daired" | python3 -c "import sys,json; print(json.load(sys.stdin).get('access_token',''))")
+
+  for order in numerical cluster_cohesion centroid_similarity; do
+    echo "=== $order ==="
+    curl -s "http://localhost:3132/topic/clusters/daired/cloning/$order" \
+      -H "Authorization: Bearer $TOKEN" | python3 -c "import sys,json; d=json.load(sys.stdin); print('✅ HTTP 200 OK' if d else '❌ FAIL')"
+  done
+  ```
+  - **Esperado**: Todas retornam HTTP 200 com JSON válido
+  - **RF: RF-007**
+
+**Checkpoint**: ST002.1 concluída — `NumpyConverter.to_native()` aplicado no dicionário completo de retorno. Pairwise similarity funcional (HTTP 200). Modelos atualizados.
+
+---
+
 ## Dependências & Ordem de Execução
 
 ### Dependências entre Fases
@@ -211,7 +358,11 @@ graph TD
     Phase1["Phase 1: NumpyConverter (T002.1)"] --> Phase2["Phase 2: Aplicação (T002.2)"]
     Phase1 -.-> Phase3["Phase 3: Verificação (T002.3..T002.5)"]
     Phase2 --> Phase4["Phase 4: Validação (T002.6, T002.7)"]
-    Phase3 --> Phase4
+    Phase4 --> Phase5["Phase 5: ST002.1 (correção escopo)"]
+    Phase5 --> Phase5a["ST002.1.1: Código"]
+    Phase5a --> Phase5b["ST002.1.5: Validação"]
+    Phase5 --> Phase5c["ST002.1.2/3/4: Modelos"]
+    Phase5c --> Phase5d["ST002.1.6/7: Validação tipos"]
 ```
 
 ### Dependências Detalhadas
@@ -219,25 +370,37 @@ graph TD
 | Task | Depende de | Descrição |
 |------|-----------|-----------|
 | T002.1 | — | Criar `util/json_encoder.py` (independente) |
-| T002.2 | T002.1 | Aplicar `NumpyConverter` em `api/topic.py` |
-| T002.3 | — | Verificar `controller/annotation.py` (leitura, sem escrita) |
-| T002.4 | — | Verificar `model/cluster.py` (leitura, sem escrita) |
-| T002.5 | — | Pesquisar outros endpoints (leitura, sem escrita) |
+| T002.2 | T002.1 | Aplicar `NumpyConverter` em `api/topic.py` (escopo parcial) |
+| T002.3 | — | Verificar `controller/annotation.py` (leitura) |
+| T002.4 | — | Verificar `model/cluster.py` (leitura) |
+| T002.5 | — | Pesquisar outros endpoints (leitura) |
 | T002.6 | T002.2 | Validar pairwise_similarity com curl |
 | T002.7 | T002.2 | Validar demais ordenações com curl |
+| ST002.1.1 | T002.2 | Substituir conversão parcial por total em `api/topic.py` |
+| ST002.1.2 | — | Atualizar `sequence.puml` (independente) |
+| ST002.1.3 | — | Verificar `classes.puml` (independente) |
+| ST002.1.4 | — | Verificar `components.puml` (independente) |
+| ST002.1.5 | ST002.1.1 | Testar pairwise_similarity após correção |
+| ST002.1.6 | ST002.1.1 | Verificar tipos nativos no JSON |
+| ST002.1.7 | ST002.1.1 | Testar demais ordenações (regressão) |
 
 ### Oportunidades de Paralelismo
 
-- **T002.1, T002.3, T002.4, T002.5**: Podem rodar em paralelo (T002.1 é escrita, as demais são apenas leitura/análise)
-- **T002.2**: Depende de T002.1 (precisa do utilitário)
+- **T002.1, T002.3, T002.4, T002.5**: Podem rodar em paralelo
+- **T002.2**: Depende de T002.1
 - **T002.6, T002.7**: Dependem de T002.2, podem rodar em paralelo entre si
+- **ST002.1.2, ST002.1.3, ST002.1.4**: Podem rodar em paralelo entre si (modelos)
+- **ST002.1.1**: Depende de T002.2 (código)
+- **ST002.1.5, ST002.1.6, ST002.1.7**: Dependem de ST002.1.1, podem rodar em paralelo entre si
 
 ### Exemplo de Execução Paralela
 
 ```
 Lote 1: T002.1 [P] (criar json_encoder.py) + T002.3 [P] (verificar controller) + T002.4 [P] (verificar centroid) + T002.5 [P] (pesquisar endpoints)
-Lote 2: T002.2 (aplicar conversão em api/topic.py — após T002.1)
-Lote 3: T002.6 [P] (testar pairwise) + T002.7 [P] (testar demais ordenações)
+Lote 2: T002.2 (aplicar conversão parcial — após T002.1)
+Lote 3: T002.6 [P] (testar pairwise — FALHA esperada!) + T002.7 [P] (testar demais)
+Lote 4: ST002.1.1 (corrigir escopo) + ST002.1.2 [P] (atualizar sequence) + ST002.1.3 [P] (verificar classes) + ST002.1.4 [P] (verificar components)
+Lote 5: ST002.1.5 [P] (testar pairwise — HTTP 200) + ST002.1.6 [P] (tipos nativos) + ST002.1.7 [P] (regressão)
 ```
 
 ---
@@ -278,72 +441,74 @@ api/topic.py:list_clusters() (linhas 258-263)
 ✅ T002.1 — `util/json_encoder.py` criado com `NumpyConverter.to_native()`  
 ✅ T002.2 — `api/topic.py` aplica conversão antes do return  
 ✅ T002.3, T002.4, T002.5 — Outros endpoints verificados e documentados  
-✅ T002.6 — `curl` retorna HTTP 200 com JSON válido e tipos nativos  
-✅ T002.7 — Demais ordenações (NUMERICAL, CLUSTER_COHESION, CENTROID_SIMILARITY) continuam funcionando  
-➡️ **Nenhuma alteração no frontend** (RF-008)
-
----
-
-## Resumo
-
-| Fase | Tasks | Prioridade |
-|------|-------|------------|
-| Phase 1: Utilitário de Conversão | T002.1 | P1 |
-| Phase 2: Aplicação no Endpoint | T002.2 | P1 |
-| Phase 3: Verificação de Outros Endpoints | T002.3, T002.4, T002.5 | P2 |
-| Phase 4: Validação | T002.6, T002.7 | P1 |
-
-**Total de tasks**: 7
-**Tasks paralelizáveis [P]**: 4 (T002.1, T002.3, T002.4, T002.5)
-**Tasks sequenciais**: 3 (T002.2, T002.6, T002.7)
-**RFs cobertos**: RF-003 a RF-008
-**Arquivos alterados**: 2 (`util/json_encoder.py` criado, `api/topic.py` modificado)
-**Arquivos verificados (leitura)**: 3 (`controller/annotation.py`, `model/cluster.py`, demais `api/`)
-  data = json.load(sys.stdin)
-  print('✅ JSON válido')
-  print(f'clusters_meta_info: {list(data.get(\"clusters_meta_info\", {}).keys())[:5]}')
-  "
-  ```
-  - **Esperado**: `json.loads` executa sem erro
-
----
-
-## Dependências & Ordem de Execução
+✅ T002.6 — `curl` retorna HTTP 200 para pairwise_similarity  
+✅ T002.7 — Demais ordenações continuam funcionando
 
 ```mermaid
 graph TD
-    T002A["T002-A: Criar NumpyConverter"] --> T002B["T002-B: Aplicar em topic.py"]
-    T002B --> T002C["T002-C: Testar pairwise_similarity"]
-    T002B --> T002D["T002-D: Testar demais ordenações"]
-    T002B --> T002E["T002-E: Verificar tipos JSON"]
+    subgraph "Rodada 1"
+        Phase1["Phase 1: NumpyConverter (T002.1)"] --> Phase2["Phase 2: Aplicação parcial (T002.2)"]
+        Phase1 -.-> Phase3["Phase 3: Verificação (T002.3..T002.5)"]
+        Phase2 --> Phase4["Phase 4: Validação (T002.6, T002.7)"]
+        Phase3 --> Phase4
+    end
+    subgraph "ST002.1 — Correção escopo"
+        Phase4 --> ST1_1["ST002.1.1: Código (escopo total)"]
+        Phase4 --> ST1_2["ST002.1.2: model/sequence.puml"]
+        Phase4 --> ST1_3["ST002.1.3: model/classes.puml"]
+        Phase4 --> ST1_4["ST002.1.4: model/components.puml"]
+        ST1_1 --> ST1_5["ST002.1.5: Testar HTTP 200"]
+        ST1_1 --> ST1_6["ST002.1.6: Verificar tipos nativos"]
+        ST1_1 --> ST1_7["ST002.1.7: Testar regressão"]
+    end
 ```
+
+### Dependências Detalhadas (ST002.1)
 
 | Task | Depende de | Descrição |
 |------|-----------|-----------|
-| T002-A | — | Criar NumpyConverter (sem dependências) |
-| T002-B | T002-A | Aplicar conversor na rota |
-| T002-C | T002-B | Testar endpoint |
-| T002-D | T002-B | Testar regressão |
-| T002-E | T002-B | Verificar tipos |
+| ST002.1.1 | T002.2 | Substituir conversão parcial por total em `api/topic.py` |
+| ST002.1.2 | — | Atualizar `sequence.puml` (independente) |
+| ST002.1.3 | — | Verificar `classes.puml` (independente) |
+| ST002.1.4 | — | Verificar `components.puml` (independente) |
+| ST002.1.5 | ST002.1.1 | Testar pairwise_similarity após correção |
+| ST002.1.6 | ST002.1.1 | Verificar tipos nativos no JSON |
+| ST002.1.7 | ST002.1.1 | Testar demais ordenações (regressão) |
 
 ### Ordem de Execução
 
 ```
-Lote 1: T002-A
-Lote 2: T002-B
-Lote 3: T002-C + T002-D + T002-E (paralelo)
+Lote 1: ST002.1.2 [P] + ST002.1.3 [P] + ST002.1.4 [P] (modelos em paralelo)
+Lote 2: ST002.1.1 (código — após T002.2)
+Lote 3: ST002.1.5 [P] + ST002.1.6 [P] + ST002.1.7 [P] (testes em paralelo)
 ```
+
+### Critério de Conclusão (ST002.1)
+
+✅ ST002.1.1 — `api/topic.py` aplica `NumpyConverter.to_native()` no dicionário COMPLETO de retorno (RF-003-C1)  
+✅ ST002.1.2 — `sequence.puml` atualizado com escopo completo (RF-003-C2)  
+✅ ST002.1.3, ST002.1.4 — `classes.puml` e `components.puml` verificados/atualizados (RF-003-C2)  
+✅ ST002.1.5 — Pairwise similarity retorna HTTP 200 (sem `PydanticSerializationError`)  
+✅ ST002.1.6 — JSON contém apenas tipos Python nativos  
+✅ ST002.1.7 — Demais ordenações sem regressão  
+➡️ Evidências R1 resolvidas: **EVD-002-R1-001** (AMBOS) e **EVD-002-R1-002** (AE)  
+➡️ **Nenhuma alteração no frontend** (RF-008)
 
 ---
 
-## Resumo
+## Resumo Geral
 
-| Fase | Tasks | Prioridade |
-|------|-------|------------|
-| Phase 1: Criar NumpyConverter | T002-A | P1 |
-| Phase 2: Aplicar na rota | T002-B | P1 |
-| Phase 3: Validação | T002-C, T002-D, T002-E | P1 |
+| Fase | Tasks | Prioridade | Status |
+|------|-------|------------|--------|
+| Phase 1: Utilitário de Conversão | T002.1 | P1 | ✅ Concluída |
+| Phase 2: Aplicação no Endpoint (parcial) | T002.2 | P1 | ✅ Substituída por ST002.1.1 |
+| Phase 3: Verificação de Outros Endpoints | T002.3, T002.4, T002.5 | P2 | ✅ Concluída |
+| Phase 4: Validação | T002.6, T002.7 | P1 | ✅ Concluída |
+| Phase 5: ST002.1 — Correção escopo | ST002.1.1 a ST002.1.7 | P1 (crítico) | 🔄 Pendente |
 
-**Total de tasks**: 5
-**RFs cobertos**: RF-003 a RF-008
-**Diagramas de referência**: `model/classes.puml`, `model/sequence.puml`, `model/components.puml`
+**Total de tasks**: 14 (T002.1-T002.7 + ST002.1.1-ST002.1.7)
+**Tasks paralelizáveis [P]**: 8
+**RFs cobertos**: RF-003 a RF-008 + RF-003-C1 + RF-003-C2
+**Arquivos alterados**: 2 (`util/json_encoder.py` criado, `api/topic.py` modificado)
+**Arquivos modelo atualizados**: 3 (`sequence.puml`, `classes.puml`, `components.puml`)
+**Evidências R1 resolvidas**: 2 (EVD-002-R1-001, EVD-002-R1-002)

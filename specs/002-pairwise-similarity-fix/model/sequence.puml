@@ -25,37 +25,37 @@ participant "JSON\nResponse" as Response #LightGray
 == Requisição HTTP ==
 
 Client -> Router: GET /topic/clusters/daired/cloning/pairwise_similarity
-note right @ rf: RF-003 — Path params: username, topic, cluster_order
+note right : @rf: RF-003 — Path params: username, topic, cluster_order
 
 Router -> Router: Valida autenticação e permissões
-note right @ rf: RF-003 — Verifica se username == logged_user
+note right : @rf: RF-003 — Verifica se username == logged_user
 
 Router -> Controller: get_clusters(sort_by=PAIRWISE_SIMILARITY)
-note right @ rf: RF-003 — Cria AnnotationController(topic, username)
+note right : @rf: RF-003 — Cria AnnotationController(topic, username)
 
 Controller -> ClusterAnn: get_clusters(sort_by)
-note right @ rf: RF-003 — Delega para ClusterAnnotation
+note right : @rf: RF-003 — Delega para ClusterAnnotation
 
 ClusterAnn -> ClusterAnn: get_pairwise_cluster_similarity()
-note right @ rf: RF-003 — Calcula pares de similaridade
+note right : @rf: RF-003 — Calcula pares de similaridade
 
 ClusterAnn -> PairSim: get_pairwise_similarity()
-note right @ rf: RF-003 — Obtém tripletos da matriz
+note right : @rf: RF-003 — Obtém tripletos da matriz
 
 PairSim -> PairSim: get_max_pair_similarity() em loop
-note right @ rf: RF-003 — Usa numpy.argmax, numpy.unravel_index
+note right : @rf: RF-003 — Usa numpy.argmax, numpy.unravel_index
 
 PairSim --> ClusterAnn: [[numpy.int64, numpy.int64, numpy.float64], ...]
-note right @ rf: RF-003 — 🔴 VALORES NUMPY
+note right : @rf: RF-003 — 🔴 VALORES NUMPY
 
 ClusterAnn -> ClusterAnn: Monta clusters_meta_info
-note right @ rf: RF-003 — similar_cluster: numpy.int64\nsimilarity: numpy.float64
+note right : @rf: RF-003 — similar_cluster: numpy.int64\nsimilarity: numpy.float64
 
 ClusterAnn --> Controller: (clusters, clusters_meta_info)
-note right @ rf: RF-003 — clusters_meta_info com numpy
+note right : @rf: RF-003 — clusters_meta_info com numpy
 
 Controller --> Router: (clusters, clusters_meta_info)
-note right @ rf: RF-003 — Dados propagam até a rota
+note right : @rf: RF-003 — AMBOS contêm valores numpy\nclusters via cluster_data, cluster_selection\nclusters_meta_info via similar_cluster/similarity
 
 ' ============================================================
 ' RAMO: ANTES da Correção (ERRO)
@@ -64,16 +64,16 @@ note right @ rf: RF-003 — Dados propagam até a rota
 == 🔴 ANTES da Correção ==
 
 Router -> Serializer: return { "clusters": c, "clusters_meta_info": cmi }
-note right @ rf: RF-003 — FastAPI tenta serializar diretamente
+note right : @rf: RF-003 — FastAPI tenta serializar diretamente
 
 Serializer -> Serializer: Pydantic → json.dumps()
-note right @ rf: RF-003 — Tenta converter numpy.int64
+note right : @rf: RF-003 — Tenta converter numpy.int64
 
 Serializer -> Serializer: ❌ PydanticSerializationError
-note right @ rf: RF-003 — "Unable to serialize unknown type:\n<class 'numpy.int64'>"
+note right : @rf: RF-003 — "Unable to serialize unknown type:\n<class 'numpy.int64'>"
 
 Serializer --> Client: HTTP 500 Internal Server Error
-note right @ rf: RF-003 — Frontend recebe erro
+note right : @rf: RF-003 — Frontend recebe erro
 
 ' ============================================================
 ' RAMO: DEPOIS da Correção (OK)
@@ -81,36 +81,38 @@ note right @ rf: RF-003 — Frontend recebe erro
 
 == ✅ DEPOIS da Correção ==
 
-Router -> Converter: to_native(clusters_meta_info)
-note right @ rf: RF-003 — Percorre dict recursivamente\nconverte numpy → Python nativo
+Router -> Router: Monta resultado completo e aplica NumpyConverter
+note right : @rf: RF-003 — RF-003-C1\nresultado = {\n  \"sorting_applied\": sorting.value,\n  \"clusters\": clusters,\n  \"clusters_meta_info\": clusters_meta_info\n}\nNumpyConverter.to_native(resultado)\nconverte numpy em TODO o dicionário
+
+Router -> Converter: to_native() recursivo
 
 alt numpy.integer
     Converter -> Converter: int(value)
-    note right @ rf: RF-003 — numpy.int64 → int
+    note right : @rf: RF-003 — numpy.int64 → int
 else numpy.floating
     Converter -> Converter: float(value)
-    note right @ rf: RF-003 — numpy.float64 → float
+    note right : @rf: RF-003 — numpy.float64 → float
 else numpy.ndarray
     Converter -> Converter: value.tolist()
-    note right @ rf: RF-003 — numpy.ndarray → list
+    note right : @rf: RF-003 — numpy.ndarray → list
 else numpy.bool_
     Converter -> Converter: bool(value)
-    note right @ rf: RF-003 — numpy.bool_ → bool
+    note right : @rf: RF-003 — numpy.bool_ → bool
 end
 
-Converter --> Router: clusters_meta_info (tipos Python nativos)
-note right @ rf: RF-003 — ✅ Apenas int, float, list, bool, str, dict, None
+Converter --> Router: resultado_sem_numpy
+note right : @rf: RF-003 — ✅ Dicionário completo sem numpy\n{clusters: [...], clusters_meta_info: {...}}\nApenas int, float, list, bool, str, dict, None
 
-Router -> Serializer: return { "clusters": c, "clusters_meta_info": cmi_converted }
-note right @ rf: RF-003 — FastAPI serializa sem erros
+Router -> Serializer: return resultado_sem_numpy
+note right : @rf: RF-003 — FastAPI serializa sem erros
 
 Serializer -> Serializer: Pydantic → json.dumps()
-note right @ rf: RF-003 — Todos os tipos são serializáveis
+note right : @rf: RF-003 — Todos os tipos são serializáveis
 
 Serializer --> Response: HTTP 200
-note right @ rf: RF-003 — JSONResponse com JSON válido
+note right : @rf: RF-003 — JSONResponse com JSON válido
 
 Response --> Client: { "sorting_applied": "pairwise_similarity",\n  "clusters": [...],\n  "clusters_meta_info": {...} }
-note right @ rf: RF-003 — Frontend recebe dados corretos\nsem erro no console
+note right : @rf: RF-003 — Frontend recebe dados corretos\nsem erro no console
 
 @enduml

@@ -44,7 +44,9 @@ package "Controller Layer #LightYellow" as CTRL {
   note right of AnnotationController
     controller/annotation.py:56
     Retorna (clusters, clusters_meta_info)
-    clusters_meta_info contém valores numpy
+    🔴 AMBOS contêm valores numpy
+    clusters: via cluster_data, cluster_selection
+    clusters_meta_info: via similar_cluster/similarity
   end note
 
   class "ClusterSorting" as ClusterSorting {
@@ -116,6 +118,11 @@ package "Utility #LightGreen" as UTIL {
     numpy.floating → float
     numpy.ndarray → list
     numpy.bool_ → bool
+    
+    Nota: Aplicado em TODO o dicionário de
+    retorno, não apenas em clusters_meta_info.
+    { "clusters": [...], "clusters_meta_info": {...} }
+    @rf: RF-003-C1
   end note
 
   class "JSONEncoder (stdlib)" as JSONEncoder {
@@ -166,7 +173,7 @@ note on link : get_pairwise_cluster_similarity()\ngera valores numpy
 ' Conversão
 TopicRouter --> NumpyConverter : <<aplica>>
 RF(TopicRouter)
-note on link : to_native(clusters_meta_info)\nantes de retornar
+note on link : to_native(resultado_completo)\nconverte clusters + clusters_meta_info\n@rf: RF-003-C1
 
 NumpyConverter --> JSONEncoder : <<estende>>
 RF(NumpyConverter)

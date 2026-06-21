@@ -1,0 +1,120 @@
+@startuml
+' /relatorios/sprint3-t004-t005/model/sequence.puml
+' Sprint 03 | Análise Retroativa T004+T005
+' RF: RF-005 (cluster_cohesion), RF-006 (centroid_similarity)
+
+title Correção de ordenação — cluster_cohesion (RF-005) e centroid_similarity (RF-006)
+
+' === LEGENDA ===
+legend top left
+  <#LightBlue>  |  <#LightGreen>
+  <#LightBlue>  @rf: RF-005 (cluster_cohesion)
+  <#LightGreen>  @rf: RF-006 (centroid_similarity)
+end legend
+
+participant "Cliente HTTP" as Client
+participant "api/topic.py\n:list_clusters()" as TopicAPI
+participant "controller/annotation.py\n:AnnotationController" as Controller
+participant "model/cluster.py\n:KeyphraseClustering" as KClustering
+database "model/cluster.py\n:clusters: Dict[int, Cluster]" as Clusters
+participant "model/cluster.py\n:Cluster" as Cluster
+
+' ==========================================
+' Fluxo RF-005: cluster_cohesion
+' ==========================================
+
+== RF-005: cluster_cohesion ==
+
+Client -> TopicAPI ++ : GET /topic/clusters/{user}/{topic}\n/cluster_cohesion
+
+TopicAPI -> Controller ++ : get_clusters(sort_by=\nClusterSorting.CLUSTER_COHESION)
+
+Controller -> KClustering ++ : get_clusters(sort_by=\nClusterSorting.CLUSTER_COHESION)
+
+note right #LightBlue
+  RF-005: sorted(..., reverse=True)
+  Ordena clusters por coesão
+  do maior → menor valor
+end note
+
+KClustering -> Clusters ++ : values()
+
+Clusters --> KClustering -- : lista de Clusters
+
+loop para cada cluster
+  KClustering -> Cluster ++ : get_cohesion()
+
+  note right #LightBlue
+    RF-005: Coesão calculada por
+    similaridade média entre
+    todos os pares de keyphrases
+  end note
+
+  Cluster --> KClustering -- : cohesion: float
+end
+
+KClustering -> KClustering : sorted(...,\nkey=get_cohesion,\nreverse=True)
+
+KClustering --> Controller -- : (clusters_ordenados,\nclusters_meta_info)
+
+Controller -> Controller : constrói aliases\ncom coesão
+
+Controller --> TopicAPI -- : (clusters dict,\nclusters_meta_info)
+
+TopicAPI -> TopicAPI : NumpyConverter\n.to_native()
+
+TopicAPI --> Client -- : 200 OK\n{clusters, meta_info}
+
+' ==========================================
+' Fluxo RF-006: centroid_similarity
+' ==========================================
+
+== RF-006: centroid_similarity ==
+
+Client -> TopicAPI ++ : GET /topic/clusters/{user}/{topic}\n/centroid_similarity
+
+TopicAPI -> Controller ++ : get_clusters(sort_by=\nClusterSorting.CENTROID_SIMILARITY)
+
+Controller -> KClustering ++ : get_clusters(sort_by=\nClusterSorting.CENTROID_SIMILARITY)
+
+KClustering -> KClustering ++ : get_cluster_centrality_scores()
+
+loop para cada cluster
+  KClustering -> Cluster ++ : get_centrality_scores()
+
+  note right #LightGreen
+    RF-006: Centralidade via PageRank.
+    Retorna (centrality_score,
+    similarity_from_most_central)
+    para cada keyphrase no cluster.
+  end note
+
+  Cluster --> KClustering -- : dict[keyphrase_id → (centr, sim)]
+end
+
+KClustering --> KClustering -- : clusters_meta_info
+
+note right #LightGreen
+  RF-006: sorted(..., reverse=True)
+  Ordena clusters por
+  average_similarity_from_centroid
+  do maior → menor valor
+end note
+
+KClustering -> Clusters ++ : values()
+
+Clusters --> KClustering -- : lista de Clusters
+
+KClustering -> KClustering : sorted(...,\nkey=average_similarity\n_from_centroid,\nreverse=True)
+
+KClustering --> Controller -- : (clusters_ordenados,\nclusters_meta_info)
+
+Controller -> Controller : constrói aliases\ncom centróide e média
+
+Controller --> TopicAPI -- : (clusters dict,\nclusters_meta_info)
+
+TopicAPI -> TopicAPI : NumpyConverter\n.to_native()
+
+TopicAPI --> Client -- : 200 OK\n{clusters, meta_info}
+
+@enduml

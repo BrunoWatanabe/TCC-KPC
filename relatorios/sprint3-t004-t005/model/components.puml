@@ -1,0 +1,106 @@
+@startuml
+' /relatorios/sprint3-t004-t005/model/components.puml
+' Sprint 03 | Análise Retroativa T004+T005
+' RF: RF-005 (cluster_cohesion), RF-006 (centroid_similarity)
+
+title Arquitetura de Componentes — Ordenação de Clusters
+
+!define RF(x) note right of x : @rf: x
+
+skinparam component {
+  BackgroundColor #FEFEFE
+  BorderColor #333333
+  FontSize 12
+}
+
+' === CAMADA 1: API Layer ===
+package "API Layer" as APILayer {
+  [api/topic.py] as TopicComponent <<FastAPI Router>>
+  note right of TopicComponent
+    Endpoints REST:
+    GET /clusters/{user}/{topic}/
+      {cluster_order}
+    GET /keyphrase_clustering/
+      {user}/{topic}/{order}
+    GET /cluster_selection/{user}/{topic}
+  end note
+}
+RF(TopicComponent)
+
+' === CAMADA 2: Controller Layer ===
+package "Controller Layer" as ControllerLayer {
+  [controller/annotation.py] as AnnotationComponent <<Controller>>
+  note right of AnnotationComponent
+    AnnotationController
+    - orquestra chamadas
+    - constrói aliases
+    - calcula médias
+      (avg_cohesion,
+       avg_centroid_sim)
+  end note
+}
+RF(AnnotationComponent)
+
+' === CAMADA 3: Model/Domain Layer ===
+package "Model / Domain Layer" as ModelLayer {
+  [model/cluster.py] as ClusterComponent <<Domain Model>>
+  note right of ClusterComponent
+    KeyphraseClustering
+    - clusters: Dict[int, Cluster]
+    - ClusterSorting enum
+    - get_clusters(sort_by)
+      • NUMERICAL
+      • CLUSTER_COHESION  @rf: RF-005
+      • PAIRWISE_SIMILARITY
+      • CENTROID_SIMILARITY  @rf: RF-006
+
+    Ordenação aplicada aqui:
+    - sorted(..., reverse=True)
+  end note
+}
+RF(ClusterComponent)
+
+' === CAMADA 4: Utility Layer ===
+package "Utility Layer" as UtilLayer {
+  [util/json_encoder.py] as NumpyComponent <<Utility>>
+  note right of NumpyComponent
+    NumpyConverter.to_native()
+    Conversão recursiva de
+    tipos numpy → Python nativos
+    (herdado da Sprint 02)
+  end note
+}
+RF(NumpyComponent)
+
+' === RELACIONAMENTOS ===
+
+TopicComponent --> AnnotationComponent : <<calls>>\nget_clusters(sorting)
+RF(TopicComponent)
+RF(AnnotationComponent)
+
+AnnotationComponent --> ClusterComponent : <<delegates>>\nget_clusters(sort_by)
+RF(AnnotationComponent)
+RF(ClusterComponent)
+
+ClusterComponent --> ClusterComponent : <<sorted>>\nreverse=True
+RF(ClusterComponent)
+
+TopicComponent --> NumpyComponent : <<uses>>\nNumpyConverter.to_native()
+RF(TopicComponent)
+RF(NumpyComponent)
+
+note bottom of ClusterComponent
+  RF-005: CLUSTER_COHESION
+    sorted(self.clusters.values(),
+           key=lambda x: x.get_cohesion(),
+           reverse=True)
+
+  RF-006: CENTROID_SIMILARITY
+    meta = get_cluster_centrality_scores()
+    sorted(self.clusters.values(),
+           key=lambda x:
+             meta[x.id][avg_similarity],
+           reverse=True)
+end note
+
+@enduml

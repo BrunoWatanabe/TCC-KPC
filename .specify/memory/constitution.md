@@ -20,8 +20,9 @@
 
 # Constituição do Projeto: Keyphrase Curation (KPC)
 
-> **Propósito**: Regência do desenvolvimento frontend do experimento de pesquisa
-> **Escopo**: `kpc-frontend/` (React 18 + TypeScript + Vite + MVVM)
+> **Propósito**: Regência do desenvolvimento do experimento de pesquisa
+> **Escopo**: `kpc-frontend/` (React 18 + TypeScript + Vite + MVVM) e `kpc-backend/` (Python + FastAPI)
+> **Modelagem MDE+SDD**: O Agente Arquiteto modela a arquitetura geral do sistema, incluindo frontend e backend, garantindo rastreabilidade entre requisitos, modelo e código em ambas as camadas.
 > **Experimento**: MDE + SDD com pipeline de 4 agentes de IA
 
 ---
@@ -40,6 +41,10 @@ Código SOMENTE é escrito após modelo diagramático aprovado.
   obrigatório antes de qualquer implementação.
 - NENHUMA linha de código DEVE ser escrita sem que seu elemento correspondente
   exista em um diagrama `.puml`.
+- **A modelagem cobre FRONTEND e BACKEND.** O Agente Arquiteto DEVE modelar:
+  - Frontend: componentes React, MVVM (views, viewmodels, models), rotas, stores
+  - Backend: endpoints FastAPI, serviços, entidades, controladores, serializadores
+  - A rastreabilidade `@rf:` aplica-se a elementos de ambas as camadas.
 
 **Padrão de Modelagem PlantUML**: Todos os diagramas DEVEM seguir estritamente
 a sintaxe e as boas práticas definidas no guia oficial:
@@ -53,6 +58,9 @@ Este guia DEVE ser consultado como fonte autoritativa para:
 - Formatação e estilos (cores, temas, linhas)
 - Skinparams e personalização visual
 - Boas práticas de legibilidade e manutenção
+
+**Rationale**: O experimento avalia a eficácia de MDE+SDD. Pular a modelagem
+invalida o propósito da pesquisa.
 
 **Rationale**: O experimento avalia a eficácia de MDE+SDD. Pular a modelagem
 invalida o propósito da pesquisa.

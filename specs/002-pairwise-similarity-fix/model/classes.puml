@@ -1,0 +1,196 @@
+@startuml
+' /specs/002-pairwise-similarity-fix/model/classes.puml
+' Sprint: 02 | RF: RF-003
+' Diagrama de Classes — Serialização Pairwise Similarity (Backend)
+
+!define RF(x) note right of x : @rf: RF-003
+
+title "Diagrama de Classes — Correção de Serialização Pairwise Similarity\nSprint 02 | RF-003"
+
+' ============================================================
+' PACOTE: API Layer
+' ============================================================
+
+package "API Layer (FastAPI) #LightGray" as API {
+  class "FastAPI App" as FastAPIApp {
+    + json_encoder: Type[JSONEncoder]
+    + include_router(router): void
+  }
+  RF(FastAPIApp)
+  note right of FastAPIApp : app = FastAPI()\nem api/main.py
+
+  class "TopicRouter" as TopicRouter {
+    + {method} list_clusters(username, topic, cluster_order): dict
+  }
+  RF(TopicRouter)
+  note right of TopicRouter : GET /topic/clusters/{username}/{topic}/{cluster_order}\nem api/topic.py:228
+
+  class "JSONResponse" as JSONResponse {
+    + content: Any
+    + status_code: int
+  }
+  RF(JSONResponse)
+}
+
+' ============================================================
+' PACOTE: Controller Layer
+' ============================================================
+
+package "Controller Layer #LightYellow" as CTRL {
+  class "AnnotationController" as AnnotationController {
+    + get_clusters(sort_by: ClusterSorting): Tuple[dict, dict]
+  }
+  RF(AnnotationController)
+  note right of AnnotationController
+    controller/annotation.py:56
+    Retorna (clusters, clusters_meta_info)
+    clusters_meta_info contém valores numpy
+  end note
+
+  class "ClusterSorting" as ClusterSorting {
+    + {enum} NUMERICAL
+    + {enum} CLUSTER_COHESION
+    + {enum} PAIRWISE_SIMILARITY
+    + {enum} CENTROID_SIMILARITY
+  }
+  RF(ClusterSorting)
+  note right of ClusterSorting : model/cluster.py:12
+}
+
+' ============================================================
+' PACOTE: Model Layer
+' ============================================================
+
+package "Model Layer #LightCoral" as MODEL {
+  class "ClusterAnnotation" as ClusterAnnotation {
+    + get_clusters(sort_by): Tuple[list, dict]
+  }
+  RF(ClusterAnnotation)
+  note right of ClusterAnnotation
+    model/annotation.py
+    Delega para KeyphraseClustering.get_clusters()
+  end note
+
+  class "KeyphraseClustering" as KeyphraseClustering {
+    + clustering: list[int]
+    + pairwise_similarity: PairwiseSimilarity
+    + get_clusters(): Tuple[list, dict]
+    + get_pairwise_cluster_similarity(): dict
+  }
+  RF(KeyphraseClustering)
+  note right of KeyphraseClustering
+    model/cluster.py
+    Gera clusters_meta_info
+    com valores numpy via get_pairwise_similarity()
+  end note
+
+  class "PairwiseSimilarity" as PairwiseSimilarity {
+    + similarity_matrix: numpy.ndarray
+    + diagonal_matrix: numpy.ndarray
+    + reset_elements: list
+    + get_pairwise_similarity(): list[list]
+  }
+  RF(PairwiseSimilarity)
+  note right of PairwiseSimilarity
+    util/pairwise_similarity.py
+    Retorna lista de tripletos
+    [numpy.int64, numpy.int64, numpy.float64]
+    FONTE do bug de serialização
+  end note
+}
+
+' ============================================================
+' PACOTE: Utility
+' ============================================================
+
+package "Utility #LightGreen" as UTIL {
+  class "NumpyConverter" as NumpyConverter {
+    + {static} to_native(obj: Any): Any
+    - {static} _convert_value(value: Any): Any
+  }
+  RF(NumpyConverter)
+  note right of NumpyConverter
+    util/json_encoder.py (NOVO)
+    Percorre dicts/lists recursivamente
+    numpy.integer → int
+    numpy.floating → float
+    numpy.ndarray → list
+    numpy.bool_ → bool
+  end note
+
+  class "JSONEncoder (stdlib)" as JSONEncoder {
+    + default(obj: Any): Any
+  }
+  RF(JSONEncoder)
+  note right of JSONEncoder : json.JSONEncoder base
+}
+
+' ============================================================
+' PACOTE: Tipos NumPy
+' ============================================================
+
+package "NumPy Types (External) #LightPink" as NUMPY {
+  class "numpy.int64" as NpInt64 {
+    + item(): int
+  }
+  class "numpy.float64" as NpFloat64 {
+    + item(): float
+  }
+  class "numpy.ndarray" as NpArray {
+    + tolist(): list
+  }
+  class "numpy.bool_" as NpBool {
+    + item(): bool
+  }
+}
+
+' ============================================================
+' RELACIONAMENTOS
+' ============================================================
+
+' API → Controller
+TopicRouter --> AnnotationController : <<chama>>
+RF(TopicRouter)
+
+AnnotationController --> ClusterAnnotation : <<delega>>
+RF(AnnotationController)
+
+' Controller → Model
+ClusterAnnotation --> KeyphraseClustering : <<usa>>
+RF(ClusterAnnotation)
+
+KeyphraseClustering --> PairwiseSimilarity : <<usa>>
+RF(KeyphraseClustering)
+note on link : get_pairwise_cluster_similarity()\ngera valores numpy
+
+' Conversão
+TopicRouter --> NumpyConverter : <<aplica>>
+RF(TopicRouter)
+note on link : to_native(clusters_meta_info)\nantes de retornar
+
+NumpyConverter --> JSONEncoder : <<estende>>
+RF(NumpyConverter)
+
+' Tipos numpy envolvidos
+PairwiseSimilarity --> NpInt64 : <<produz>>
+RF(PairwiseSimilarity)
+note on link : pair[0], pair[1]\nsão numpy.int64
+
+PairwiseSimilarity --> NpFloat64 : <<produz>>
+RF(PairwiseSimilarity)
+note on link : pair[2] é\nnumpy.float64
+
+NumpyConverter --> NpInt64 : <<converte>>
+NumpyConverter --> NpFloat64 : <<converte>>
+NumpyConverter --> NpArray : <<converte>>
+NumpyConverter --> NpBool : <<converte>>
+
+' Response
+TopicRouter --> JSONResponse : <<retorna>>
+RF(TopicRouter)
+
+FastAPIApp --> TopicRouter : <<registra>>
+RF(FastAPIApp)
+note on link : app.include_router(topic.router)
+
+@enduml

@@ -1,0 +1,116 @@
+@startuml
+' /specs/002-pairwise-similarity-fix/model/sequence.puml
+' Sprint: 02 | RF: RF-003
+' Diagrama de Sequência — Fluxo de Serialização (Antes vs Depois)
+
+title "Diagrama de Sequência — Serialização Pairwise Similarity\nSprint 02 | RF-003 | Antes vs Depois"
+
+' ============================================================
+' PARTICIPANTES
+' ============================================================
+
+actor "Cliente\n(Frontend)" as Client
+participant "TopicRouter\napi/topic.py" as Router #LightGray
+participant "AnnotationController\ncontroller/annotation.py" as Controller #LightYellow
+participant "ClusterAnnotation\nmodel/annotation.py" as ClusterAnn #LightCoral
+participant "PairwiseSimilarity\nutil/pairwise_similarity.py" as PairSim #LightCoral
+participant "NumpyConverter\nutil/json_encoder.py" as Converter #LightGreen
+participant "FastAPI\nSerializer" as Serializer #LightGray
+participant "JSON\nResponse" as Response #LightGray
+
+' ============================================================
+' FLUXO COMUM (Requisição)
+' ============================================================
+
+== Requisição HTTP ==
+
+Client -> Router: GET /topic/clusters/daired/cloning/pairwise_similarity
+note right @ rf: RF-003 — Path params: username, topic, cluster_order
+
+Router -> Router: Valida autenticação e permissões
+note right @ rf: RF-003 — Verifica se username == logged_user
+
+Router -> Controller: get_clusters(sort_by=PAIRWISE_SIMILARITY)
+note right @ rf: RF-003 — Cria AnnotationController(topic, username)
+
+Controller -> ClusterAnn: get_clusters(sort_by)
+note right @ rf: RF-003 — Delega para ClusterAnnotation
+
+ClusterAnn -> ClusterAnn: get_pairwise_cluster_similarity()
+note right @ rf: RF-003 — Calcula pares de similaridade
+
+ClusterAnn -> PairSim: get_pairwise_similarity()
+note right @ rf: RF-003 — Obtém tripletos da matriz
+
+PairSim -> PairSim: get_max_pair_similarity() em loop
+note right @ rf: RF-003 — Usa numpy.argmax, numpy.unravel_index
+
+PairSim --> ClusterAnn: [[numpy.int64, numpy.int64, numpy.float64], ...]
+note right @ rf: RF-003 — 🔴 VALORES NUMPY
+
+ClusterAnn -> ClusterAnn: Monta clusters_meta_info
+note right @ rf: RF-003 — similar_cluster: numpy.int64\nsimilarity: numpy.float64
+
+ClusterAnn --> Controller: (clusters, clusters_meta_info)
+note right @ rf: RF-003 — clusters_meta_info com numpy
+
+Controller --> Router: (clusters, clusters_meta_info)
+note right @ rf: RF-003 — Dados propagam até a rota
+
+' ============================================================
+' RAMO: ANTES da Correção (ERRO)
+' ============================================================
+
+== 🔴 ANTES da Correção ==
+
+Router -> Serializer: return { "clusters": c, "clusters_meta_info": cmi }
+note right @ rf: RF-003 — FastAPI tenta serializar diretamente
+
+Serializer -> Serializer: Pydantic → json.dumps()
+note right @ rf: RF-003 — Tenta converter numpy.int64
+
+Serializer -> Serializer: ❌ PydanticSerializationError
+note right @ rf: RF-003 — "Unable to serialize unknown type:\n<class 'numpy.int64'>"
+
+Serializer --> Client: HTTP 500 Internal Server Error
+note right @ rf: RF-003 — Frontend recebe erro
+
+' ============================================================
+' RAMO: DEPOIS da Correção (OK)
+' ============================================================
+
+== ✅ DEPOIS da Correção ==
+
+Router -> Converter: to_native(clusters_meta_info)
+note right @ rf: RF-003 — Percorre dict recursivamente\nconverte numpy → Python nativo
+
+alt numpy.integer
+    Converter -> Converter: int(value)
+    note right @ rf: RF-003 — numpy.int64 → int
+else numpy.floating
+    Converter -> Converter: float(value)
+    note right @ rf: RF-003 — numpy.float64 → float
+else numpy.ndarray
+    Converter -> Converter: value.tolist()
+    note right @ rf: RF-003 — numpy.ndarray → list
+else numpy.bool_
+    Converter -> Converter: bool(value)
+    note right @ rf: RF-003 — numpy.bool_ → bool
+end
+
+Converter --> Router: clusters_meta_info (tipos Python nativos)
+note right @ rf: RF-003 — ✅ Apenas int, float, list, bool, str, dict, None
+
+Router -> Serializer: return { "clusters": c, "clusters_meta_info": cmi_converted }
+note right @ rf: RF-003 — FastAPI serializa sem erros
+
+Serializer -> Serializer: Pydantic → json.dumps()
+note right @ rf: RF-003 — Todos os tipos são serializáveis
+
+Serializer --> Response: HTTP 200
+note right @ rf: RF-003 — JSONResponse com JSON válido
+
+Response --> Client: { "sorting_applied": "pairwise_similarity",\n  "clusters": [...],\n  "clusters_meta_info": {...} }
+note right @ rf: RF-003 — Frontend recebe dados corretos\nsem erro no console
+
+@enduml

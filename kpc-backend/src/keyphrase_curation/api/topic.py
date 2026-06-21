@@ -9,6 +9,9 @@ from keyphrase_curation.model.annotation import \
 from typing import Dict, List, Tuple, Optional
 from keyphrase_curation.model.keyphrase import KeyphraseSorting
 from keyphrase_curation.model.cluster import ClusterSorting
+# @model: specs/002-pairwise-similarity-fix/model/classes.puml
+# RF: RF-003 — Conversão numpy → Python nativo no retorno da API
+from keyphrase_curation.util.json_encoder import NumpyConverter
 
 router = APIRouter()
 
@@ -259,6 +262,10 @@ async def list_clusters(
         raise http_exc
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+    # @model: specs/002-pairwise-similarity-fix/model/classes.puml
+    # RF: RF-003, RF-004 — Converter tipos numpy para Python nativos antes da serialização
+    clusters_meta_info = NumpyConverter.to_native(clusters_meta_info)
 
     return {
         "sorting_applied": sorting.value,

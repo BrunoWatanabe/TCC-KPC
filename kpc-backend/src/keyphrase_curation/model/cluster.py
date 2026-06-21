@@ -385,9 +385,12 @@ class KeyphraseClustering(KeyphraseEmbeddings):
         if sort_by.name == ClusterSorting.NUMERICAL.name:
             clusters = list(self.clusters.values())
         elif sort_by.name == ClusterSorting.CLUSTER_COHESION.name:
+            # Sprint 03 — T004: Corrigir ordenação ascendente → descendente
+            # Antes: reverse=False (coesão mais baixa → mais alta)
+            # Depois: reverse=True  (coesão mais alta → mais baixa)
             clusters = list(sorted(
                 self.clusters.values(),
-                key=lambda x: x.get_cohesion(), reverse=False))
+                key=lambda x: x.get_cohesion(), reverse=True))
         elif sort_by.name == ClusterSorting.PAIRWISE_SIMILARITY.name:
             clusters_meta_info = self.get_pairwise_cluster_similarity()
             clusters = list(sorted(
@@ -395,12 +398,15 @@ class KeyphraseClustering(KeyphraseEmbeddings):
                 key=lambda x: clusters_meta_info[x.id]['similarity'],
                 reverse=True))
         elif sort_by.name == ClusterSorting.CENTROID_SIMILARITY.name:
+            # Sprint 03 — T005: Corrigir ordenação ascendente → descendente
+            # Antes: reverse=False (similaridade mais baixa → mais alta)
+            # Depois: reverse=True  (similaridade mais alta → mais baixa)
             clusters_meta_info = self.get_cluster_centrality_scores()
             clusters = list(sorted(
                 self.clusters.values(),
                 key=lambda x:
                 clusters_meta_info[x.id]['average_similarity_from_centroid'],
-                reverse=False))
+                reverse=True))
         return clusters, clusters_meta_info
 
     def to_list(self, header=False, sort_column=1, reverse=False):

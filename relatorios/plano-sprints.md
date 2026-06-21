@@ -12,7 +12,7 @@
 |--------|-------------|-----------|--------|
 | **Sprint 01** | 🏗️ **MDE+SDD (Spec-Kit + 4 Personas)** | Teste do pipeline Spec-Kit com Arquitetura, Developer, Polícia e Juiz — componente de Login | ✅ Concluída |
 | **Sprint 02** | 🏗️ **MDE+SDD (Spec-Kit + 4 Personas)** | Teste do pipeline Spec-Kit — correção de serialização numpy no backend | ✅ Concluída |
-| **Sprint 03** | 🤖 **Copilot (sem metodologia)** | Teste do Copilot puro, sem Spec-Kit, sem personas, sem pipeline — correção de ordenação via chat direto | 🟡 Pendente |
+| **Sprint 03** | 🤖 **Copilot (sem metodologia)** | Teste do Copilot puro, sem Spec-Kit, sem personas, sem pipeline — correção de ordenação via chat direto + labels + pareamento | 🟡 Em andamento (T004/T005 ✅, T006/T007 🟡) |
 | **Sprint 04** | ⚡ **Copilot + RTK (Redux Toolkit)** | Teste do Copilot com RTK — implementação de nova funcionalidade completa no frontend | ⬜ Planejada |
 
 ---
@@ -127,19 +127,38 @@ flowchart LR
 |----|-----------|------------|
 | RF-005 | Ordenar cluster_cohesion do maior para o menor | P1 |
 | RF-006 | Ordenar centroid_similarity do maior para o menor | P1 |
+| RF-007 | Padronizar labels do order by "Source Keyphrases" com enum `KeyphraseSortingLabels` | P2 |
+| RF-008 | Agrupar pares recíprocos no pairwise_similarity do backend | P2 |
 
 ### O que precisa ser feito
 
 | Tarefa | Backend | Frontend | Artefato Esperado |
 |--------|---------|----------|-------------------|
-| **T004** | 🤖 Corrigir ordenação do endpoint `/topic/clusters/{username}/{topic}/cluster_cohesion` — atualmente retorna da **coesão mais baixa para a mais alta** (ascendente). Deve retornar da **coesão mais alta para a mais baixa** (descendente). Localizar a lógica de ordenação em `model/cluster.py` e inverter o `reverse` ou o sorting key. | N/A (frontend apenas consome) | `curl http://localhost:3132/topic/clusters/daired/cloning/cluster_cohesion` retorna clusters ordenados do maior valor de coesão para o menor |
-| **T005** | 🤖 Corrigir ordenação do endpoint `/topic/clusters/{username}/{topic}/centroid_similarity` — atualmente retorna da **similaridade mais baixa para a mais alta** (ascendente). Deve retornar da **similaridade mais alta para a mais baixa** (descendente). Como o `NumpyConverter` já resolveu a serialização, o foco é apenas inverter a ordenação. | N/A (frontend apenas consome) | `curl http://localhost:3132/topic/clusters/daired/cloning/centroid_similarity` retorna clusters ordenados do maior valor de similaridade para o menor |
+| **T004** | 🟢 **Concluída** — `model/cluster.py`: `reverse=False` → `reverse=True` no `sorted()` de `cluster_cohesion`. Testado com `curl` → ordenação descendente confirmada (`[1.0, 1.0, 1.0, 0.92, 0.75, ...]`). Log experimental: `relatorios/log-copilot-sprint3-t004.md` | N/A (frontend apenas consome) | `curl http://localhost:3132/topic/clusters/daired/cloning/cluster_cohesion` ✅ Ordem descendente |
+| **T005** | 🟢 **Concluída** — `model/cluster.py`: `reverse=False` → `reverse=True` no `sorted()` de `centroid_similarity`. Testado com `curl` → ordenação descendente confirmada (`[1.0, 1.0, 1.0, 0.92, 0.75, 0.74, ...]`). Corrigido em conjunto com T004 por compartilharem o mesmo padrão de erro e mesmo arquivo. | N/A (frontend apenas consome) | `curl http://localhost:3132/topic/clusters/daired/cloning/centroid_similarity` ✅ Ordem descendente |
+| **T006** | N/A | 🤖 **Corrigir labels do order by "Source Keyphrases"** — o select de ordenação em `KeyphraseClusteringView.jsx` (linhas ~175-182) usa labels hardcoded como `"Similaridade de Cluster"` e `"Similaridade Pareada"`. Deve seguir o padrão do "Keyphrase Clusters" que usa `ClusterSortingLabels` no enum `ClusterSorting.js`. Criar `KeyphraseSortingLabels` em `KeyphraseSorting.js` nos mesmos moldes e usar no select. | Select de ordenação com labels padronizados via enum, igual ao "Keyphrase Clusters" |
+| **T007** | 🐍 **Corrigir ordenação pairwise_similarity no backend** — em `model/cluster.py:get_keyphrase_descriptions()`, quando `sort_by=PAIRWISE_SIMILARITY`, a ordenação é feita por `sort_column=3` (similarity), o que não garante que pares recíprocos fiquem adjacentes. Ex: `Therapeutic cloning(18): (48, 1.00)` e `Therapeutic cloning(48): (18, 1.00)` podem ficar distantes. O backend deve **agrupar pares recíprocos** na listagem — quando dois clusters têm `similar_cluster` apontando um para o outro com `similarity` igual, devem ser consecutivos. | N/A (frontend apenas consome) | Listagem pairwise_similarity com pares recíprocos adjacentes |
 
-### Arquivos impactados (backend)
+### Status Geral da Sprint
+
+| Critério | Resultado |
+|----------|-----------|
+| RF-005 (cluster_cohesion descendente) | ✅ OK — `reverse=True` em `model/cluster.py:387` |
+| RF-006 (centroid_similarity descendente) | ✅ OK — `reverse=True` em `model/cluster.py:410` |
+| RF-007 (labels do order by Source Keyphrases) | 🟡 Pendente — criar `KeyphraseSortingLabels` no enum |
+| RF-008 (pares pairwise adjacentes) | 🟡 Pendente — agrupar pares recíprocos no backend |
+| Teste HTTP 200 | ✅ Ambos endpoints retornam 200 |
+| Log experimental | ✅ `relatorios/log-copilot-sprint3-t004.md` criado |
+| Tempo total (parcial) | ~25 minutos (T004 + T005) |
+
+### Arquivos impactados (frontend + backend)
 
 | Arquivo | Ação |
 |---------|------|
-| `src/keyphrase_curation/model/cluster.py` | Localizar lógica de ordenação de `cluster_cohesion` e `centroid_similarity` e inverter ordem (ascendente → descendente) |
+| `kpc-backend/src/keyphrase_curation/model/cluster.py` | ✅ Ordenação cluster_cohesion/centroid_similarity (ascendente → descendente) — Concluído |
+| `kpc-backend/src/keyphrase_curation/model/cluster.py` | 🟡 Agrupar pares recíprocos em `get_keyphrase_descriptions()` p/ PAIRWISE_SIMILARITY (T007) |
+| `kpc-frontend/src-mvvm/shared/enums/KeyphraseSorting.js` | 🟡 Criar `KeyphraseSortingLabels` padronizado (T006) |
+| `kpc-frontend/src-mvvm/views/pages/KeyphraseClusteringView.jsx` | 🟡 Usar `KeyphraseSortingLabels` no select de ordenação (T006) |
 
 ---
 
@@ -155,13 +174,13 @@ flowchart LR
 
 | RF | Descrição | Prioridade |
 |----|-----------|------------|
-| RF-007 | Implementar tela de curadoria de keyphrases com RTK (selecionar, anotar, salvar) | P1 |
+| RF-009 | Implementar tela de curadoria de keyphrases com RTK (selecionar, anotar, salvar) | P1 |
 
 ### O que precisa ser feito
 
 | Tarefa | Backend | Frontend | Artefato Esperado |
 |--------|---------|----------|-------------------|
-| **T006** | N/A (API já existe) | ⚡ **Criar funcionalidade completa de curadoria de keyphrases** utilizando **RTK (Redux Toolkit)** para gerenciamento de estado: store global, slices, thunks assíncronos, componentes conectados. A funcionalidade deve consumir endpoints existentes do backend para listar, selecionar e salvar anotações de keyphrases por tópico. Incluir feedback visual (loading, sucesso, erro). | Tela funcional de curadoria com RTK — store, slice, thunks e UI conectada |
+| **T008** | N/A (API já existe) | ⚡ **Criar funcionalidade completa de curadoria de keyphrases** utilizando **RTK (Redux Toolkit)** para gerenciamento de estado: store global, slices, thunks assíncronos, componentes conectados. A funcionalidade deve consumir endpoints existentes do backend para listar, selecionar e salvar anotações de keyphrases por tópico. Incluir feedback visual (loading, sucesso, erro). | Tela funcional de curadoria com RTK — store, slice, thunks e UI conectada |
 
 ### Arquivos impactados (frontend)
 
@@ -179,7 +198,7 @@ flowchart LR
 ```mermaid
 flowchart LR
     S1[Sprint 01<br/>MDE+SDD Login<br/>✅ Concluída] --> S2[Sprint 02<br/>MDE+SDD Serialização<br/>✅ Concluída]
-    S2 --> S3[Sprint 03<br/>🤖 Copilot Ordenação<br/>🟡 Pendente]
+    S2 --> S3[Sprint 03<br/>🤖 Copilot Ordenação/Labels<br/>🟡 Em andamento]
     S3 --> S4[Sprint 04<br/>⚡ Copilot+RTK Funcionalidade<br/>⬜ Planejada]
 ```
 
@@ -187,7 +206,7 @@ flowchart LR
 |--------|-------------|-----------|----------------------|
 | 01 — Login + Refinar | 🏗️ MDE+SDD (Spec-Kit) | — | 02 |
 | 02 — Serialização (pairwise + centroid) | 🏗️ MDE+SDD (Spec-Kit) | 01 | 03 |
-| 03 — Ordenação de clusters | 🤖 Copilot (sem metodologia) | 02 | 04 |
+| 03 — Ordenação + Labels + Pareamento | 🤖 Copilot (sem metodologia) | 02 | 04 |
 | 04 — Funcionalidade RTK | ⚡ Copilot + RTK | 03 | — |
 
 ---
@@ -198,5 +217,5 @@ flowchart LR
 |--------|-------------|-----|---------|----------|---------|
 | Sprint 01 | 🏗️ MDE+SDD (Spec-Kit) | RF-001, RF-002 | T001 + ST001.1 + ST001.2 | Refatorar 4 arquivos | Nenhum |
 | Sprint 02 | 🏗️ MDE+SDD (Spec-Kit) | RF-003, RF-004 | T002 + ST002.1 + T003 | N/A | `json_encoder.py` (criar), `api/topic.py` (modificar) |
-| Sprint 03 | 🤖 Copilot (sem metodologia) | RF-005, RF-006 | T004 + T005 | N/A | `model/cluster.py` (corrigir ordenação) |
-| Sprint 04 | ⚡ Copilot + RTK | RF-007 | T006 | Criar store RTK + páginas + componentes + serviços | N/A |
+| Sprint 03 | 🤖 Copilot (sem metodologia) | RF-005, RF-006, RF-007, RF-008 | T004 + T005 + T006 + T007 | `KeyphraseSorting.js` (criar labels enum), `KeyphraseClusteringView.jsx` (usar enum) | `model/cluster.py` (corrigir ordenação + parear pares) |
+| Sprint 04 | ⚡ Copilot + RTK | RF-009 | T008 | Criar store RTK + páginas + componentes + serviços | N/A |

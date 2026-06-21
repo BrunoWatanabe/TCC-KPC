@@ -147,15 +147,7 @@ flowchart LR
 
 ---
 
-### Passo 5: Commit (Ação Humana)
-
-```
-> git commit -m "feat: implementa componente de login"
-```
-
----
-
-### Passo 6: Análise + Polícia + Juiz (Tudo Automático)
+### Passo 5: Análise + Polícia + Juiz
 
 ```
 > /speckit.analyze

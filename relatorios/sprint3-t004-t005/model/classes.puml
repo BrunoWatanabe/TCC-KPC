@@ -1,0 +1,145 @@
+@startuml
+' /relatorios/sprint3-t004-t005/model/classes.puml
+' Sprint 03 | Análise Retroativa T004+T005
+' RF: RF-005 (cluster_cohesion), RF-006 (centroid_similarity)
+
+!define RF(x) note right of x : @rf: x
+
+package "api" {
+  class "api/topic.py" as TopicAPI {
+    + list_clusters(username, topic, cluster_order) : dict
+    ..
+    + list_keyphrase_clusters(username, topic, keyphrase_order) : dict
+  }
+  RF(TopicAPI)
+}
+
+package "controller" {
+  class AnnotationController {
+    + get_clusters(sort_by: ClusterSorting) : tuple
+    + get_cluster_selection() : dict
+    + get_keyphrases_selection() : dict
+    + get_keyphrases_aliases() : dict
+    + get_curated_keyphrases() : dict
+    - cluster_annotation: ClusterAnnotation
+    - cluster_selection_annotation: ClusterSelectionAnnotation
+    - keyphrase_selection_annotation: KeyphraseSelectionAnnotation
+    - keyphrase_alias_annotation: KeyphraseAliasAnnotation
+  }
+  RF(AnnotationController)
+}
+
+package "model" {
+  enum ClusterSorting {
+    NUMERICAL
+    CLUSTER_COHESION  @rf: RF-005
+    PAIRWISE_SIMILARITY
+    CENTROID_SIMILARITY  @rf: RF-006
+    CLUES_FROM_OTHER_ANNOTATORS
+    ..
+    + by_value(value) : ClusterSorting
+    + is_member(value) : bool
+  }
+  RF(ClusterSorting)
+
+  class KeyphraseClustering {
+    + cluster_set_size: int
+    + clustering: list
+    + clusters: Dict[int, Cluster]
+    ..
+    + get_clusters(sort_by: ClusterSorting) : tuple  @rf: RF-005 @rf: RF-006
+    + get_cluster_centrality_scores() : dict  @rf: RF-006
+    + get_cluster_by_id(cluster_id: int) : Cluster
+    + get_keyphrase_sets(only_ids: bool) : dict
+    + to_list(header, sort_column, reverse) : list
+    + get_keyphrase_similarity_with_clusters(keyphrase) : list
+    + get_cluster_similarity_matrix() : list
+    + get_pairwise_cluster_similarity() : dict
+  }
+  RF(KeyphraseClustering)
+
+  class KeyphraseEmbeddings <<abstract>> {
+    + topic: str
+    + embeddings_path: str
+    + keyphrases: list
+    ..
+    + get_keyphrase_by_id(id) : Keyphrase
+    + get_similarity(kp1, kp2) : float
+  }
+
+  class Cluster {
+    + id: int
+    + alias: str
+    ..
+    + get_alias() : str
+    + get_keyphrase_ids() : list
+    + is_empty() : bool
+    + get_descriptions(sort_by, show_ids) : list
+    + get_cohesion() : float  @rf: RF-005
+    + get_similarity(cluster) : float
+    + get_similarity_matrix() : tuple
+    + get_centrality_scores() : dict  @rf: RF-006
+  }
+  RF(Cluster)
+
+  class ClusterAnnotation {
+    + get_clusters(sort_by: ClusterSorting) : tuple
+    + get_keyphrase_descriptions(sort_by) : dict
+    + clustering: list
+  }
+  RF(ClusterAnnotation)
+}
+
+package "util" {
+  class NumpyConverter {
+    + {static} to_native(obj) : Any
+  }
+}
+
+' === Relacionamentos ===
+
+KeyphraseClustering -up-|> KeyphraseEmbeddings : extends
+RF(KeyphraseClustering)
+RF(KeyphraseEmbeddings)
+
+KeyphraseClustering *- Cluster : contains >
+RF(KeyphraseClustering)
+RF(Cluster)
+
+AnnotationController --> ClusterAnnotation : delegates
+RF(AnnotationController)
+RF(ClusterAnnotation)
+
+ClusterAnnotation --> KeyphraseClustering : calls
+RF(ClusterAnnotation)
+RF(KeyphraseClustering)
+
+TopicAPI --> AnnotationController : calls
+RF(TopicAPI)
+RF(AnnotationController)
+
+TopicAPI --> NumpyConverter : <<uses>>
+RF(TopicAPI)
+
+KeyphraseClustering ..> ClusterSorting : <<uses>>
+RF(KeyphraseClustering)
+RF(ClusterSorting)
+
+ClusterAnnotation ..> ClusterSorting : <<uses>>
+RF(ClusterAnnotation)
+RF(ClusterSorting)
+
+Cluster --> KeyphraseClustering : outer class reference
+RF(Cluster)
+RF(KeyphraseClustering)
+
+' --- Note about the sorting methods ---
+note right of KeyphraseClustering
+  get_clusters(sort_by):
+    CLUSTER_COHESION:
+      sorted(..., key=get_cohesion, reverse=True)
+    CENTROID_SIMILARITY:
+      sorted(..., key=average_similarity_from_centroid, reverse=True)
+end note
+
+@enduml

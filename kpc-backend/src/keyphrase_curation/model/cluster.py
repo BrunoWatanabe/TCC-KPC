@@ -385,9 +385,12 @@ class KeyphraseClustering(KeyphraseEmbeddings):
         if sort_by.name == ClusterSorting.NUMERICAL.name:
             clusters = list(self.clusters.values())
         elif sort_by.name == ClusterSorting.CLUSTER_COHESION.name:
+            # Sprint 03 — T004: Corrigir ordenação ascendente → descendente
+            # Antes: reverse=False (coesão mais baixa → mais alta)
+            # Depois: reverse=True  (coesão mais alta → mais baixa)
             clusters = list(sorted(
                 self.clusters.values(),
-                key=lambda x: x.get_cohesion(), reverse=False))
+                key=lambda x: x.get_cohesion(), reverse=True))
         elif sort_by.name == ClusterSorting.PAIRWISE_SIMILARITY.name:
             clusters_meta_info = self.get_pairwise_cluster_similarity()
             clusters = list(sorted(
@@ -395,12 +398,15 @@ class KeyphraseClustering(KeyphraseEmbeddings):
                 key=lambda x: clusters_meta_info[x.id]['similarity'],
                 reverse=True))
         elif sort_by.name == ClusterSorting.CENTROID_SIMILARITY.name:
+            # Sprint 03 — T005: Corrigir ordenação ascendente → descendente
+            # Antes: reverse=False (similaridade mais baixa → mais alta)
+            # Depois: reverse=True  (similaridade mais alta → mais baixa)
             clusters_meta_info = self.get_cluster_centrality_scores()
             clusters = list(sorted(
                 self.clusters.values(),
                 key=lambda x:
                 clusters_meta_info[x.id]['average_similarity_from_centroid'],
-                reverse=False))
+                reverse=True))
         return clusters, clusters_meta_info
 
     def to_list(self, header=False, sort_column=1, reverse=False):
@@ -474,14 +480,53 @@ class KeyphraseClustering(KeyphraseEmbeddings):
                     get_description()
                 keyphrase_descriptions[id] = description
         elif sort_by.name == KeyphraseSorting.PAIRWISE_SIMILARITY.name:
+            # T007 — Sprint 03: Agrupar pares recíprocos adjacentes
+            # 1. Construir lista temporária com (id, description, best_pair_id, similarity)
+            temp_list = []
             for keyphrase in keyphrase_list:
-                similar_cluster = "({}, {:.2f})".\
+                similar_cluster = "({}, {:.2f})". \
                     format(keyphrase[2], keyphrase[3])
-                id = keyphrase[0]
-                keyphrase_obj = self.get_keyphrase_by_id(id)
+                _id = keyphrase[0]
+                keyphrase_obj = self.get_keyphrase_by_id(_id)
                 description = keyphrase_obj.get_description(
                     similar_cluster)
-                keyphrase_descriptions[id] = description
+                temp_list.append((
+                    _id,
+                    description,
+                    keyphrase[2],  # best_pair_id
+                    keyphrase[3]   # similarity
+                ))
+
+            # 2. Agrupar pares recíprocos: se A→B e B→A, colocar adjacentes
+            id_to_data = {item[0]: item for item in temp_list}
+            visited = set()
+            grouped_list = []
+
+            for item in temp_list:
+                kid = item[0]
+                if kid in visited:
+                    continue
+                best_pair_id = item[2]
+                visited.add(kid)
+
+                # Verifica se best_pair é recíproco (B→A)
+                if (best_pair_id is not None and best_pair_id != 0
+                        and best_pair_id in id_to_data
+                        and best_pair_id not in visited):
+                    best_data = id_to_data[best_pair_id]
+                    if best_data[2] == kid:  # B's best_pair == A
+                        # Par recíproco: adiciona A e B consecutivos
+                        grouped_list.append(item)
+                        grouped_list.append(best_data)
+                        visited.add(best_pair_id)
+                        continue
+
+                # Não recíproco ou já visitado: adiciona solo
+                grouped_list.append(item)
+
+            keyphrase_descriptions = {
+                item[0]: item[1] for item in grouped_list
+            }
         elif sort_by.name == KeyphraseSorting.CLUSTER_SIMILARITY.name:
             for keyphrase in keyphrase_list:
                 similar_keyphrase = "({}, {:.2f})".\

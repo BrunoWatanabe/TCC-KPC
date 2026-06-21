@@ -1,7 +1,7 @@
 # Plano de Sprints — Keyphrase Curation (KPC)
 
 **Projeto:** Frontend MVVM de curadoria de keyphrases com backend FastAPI
-**Total de Sprints:** 4 sprints
+**Total de Sprints:** 3 sprints
 **Ritmo:** 1 sprint por dia útil (~4h/dia)
 
 ---
@@ -12,8 +12,7 @@
 |--------|-------------|-----------|--------|
 | **Sprint 01** | 🏗️ **MDE+SDD (Spec-Kit + 4 Personas)** | Teste do pipeline Spec-Kit com Arquitetura, Developer, Polícia e Juiz — componente de Login | ✅ Concluída |
 | **Sprint 02** | 🏗️ **MDE+SDD (Spec-Kit + 4 Personas)** | Teste do pipeline Spec-Kit — correção de serialização numpy no backend | ✅ Concluída |
-| **Sprint 03** | 🤖 **Copilot (sem metodologia)** | Teste do Copilot puro, sem Spec-Kit, sem personas, sem pipeline — correção de ordenação via chat direto | 🟡 Pendente |
-| **Sprint 04** | ⚡ **Copilot + RTK (Redux Toolkit)** | Teste do Copilot com RTK — implementação de nova funcionalidade completa no frontend | ⬜ Planejada |
+| **Sprint 03** | 🤖 **Copilot (sem metodologia)** + 🏗️👨‍💻👮‍♂️⚖️ **Análise retroativa Spec-Kit** | Correção de ordenação + labels + pareamento via Copilot, seguido de análise retroativa com as 4 personas do Spec-Kit | ✅ Concluída |
 
 ---
 
@@ -23,14 +22,25 @@ A Sprint 01 e Sprint 02 deste plano executa **obrigatoriamente** o pipeline comp
 
 ```mermaid
 flowchart LR
-    A[/speckit.specify\\] --> B[/speckit.plan\\]
-    B --> C[/speckit.tasks\\]
-    C --> D[/speckit.implement\\]
-    D --> E[\Commit\]
-    E --> F[/speckit.analyze\\]
-    B -.->|+ Arquiteto| B2
-    D -.->|+ Developer| D2
-    F -.->|Polícia ➡ Juiz| F2
+    subgraph "Fundação (Sprint 0)"
+        CONST[/speckit.constitution<br/>Constituição\\]
+    end
+
+    subgraph "Comandos Spec-Kit (Nativos)"
+        CONST --> A[/speckit.specify<br/>Especificação\\]
+        A --> B[/speckit.plan<br/>Planejamento\\]
+        B --> C[/speckit.tasks<br/>Tarefas\\]
+        C --> D[/speckit.implement<br/>Implementação\\]
+        D --> E[/speckit.analyze<br/>Análise\\]
+    end
+
+    subgraph "Personas (Camada Adicional)"
+        B -.->|+ 🏗️ Arquiteto| B2[Gera model/*.puml<br/>com RF tags]
+        D -.->|+ 👨‍💻 Developer| D2[Valida fidelidade<br/>+ @model tags]
+        E -.->|+ 👮‍♂️ Polícia| E2[Gera .md + depoimentos<br/>ARG-/DEP- automáticos]
+        E2 -->|automático| F[⚖️ Juiz<br/>Julga direto]
+        F --> G[verdict/verdict.md]
+    end
 ```
 
 | Passo | Comando | Persona | Artefato |
@@ -40,33 +50,27 @@ flowchart LR
 | 2 | `/speckit.plan` | 🏗️ Arquiteto | `specs/<feature>/model/*.puml` com `@rf:` |
 | 3 | `/speckit.tasks` | — | `specs/<feature>/tasks.md` |
 | 4 | `/speckit.implement` | 👨‍💻 Developer | Código com `// @model:` |
-| 5 | `git commit` | Humano | Commit |
-| 6 | `/speckit.analyze` | 👮‍♂️ Polícia + ⚖️ Juiz | `evidence/inconsistencies.md` + `verdict/verdict.md` |
+| 5 | `/speckit.analyze` | 👮‍♂️ Polícia + ⚖️ Juiz | `evidence/inconsistencies.md` + `verdict/verdict.md` |
 
 ---
 
-## Sprint 01 — Autenticação e Timeline de Tópicos
+## Sprint 01 — Autenticação e Timeline de Tópicos - 🏗️ MDE+SDD (Spec-Kit)
 
 **Escopo:** Tela de login funcional + seletor de tópicos (abortion, cloning, etc.).
 
 ### RFs da Sprint
 
-| RF | Descrição | Prioridade |
-|----|-----------|------------|
-| RF-001 | Login com e-mail e senha via API | P1 |
-| RF-002 | Seletor de tópicos carregado do backend | P1 |
+| RF | Descrição | Prioridade | Status |
+|----|-----------|------------|--------|
+| RF-001 | Login com e-mail e senha via API | P1 | ✅ Concluído |
 
 ### O que precisa ser feito
 
-| Tarefa | Backend | Frontend | Artefato Esperado |
-|--------|---------|----------|-------------------|
-| **T001** | ✅ (já existe endpoint de login em `/auth/login`) | Criar/refinar `LoginView.jsx` com formulário e store `useAuthStore` | `specs/sprint-01/model/login.puml` → `views/pages/LoginView.jsx` |
-| **Status** | � Concluída | **3 rodadas completas:** R1 (6 evidências DE → correções ST001.1), R2 (6 RESOLVIDAS, GATE-03 liberado), R3 (runtime legados corrigido ST001.2). |
-| **ST001.1** | N/A | Aplicar correções determinadas pelo veredito da Rodada 1 (`specs/001-login-component/verdict/verdict.md`): refatorar `User.js` para escopo mínimo, refatorar `AuthService.js` para expor apenas `login()`, remover ações não modeladas de `useAuthStore`, adicionar `// @model:` em `config.js`, corrigir `maxRows` no `TextField.jsx`, alinhar nomenclatura do hook `useAuth` | Executar novo ciclo: `commit` → `/speckit.analyze` (Rodada 2) |
-| **Status ST001.1** | 🟢 Concluída | Rodada 2 aprovou todas as 6 correções como RESOLVIDAS. GATE-03 (over-engineering) liberado. |
-| **ST001.2** | N/A | Aplicar correções determinadas pelo veredito da Rodada 2 e corrigir bug de runtime: (1) `authService` não exportado — corrigir imports em 6 arquivos legados; (2) varredura de imports quebrados em `src-mvvm/`; (3) console limpo | Executar novo ciclo: `commit` → `/speckit.analyze` (Rodada 3) |
-| **Status ST001.2** | 🟢 Concluída | Rodada 3 confirmou runtime sem erros. 0 novas evidências. 6 evidências R1 mantidas RESOLVIDAS. |
-| **T002** | ✅ (já existe endpoint de tópicos em `/topics`) | Criar/refinar `TopicSelectionView.jsx` com store `useTopicStore` | `specs/sprint-01/model/topics.puml` → `views/pages/TopicSelectionView.jsx` |
+| Tarefa | Backend | Frontend | Artefato Esperado | Status |
+|--------|---------|----------|-------------------|--------|
+| **T001** | ✅ endpoint `/auth/login` existe | Criar/refinar `LoginView.jsx` + `useAuthStore` | `LoginView.jsx` funcional com MVVM | ✅ **Concluído** — 3 rodadas: R1 (6 evidências), R2 (6 RESOLVIDAS), R3 (runtime legados) |
+| **ST001.1** | N/A | Aplicar correções do veredito R1: refatorar `User.js`, `AuthService.js`, `useAuthStore`, `config.js`, `TextField.jsx`, hook `useAuth` | Correções aplicadas e validadas | ✅ **Concluído** — R2 aprovou 6/6 correções, GATE-03 liberado |
+| **ST001.2** | N/A | Corrigir imports quebrados em 6 arquivos legados de `src-mvvm/` | Runtime sem erros | ✅ **Concluído** — R3: 0 novas evidências, 6 mantidas RESOLVIDAS |
 
 ### Arquivos impactados (frontend)
 
@@ -80,7 +84,7 @@ flowchart LR
 
 ---
 
-## Sprint 02 — Correção de Serialização: Pairwise + Centroid Similarity
+## Sprint 02 — Correção de Serialização: Pairwise + Centroid Similarity - 🏗️ MDE+SDD (Spec-Kit)
 
 **Escopo:** Corrigir `500 Internal Server Error` nos endpoints `GET /topic/clusters/{username}/{topic}/pairwise_similarity` e `GET /topic/clusters/{username}/{topic}/centroid_similarity`.
 
@@ -90,19 +94,18 @@ flowchart LR
 
 ### RFs da Sprint
 
-| RF | Descrição | Prioridade |
-|----|-----------|------------|
-| RF-003 | Corrigir serialização do endpoint pairwise_similarity | P1 |
-| RF-004 | Corrigir serialização do endpoint centroid_similarity (resolvido pelo NumpyConverter da T002) | P1 |
+| RF | Descrição | Prioridade | Status |
+|----|-----------|------------|--------|
+| RF-003 | Corrigir serialização do endpoint pairwise_similarity | P1 | ✅ Concluído |
+| RF-004 | Corrigir serialização do endpoint centroid_similarity (resolvido pelo NumpyConverter) | P1 | ✅ Concluído |
 
 ### O que precisa ser feito
 
-| Tarefa | Backend | Frontend | Artefato Esperado |
-|--------|---------|----------|-------------------|
-| **T002** | 🟢 **Concluída** — `NumpyConverter.to_native()` criado em `util/json_encoder.py` e aplicado no retorno completo de `list_clusters()` em `api/topic.py:268`. | N/A | `curl http://localhost:3132/topic/clusters/daired/cloning/pairwise_similarity` → HTTP 200 ✅ |
-| **Status** | 🟢 Concluída | **2 rodadas completas:** R1 (2 evidências — 1 AMBOS, 1 AE), R2 (2 RESOLVIDAS — ambas NE). GATES aprovados. SC-001 (HTTP 200) alcançado. |
-| **ST002.1** | 🟢 **Concluída** — Corrigir alcance do `NumpyConverter.to_native()` — aplicado em TODO o dicionário de retorno (`return NumpyConverter.to_native({...})`). Modelo (`sequence.puml`, `classes.puml`, `components.puml`) atualizado com `@rf: RF-003-C1`. | N/A | `curl` → HTTP 200. Veredito R2: NE (Ninguém Errado). |
-| **T003** | 🟢 **Concluída** — Resolvida automaticamente pelo `NumpyConverter` da T002. O endpoint `centroid_similarity` passa pelo mesmo `list_clusters()` que aplica `NumpyConverter.to_native()` em todo o dicionário. | N/A | `curl http://localhost:3132/topic/clusters/daired/cloning/centroid_similarity` → HTTP 200 ✅ |
+| Tarefa | Backend | Frontend | Artefato Esperado | Status |
+|--------|---------|----------|-------------------|--------|
+| **T002** | Criar `NumpyConverter.to_native()` em `util/json_encoder.py` e aplicar no retorno de `list_clusters()` | N/A | `curl pairwise_similarity` → HTTP 200 | ✅ **Concluído** — 2 rodadas: R1 (AMBOS+AE), R2 (NE+NE). SC-001 aprovado |
+| **ST002.1** | Aplicar `to_native()` em TODO o dicionário de retorno (`return NumpyConverter.to_native({...})`). Modelo `.puml` atualizado com `@rf: RF-003-C1` | N/A | `curl` → HTTP 200, sem `PydanticSerializationError` | ✅ **Concluído** — Veredito R2: NE |
+| **T003** | Resolvido automaticamente pelo `NumpyConverter` — `centroid_similarity` passa pelo mesmo `list_clusters()` | N/A | `curl centroid_similarity` → HTTP 200 | ✅ **Concluído** — Herdou solução da T002 |
 
 ### Arquivos impactados (backend)
 
@@ -113,9 +116,12 @@ flowchart LR
 
 ---
 
-## Sprint 03 — Correção de Ordenação de Clusters — 🤖 Copilot (sem metodologia)
+## Sprint 03 — Correção de Ordenação de Clusters — 🤖 Copilot + Análise Retroativa 🏗️👨‍💻👮‍♂️⚖️
 
-**Natureza:** Experimento **Copilot puro** — sem Spec-Kit, sem personas, sem pipeline MDE+SDD. O objetivo é testar a produtividade e qualidade do Copilot agindo livremente, sem amarras metodológicas.
+**Natureza:** Experimento híbrido — **Copilot puro** para implementação (sem metodologia) seguido de **análise retroativa com as 4 personas do Spec-Kit** para gerar artefatos de modelagem, evidências e vereditos sobre o que foi implementado.
+
+**Fase 1 — Implementação com Copilot:** Correção de ordenação + labels + pareamento via chat direto.
+**Fase 2 — Análise com Spec-Kit:** Aplicar Arquiteto, Developer, Polícia e Juiz retroativamente, gerando diagramas .puml, evidências e vereditos a partir dos logs experimentais.
 
 **Escopo:** Corrigir a ordenação dos endpoints `cluster_cohesion` e `centroid_similarity` — atualmente retornam do menor para o maior, mas devem retornar do maior para o menor.
 
@@ -123,54 +129,54 @@ flowchart LR
 
 ### RFs da Sprint
 
-| RF | Descrição | Prioridade |
-|----|-----------|------------|
-| RF-005 | Ordenar cluster_cohesion do maior para o menor | P1 |
-| RF-006 | Ordenar centroid_similarity do maior para o menor | P1 |
+| RF | Descrição | Prioridade | Status |
+|----|-----------|------------|--------|
+| RF-005 | Ordenar cluster_cohesion do maior para o menor | P1 | ✅ Concluído |
+| RF-006 | Ordenar centroid_similarity do maior para o menor | P1 | ✅ Concluído |
+| RF-007 | Padronizar labels do order by "Source Keyphrases" com enum `KeyphraseSortingLabels` | P2 | ✅ Concluído |
+| RF-008 | Agrupar pares recíprocos no pairwise_similarity do backend | P2 | ✅ Concluído |
+| RF-009 | Análise retroativa com personas (T004+T005) — gerar artefatos de modelagem, evidências e veredito | P3 | ✅ Concluído — 1 rodada, 5 evidências NE. Veredito: `/relatorios/sprint3-t004-t005/verdict/verdict.md` |
+| RF-010 | Análise retroativa com personas (T006) — gerar artefatos de modelagem, evidências e veredito | P3 | ✅ Concluído — 1 rodada, 5 evidências NE. Veredito: `/relatorios/sprint3-t006/verdict/verdict.md` |
+| RF-011 | Análise retroativa com personas (T007) — gerar artefatos de modelagem, evidências e veredito | P3 | ✅ Concluído — 1 rodada, 5 evidências NE. Veredito: `/relatorios/sprint3-t007/verdict/verdict.md` |
 
 ### O que precisa ser feito
 
-| Tarefa | Backend | Frontend | Artefato Esperado |
-|--------|---------|----------|-------------------|
-| **T004** | 🤖 Corrigir ordenação do endpoint `/topic/clusters/{username}/{topic}/cluster_cohesion` — atualmente retorna da **coesão mais baixa para a mais alta** (ascendente). Deve retornar da **coesão mais alta para a mais baixa** (descendente). Localizar a lógica de ordenação em `model/cluster.py` e inverter o `reverse` ou o sorting key. | N/A (frontend apenas consome) | `curl http://localhost:3132/topic/clusters/daired/cloning/cluster_cohesion` retorna clusters ordenados do maior valor de coesão para o menor |
-| **T005** | 🤖 Corrigir ordenação do endpoint `/topic/clusters/{username}/{topic}/centroid_similarity` — atualmente retorna da **similaridade mais baixa para a mais alta** (ascendente). Deve retornar da **similaridade mais alta para a mais baixa** (descendente). Como o `NumpyConverter` já resolveu a serialização, o foco é apenas inverter a ordenação. | N/A (frontend apenas consome) | `curl http://localhost:3132/topic/clusters/daired/cloning/centroid_similarity` retorna clusters ordenados do maior valor de similaridade para o menor |
+| Tarefa | Backend | Frontend | Artefato Esperado | Status |
+|--------|---------|----------|-------------------|--------|
+| **T004** | `model/cluster.py`: `reverse=False` → `reverse=True` no `sorted()` de `cluster_cohesion` | N/A | `curl cluster_cohesion` → ordem descendente | ✅ **Concluído** — Testado: `[1.0, 1.0, 1.0, 0.92, 0.75, ...]` |
+| **T005** | `model/cluster.py`: `reverse=False` → `reverse=True` no `sorted()` de `centroid_similarity` | N/A | `curl centroid_similarity` → ordem descendente | ✅ **Concluído** — Testado: `[1.0, 1.0, 1.0, 0.92, 0.75, 0.74, ...]` |
+| **T006** | N/A | `KeyphraseSorting.js`: criar `KeyphraseSortingLabels`. `KeyphraseClusteringView.jsx`: substituir labels hardcoded pelo enum | Select de ordenação padronizado via enum | ✅ **Concluído** — Log: `relatorios/log-copilot-sprint3-t006.md` |
+| **T007** | `model/cluster.py`: pós-processamento em `get_keyphrase_descriptions()` p/ agrupar pares recíprocos adjacentes | N/A | Pares recíprocos adjacentes no pairwise_similarity | ✅ **Concluído** — Testado: 140/140 pares adjacentes. Log: `relatorios/log-copilot-sprint3-t007.md` |
+| **T008** | 🏗️👮‍♂️⚖️ Aplicar personas (Arquiteto, Polícia, Juiz) nas correções **T004+T005**. Base: `/relatorios/sprint3-t004-t005/log-copilot-sprint3-t004-t005.md`. Para gerar: `/relatorios/sprint3-t004-t005/model/*.puml`, `/relatorios/sprint3-t004-t005/evidence/inconsistencies.md`, `/relatorios/sprint3-t004-t005/verdict/verdict.md` | N/A | Artefatos de modelagem + evidências + veredito para as correções de ordenação | ✅ **Concluído** — R1: 5 evidências (2 TAG_MODEL_AUSENTE, 3 METODO_EXTRAS), 5 vereditos NE. Gates: 3✅ 1❌. 1 rodada finalizada |
+| **T009** | 🏗️👮‍♂️⚖️ Aplicar personas (Arquiteto, Polícia, Juiz) na correção **T006**. Base: `/relatorios/sprint3-t006/log-copilot-sprint3-t006.md`. Para gerar: `/relatorios/sprint3-t006/model/*.puml`, `/relatorios/sprint3-t006/evidence/inconsistencies.md`, `/relatorios/sprint3-t006/verdict/verdict.md` | N/A | Artefatos de modelagem + evidências + veredito para padronização de labels | ✅ **Concluído** — R1: 5 evidências (3 TAG_MODEL_AUSENTE, 1 METODO_EXTRAS, 1 ATRIBUTO_EXTRAS), 5 vereditos NE. Gates: 3✅ 1❌. 1 rodada finalizada |
+| **T010** | 🏗️👮‍♂️⚖️ Aplicar personas (Arquiteto, Polícia, Juiz) na correção **T007**. Base: `/relatorios/sprint3-t007/log-copilot-sprint3-t007.md`. Para gerar: `/relatorios/sprint3-t007/model/*.puml`, `/relatorios/sprint3-t007/evidence/inconsistencies.md`, `/relatorios/sprint3-t007/verdict/verdict.md` | N/A | Artefatos de modelagem + evidências + veredito para pareamento de pares recíprocos | ✅ **Concluído** — R1: 5 evidências (3 TAG_MODEL_AUSENTE, 2 METODO_EXTRAS), 5 vereditos NE. Gates: 3✅ 1❌. 1 rodada finalizada |
 
-### Arquivos impactados (backend)
+### Status Geral da Sprint
 
-| Arquivo | Ação |
-|---------|------|
-| `src/keyphrase_curation/model/cluster.py` | Localizar lógica de ordenação de `cluster_cohesion` e `centroid_similarity` e inverter ordem (ascendente → descendente) |
+| Critério | Resultado |
+|----------|-----------|
+| RF-005 (cluster_cohesion descendente) | ✅ OK — `reverse=True` em `model/cluster.py:387` |
+| RF-006 (centroid_similarity descendente) | ✅ OK — `reverse=True` em `model/cluster.py:410` |
+| RF-007 (labels do order by Source Keyphrases) | ✅ OK — `KeyphraseSortingLabels` criado em `KeyphraseSorting.js`, aplicado em ambos selects |
+| RF-008 (pares pairwise adjacentes) | ✅ OK — Algoritmo de pós-processamento agrupa pares recíprocos. Testado: 140/140 adjacentes |
+| RF-009 (análise retroativa T004+T005) | ✅ OK — 1 rodada concluída. 5 vereditos NE. GATE-03 ✅, GATE-04 ❌ (esperado) |
+| RF-010 (análise retroativa T006) | ✅ OK — 1 rodada concluída. 5 vereditos NE. GATE-03 ✅, GATE-04 ❌ (esperado) |
+| RF-011 (análise retroativa T007) | ✅ OK — 1 rodada concluída. 5 vereditos NE. GATE-03 ✅, GATE-04 ❌ (esperado) |
+| Teste HTTP 200 | ✅ Todos os endpoints retornam 200 |
+| Log experimental | ✅ `relatorios/log-copilot-sprint3-t004.md`, `t006.md`, `t007.md` |
+| Tempo total | ~1h (T004+T005: 25min, T006: 15min, T007: 20min) |
 
----
-
-## Sprint 04 — Implementação de Funcionalidade Completa — ⚡ Copilot + RTK
-
-**Natureza:** Experimento **Copilot com RTK (Redux Toolkit)** — implementar uma nova funcionalidade completa no frontend utilizando RTK para gerenciamento de estado global. O objetivo é testar a eficácia do Copilot auxiliado por RTK vs Spec-Kit.
-
-**Escopo:** Implementar uma nova funcionalidade de curadoria de keyphrases no frontend, consumindo a API existente do backend.
-
-**Frontend:** `kpc-frontend/src-mvvm/`
-
-### RFs da Sprint
-
-| RF | Descrição | Prioridade |
-|----|-----------|------------|
-| RF-007 | Implementar tela de curadoria de keyphrases com RTK (selecionar, anotar, salvar) | P1 |
-
-### O que precisa ser feito
-
-| Tarefa | Backend | Frontend | Artefato Esperado |
-|--------|---------|----------|-------------------|
-| **T006** | N/A (API já existe) | ⚡ **Criar funcionalidade completa de curadoria de keyphrases** utilizando **RTK (Redux Toolkit)** para gerenciamento de estado: store global, slices, thunks assíncronos, componentes conectados. A funcionalidade deve consumir endpoints existentes do backend para listar, selecionar e salvar anotações de keyphrases por tópico. Incluir feedback visual (loading, sucesso, erro). | Tela funcional de curadoria com RTK — store, slice, thunks e UI conectada |
-
-### Arquivos impactados (frontend)
+### Arquivos impactados (frontend + backend)
 
 | Arquivo | Ação |
 |---------|------|
-| `src-mvvm/store/` | Criar — estrutura RTK (store, slices, thunks) |
-| `src-mvvm/views/pages/` | Criar — tela de curadoria |
-| `src-mvvm/views/components/` | Criar — componentes de anotação |
-| `src-mvvm/models/services/` | Criar — serviço HTTP para keyphrases |
+| `kpc-backend/src/keyphrase_curation/model/cluster.py` | ✅ Ordenação cluster_cohesion/centroid_similarity (ascendente → descendente) — Concluído |
+| `kpc-backend/src/keyphrase_curation/model/cluster.py` | ✅ Pares recíprocos agrupados em `get_keyphrase_descriptions()` p/ PAIRWISE_SIMILARITY (T007) |
+| `kpc-frontend/src-mvvm/shared/enums/KeyphraseSorting.js` | ✅ `KeyphraseSortingLabels` criado como alias PascalCase (T006) |
+| `kpc-frontend/src-mvvm/views/pages/KeyphraseClusteringView.jsx` | ✅ Labels hardcoded substituídos por `KeyphraseSortingLabels` (T006) |
+| `/relatorios/sprint3-t004-t005/` | ✅ Gerado — classes.puml, sequence.puml, components.puml, evidence/inconsistencies.md, verdict/verdict.md (T008) |
+| `/relatorios/sprint3-t006/` | ✅ Gerado — classes.puml, sequence.puml, components.puml, evidence/inconsistencies.md, verdict/verdict.md (T009) |
+| `/relatorios/sprint3-t006/` | ✅ Gerado — classes.puml, sequence.puml, components.puml, evidence/inconsistencies.md, verdict/verdict.md (T010) |
 
 ---
 
@@ -179,16 +185,15 @@ flowchart LR
 ```mermaid
 flowchart LR
     S1[Sprint 01<br/>MDE+SDD Login<br/>✅ Concluída] --> S2[Sprint 02<br/>MDE+SDD Serialização<br/>✅ Concluída]
-    S2 --> S3[Sprint 03<br/>🤖 Copilot Ordenação<br/>🟡 Pendente]
-    S3 --> S4[Sprint 04<br/>⚡ Copilot+RTK Funcionalidade<br/>⬜ Planejada]
+    S2 --> S3[Sprint 03<br/>🤖 Copilot + Análise<br/>✅ Concluída]
+    S3
 ```
 
 | Sprint | Metodologia | Depende de | É pré-requisito para |
 |--------|-------------|-----------|----------------------|
 | 01 — Login + Refinar | 🏗️ MDE+SDD (Spec-Kit) | — | 02 |
 | 02 — Serialização (pairwise + centroid) | 🏗️ MDE+SDD (Spec-Kit) | 01 | 03 |
-| 03 — Ordenação de clusters | 🤖 Copilot (sem metodologia) | 02 | 04 |
-| 04 — Funcionalidade RTK | ⚡ Copilot + RTK | 03 | — |
+| 03 — Ordenação + Labels + Pareamento + Análise | 🤖 Copilot + 🏗️👨‍💻👮‍♂️⚖️ Análise | 02 | — |
 
 ---
 
@@ -198,5 +203,4 @@ flowchart LR
 |--------|-------------|-----|---------|----------|---------|
 | Sprint 01 | 🏗️ MDE+SDD (Spec-Kit) | RF-001, RF-002 | T001 + ST001.1 + ST001.2 | Refatorar 4 arquivos | Nenhum |
 | Sprint 02 | 🏗️ MDE+SDD (Spec-Kit) | RF-003, RF-004 | T002 + ST002.1 + T003 | N/A | `json_encoder.py` (criar), `api/topic.py` (modificar) |
-| Sprint 03 | 🤖 Copilot (sem metodologia) | RF-005, RF-006 | T004 + T005 | N/A | `model/cluster.py` (corrigir ordenação) |
-| Sprint 04 | ⚡ Copilot + RTK | RF-007 | T006 | Criar store RTK + páginas + componentes + serviços | N/A |
+| Sprint 03 | 🤖 Copilot (sem metodologia) + análise retroativa Spec-Kit | RF-005 a RF-011 | T004 + T005 + T006 + T007 + T008 + T009 + T010 | `KeyphraseSorting.js` (criar labels enum), `KeyphraseClusteringView.jsx` (usar enum) | `model/cluster.py` (corrigir ordenação + parear pares) |

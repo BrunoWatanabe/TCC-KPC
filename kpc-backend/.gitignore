@@ -29,3 +29,15 @@ run.log
 dataset/annotations/tests
 *storybook.log
 storybook-static
+
+# Credenciais e tokens
+login_response.json
+notebooks/token.json
+
+# Dados de anotação em andamento
+cloning_agreement.tsv
+dataset/annotations/new/
+notebooks/attributions.json
+
+# Backups
+*.backup

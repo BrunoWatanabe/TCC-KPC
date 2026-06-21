@@ -1,200 +1,402 @@
-# Keyphrase Curation — Backend
+# Keyphrase Curation Platform — Backend
 
-Este repositório contém o backend da ferramenta de curadoria de keyphrases (anotações, extração, clustering e interface administrativa).
+**KPC Backend** é o servidor da plataforma de curadoria de keyphrases. Ele fornece uma API REST (FastAPI) para extração, geração, clustering, anotação e adjudicação de keyphrases, além de uma interface web interativa construída com ReactPy.
 
-Sumário
--------
+---
 
-- [Visão geral](#visao-geral)
-- [Tutorial de inicialização](#tutorial-inicializacao)
-  - [Inicialização manual (ambiente local)](#inicializacao-manual)
-  - [Inicialização via scripts (`launcher/`)](#inicializacao-via-scripts)
-  - [Inicialização via Docker (opcional)](#inicializacao-via-docker)
-- [Estrutura do projeto (explicação de pastas e arquivos importantes)](#estrutura-do-projeto)
-- [Configuração (variáveis, arquivos de exemplo)](#configuracao)
-- [Execução e comandos úteis](#execucao-e-comandos-uteis)
+## Sumário
+
+- [Visão geral](#visão-geral)
+- [Arquitetura](#arquitetura)
+- [Estrutura do projeto](#estrutura-do-projeto)
+  - [`src/` — Código-fonte](#src--código-fonte)
+  - [`dataset/` — Base de dados](#dataset--base-de-dados)
+  - [`scripts/` — Utilitários](#scripts--utilitários)
+  - [`notebooks/` — Experimentos e análise](#notebooks--experimentos-e-análise)
+  - [`tests/` — Testes automatizados](#tests--testes-automatizados)
+  - [`docs/` — Documentação](#docs--documentação)
+  - [`launcher/` — Scripts de inicialização](#launcher--scripts-de-inicialização)
+- [Tutorial de inicialização](#tutorial-de-inicialização)
+  - [Manual (ambiente local)](#1-manual-ambiente-local)
+  - [Via scripts (`launcher/`)](#2-via-scripts-launcher)
+  - [Via Docker](#3-via-docker)
+- [API REST — Endpoints](#api-rest--endpoints)
+- [Autenticação e segurança](#autenticação-e-segurança)
+- [Configuração](#configuração)
 - [Desenvolvimento e testes](#desenvolvimento-e-testes)
-- [Notas finais / boas práticas](#notas-finais--boas-praticas)
-- [Contatos e referências](#contatos-e-referencias)
+- [Licença](#licença)
 
-<a id="visao-geral"></a>
-Visão geral
------------
+---
 
-O backend fornece:
+## Visão geral
 
-- Extração de keyphrases com ferramentas como KeyBERT, RAKE, spaCy, TextRank e YAKE.
-- Geração de keyphrases por prompts (ex.: integração com LLMs).
-- Suporte a anotações com embeddings (Sentence-BERT) para similaridade e clustering.
-- Fluxo de gerenciamento de anotações (perfis, atribuição de tarefas, controle de pipeline).
+A plataforma KPC foi desenvolvida para apoiar a curadoria de keyphrases em textos argumentativos. Ela permite:
 
-<a id="tutorial-inicializacao"></a>
-Tutorial de inicialização
--------------------------
+- **Extração automática** de keyphrases usando KeyBERT, RAKE, spaCy, TextRank e YAKE.
+- **Geração por LLM** via prompts para ChatGPT (OpenAI).
+- **Clustering** de keyphrases baseado em embeddings (Sentence-BERT) com suporte a múltiplas ordenações (coesão, similaridade por pares, similaridade por centróide).
+- **Anotação colaborativa**: múltiplos anotadores podem classificar keyphrases em clusters.
+- **Adjudicação**: consolidação das anotações de diferentes usuários.
+- **Interface web interativa** com ReactPy para o fluxo de anotação.
 
-<a id="inicializacao-manual"></a>
-1) Inicialização manual (ambiente local)
+---
 
-Pré-requisitos
+## Arquitetura
 
-- Python 3.9 (recomendado)
-- pip
-- Git
-- (Opcional) Docker para o modo `docker`
+```
+┌──────────────┐     ┌──────────────────────────────────────────────┐
+│  Cliente     │     │            KPC Backend (FastAPI)             │
+│  (ReactPy)   │◄───►│                                              │
+│  (Swagger)   │     │  ┌─────────┐  ┌────────────┐  ┌──────────┐  │
+└──────────────┘     │  │  API    │  │ Controller │  │  Model   │  │
+                     │  │  Layer  │──►│   Layer    │──►│  Layer   │  │
+                     │  └─────────┘  └────────────┘  └──────────┘  │
+                     │       │              │               │       │
+                     │  ┌─────────┐  ┌────────────┐  ┌──────────┐  │
+                     │  │ Security │  │ Annotation │  │ Dataset  │  │
+                     │  │  (JWT)  │  │ Controller │  │ (TOML)   │  │
+                     │  └─────────┘  └────────────┘  └──────────┘  │
+                     └──────────────────────────────────────────────┘
+```
+
+**Tecnologias principais:**
+- **FastAPI** — Framework web assíncrono (Python 3.9+)
+- **ReactPy** — Interface reativa no backend (componentes Python → HTML/JS)
+- **Sentence-BERT** — Embeddings para similaridade semântica
+- **JWT + bcrypt** — Autenticação stateless
+- **TOML** — Configuração de atribuições de usuários
+- **NumPy / NetworkX** — Computação de similaridade e clustering
+
+---
+
+## Estrutura do projeto
+
+```
+kpc-backend/
+├── src/
+│   └── keyphrase_curation/
+│       ├── __init__.py          # Inicialização do config (dotenv)
+│       ├── extractor.py         # Extração de keyphrases (KeyBERT, RAKE, YAKE, spaCy)
+│       ├── generator.py         # Geração via LLM (ChatGPT/OpenAI)
+│       ├── api/                 # Camada de API REST (FastAPI routers)
+│       │   ├── main.py          # App FastAPI, middlewares, rotas
+│       │   ├── api_server.py    # Classe ApiServer (wrapper uvicorn)
+│       │   ├── user.py          # Login, logout, listagem de usuários
+│       │   ├── topic.py         # CRUD de tópicos, clustering, anotações
+│       │   ├── cluster.py       # Opções de ordenação de clusters
+│       │   ├── keyphrase.py     # Opções de ordenação de keyphrases
+│       │   └── annotation_file.py # Arquivos de anotação por usuário
+│       ├── controller/          # Lógica de negócio
+│       │   ├── user_attribution.py # Gerencia atribuições de usuários
+│       │   └── annotation.py    # Controlador de anotações (clusters, seleções)
+│       ├── model/               # Modelos de domínio
+│       │   ├── annotation.py    # Tasks, KeyphraseCurationFile, ClusterAnnotation
+│       │   ├── cluster.py       # ClusterSorting, KeyphraseClustering, Cluster
+│       │   ├── keyphrase.py     # Keyphrase, KeyphraseEmbeddings, KeyphraseSorting
+│       │   └── user_attribution.py # Leitura do attributions.toml
+│       ├── components/          # Componentes ReactPy (interface web)
+│       │   ├── app.py           # App principal, rotas ReactPy
+│       │   ├── login.py         # Tela de login (ReactPy)
+│       │   ├── login_internal.py # Login interno
+│       │   ├── topic.py         # Seleção de tópico
+│       │   ├── curation.py      # Curadoria de keyphrases
+│       │   ├── keyphrase_clustering.py # Clustering UI
+│       │   ├── keyphrase_clusters.py   # Visualização de clusters
+│       │   ├── curated_keyphrases.py   # Keyphrases curadas
+│       │   ├── adjudicator_chip.py     # Chip de adjudicação
+│       │   ├── adjudicator_clusters.py # Clusters do adjudicator
+│       │   └── mui.py           # Componentes Material UI wrappers
+│       ├── view/                # Views legadas (ipywidgets/Jupyter)
+│       │   ├── app.py
+│       │   ├── cluster_annotation.py
+│       │   └── user_data.py
+│       └── util/                # Utilitários
+│           ├── security.py      # JWT, bcrypt, OAuth2
+│           ├── pairwise_similarity.py # Matriz de similaridade por pares
+│           ├── json_encoder.py  # Conversor numpy → Python nativo
+│           └── fixture.py       # Import de fixtures de teste
+├── dataset/
+│   ├── attributions.toml        # 👤 Atribuições de usuários (IGNORADO pelo git)
+│   ├── attributions.template.toml # Template para attributions.toml
+│   ├── annotations/             # Anotações por usuário (.json e .kpc)
+│   │   ├── akira/
+│   │   ├── alexandre/
+│   │   ├── daired/
+│   │   ├── victor/
+│   │   └── new/                 # Anotações em andamento (ignorado)
+│   ├── keyphrases/
+│   │   ├── collected/           # Keyphrases coletadas (.tsv por tópico)
+│   │   ├── curated/             # Keyphrases curadas (.kpc por tópico)
+│   │   ├── embeddings/          # Embeddings pré-computados (.pkl)
+│   │   ├── extracted/           # Keyphrases extraídas automaticamente
+│   │   └── generated/           # Keyphrases geradas por LLM
+│   ├── scrapped/                # Dados brutos scrappados (.tsv)
+│   └── texts/                   # Textos fonte organizados por tópico
+│       ├── abortion/
+│       ├── cloning/
+│       ├── death_penalty/
+│       ├── gun_control/
+│       ├── marijuana_legalization/
+│       ├── minimum_wage/
+│       ├── nuclear_energy/
+│       └── school_uniforms/
+├── scripts/                     # Scripts utilitários
+│   ├── agreement.py             # Cálculo de acordo entre anotadores
+│   ├── extract_keyphrases.py    # Extração em lote
+│   ├── generate_embbedings.py   # Geração de embeddings
+│   ├── generate_keyphrases.py   # Geração via LLM
+│   ├── keyphrases_tsv_to_json.py # Conversão TSV → JSON
+│   ├── kpc_to_json.py           # Conversão .kpc → .json
+│   └── print_selected_keyphrases.py # Impressão de keyphrases selecionadas
+├── notebooks/                   # Jupyter Notebooks
+│   ├── new/                     # Notebooks atuais
+│   │   ├── cluster.ipynb
+│   │   ├── keyphase.ipynb
+│   │   ├── login.ipynb
+│   │   └── topic.ipynb
+│   ├── old/                     # Notebooks históricos
+│   └── *.ipynb                  # Notebooks avulsos (anotador, matching, etc.)
+├── tests/                       # Testes automatizados (pytest)
+│   ├── cluster_annotation_test.py
+│   ├── keyphrase_clustering_test.py
+│   ├── keyphrase_embeddings_test.py
+│   ├── fixtures/                # Fixtures de dados para testes
+│   └── samples/                 # Amostras de dados
+├── docs/                        # Documentação complementar
+│   ├── cluster_annotation.md
+│   └── user_data.md
+├── launcher/                    # Scripts de inicialização
+│   ├── start.sh                 # Inicia o backend (local ou docker)
+│   ├── stop.sh                  # Para o backend
+│   ├── status.sh                # Verifica status
+│   ├── common.sh                # Funções compartilhadas
+│   └── Dockerfile               # Imagem Docker
+├── reactpy-material/            # Submódulo: componentes Material UI para ReactPy
+├── reactpy-material-akira/      # Submódulo: fork com customizações
+├── .env                         # 🔐 Variáveis de ambiente (NÃO versionar)
+├── .env.template                # Template para .env
+├── .gitignore                   # Arquivos ignorados pelo git
+├── .dockerignore                # Arquivos ignorados pelo Docker
+├── requirements.txt             # Dependências Python (pinned)
+├── pyproject.toml               # Metadados do pacote Python
+├── package.json                 # Scripts npm auxiliares
+├── run.py                       # Entry point alternativo
+└── openapi.json                 # Especificação OpenAPI exportada
+```
+
+---
+
+## Tutorial de inicialização
+
+### 1. Manual (ambiente local)
+
+**Pré-requisitos:** Python 3.9+, pip, Git
 
 ```bash
 cd kpc-backend
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-# se desejar instalar como pacote editável
-pip install -e .
+pip install -e .                      # instala como pacote editável
+cp .env.template .env                 # configure suas variáveis
+cp dataset/attributions.template.toml dataset/attributions.toml
+git submodule update --init --recursive  # se for usar a interface ReactPy
 ```
 
-Em seguida copie os arquivos de configuração e edite-os:
+Edite `.env` com suas configurações (especialmente `SECRET_KEY` e `OPENAI_API_TOKEN`).
+
+### 2. Via scripts (`launcher/`)
 
 ```bash
-cp .env.template .env
-# editar .env conforme necessário
-cd dataset
-cp attributions.template.toml attributions.toml
-# ajustar attributions.toml
+bash launcher/start.sh local     # modo interativo
+bash launcher/start.sh docker    # modo Docker (requer Docker instalado)
+bash launcher/status.sh          # verificar status
+bash launcher/stop.sh            # parar execução
 ```
 
-<a id="inicializacao-via-scripts"></a>
-2) Inicialização via scripts (`launcher/`)
-
-O diretório `launcher/` contém scripts organizados para iniciar o backend nos modos suportados.
-
-- Executar localmente (interativo ou em background):
-
-```bash
-bash launcher/start.sh local
-```
-
-- Executar com Docker (faz verificações e prepara submódulos):
+### 3. Via Docker
 
 ```bash
 bash launcher/start.sh docker
 ```
 
-- Verificar status:
+O `Dockerfile` usa `python:3.11-slim` e expõe a porta `3132`.
 
-```bash
-bash launcher/status.sh
-```
+---
 
-- Parar a execução:
+## API REST — Endpoints
 
-```bash
-bash launcher/stop.sh
-```
-
-Se `start.sh` for executado sem argumento, ele exibirá um menu interativo para escolher o modo.
-
-<a id="acesso-ao-fastapi"></a>
-### Acessando o FastAPI
-
-Com o backend em execução, a API estará disponível nos seguintes endereços (padrão: `http://127.0.0.1:3132`):
+Com o servidor rodando (padrão: `http://127.0.0.1:3132`):
 
 | Recurso               | URL                                     |
 |-----------------------|-----------------------------------------|
 | **Swagger UI** (docs) | `http://127.0.0.1:3132/api/docs`        |
 | **OpenAPI spec**      | `http://127.0.0.1:3132/openapi.json`    |
+| **Interface ReactPy** | `http://127.0.0.1:3132/`                |
 
-> A porta pode ser alterada definindo a variável `KPC_PORT` (ex.: `export KPC_PORT=8000`) antes de iniciar.
+### Autenticação
 
-<a id="inicializacao-via-docker"></a>
-3) Inicialização via Docker (resumo)
+| Método | Rota                           | Descrição                    |
+|--------|--------------------------------|------------------------------|
+| POST   | `/users/login`                 | Login (form) → JWT+cookie    |
+| GET    | `/users/basic_login`           | Login via HTTP Basic Auth    |
+| GET    | `/users/logout`                | Logout (limpa cookie)        |
+| GET    | `/users/list`                  | Lista usuários               |
+| GET    | `/users/whoami`                | Retorna usuário logado       |
 
-O modo `docker` do `launcher/start.sh` valida a presença do Docker, testa o daemon e inicializa submódulos/arquivos de ambiente quando necessário. Recomenda-se usar esse modo em produção/local com contêineres.
+### Tópicos
 
-<a id="estrutura-do-projeto"></a>
-Estrutura do projeto
---------------------
+| Método | Rota                                      | Descrição                              |
+|--------|-------------------------------------------|----------------------------------------|
+| GET    | `/topic/{username}/list`                  | Tópicos do usuário                     |
+| GET    | `/topic/{username}/{topic}`               | Dados do tópico                        |
+| GET    | `/topic/keyphrase_clustering/{username}/{topic}` | Clustering de keyphrases       |
+| GET    | `/topic/clusters/{username}/{topic}`      | Clusters do tópico                     |
+| PUT    | `/topic/move_to_cluster/{username}/{topic}/{keyphrase_id}/{cluster_id}` | Move keyphrase para cluster |
+| PUT    | `/topic/save_annotation/{username}/{topic}/{task}` | Salva anotação                |
+| GET    | `/topic/cluster_selection/{username}/{topic}` | Seleção de clusters                |
+| GET    | `/topic/keyphrases_selection/{username}/{topic}` | Seleção de keyphrases          |
+| GET    | `/topic/keyphrases_aliases/{username}/{topic}` | Aliases de keyphrases            |
+| GET    | `/topic/curated_keyphrases/{username}/{topic}` | Keyphrases curadas              |
+| GET    | `/topic/clusters/{username}/{topic}/<sorting>` | Clusters ordenados (numerical, cluster_cohesion, pairwise_similarity, centroid_similarity) |
 
-Aqui estão as pastas e arquivos mais importantes e o que fazem:
+### Clusters
 
-- `dataset/`
-  - Contém dados usados no fluxo de curadoria: `attributions.toml`, anotações, keyphrases (coletadas/curadas/embeddings), e textos por tópico.
-  - `attributions.template.toml` → template para criar `dataset/attributions.toml`.
+| Método | Rota                                      | Descrição                              |
+|--------|-------------------------------------------|----------------------------------------|
+| GET    | `/clusters/cluster_sorting_options/{username}` | Opções de ordenação              |
+| GET    | `/clusters/get_cluster_sorting_by_value/{username}/{order}` | Ordenação por valor |
 
-- `docs/`
-  - Documentação específica, por exemplo `cluster_annotation.md` e `user_data.md`.
+### Keyphrases
 
-- `guideline/`
-  - Guias e templates relacionados às anotações.
+| Método | Rota                                      | Descrição                              |
+|--------|-------------------------------------------|----------------------------------------|
+| GET    | `/keyphrases/list`                        | Lista keyphrases                       |
+| GET    | `/keyphrases/get_keyphrase_sorting_by_value/{username}/{order}` | Ordenação por valor |
 
-- `launcher/`
-  - Scripts de inicialização: `start.sh`, `status.sh`, `stop.sh`, `common.sh` e `Dockerfile` de apoio.
-  - Use esses scripts para iniciar o sistema localmente ou com Docker.
+### Arquivos de anotação
 
-- `notebooks/`
-  - Notebooks Jupyter com experimentos, análise e ferramentas auxiliares (anotador, matching, etc.).
+| Método | Rota                                      | Descrição                              |
+|--------|-------------------------------------------|----------------------------------------|
+| GET    | `/annotation_files/{username}/list`       | Arquivos de anotação do usuário        |
 
-- `reactpy-material/` e `reactpy-material-akira/`
-  - Submódulos / módulos ReactPy usados pela interface. Observação: os READMEs locais foram consolidados neste README principal.
-
-- `scripts/`
-  - Scripts utilitários para extração, geração de embeddings, conversões e processamento, por exemplo: `generate_embbedings.py`, `extract_keyphrases.py`, `generate_keyphrases.py`.
-
-- `src/`
-  - Código-fonte Python principal, incluindo o pacote `keyphrase_curation` com a lógica do backend.
-
-- `tests/`
-  - Testes unitários e fixtures para validar componentes principais.
-
-- Arquivos importantes no root do backend:
-  - `.env.template` → modelo de variáveis de ambiente (copiar para `.env`).
-  - `requirements.txt` → dependências Python para instalação.
-  - `pyproject.toml` → metadados do pacote Python.
-  - `package.json` → dependências/ tarefas JS (se necessário para submódulos front-end).
-  - `run.py` → ponto de entrada auxiliar (se presente) para execução direta.
-  - `openapi.json` → especificação da API (se usada pela interface).
-
-<a id="configuracao"></a>
-Configuração
--------------
-
-- Copie `.env.template` para `.env` e ajuste variáveis (portas, caminhos, credenciais de serviços externos, chaves de API de LLMs, etc.).
-- Copie `dataset/attributions.template.toml` para `dataset/attributions.toml` e ajuste conforme o projeto.
-- Se o projeto usa submódulos Git, inicialize-os:
-
-```bash
-git submodule update --init --recursive
-```
-
-<a id="execucao-e-comandos-uteis"></a>
-Execução e comandos úteis
-------------------------
-
-- Iniciar local (interativo): `bash launcher/start.sh local`
-- Iniciar com Docker: `bash launcher/start.sh docker`
-- Parar: `bash launcher/stop.sh`
-- Status: `bash launcher/status.sh`
-- Ativar ambiente Python manualmente (sem launcher): veja a seção "Inicialização manual".
-
-<a id="desenvolvimento-e-testes"></a>
-Desenvolvimento
----------------
-
-- Instale as dependências de desenvolvimento do `requirements.txt`.
-- Rode os testes com pytest (ex.: `pytest -q`).
-- Para desenvolvimento front-end nos submódulos, consulte os respectivos diretórios `reactpy-material/` e `reactpy-material-akira/`.
-
-<a id="notas-finais--boas-praticas"></a>
-Notas finais / boas práticas
----------------------------
-
-- Mantenha as variáveis sensíveis fora do repositório — use `.env` local e não commite esse arquivo.
-- Use `launcher/` para fluxos repetíveis de inicialização e debugging.
-- Se for executar em produção com Docker, garanta que as variáveis de ambiente e volumes estejam bem configurados.
-
-<a id="contatos-e-referencias"></a>
-Contatos e referências
-----------------------
-
-Caso precise de mais informações sobre a arquitetura interna, consulte os arquivos em `docs/` e os notebooks em `notebooks/` para exemplos operacionais.
+A porta pode ser alterada definindo a variável `KPC_PORT` (ex.: `export KPC_PORT=8000`).
 
 ---
 
+## Autenticação e segurança
+
+O sistema utiliza **JWT (JSON Web Tokens)** com bcrypt para hash de senhas.
+
+- As senhas são armazenadas como hashes `$2b$` no `dataset/attributions.toml`.
+- O token JWT é gerado com `HS256` e expiração configurável (`ACCESS_TOKEN_EXPIRE_MINUTES`, padrão: 2880 min = 48h).
+- O cookie `Authorization` é do tipo `httponly`.
+- A **interface ReactPy** usa autenticação via cookie; a **API REST** pode usar `Authorization: Bearer <token>`.
+
+### ⚠️ Segurança ao publicar no GitHub
+
+Antes de tornar o repositório público, **verifique os seguintes pontos**:
+
+| Item | Status | Ação necessária |
+|------|--------|-----------------|
+| `.env` | ✅ No `.gitignore` | Contém `SECRET_KEY` e `OPENAI_API_TOKEN` — não versionar |
+| `dataset/attributions.toml` | ✅ No `.gitignore` | Contém hashes de senha reais |
+| `notebooks/token.json` | ✅ Removido do git | Continha token OAuth real do Google — **NUNCA versionar** |
+| `login_response.json` | ✅ Removido do git | Continha JWT real — **NUNCA versionar** |
+| `notebooks/attributions.json` | ✅ Removido do git | Contém mapeamento de anotadores |
+| `dataset/annotations/new/` | ✅ No `.gitignore` | Dados de anotação em andamento |
+| `venv/` | ✅ No `.gitignore` | Ambiente virtual local |
+| `dataset/attributions.template.toml` | ✅ Template apenas | **Use hashes placeholder** para publicação |
+| `openapi.json` | ⚠️ Público | Apenas especificação da API, sem dados sensíveis |
+
+> **Antes do primeiro commit público**, execute:
+> ```bash
+> # Verificar se há arquivos sensíveis no staging
+> git status
+> # Se necessário, remover do cache e adicionar ao .gitignore
+> git rm --cached arquivo_sensivel.json
+> # Regerar SECRET_KEY no .env local
+> python -c "import secrets; print(secrets.token_urlsafe(32))"
+> ```
+
+---
+
+## Configuração
+
+As variáveis de ambiente são carregadas de `.env` pelo `python-dotenv`:
+
+| Variável | Descrição | Padrão |
+|----------|-----------|--------|
+| `OPENAI_API_TOKEN` | Token da API OpenAI | — |
+| `OPENAI_API_TEMPERATURE` | Temperatura do modelo | `0.2` |
+| `OPENAI_API_MODEL` | Modelo OpenAI | `gpt-3.5-turbo` |
+| `OPENAI_API_MAX_TOKENS` | Máximo de tokens | `1000` |
+| `SECRET_KEY` | Chave secreta para assinatura JWT | — |
+| `SECURITY_ALGORITHM` | Algoritmo JWT | `HS256` |
+| `ACCESS_TOKEN_EXPIRE_MINUTES` | Expiração do token (minutos) | `2880` |
+| `DATASET_RELATIVE_PATH` | Caminho relativo para dataset | `dataset` |
+| `ATTRIBUTIONS_FILENAME` | Nome do arquivo de atribuições | `attributions.toml` |
+| `COOKIE_DOMAIN` | Domínio do cookie | `localhost` |
+| `COOKIE_PATH` | Path do cookie | `/` |
+| `CLUSTER_IDS_LENGTH` | Tamanho dos IDs de cluster | `33` |
+| `CURATED_KEYPHRASES_LENGTH` | Tamanho de keyphrases curadas | `16` |
+
+---
+
+## Desenvolvimento e testes
+
+```bash
+# Ativar ambiente virtual
+source .venv/bin/activate
+
+# Instalar dependências de desenvolvimento
+pip install -r requirements.txt
+
+# Executar testes
+pytest -q
+
+# Executar lint (ruff)
+ruff check src/
+
+# Verificar tipagem (mypy)
+mypy src/
+```
+
+### Testes disponíveis
+
+- `cluster_annotation_test.py` — Testes de anotação de clusters
+- `keyphrase_clustering_test.py` — Testes de clustering
+- `keyphrase_embeddings_test.py` — Testes de embeddings
+
+### Scripts utilitários
+
+```bash
+# Extrair keyphrases de textos
+python scripts/extract_keyphrases.py
+
+# Gerar embeddings
+python scripts/generate_embbedings.py
+
+# Gerar keyphrases via LLM
+python scripts/generate_keyphrases.py
+
+# Calcular acordo entre anotadores
+python scripts/agreement.py
+```
+
+---
+
+## Licença
+
+Este projeto está licenciado sob a licença MIT — veja o arquivo [LICENSE](LICENSE) para detalhes (se aplicável).
+
+---
+
+## Contatos e referências
+
+- Documentação adicional: [`docs/`](./docs)
+- Notebooks de experimentos: [`notebooks/new/`](./notebooks/new)
+- Especificação OpenAPI: [`openapi.json`](./openapi.json)
+- Submódulos:
+  - [reactpy-material](https://github.com/williamneto/reactpy-material.git)
+  - [reactpy-material-akira](https://github.com/marceloakira/reactpy-material.git)

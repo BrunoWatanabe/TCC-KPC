@@ -21,6 +21,7 @@ import {
 import { MainLayout } from '../layouts/index.js';
 import { KeyphraseItem, Button } from '../components/index.js';
 import { KeyphraseClustersView } from '../pages/index.js';
+import { KeyphraseSortingLabels } from '../../shared/enums/KeyphraseSorting.js';
 
 const KeyphraseClusteringView = ({
   // Estado
@@ -172,10 +173,9 @@ const KeyphraseClusteringView = ({
                   onChange={(e) => onKeyphraseOrderChange && onKeyphraseOrderChange(e.target.value)}
                   label="Ordenação das Keyphrases"
                 >
-                  <MenuItem value="alphabetical">Alfabética</MenuItem>
-                  <MenuItem value="numerical">Numérica</MenuItem>
-                  <MenuItem value="cluster_similarity">Similaridade de Cluster</MenuItem>
-                  <MenuItem value="pairwise_similarity">Similaridade Pareada</MenuItem>
+                  {Object.entries(KeyphraseSortingLabels).map(([value, label]) => (
+                    <MenuItem key={value} value={value}>{label}</MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </Grid>
@@ -231,7 +231,7 @@ const KeyphraseClusteringView = ({
           gap: 2,
           mb: 2
         }}>
-          {/* Order by select - seguindo backend */}
+          {/* Order by select - usando enum padronizado KeyphraseSortingLabels */}
           <FormControl sx={{ flex: 1, display: 'flex' }} size="small">
             <InputLabel>Order by</InputLabel>
             <Select
@@ -239,10 +239,9 @@ const KeyphraseClusteringView = ({
               onChange={(e) => onKeyphraseOrderChange(e.target.value)}
               label="Order by"
             >
-              <MenuItem value="alphabetical">alphabetical</MenuItem>
-              <MenuItem value="numerical">numerical</MenuItem>
-              <MenuItem value="cluster_similarity">cluster_similarity</MenuItem>
-              <MenuItem value="pairwise_similarity">pairwise_similarity</MenuItem>
+              {Object.entries(KeyphraseSortingLabels).map(([value, label]) => (
+                <MenuItem key={value} value={value}>{label}</MenuItem>
+              ))}
             </Select>
           </FormControl>
           

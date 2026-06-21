@@ -12,7 +12,7 @@
 |--------|-------------|-----------|--------|
 | **Sprint 01** | 🏗️ **MDE+SDD (Spec-Kit + 4 Personas)** | Teste do pipeline Spec-Kit com Arquitetura, Developer, Polícia e Juiz — componente de Login | ✅ Concluída |
 | **Sprint 02** | 🏗️ **MDE+SDD (Spec-Kit + 4 Personas)** | Teste do pipeline Spec-Kit — correção de serialização numpy no backend | ✅ Concluída |
-| **Sprint 03** | 🤖 **Copilot (sem metodologia)** | Teste do Copilot puro, sem Spec-Kit, sem personas, sem pipeline — correção de ordenação via chat direto + labels + pareamento | 🟡 Em andamento (T004/T005 ✅, T006/T007 🟡) |
+| **Sprint 03** | 🤖 **Copilot (sem metodologia)** | Teste do Copilot puro, sem Spec-Kit, sem personas, sem pipeline — correção de ordenação via chat direto + labels + pareamento | ✅ Concluída |
 | **Sprint 04** | ⚡ **Copilot + RTK (Redux Toolkit)** | Teste do Copilot com RTK — implementação de nova funcionalidade completa no frontend | ⬜ Planejada |
 
 ---
@@ -45,28 +45,24 @@ flowchart LR
 
 ---
 
-## Sprint 01 — Autenticação e Timeline de Tópicos
+## Sprint 01 — Autenticação e Timeline de Tópicos - 🏗️ MDE+SDD (Spec-Kit)
 
 **Escopo:** Tela de login funcional + seletor de tópicos (abortion, cloning, etc.).
 
 ### RFs da Sprint
 
-| RF | Descrição | Prioridade |
-|----|-----------|------------|
-| RF-001 | Login com e-mail e senha via API | P1 |
-| RF-002 | Seletor de tópicos carregado do backend | P1 |
+| RF | Descrição | Prioridade | Status |
+|----|-----------|------------|--------|
+| RF-001 | Login com e-mail e senha via API | P1 | ✅ Concluído |
+| RF-002 | Seletor de tópicos carregado do backend | P1 | 🟡 Pendente |
 
 ### O que precisa ser feito
 
-| Tarefa | Backend | Frontend | Artefato Esperado |
-|--------|---------|----------|-------------------|
-| **T001** | ✅ (já existe endpoint de login em `/auth/login`) | Criar/refinar `LoginView.jsx` com formulário e store `useAuthStore` | `specs/sprint-01/model/login.puml` → `views/pages/LoginView.jsx` |
-| **Status** | � Concluída | **3 rodadas completas:** R1 (6 evidências DE → correções ST001.1), R2 (6 RESOLVIDAS, GATE-03 liberado), R3 (runtime legados corrigido ST001.2). |
-| **ST001.1** | N/A | Aplicar correções determinadas pelo veredito da Rodada 1 (`specs/001-login-component/verdict/verdict.md`): refatorar `User.js` para escopo mínimo, refatorar `AuthService.js` para expor apenas `login()`, remover ações não modeladas de `useAuthStore`, adicionar `// @model:` em `config.js`, corrigir `maxRows` no `TextField.jsx`, alinhar nomenclatura do hook `useAuth` | Executar novo ciclo: `commit` → `/speckit.analyze` (Rodada 2) |
-| **Status ST001.1** | 🟢 Concluída | Rodada 2 aprovou todas as 6 correções como RESOLVIDAS. GATE-03 (over-engineering) liberado. |
-| **ST001.2** | N/A | Aplicar correções determinadas pelo veredito da Rodada 2 e corrigir bug de runtime: (1) `authService` não exportado — corrigir imports em 6 arquivos legados; (2) varredura de imports quebrados em `src-mvvm/`; (3) console limpo | Executar novo ciclo: `commit` → `/speckit.analyze` (Rodada 3) |
-| **Status ST001.2** | 🟢 Concluída | Rodada 3 confirmou runtime sem erros. 0 novas evidências. 6 evidências R1 mantidas RESOLVIDAS. |
-| **T002** | ✅ (já existe endpoint de tópicos em `/topics`) | Criar/refinar `TopicSelectionView.jsx` com store `useTopicStore` | `specs/sprint-01/model/topics.puml` → `views/pages/TopicSelectionView.jsx` |
+| Tarefa | Backend | Frontend | Artefato Esperado | Status |
+|--------|---------|----------|-------------------|--------|
+| **T001** | ✅ endpoint `/auth/login` existe | Criar/refinar `LoginView.jsx` + `useAuthStore` | `LoginView.jsx` funcional com MVVM | ✅ **Concluído** — 3 rodadas: R1 (6 evidências), R2 (6 RESOLVIDAS), R3 (runtime legados) |
+| **ST001.1** | N/A | Aplicar correções do veredito R1: refatorar `User.js`, `AuthService.js`, `useAuthStore`, `config.js`, `TextField.jsx`, hook `useAuth` | Correções aplicadas e validadas | ✅ **Concluído** — R2 aprovou 6/6 correções, GATE-03 liberado |
+| **ST001.2** | N/A | Corrigir imports quebrados em 6 arquivos legados de `src-mvvm/` | Runtime sem erros | ✅ **Concluído** — R3: 0 novas evidências, 6 mantidas RESOLVIDAS |
 
 ### Arquivos impactados (frontend)
 
@@ -80,7 +76,7 @@ flowchart LR
 
 ---
 
-## Sprint 02 — Correção de Serialização: Pairwise + Centroid Similarity
+## Sprint 02 — Correção de Serialização: Pairwise + Centroid Similarity - 🏗️ MDE+SDD (Spec-Kit)
 
 **Escopo:** Corrigir `500 Internal Server Error` nos endpoints `GET /topic/clusters/{username}/{topic}/pairwise_similarity` e `GET /topic/clusters/{username}/{topic}/centroid_similarity`.
 
@@ -90,19 +86,18 @@ flowchart LR
 
 ### RFs da Sprint
 
-| RF | Descrição | Prioridade |
-|----|-----------|------------|
-| RF-003 | Corrigir serialização do endpoint pairwise_similarity | P1 |
-| RF-004 | Corrigir serialização do endpoint centroid_similarity (resolvido pelo NumpyConverter da T002) | P1 |
+| RF | Descrição | Prioridade | Status |
+|----|-----------|------------|--------|
+| RF-003 | Corrigir serialização do endpoint pairwise_similarity | P1 | ✅ Concluído |
+| RF-004 | Corrigir serialização do endpoint centroid_similarity (resolvido pelo NumpyConverter) | P1 | ✅ Concluído |
 
 ### O que precisa ser feito
 
-| Tarefa | Backend | Frontend | Artefato Esperado |
-|--------|---------|----------|-------------------|
-| **T002** | 🟢 **Concluída** — `NumpyConverter.to_native()` criado em `util/json_encoder.py` e aplicado no retorno completo de `list_clusters()` em `api/topic.py:268`. | N/A | `curl http://localhost:3132/topic/clusters/daired/cloning/pairwise_similarity` → HTTP 200 ✅ |
-| **Status** | 🟢 Concluída | **2 rodadas completas:** R1 (2 evidências — 1 AMBOS, 1 AE), R2 (2 RESOLVIDAS — ambas NE). GATES aprovados. SC-001 (HTTP 200) alcançado. |
-| **ST002.1** | 🟢 **Concluída** — Corrigir alcance do `NumpyConverter.to_native()` — aplicado em TODO o dicionário de retorno (`return NumpyConverter.to_native({...})`). Modelo (`sequence.puml`, `classes.puml`, `components.puml`) atualizado com `@rf: RF-003-C1`. | N/A | `curl` → HTTP 200. Veredito R2: NE (Ninguém Errado). |
-| **T003** | 🟢 **Concluída** — Resolvida automaticamente pelo `NumpyConverter` da T002. O endpoint `centroid_similarity` passa pelo mesmo `list_clusters()` que aplica `NumpyConverter.to_native()` em todo o dicionário. | N/A | `curl http://localhost:3132/topic/clusters/daired/cloning/centroid_similarity` → HTTP 200 ✅ |
+| Tarefa | Backend | Frontend | Artefato Esperado | Status |
+|--------|---------|----------|-------------------|--------|
+| **T002** | Criar `NumpyConverter.to_native()` em `util/json_encoder.py` e aplicar no retorno de `list_clusters()` | N/A | `curl pairwise_similarity` → HTTP 200 | ✅ **Concluído** — 2 rodadas: R1 (AMBOS+AE), R2 (NE+NE). SC-001 aprovado |
+| **ST002.1** | Aplicar `to_native()` em TODO o dicionário de retorno (`return NumpyConverter.to_native({...})`). Modelo `.puml` atualizado com `@rf: RF-003-C1` | N/A | `curl` → HTTP 200, sem `PydanticSerializationError` | ✅ **Concluído** — Veredito R2: NE |
+| **T003** | Resolvido automaticamente pelo `NumpyConverter` — `centroid_similarity` passa pelo mesmo `list_clusters()` | N/A | `curl centroid_similarity` → HTTP 200 | ✅ **Concluído** — Herdou solução da T002 |
 
 ### Arquivos impactados (backend)
 
@@ -123,21 +118,21 @@ flowchart LR
 
 ### RFs da Sprint
 
-| RF | Descrição | Prioridade |
-|----|-----------|------------|
-| RF-005 | Ordenar cluster_cohesion do maior para o menor | P1 |
-| RF-006 | Ordenar centroid_similarity do maior para o menor | P1 |
-| RF-007 | Padronizar labels do order by "Source Keyphrases" com enum `KeyphraseSortingLabels` | P2 |
-| RF-008 | Agrupar pares recíprocos no pairwise_similarity do backend | P2 |
+| RF | Descrição | Prioridade | Status |
+|----|-----------|------------|--------|
+| RF-005 | Ordenar cluster_cohesion do maior para o menor | P1 | ✅ Concluído |
+| RF-006 | Ordenar centroid_similarity do maior para o menor | P1 | ✅ Concluído |
+| RF-007 | Padronizar labels do order by "Source Keyphrases" com enum `KeyphraseSortingLabels` | P2 | ✅ Concluído |
+| RF-008 | Agrupar pares recíprocos no pairwise_similarity do backend | P2 | ✅ Concluído |
 
 ### O que precisa ser feito
 
-| Tarefa | Backend | Frontend | Artefato Esperado |
-|--------|---------|----------|-------------------|
-| **T004** | 🟢 **Concluída** — `model/cluster.py`: `reverse=False` → `reverse=True` no `sorted()` de `cluster_cohesion`. Testado com `curl` → ordenação descendente confirmada (`[1.0, 1.0, 1.0, 0.92, 0.75, ...]`). Log experimental: `relatorios/log-copilot-sprint3-t004.md` | N/A (frontend apenas consome) | `curl http://localhost:3132/topic/clusters/daired/cloning/cluster_cohesion` ✅ Ordem descendente |
-| **T005** | 🟢 **Concluída** — `model/cluster.py`: `reverse=False` → `reverse=True` no `sorted()` de `centroid_similarity`. Testado com `curl` → ordenação descendente confirmada (`[1.0, 1.0, 1.0, 0.92, 0.75, 0.74, ...]`). Corrigido em conjunto com T004 por compartilharem o mesmo padrão de erro e mesmo arquivo. | N/A (frontend apenas consome) | `curl http://localhost:3132/topic/clusters/daired/cloning/centroid_similarity` ✅ Ordem descendente |
-| **T006** | N/A | 🤖 **Corrigir labels do order by "Source Keyphrases"** — o select de ordenação em `KeyphraseClusteringView.jsx` (linhas ~175-182) usa labels hardcoded como `"Similaridade de Cluster"` e `"Similaridade Pareada"`. Deve seguir o padrão do "Keyphrase Clusters" que usa `ClusterSortingLabels` no enum `ClusterSorting.js`. Criar `KeyphraseSortingLabels` em `KeyphraseSorting.js` nos mesmos moldes e usar no select. | Select de ordenação com labels padronizados via enum, igual ao "Keyphrase Clusters" |
-| **T007** | 🐍 **Corrigir ordenação pairwise_similarity no backend** — em `model/cluster.py:get_keyphrase_descriptions()`, quando `sort_by=PAIRWISE_SIMILARITY`, a ordenação é feita por `sort_column=3` (similarity), o que não garante que pares recíprocos fiquem adjacentes. Ex: `Therapeutic cloning(18): (48, 1.00)` e `Therapeutic cloning(48): (18, 1.00)` podem ficar distantes. O backend deve **agrupar pares recíprocos** na listagem — quando dois clusters têm `similar_cluster` apontando um para o outro com `similarity` igual, devem ser consecutivos. | N/A (frontend apenas consome) | Listagem pairwise_similarity com pares recíprocos adjacentes |
+| Tarefa | Backend | Frontend | Artefato Esperado | Status |
+|--------|---------|----------|-------------------|--------|
+| **T004** | `model/cluster.py`: `reverse=False` → `reverse=True` no `sorted()` de `cluster_cohesion` | N/A | `curl cluster_cohesion` → ordem descendente | ✅ **Concluído** — Testado: `[1.0, 1.0, 1.0, 0.92, 0.75, ...]` |
+| **T005** | `model/cluster.py`: `reverse=False` → `reverse=True` no `sorted()` de `centroid_similarity` | N/A | `curl centroid_similarity` → ordem descendente | ✅ **Concluído** — Testado: `[1.0, 1.0, 1.0, 0.92, 0.75, 0.74, ...]` |
+| **T006** | N/A | `KeyphraseSorting.js`: criar `KeyphraseSortingLabels`. `KeyphraseClusteringView.jsx`: substituir labels hardcoded pelo enum | Select de ordenação padronizado via enum | ✅ **Concluído** — Log: `relatorios/log-copilot-sprint3-t006.md` |
+| **T007** | `model/cluster.py`: pós-processamento em `get_keyphrase_descriptions()` p/ agrupar pares recíprocos adjacentes | N/A | Pares recíprocos adjacentes no pairwise_similarity | ✅ **Concluído** — Testado: 140/140 pares adjacentes. Log: `relatorios/log-copilot-sprint3-t007.md` |
 
 ### Status Geral da Sprint
 
@@ -145,20 +140,20 @@ flowchart LR
 |----------|-----------|
 | RF-005 (cluster_cohesion descendente) | ✅ OK — `reverse=True` em `model/cluster.py:387` |
 | RF-006 (centroid_similarity descendente) | ✅ OK — `reverse=True` em `model/cluster.py:410` |
-| RF-007 (labels do order by Source Keyphrases) | 🟡 Pendente — criar `KeyphraseSortingLabels` no enum |
-| RF-008 (pares pairwise adjacentes) | 🟡 Pendente — agrupar pares recíprocos no backend |
-| Teste HTTP 200 | ✅ Ambos endpoints retornam 200 |
-| Log experimental | ✅ `relatorios/log-copilot-sprint3-t004.md` criado |
-| Tempo total (parcial) | ~25 minutos (T004 + T005) |
+| RF-007 (labels do order by Source Keyphrases) | ✅ OK — `KeyphraseSortingLabels` criado em `KeyphraseSorting.js`, aplicado em ambos selects |
+| RF-008 (pares pairwise adjacentes) | ✅ OK — Algoritmo de pós-processamento agrupa pares recíprocos. Testado: 140/140 adjacentes |
+| Teste HTTP 200 | ✅ Todos os endpoints retornam 200 |
+| Log experimental | ✅ `relatorios/log-copilot-sprint3-t004.md`, `t006.md`, `t007.md` |
+| Tempo total | ~1h (T004+T005: 25min, T006: 15min, T007: 20min) |
 
 ### Arquivos impactados (frontend + backend)
 
 | Arquivo | Ação |
 |---------|------|
 | `kpc-backend/src/keyphrase_curation/model/cluster.py` | ✅ Ordenação cluster_cohesion/centroid_similarity (ascendente → descendente) — Concluído |
-| `kpc-backend/src/keyphrase_curation/model/cluster.py` | 🟡 Agrupar pares recíprocos em `get_keyphrase_descriptions()` p/ PAIRWISE_SIMILARITY (T007) |
-| `kpc-frontend/src-mvvm/shared/enums/KeyphraseSorting.js` | 🟡 Criar `KeyphraseSortingLabels` padronizado (T006) |
-| `kpc-frontend/src-mvvm/views/pages/KeyphraseClusteringView.jsx` | 🟡 Usar `KeyphraseSortingLabels` no select de ordenação (T006) |
+| `kpc-backend/src/keyphrase_curation/model/cluster.py` | ✅ Pares recíprocos agrupados em `get_keyphrase_descriptions()` p/ PAIRWISE_SIMILARITY (T007) |
+| `kpc-frontend/src-mvvm/shared/enums/KeyphraseSorting.js` | ✅ `KeyphraseSortingLabels` criado como alias PascalCase (T006) |
+| `kpc-frontend/src-mvvm/views/pages/KeyphraseClusteringView.jsx` | ✅ Labels hardcoded substituídos por `KeyphraseSortingLabels` (T006) |
 
 ---
 
@@ -172,15 +167,15 @@ flowchart LR
 
 ### RFs da Sprint
 
-| RF | Descrição | Prioridade |
-|----|-----------|------------|
-| RF-009 | Implementar tela de curadoria de keyphrases com RTK (selecionar, anotar, salvar) | P1 |
+| RF | Descrição | Prioridade | Status |
+|----|-----------|------------|--------|
+| RF-009 | Implementar tela de curadoria de keyphrases com RTK (selecionar, anotar, salvar) | P1 | ⬜ Planejado |
 
 ### O que precisa ser feito
 
-| Tarefa | Backend | Frontend | Artefato Esperado |
-|--------|---------|----------|-------------------|
-| **T008** | N/A (API já existe) | ⚡ **Criar funcionalidade completa de curadoria de keyphrases** utilizando **RTK (Redux Toolkit)** para gerenciamento de estado: store global, slices, thunks assíncronos, componentes conectados. A funcionalidade deve consumir endpoints existentes do backend para listar, selecionar e salvar anotações de keyphrases por tópico. Incluir feedback visual (loading, sucesso, erro). | Tela funcional de curadoria com RTK — store, slice, thunks e UI conectada |
+| Tarefa | Backend | Frontend | Artefato Esperado | Status |
+|--------|---------|----------|-------------------|--------|
+| **T008** | N/A (API já existe) | Criar store RTK (global, slices, thunks), páginas, componentes, serviços HTTP | Tela funcional de curadoria com RTK | ⬜ Planejado |
 
 ### Arquivos impactados (frontend)
 
@@ -198,7 +193,7 @@ flowchart LR
 ```mermaid
 flowchart LR
     S1[Sprint 01<br/>MDE+SDD Login<br/>✅ Concluída] --> S2[Sprint 02<br/>MDE+SDD Serialização<br/>✅ Concluída]
-    S2 --> S3[Sprint 03<br/>🤖 Copilot Ordenação/Labels<br/>🟡 Em andamento]
+    S2 --> S3[Sprint 03<br/>🤖 Copilot Ordenação/Labels<br/>✅ Concluída]
     S3 --> S4[Sprint 04<br/>⚡ Copilot+RTK Funcionalidade<br/>⬜ Planejada]
 ```
 

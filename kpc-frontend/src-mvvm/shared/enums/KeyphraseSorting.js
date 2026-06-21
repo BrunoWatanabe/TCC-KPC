@@ -18,9 +18,9 @@ export const KeyphraseSorting = {
  */
 export const KEYPHRASE_SORTING_TYPES = [
   KeyphraseSorting.ALPHABETICAL,
+  KeyphraseSorting.NUMERICAL,
   KeyphraseSorting.CLUSTER_SIMILARITY,
-  KeyphraseSorting.PAIRWISE_SIMILARITY,
-  KeyphraseSorting.NUMERICAL
+  KeyphraseSorting.PAIRWISE_SIMILARITY
 ];
 
 /**
@@ -28,9 +28,9 @@ export const KEYPHRASE_SORTING_TYPES = [
  */
 export const KEYPHRASE_SORTING_LABELS = {
   [KeyphraseSorting.ALPHABETICAL]: 'Alfabética',
+  [KeyphraseSorting.NUMERICAL]: 'Numérica',
   [KeyphraseSorting.CLUSTER_SIMILARITY]: 'Similaridade de Cluster',
   [KeyphraseSorting.PAIRWISE_SIMILARITY]: 'Similaridade Par a Par',
-  [KeyphraseSorting.NUMERICAL]: 'Numérica'
 };
 
 /**
@@ -46,3 +46,10 @@ export const isValidKeyphraseSorting = (sorting) => {
 export const getDefaultKeyphraseSorting = () => {
   return KeyphraseSorting.ALPHABETICAL;
 };
+
+/**
+ * Alias PascalCase seguindo padrão ClusterSortingLabels
+ * @see ClusterSortingLabels em ClusterSorting.js
+ * T006 — Sprint 03: Padronização de labels para o select de ordenação
+ */
+export const KeyphraseSortingLabels = KEYPHRASE_SORTING_LABELS;

@@ -480,14 +480,53 @@ class KeyphraseClustering(KeyphraseEmbeddings):
                     get_description()
                 keyphrase_descriptions[id] = description
         elif sort_by.name == KeyphraseSorting.PAIRWISE_SIMILARITY.name:
+            # T007 — Sprint 03: Agrupar pares recíprocos adjacentes
+            # 1. Construir lista temporária com (id, description, best_pair_id, similarity)
+            temp_list = []
             for keyphrase in keyphrase_list:
-                similar_cluster = "({}, {:.2f})".\
+                similar_cluster = "({}, {:.2f})". \
                     format(keyphrase[2], keyphrase[3])
-                id = keyphrase[0]
-                keyphrase_obj = self.get_keyphrase_by_id(id)
+                _id = keyphrase[0]
+                keyphrase_obj = self.get_keyphrase_by_id(_id)
                 description = keyphrase_obj.get_description(
                     similar_cluster)
-                keyphrase_descriptions[id] = description
+                temp_list.append((
+                    _id,
+                    description,
+                    keyphrase[2],  # best_pair_id
+                    keyphrase[3]   # similarity
+                ))
+
+            # 2. Agrupar pares recíprocos: se A→B e B→A, colocar adjacentes
+            id_to_data = {item[0]: item for item in temp_list}
+            visited = set()
+            grouped_list = []
+
+            for item in temp_list:
+                kid = item[0]
+                if kid in visited:
+                    continue
+                best_pair_id = item[2]
+                visited.add(kid)
+
+                # Verifica se best_pair é recíproco (B→A)
+                if (best_pair_id is not None and best_pair_id != 0
+                        and best_pair_id in id_to_data
+                        and best_pair_id not in visited):
+                    best_data = id_to_data[best_pair_id]
+                    if best_data[2] == kid:  # B's best_pair == A
+                        # Par recíproco: adiciona A e B consecutivos
+                        grouped_list.append(item)
+                        grouped_list.append(best_data)
+                        visited.add(best_pair_id)
+                        continue
+
+                # Não recíproco ou já visitado: adiciona solo
+                grouped_list.append(item)
+
+            keyphrase_descriptions = {
+                item[0]: item[1] for item in grouped_list
+            }
         elif sort_by.name == KeyphraseSorting.CLUSTER_SIMILARITY.name:
             for keyphrase in keyphrase_list:
                 similar_keyphrase = "({}, {:.2f})".\

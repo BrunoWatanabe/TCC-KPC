@@ -51,7 +51,6 @@
    - 9.4 [Metricas com Arbitros Humanos (Trabalho Futuro)](#94-metricas-com-arbitros-humanos-trabalho-futuro)
      - 9.4.1 [Metricas da Policia (Matriz VP/FP/FN/VN)](#941-metricas-da-policia-matriz-vpfpfnvn)
      - 9.4.2 [Metricas do Juiz (Matriz DE/AE/AMBOS/NE)](#942-metricas-do-juiz-matriz-deaeambosne)
-     - 9.4.3 [Metricas Qualitativas](#943-metricas-qualitativas)
 10. [Hipotese](#10-hipotese)
     - 10.1 [H1: Capacidade de Deteccao (Policia)](#101-h1-capacidade-de-deteccao-policia)
     - 10.2 [H2: Capacidade de Decisao (Juiz)](#102-h2-capacidade-de-decisao-juiz)
@@ -60,8 +59,9 @@
 12. [Estrategia de Construcao das Personas](#12-estrategia-de-construcao-das-personas)
 13. [Fontes de Extracao de Dados Nao Humanos](#13-fontes-de-extracao-de-dados-nao-humanos)
 14. [Checklists para Coleta de Dados Humanos](#14-checklists-para-coleta-de-dados-humanos)
-    - 14.1 [Checklist da Policia (Matriz VP/FP/FN/VN)](#141-checklist-da-policia-matriz-vpfpfnvn)
-    - 14.2 [Checklist do Juiz (Matriz DE/AE/AMBOS/NE)](#142-checklist-do-juiz-matriz-deaeambosne)
+    - 14.1 [Checklist da Policia - Evidencias Apontadas (VP/FP)](#141-checklist-da-policia---evidencias-apontadas-vpfp)
+    - 14.2 [Checklist da Policia - Evidencias Nao Apontadas (FN/VN)](#142-checklist-da-policia---evidencias-nao-apontadas-fnvn)
+    - 14.3 [Checklist do Juiz (DE/AE/AMBOS/NE)](#143-checklist-do-juiz-deaeambosne)
 15. [Contribuicoes Esperadas](#15-contribuicoes-esperadas)
 16. [Limitacoes e Ameacas a Validade](#16-limitacoes-e-ameacas-a-validade)
     - 16.1 [Ameacas a Validade Interna](#161-ameacas-a-validade-interna)
@@ -310,7 +310,7 @@ personas de IA:
 1. **Persona Policia:** Responsavel por comparar o modelo UML (PlantUML) com
    o codigo implementado, coletando evidencias estruturadas de inconsistencia.
    Cada evidencia inclui tipo, severidade, localizacao exata (arquivo:linha)
-   e deposimentos simulados do Arquiteto e do Developer.
+   e depoimentos simulados do Arquiteto e do Developer.
 
 2. **Persona Juiz:** Responsavel por analisar o relatorio de evidencias
    gerado pela Policia e proferir uma decisao fundamentada para cada
@@ -404,7 +404,7 @@ papeis, comandos e artefatos para consulta rapida.
 |---------|------------------|------------------|-----------------|
 | Arquiteto | `/speckit.plan` | Modelagem UML (PlantUML) com rastreabilidade `@rf:` | `model/*.puml` |
 | Developer | `/speckit.implement` | Implementacao fiel ao modelo, zero over-engineering | Codigo com `// @model:` |
-| Policia | `/speckit.analyze` | Coleta de evidencias de inconsistencia + deposimentos ARG-/DEP- | `evidence/inconsistencies.md` |
+| Policia | `/speckit.analyze` | Coleta de evidencias de inconsistencia + depoimentos ARG-/DEP- | `evidence/inconsistencies.md` |
 | Juiz | `/speckit.analyze` (automatico apos Policia) | Julgamento fundamentado (DE, AE, AMBOS, NE) | `verdict/verdict.md` |
 
 **Nota:** A arvore de decisao do Juiz e o checklist de verificacao da Policia
@@ -516,38 +516,33 @@ de arbitros humanos.
 ### 9.4 Metricas com Arbitros Humanos (Trabalho Futuro)
 
 As metricas a seguir dependem da participacao de arbitros humanos para
-classificar cada evidencia/veredito segundo as matrizes das secoes 9.4.1 e 9.4.2 .
-Foram definidas no protocolo original mas nao foram executadas neste
-experimento, sendo registradas como trabalho futuro.
+classificar cada evidencia/veredito segundo as matrizes das secoes 9.1 e 9.2,
+utilizando os checklists da secao 14. Foram definidas no protocolo original
+mas nao foram executadas neste experimento, sendo registradas como trabalho futuro.
 
 #### 9.4.1 Metricas da Policia (Matriz VP/FP/FN/VN)
 
 | ID | Metrica | Formula | Descricao | Fonte |
 |----|---------|---------|-----------|-------|
-| M16 | Precisao da Policia | VP / (VP + FP) | Proporcao de evidencias corretas entre todas que a Policia reportou | [CHK-POL](#181-checklist-da-policia-matriz-vpfpfnvn) |
-| M17 | Revocacao da Policia | VP / (VP + FN) | Proporcao de inconsistencias reais que a Policia conseguiu detectar | [CHK-POL](#181-checklist-da-policia-matriz-vpfpfnvn) |
-| M18 | Especificidade da Policia | VN / (VN + FP) | Proporcao de ausencias de inconsistencia corretamente identificadas | [CHK-POL](#181-checklist-da-policia-matriz-vpfpfnvn) |
-| M19 | F1-Score da Policia | 2 x (Precisao x Revocacao) / (Precisao + Revocacao) | Media harmonica entre precisao e revocacao | [CHK-POL](#181-checklist-da-policia-matriz-vpfpfnvn) |
-| M20 | Acerto global da Policia | (VP + VN) / (VP + VN + FP + FN) | Proporcao de acertos entre todas as decisoes da Policia | [CHK-POL](#181-checklist-da-policia-matriz-vpfpfnvn) |
-| M21 | Taxa de Falso Positivo | FP / (FP + VN) | Proporcao de alarmes falsos entre todas as ausencias reais | [CHK-POL](#181-checklist-da-policia-matriz-vpfpfnvn) |
-| M22 | Taxa de Falso Negativo | FN / (FN + VP) | Proporcao de omissoes entre todas as inconsistencias reais | [CHK-POL](#181-checklist-da-policia-matriz-vpfpfnvn) |
+| M16 | Precisao da Policia | VP / (VP + FP) | Proporcao de evidencias corretas entre todas que a Policia reportou | [CHK-POL-AP](#141-checklist-da-policia---evidencias-apontadas-vpfp) |
+| M17 | Revocacao da Policia | VP / (VP + FN) | Proporcao de inconsistencias reais que a Policia conseguiu detectar | [CHK-POL-AP](#141-checklist-da-policia---evidencias-apontadas-vpfp) e [CHK-POL-NA](#142-checklist-da-policia---evidencias-nao-apontadas-fnvn) |
+| M18 | Especificidade da Policia | VN / (VN + FP) | Proporcao de ausencias de inconsistencia corretamente identificadas | [CHK-POL-AP](#141-checklist-da-policia---evidencias-apontadas-vpfp) e [CHK-POL-NA](#142-checklist-da-policia---evidencias-nao-apontadas-fnvn) |
+| M19 | F1-Score da Policia | 2 x (Precisao x Revocacao) / (Precisao + Revocacao) | Media harmonica entre precisao e revocacao | [CHK-POL-AP](#141-checklist-da-policia---evidencias-apontadas-vpfp) e [CHK-POL-NA](#142-checklist-da-policia---evidencias-nao-apontadas-fnvn) |
+| M20 | Acerto global da Policia | (VP + VN) / (VP + VN + FP + FN) | Proporcao de acertos entre todas as decisoes da Policia | [CHK-POL-AP](#141-checklist-da-policia---evidencias-apontadas-vpfp) e [CHK-POL-NA](#142-checklist-da-policia---evidencias-nao-apontadas-fnvn) |
+| M21 | Taxa de Falso Positivo | FP / (FP + VN) | Proporcao de alarmes falsos entre todas as ausencias reais | [CHK-POL-AP](#141-checklist-da-policia---evidencias-apontadas-vpfp) e [CHK-POL-NA](#142-checklist-da-policia---evidencias-nao-apontadas-fnvn) |
+| M22 | Taxa de Falso Negativo | FN / (FN + VP) | Proporcao de omissoes entre todas as inconsistencias reais | [CHK-POL-AP](#141-checklist-da-policia---evidencias-apontadas-vpfp) e [CHK-POL-NA](#142-checklist-da-policia---evidencias-nao-apontadas-fnvn) |
 
 #### 9.4.2 Metricas do Juiz (Matriz DE/AE/AMBOS/NE)
 
 | ID | Metrica | Formula / Descricao | Descricao | Fonte |
 |----|---------|---------------------|-----------|-------|
-| M23 | Acerto global do Juiz | Vereditos corretos / Total de vereditos | Proporcao de vereditos que coincidem com a decisao correta do arbitro | [CHK-JUI](#142-checklist-do-juiz-matriz-deaeambosne) |
-| M24 | Acerto por categoria | Vereditos corretos de cada tipo / Total de vereditos daquele tipo | Acerto especifico para DE, AE, AMBOS e NE | [CHK-JUI](#142-checklist-do-juiz-matriz-deaeambosne) |
-| M25 | Matriz de confusao do Juiz | Tabela 4x4 cruzando veredito vs decisao correta | Permite identificar padroes de erro | [CHK-JUI](#142-checklist-do-juiz-matriz-deaeambosne) |
-| M26 | Kappa de Cohen | Medida de concordancia ajustada ao acaso entre Juiz e arbitro | Nivel de concordancia alem do esperado pelo acaso | [CHK-JUI](#142-checklist-do-juiz-matriz-deaeambosne) |
-
-#### 9.4.3 Metricas Qualitativas
-
-| ID | Metrica | Escala | Descricao | Fonte |
-|----|---------|--------|-----------|-------|
-| M27 | Qualidade das evidencias | 0-4 | Completude e rastreabilidade das evidencias coletadas pela Policia | [CHK-POL](#181-checklist-da-policia-matriz-vpfpfnvn) |
-| M28 | Qualidade dos deposimentos | 0-4 | Pertinencia e fundamentacao dos deposimentos ARG- e DEP- simulados | [CHK-JUI](#142-checklist-do-juiz-matriz-deaeambosne) |
-| M29 | Qualidade da decisao | 0-4 | Clareza, fundamentacao e uso das evidencias nos vereditos do Juiz | [CHK-JUI](#142-checklist-do-juiz-matriz-deaeambosne) |
+| M23 | Acerto global do Juiz | Vereditos corretos / Total de vereditos | Proporcao de vereditos que coincidem com a decisao correta do arbitro | [CHK-JUI](#143-checklist-do-juiz-deaeambosne) |
+| M24 | Acerto por categoria | Vereditos corretos de cada tipo / Total de vereditos daquele tipo | Acerto especifico para DE, AE, AMBOS e NE | [CHK-JUI](#143-checklist-do-juiz-deaeambosne) |
+| M25 | Matriz de confusao do Juiz | Tabela 4x4 cruzando veredito vs decisao correta | Permite identificar padroes de erro | [CHK-JUI](#143-checklist-do-juiz-deaeambosne) |
+| M26 | Kappa de Cohen | Medida de concordancia ajustada ao acaso entre Juiz e arbitro | Nivel de concordancia alem do esperado pelo acaso | [CHK-JUI](#143-checklist-do-juiz-deaeambosne) |
+| M27 | Taxa de Concordancia por Severidade | Proporcao de acertos do Juiz agrupada por severidade da evidencia (ALTA, MEDIA, BAIXA) | Avalia se o Juiz tem melhor desempenho em evidencias mais graves | [CHK-JUI](#143-checklist-do-juiz-deaeambosne) |
+| M28 | Distribuicao de Vereditos por Tipo de Evidencia | Proporcao de cada veredito (DE, AE, AMBOS, NE) para cada tipo de evidencia | Identifica padroes de decisao do Juiz associados a cada tipo de inconsistencia | [CHK-JUI](#143-checklist-do-juiz-deaeambosne) |
+| M29 | Proporcao de Vereditos "AMBOS" | Evidencias com veredito AMBOS / Total de evidencias | Indica a frequencia com que o Juiz atribui responsabilidade compartilhada | [CHK-JUI](#143-checklist-do-juiz-deaeambosne) |
 
 ---
 
@@ -562,7 +557,7 @@ severidade e localizacao dos desalinhamentos encontrados.
 ### 10.2 H2: Capacidade de Decisao (Juiz)
 
 O Juiz e capaz de proferir vereditos fundamentados para cada evidencia
-coletada, utilizando a arvore de decisao e os deposimentos ARG-/DEP- para
+coletada, utilizando a arvore de decisao e os depoimentos ARG-/DEP- para
 classificar a responsabilidade entre DE, AE, AMBOS ou NE.
 
 ### 10.3 H3: Iteratividade do Pipeline
@@ -600,7 +595,7 @@ contidas em seu arquivo.
 |---------|---------|------------------------|
 | Arquiteto | `persona-arquiteto.md` | Modelagem UML com PlantUML, rastreabilidade `@rf:`, escopo frontend+backend |
 | Developer | `persona-developer.md` | Implementacao fiel ao modelo, zero over-engineering, tags `@model:` |
-| Policia | `persona-policia.md` | Coleta sistematica de evidencias, checklist de verificacao, deposimentos ARG-/DEP- |
+| Policia | `persona-policia.md` | Coleta sistematica de evidencias, checklist de verificacao, depoimentos ARG-/DEP- |
 | Juiz | `persona-juiz.md` | Arvore de decisao (DE, AE, AMBOS, NE), fundamentacao obrigatoria, sistema de rodadas |
 
 Os arquivos completos de cada persona estao disponiveis em `.github/prompts/`.
@@ -614,41 +609,55 @@ M1 a M15 (secao 9.3) sao extraidas diretamente, sem necessidade de arbitros.
 
 | ID | Fonte | Conteudo | Metricas Associadas |
 |----|-------|----------|---------------------|
-| NE-01 {#ne-01} | `evidence/inconsistencies.md` | Evidencias coletadas pela Policia por sprint/rodada, com tipo, severidade, status (NOVA/PERSISTE/RESOLVIDA/REABERTA), arvore pai-filho e deposimentos ARG-/DEP- | [M1](#931-metricas-de-evidencias-policia), [M2](#931-metricas-de-evidencias-policia), [M3](#931-metricas-de-evidencias-policia), [M4](#931-metricas-de-evidencias-policia), [M5](#931-metricas-de-evidencias-policia), [M6](#931-metricas-de-evidencias-policia), [M7](#931-metricas-de-evidencias-policia), [M10](#932-metricas-de-vereditos-juiz), [M11](#932-metricas-de-vereditos-juiz), [M12](#933-metricas-de-processo), [M13](#933-metricas-de-processo), [M14](#933-metricas-de-processo), [M15](#933-metricas-de-processo) |
-| NE-02 {#ne-02} | `verdict/verdict.md` | Vereditos proferidos pelo Juiz por sprint/rodada, com decisoes (DE, AE, AMBOS, NE) e fundamentacao | [M5](#931-metricas-de-evidencias-policia), [M8](#932-metricas-de-vereditos-juiz), [M9](#932-metricas-de-vereditos-juiz), [M10](#932-metricas-de-vereditos-juiz), [M11](#932-metricas-de-vereditos-juiz), [M12](#933-metricas-de-processo), [M13](#933-metricas-de-processo) |
-| NE-03 {#ne-03} | `model/*.puml` | Diagramas UML (classes, componentes, sequencia) gerados pelo Arquiteto com tags `@rf:` | [M15](#933-metricas-de-processo) |
+| NE-01 {#ne-01} | `evidence/inconsistencies.md` | Evidencias coletadas pela Policia por sprint/rodada, com tipo, severidade, status (NOVA/PERSISTE/RESOLVIDA/REABERTA), arvore pai-filho e depoimentos ARG-/DEP- | M1, M2, M3, M4, M5, M6, M7, M10, M11, M12, M13, M14, M15 |
+| NE-02 {#ne-02} | `verdict/verdict.md` | Vereditos proferidos pelo Juiz por sprint/rodada, com decisoes (DE, AE, AMBOS, NE) e fundamentacao | M5, M8, M9, M10, M11, M12, M13 |
+| NE-03 {#ne-03} | `model/*.puml` | Diagramas UML (classes, componentes, sequencia) gerados pelo Arquiteto com tags `@rf:` | M15 |
 
 ---
 
 ## 14. Checklists para Coleta de Dados Humanos
 
-### 14.1 Checklist da Policia (Matriz VP/FP/FN/VN)
+### 14.1 Checklist da Policia - Evidencias Apontadas (VP/FP)
 
-**Metricas associadas:** [M16](#941-metricas-da-policia-matriz-vpfpfnvn) a [M22](#941-metricas-da-policia-matriz-vpfpfnvn), [M27](#943-metricas-qualitativas)
+**Objetivo:** Classificar cada evidencia **apontada** pela Policia como Verdadeiro Positivo (VP) ou Falso Positivo (FP).
+
+**Metricas associadas:** M16, M17, M18, M19, M20, M21, M22.
 
 | Item | Pergunta | Resposta |
 |------|----------|----------|
 | EVD-ID | ID da evidencia analisada | __________ |
-| POL-01 | A inconsistencia apontada realmente existia? | ( ) Sim (VP) ( ) Nao (FP) |
-| POL-02 | Havia alguma inconsistencia real que a Policia nao detectou? | ( ) Sim ( ) Nao |
-| POL-03 | Se sim, descricao da inconsistencia omitida (FN) | __________ |
-| POL-04 | O tipo da evidencia esta correto? | ( ) Sim ( ) Nao |
-| POL-05 | Qualidade da evidencia (0-4) | __ |
+| POL-AP-01 | A inconsistencia apontada pela Policia realmente existia? | ( ) Sim (VP) ( ) Nao (FP) |
+| POL-AP-02 | O tipo de inconsistencia atribuido pela Policia esta correto? | ( ) Sim ( ) Nao |
+| POL-AP-03 | A localizacao (arquivo:linha) da evidencia esta precisa? | ( ) Sim ( ) Nao |
 
-### 14.2 Checklist do Juiz (Matriz DE/AE/AMBOS/NE)
+### 14.2 Checklist da Policia - Evidencias Nao Apontadas (FN/VN)
 
-**Metricas associadas:** [M23](#942-metricas-do-juiz-matriz-deaeambosne) a [M26](#942-metricas-do-juiz-matriz-deaeambosne), [M28](#943-metricas-qualitativas), [M29](#943-metricas-qualitativas)
+**Objetivo:** Para cada evidencia **nao apontada** pela Policia, classificar como Falso Negativo (FN) ou Verdadeiro Negativo (VN).
+
+**Metricas associadas:** M17, M18, M19, M20, M21, M22.
+
+| Item | Pergunta | Resposta |
+|------|----------|----------|
+| EVD-ID | ID da evidencia analisada (se aplicavel) ou descricao do ponto verificado | __________ |
+| POL-NA-01 | Havia alguma inconsistencia real entre modelo e codigo neste ponto que a Policia **nao** detectou? | ( ) Sim (FN) ( ) Nao (VN) |
+| POL-NA-02 | Se sim (FN), descreva a inconsistencia omitida: | __________ |
+| POL-NA-03 | Se nao (VN), descreva brevemente o que foi verificado e considerado consistente: | __________ |
+
+### 14.3 Checklist do Juiz (DE/AE/AMBOS/NE)
+
+**Objetivo:** Avaliar a correcao da decisao do Juiz para cada evidencia.
+
+**Metricas associadas:** M23, M24, M25, M26, M27, M28, M29.
 
 | Item | Pergunta | Resposta |
 |------|----------|----------|
 | VER-ID | ID do veredito analisado | __________ |
 | JUI-01 | Decisao proferida pelo Juiz | ( ) DE ( ) AE ( ) AMBOS ( ) NE |
 | JUI-02 | Decisao correta (conforme arbitro) | ( ) DE ( ) AE ( ) AMBOS ( ) NE |
-| JUI-03 | O Juiz utilizou corretamente as evidencias? | ( ) Sim ( ) Parcialmente ( ) Nao |
-| JUI-04 | Qualidade da fundamentacao (0-4) | __ |
-| JUI-05 | O deposimento do Arquiteto (ARG-) foi pertinente? | ( ) Sim ( ) Parcialmente ( ) Nao |
-| JUI-06 | O deposimento do Developer (DEP-) foi pertinente? | ( ) Sim ( ) Parcialmente ( ) Nao |
-| JUI-07 | Comentarios adicionais | __________ |
+| JUI-03 | O Juiz utilizou corretamente as evidencias disponiveis? | ( ) Sim ( ) Parcialmente ( ) Nao |
+| JUI-04 | O depoimento do Arquiteto (ARG-) foi considerado na decisao? | ( ) Sim ( ) Parcialmente ( ) Nao |
+| JUI-05 | O depoimento do Developer (DEP-) foi considerado na decisao? | ( ) Sim ( ) Parcialmente ( ) Nao |
+| JUI-06 | A decisao esta de acordo com a arvore de decisao definida? | ( ) Sim ( ) Nao |
 
 ---
 

@@ -8,96 +8,232 @@
 
 **PARTICIPANTES:** Daired
 
-**DATA ATUALIZAÇÃO:** 28/05/2026
-
-**Versão:** 8.0
-
-**Status:** Protocolo com separação dos agentes Polícia e Juiz
-
 ---
 
-## Sumário
+## Sumario
 
-1. [Informações Gerais](#1-informações-gerais)
-2. [Contextualização e Motivação](#2-contextualização-e-motivação)
+1. [Informacoes Gerais](#1-informacoes-gerais)
+2. [Contextualizacao e Motivacao](#2-contextualizacao-e-motivacao)
+   - 2.1 [O Problema do Codigo Gerado por IA sem Estrutura](#21-o-problema-do-codigo-gerado-por-ia-sem-estrutura)
+   - 2.2 [O Resgate da Engenharia Orientada a Modelos (MDE)](#22-o-resgate-da-engenharia-orientada-a-modelos-mde)
+   - 2.3 [A Lacuna: Integracao entre MDE, SDD e Agentes de IA](#23-a-lacuna-integracao-entre-mde-sdd-e-agentes-de-ia)
+   - 2.4 [O Pipeline Proposto: Spec-Kit com Quatro Personas de IA](#24-o-pipeline-proposto-spec-kit-com-quatro-personas-de-ia)
+   - 2.5 [Caso de Uso: Keyphrase Curation Platform (KPC)](#25-caso-de-uso-keyphrase-curation-platform-kpc)
+   - 2.6 [Delineamento Experimental](#26-delineamento-experimental)
 3. [Objetivos](#3-objetivos)
    - 3.1 [Objetivo Geral](#31-objetivo-geral)
-   - 3.2 [Objetivo GQM](#32-objetivo-gqm)
-4. [Questões de Pesquisa](#4-questões-de-pesquisa)
-   - 4.1 [QP1: Eficácia do Pipeline de Agentes](#41-qp1-eficácia-do-pipeline-de-agentes-polícia-e-juiz)
-   - 4.2 [QP2: Alinhamento Modelo-Código](#42-qp2-alinhamento-modelo-código)
-5. [Método de Pesquisa](#5-método-de-pesquisa)
+   - 3.2 [Objetivo GQM (Goal-Question-Metric)](#32-objetivo-gqm-goal-question-metric)
+4. [Questoes de Pesquisa](#4-questoes-de-pesquisa)
+   - 4.1 [QP1: Eficacia do Pipeline de Verificacao (Policia e Juiz)](#41-qp1-eficacia-do-pipeline-de-verificacao-policia-e-juiz)
+   - 4.2 [QP2: Evolucao das Inconsistencias entre Rodadas](#42-qp2-evolucao-das-inconsistencias-entre-rodadas)
+5. [Metodo de Pesquisa](#5-metodo-de-pesquisa)
+   - 5.1 [Tipo de Pesquisa](#51-tipo-de-pesquisa)
+   - 5.2 [Estrutura do Experimento](#52-estrutura-do-experimento)
+   - 5.3 [Pipeline de Verificacao (Objeto de Estudo)](#53-pipeline-de-verificacao-objeto-de-estudo)
+   - 5.4 [Sistema de Rodadas](#54-sistema-de-rodadas)
+   - 5.5 [Instrumentos e Materiais](#55-instrumentos-e-materiais)
+   - 5.6 [Procedimento](#56-procedimento)
 6. [Participantes](#6-participantes)
-   - 6.1 [Grupo 1 — Desenvolvedores](#61-grupo-1--desenvolvedores-alunos-pesquisadores)
-   - 6.2 [Grupo 2 — Avaliadores (Árbitros Humanos)](#62-grupo-2--avaliadores-árbitros-humanos)
-   - 6.3 [Grupo 3 — Humano Piloto (Polícia + Juiz)](#63-grupo-3--humano-piloto-polícia--juiz)
+   - 6.1 [Humano Piloto](#61-humano-piloto)
+   - 6.2 [Participacao Futura](#62-participacao-futura)
 7. [Os Agentes do Pipeline](#7-os-agentes-do-pipeline)
-   - 7.1 [Agente Arquiteto](#71-agente-arquiteto)
-   - 7.2 [Agente Developer](#72-agente-developer)
-   - 7.3 [Agente Polícia de Inconsistências](#73-agente-polícia-de-inconsistências)
-   - 7.4 [Agente Juiz de Inconsistências](#74-agente-juiz-de-inconsistências)
-   - 7.5 [Fluxo de Decisão do Juiz](#75-fluxo-de-decisão-do-juiz)
-8. [Variáveis de Controle](#8-variáveis-de-controle)
-9. [Variáveis Independentes](#9-variáveis-independentes)
-10. [Variáveis Dependentes](#10-variáveis-dependentes)
-11. [Avaliação e Métricas](#11-avaliação-e-métricas)
-    - 11.1 [Rubrica Padronizada (0-4)](#111-rubrica-padronizada-0-4)
-    - 11.2 [Grupo A — Qualidade do Pipeline Polícia+Juiz](#112-grupo-a--métricas-de-qualidade-do-pipeline-políciajuiz)
-        - [A1: Matriz de Confusão do Juiz](#a1-matriz-de-confusão-do-juiz)
-        - [A2: Matriz de Decisão do Juiz](#a2-matriz-de-decisão-do-juiz)
-        - [A3: Precisão da Polícia (Precision)](#a3-precisão-da-polícia-precision)
-        - [A4: Revocação da Polícia (Recall)](#a4-revocação-da-polícia-recall)
-        - [A5: F1-Score da Polícia](#a5-f1-score-da-polícia)
-        - [A6: Taxa de Acerto do Juiz (Accuracy)](#a6-taxa-de-acerto-do-juiz-accuracy)
-        - [A7: Taxa de Concordância com Árbitros](#a7-taxa-de-concordância-com-árbitros)
-        - [A8: Qualidade das Evidências Coletadas (Polícia)](#a8-qualidade-das-evidências-coletadas-polícia)
-        - [A9: Qualidade da Decisão (Juiz)](#a9-qualidade-da-decisão-juiz)
-        - [A10: Tempo Médio de Processamento (Polícia+Juiz)](#a10-tempo-médio-de-processamento-políciajuiz)
-    - 11.3 [Grupo B — Métricas de Alinhamento Modelo-Código](#113-grupo-b--métricas-de-alinhamento-modelo-código)
-        - [B1: Cobertura do Modelo](#b1-cobertura-do-modelo)
-        - [B2: Precisão da Implementação](#b2-precisão-da-implementação)
-        - [B3: Divergência Semântica](#b3-divergência-semântica)
-        - [B4: Over-Engineering](#b4-over-engineering)
-        - [B5: Score Geral de Alinhamento](#b5-score-geral-de-alinhamento)
-        - [B6: Rastreabilidade](#b6-rastreabilidade)
-    - 11.4 [Resumo das Métricas](#114-resumo-das-métricas)
-12. [Síntese das Métricas por Sprint](#12-síntese-das-métricas-por-sprint)
-13. [Hipóteses](#13-hipóteses)
-14. [Materiais](#14-materiais)
-15. [Estratégias de Construção do Prompt](#15-estratégias-de-construção-do-prompt)
-16. [Tarefas Executadas](#16-tarefas-executadas)
-17. [Fontes de Extração de Dados Não Humanos](#17-fontes-de-extração-de-dados-não-humanos)
-18. [Checklists para Coleta de Dados Humanos](#18-checklists-para-coleta-de-dados-humanos)
-19. [Benefícios e Contribuições Esperadas](#19-benefícios-e-contribuições-esperadas)
-20. [Limitações e Ameaças à Validade](#20-limitações-e-ameaças-à-validade)
-21. [Referências](#21-referências)
+8. [Variaveis do Experimento](#8-variaveis-do-experimento)
+   - 8.1 [Variavel Independente](#81-variavel-independente)
+   - 8.2 [Variaveis Dependentes](#82-variaveis-dependentes)
+   - 8.3 [Variaveis de Controle](#83-variaveis-de-controle)
+9. [Avaliacao e Metricas](#9-avaliacao-e-metricas)
+   - 9.1 [Matriz de Classificacao da Policia](#91-matriz-de-classificacao-da-policia)
+   - 9.2 [Matriz de Decisao do Juiz](#92-matriz-de-decisao-do-juiz)
+   - 9.3 [Metricas Extraiveis dos Artefatos](#93-metricas-extraiveis-dos-artefatos)
+     - 9.3.1 [Metricas de Evidencias (Policia)](#931-metricas-de-evidencias-policia)
+     - 9.3.2 [Metricas de Vereditos (Juiz)](#932-metricas-de-vereditos-juiz)
+     - 9.3.3 [Metricas de Processo](#933-metricas-de-processo)
+   - 9.4 [Metricas com Arbitros Humanos (Trabalho Futuro)](#94-metricas-com-arbitros-humanos-trabalho-futuro)
+     - 9.4.1 [Metricas da Policia (Matriz VP/FP/FN/VN)](#941-metricas-da-policia-matriz-vpfpfnvn)
+     - 9.4.2 [Metricas do Juiz (Matriz DE/AE/AMBOS/NE)](#942-metricas-do-juiz-matriz-deaeambosne)
+     - 9.4.3 [Metricas Qualitativas](#943-metricas-qualitativas)
+10. [Hipotese](#10-hipotese)
+    - 10.1 [H1: Capacidade de Deteccao (Policia)](#101-h1-capacidade-de-deteccao-policia)
+    - 10.2 [H2: Capacidade de Decisao (Juiz)](#102-h2-capacidade-de-decisao-juiz)
+    - 10.3 [H3: Iteratividade do Pipeline](#103-h3-iteratividade-do-pipeline)
+11. [Materiais](#11-materiais)
+12. [Estrategia de Construcao das Personas](#12-estrategia-de-construcao-das-personas)
+13. [Fontes de Extracao de Dados Nao Humanos](#13-fontes-de-extracao-de-dados-nao-humanos)
+14. [Checklists para Coleta de Dados Humanos](#14-checklists-para-coleta-de-dados-humanos)
+    - 14.1 [Checklist da Policia (Matriz VP/FP/FN/VN)](#141-checklist-da-policia-matriz-vpfpfnvn)
+    - 14.2 [Checklist do Juiz (Matriz DE/AE/AMBOS/NE)](#142-checklist-do-juiz-matriz-deaeambosne)
+15. [Contribuicoes Esperadas](#15-contribuicoes-esperadas)
+16. [Limitacoes e Ameacas a Validade](#16-limitacoes-e-ameacas-a-validade)
+    - 16.1 [Ameacas a Validade Interna](#161-ameacas-a-validade-interna)
+    - 16.2 [Ameacas a Validade Externa](#162-ameacas-a-validade-externa)
+    - 16.3 [Ameacas a Validade de Constructo](#163-ameacas-a-validade-de-constructo)
+    - 16.4 [Ameacas a Validade de Conclusao](#164-ameacas-a-validade-de-conclusao)
+17. [Referencias](#17-referencias)
 
 ---
 
-## 1. Informações Gerais
+## 1. Informacoes Gerais
 
-| Campo | Descrição |
+| Campo | Descricao |
 |-------|-----------|
-| **TÍTULO** | Modernização da Engenharia Orientada a Modelos com Auxílio de Agentes de IA e Desenvolvimento Orientado a Especificações – Um Estudo Experimental sobre Pipeline de Agentes Polícia e Juiz para Verificação de Consistência |
-| **TEMA** | Estudo empírico experimental sobre a combinação de Engenharia Orientada a Modelos (MDE), Desenvolvimento Orientado a Especificações (SDD) e um pipeline de quatro agentes de IA (Arquiteto, Developer, Polícia e Juiz) para produção de código frontend, com foco na avaliação da eficácia do pipeline de verificação de inconsistências e no alinhamento entre modelo e código. |
-| **DESCRIÇÃO** | O intuito deste estudo consiste em investigar a eficácia de um pipeline de dois agentes especializados — Polícia (coleta de evidências) e Juiz (decisão) — na detecção e julgamento de inconsistências entre modelo e código, bem como o nível de alinhamento alcançado pelo pipeline completo de agentes. Para isso, será realizado um experimento controlado em ciclos de sprint (Scrum), onde cada commit dispara o Agente Polícia para coletar evidências, seguidas da atuação do Agente Juiz para analisar as evidências e tomar decisão. Ambos os agentes são operados pelo mesmo humano piloto. O escopo do estudo está delimitado à avaliação da qualidade do pipeline de verificação e do alinhamento modelo-código. |
+| **TITULO** | Integracao entre Engenharia Orientada a Modelos e Desenvolvimento Orientado a Especificacoes com Suporte de Agentes de IA: Um Estudo Experimental sobre o Pipeline Spec-Kit com Quatro Personas para Verificacao de Consistencia em uma Plataforma de Curadoria de Keyphrases |
+| **TEMA** | Estudo empirico experimental sobre a integracao entre Engenharia Orientada a Modelos (MDE) e Desenvolvimento Orientado a Especificacoes (SDD), mediada pelo framework Spec-Kit e por quatro agentes de IA especializados (Arquiteto, Developer, Policia, Juiz), aplicada a uma plataforma real de curadoria de keyphrases (KPC). O estudo investiga a eficacia do pipeline como um todo na producao de codigo frontend e backend, com enfase na avaliacao do sistema de verificacao de inconsistencias entre modelo UML e codigo implementado, bem como o nivel de alinhamento alcancado entre ambos ao longo de multiplos ciclos de desenvolvimento. |
+| **DESCRICAO** | O presente estudo tem por objetivo investigar a eficacia de um pipeline de desenvolvimento que integra o framework Spec-Kit (Spec-Driven Development) a quatro personas de IA especializadas -- Arquiteto (modelagem UML), Developer (implementacao fiel ao modelo), Policia (coleta de evidencias de inconsistencias) e Juiz (julgamento fundamentado) -- para a producao de codigo em uma plataforma real de curadoria de keyphrases (KPC). O experimento foi conduzido em tres ciclos de sprint, cada um representando uma abordagem distinta: (i) duas sprints utilizando o pipeline completo MDE+SDD com Spec-Kit e as quatro personas; (ii) uma sprint utilizando exclusivamente o GitHub Copilot sem metodologia formal, seguida de analise retroativa com as quatro personas. O estudo delimita-se a avaliacao da qualidade do pipeline de verificacao (Policia + Juiz) por meio de metricas como precisao, revocacao, taxa de acerto do juiz e concordancia com arbitros humanos, bem como o alinhamento modelo-codigo mensurado por cobertura do modelo, precisao da implementacao, divergencia semantica, over-engineering e rastreabilidade. |
+| **ABORDAGEM** | MDE (Model-Driven Engineering) combinada com SDD (Spec-Driven Development), utilizando o framework Spec-Kit como ferramenta pratica de orquestracao do pipeline, integrando quatro personas de IA (Arquiteto, Developer, Policia, Juiz) como camada adicional de comportamento sobre os comandos nativos do Spec-Kit. |
+| **CASO DE USO** | KPC (Keyphrase Curation Platform) -- uma plataforma de curadoria de keyphrases com backend FastAPI e frontend React + MVVM, que oferece extracao, geracao, clustering, anotacao colaborativa e adjudicacao de keyphrases em textos argumentativos sobre oito topicos (aborto, clonagem, pena de morte, controle de armas, legalizacao da maconha, salario minimo, energia nuclear, uniformes escolares). |
+| **FERRAMENTA PRINCIPAL** | Spec-Kit (framework open-source da GitHub para Spec-Driven Development), integrado a quatro arquivos de instrucao de agentes de IA (`persona-arquiteto.md`, `persona-developer.md`, `persona-policia.md`, `persona-juiz.md`) que definem o comportamento especializado de cada persona no pipeline. |
+| **PARTICIPANTE** | Humano piloto unico (Daired), responsavel por operar o pipeline Spec-Kit, acionar os comandos nativos, interagir com as quatro personas de IA e conduzir o experimento nos tres ciclos de sprint. |
+| **SPRINTS** | Tres sprints: Sprint 01 (MDE+SDD com Spec-Kit - refatoracao do componente de Login), Sprint 02 (MDE+SDD com Spec-Kit - correcao de serializacao numpy no backend), Sprint 03 (Copilot sem metodologia + analise retroativa com Spec-Kit - correcao de ordenacao, labels e pareamento). |
 
 ---
 
-## 2. Contextualização e Motivação
+## 2. Contextualizacao e Motivacao
 
-O desenvolvimento de software assistido por Inteligência Artificial tem ganhado crescente atenção, especialmente com o avanço dos Modelos de Linguagem de Grande Escala (LLMs). No entanto, observou-se em projetos práticos que, na ausência de uma modelagem clara e de técnicas estruturadas de controle sobre o código gerado por IA, o desenvolvimento sofre atrasos significativos e perda de qualidade de código.
+### 2.1 O Problema do Codigo Gerado por IA sem Estrutura
 
-A Engenharia Orientada a Modelos (MDE) — que propõe o uso de modelos como artefatos centrais do desenvolvimento — perdeu espaço com a ascensão dos métodos ágeis. Contudo, o cenário atual com agentes de IA capazes de interpretar e gerar artefatos a partir de modelos resgata o potencial da MDE, especialmente quando combinada com o Desenvolvimento Orientado a Especificações (SDD).
+O desenvolvimento de software assistido por Inteligencia Artificial tem ganhado
+crescente atencao, especialmente com o avanco dos Modelos de Linguagem de Grande
+Escala (LLMs). Ferramentas como GitHub Copilot, ChatGPT e outras oferecem
+capacidade sem precedentes de geracao de codigo a partir de descricoes em
+linguagem natural, aumentando significativamente a produtividade dos
+desenvolvedores em tarefas rotineiras.
 
-Neste contexto, esta pesquisa propõe um pipeline de quatro agentes de IA:
+No entanto, observou-se em projetos praticos que, na ausencia de uma modelagem
+clara e de tecnicas estruturadas de controle sobre o codigo gerado por IA, o
+desenvolvimento sofre atrasos significativos e perda de qualidade de codigo.
+Problemas como duplicacao de funcionalidades, implementacao de codigo nao
+solicitado (over-engineering), inconsistencia arquitetural e falta de
+rastreabilidade entre requisitos e implementacao tornam-se frequentes. A
+ausencia de uma "ancora" que mantenha o codigo alinhado a especificacao e ao
+projeto arquitetural leva a um crescimento desordenado da base de codigo,
+dificultando a manutencao e evolucao do sistema.
 
-1. **Agente Arquiteto**: trabalha colaborativamente com o aluno para produzir e refinar o modelo UML (PlantUML).
-2. **Agente Developer**: trabalha colaborativamente com o aluno para gerar código frontend a partir do modelo.
-3. **Agente Polícia de Inconsistências**: atua na coleta sistemática de evidências sobre possíveis inconsistências entre modelo e código.
-4. **Agente Juiz de Inconsistências**: analisa as evidências coletadas pela Polícia, considera os argumentos do Arquiteto e do Developer, e profere uma decisão.
+### 2.2 O Resgate da Engenharia Orientada a Modelos (MDE)
 
-A principal inovação deste estudo é a **separação das responsabilidades de coleta de evidências e de julgamento** em dois agentes distintos, permitindo uma avaliação mais precisa de cada etapa do processo de verificação de consistência. Ambos os agentes são operados pelo mesmo humano piloto, garantindo coerência na aplicação dos critérios.
+A Engenharia Orientada a Modelos (MDE) -- que propoe o uso de modelos como
+artefatos centrais do desenvolvimento, a partir dos quais o codigo e derivado
+de forma sistematica -- perdeu espaco com a ascensao dos metodos ageis e a
+percepcao de que a modelagem detalhada seria custosa e de baixo retorno
+pratico. Contudo, o cenario atual com agentes de IA capazes de interpretar e
+gerar artefatos a partir de modelos resgata o potencial da MDE, especialmente
+quando combinada com o Desenvolvimento Orientado a Especificacoes (SDD).
+
+A SDD propoe que a especificacao -- e nao o codigo -- seja o artefato central
+do desenvolvimento, funcionando como uma "fonte unica de verdade" a partir da
+qual todos os demais artefatos (modelos, tarefas, codigo, testes) sao
+derivados e verificados. Esta abordagem ganhou um impulso significativo com o
+surgimento do Spec-Kit, um framework open-source desenvolvido pela GitHub que
+fornece um conjunto de comandos nativos (especificacao, planejamento, geracao
+de tarefas, implementacao e analise) para orquestrar o fluxo SDD.
+
+### 2.3 A Lacuna: Integracao entre MDE, SDD e Agentes de IA
+
+Apesar dos avancos individuais em cada uma destas areas, observa-se uma lacuna
+na literatura e na pratica: a integracao sistematica entre MDE, SDD e agentes
+de IA especializados em um pipeline coeso e reprodutivel. Especificamente, nao
+foi encontrado um estudo que combine:
+
+- Um **framework pratico de SDD** (Spec-Kit) como orquestrador do fluxo de
+  desenvolvimento;
+- **Quatro agentes de IA especializados** com responsabilidades distintas e
+  complementares (Arquiteto para modelagem, Developer para implementacao fiel,
+  Policia para coleta de evidencias de inconsistencia, Juiz para julgamento
+  fundamentado);
+- Um **sistema de rodadas iterativas** que permita a correcao progressiva de
+  inconsistencias entre modelo e codigo ao longo de multiplos ciclos;
+- Um **conjunto de metricas** para avaliar tanto a qualidade do pipeline de
+  verificacao (Policia + Juiz) quanto o nivel de alinhamento entre modelo e
+  codigo alcancado.
+
+### 2.4 O Pipeline Proposto: Spec-Kit com Quatro Personas de IA
+
+Neste contexto, esta pesquisa propoe e avalia um pipeline de desenvolvimento
+que integra o framework Spec-Kit a quatro personas de IA especializadas,
+criando um fluxo sistematico de especificacao, modelagem, implementacao e
+verificacao em multiplas rodadas iterativas:
+
+1. **Persona Arquiteto**: Ativada durante o comando `/speckit.plan`, e
+   responsavel por traduzir requisitos funcionais em modelos UML precisos
+   utilizando PlantUML, garantindo rastreabilidade entre cada elemento
+   modelado e seu requisito funcional de origem por meio da tag `@rf:`.
+
+2. **Persona Developer**: Ativada durante o comando `/speckit.implement`, e
+   responsavel por traduzir os modelos UML em codigo funcional seguindo
+   rigidamente o que foi modelado. O principio fundamental e o "zero
+   over-engineering": nada e implementado sem contraparte no modelo. Cada
+   arquivo de codigo recebe um marcador `// @model:` que referencia o diagrama
+   de origem.
+
+3. **Persona Policia**: Ativada durante o comando `/speckit.analyze`, e
+   responsavel por investigar e documentar evidencias de inconsistencia entre
+   o modelo UML e o codigo implementado. A Policia nao julga, nao decide e
+   nao altera nenhum artefato -- apenas coleta evidencias estruturadas com
+   localizacao exata (arquivo:linha), tipo de inconsistencia e severidade, e
+   simula automaticamente os depoimentos do Arquiteto e do Developer sobre
+   cada evidencia.
+
+4. **Persona Juiz**: Ativada automaticamente apos a conclusao da investigacao
+   da Policia, no mesmo comando `/speckit.analyze`, e responsavel por ler o
+   relatorio de evidencias e proferir uma decisao fundamentada para cada
+   evidencia. O Juiz utiliza uma arvore de decisao que considera quatro
+   possibilidades: Developer Errado (DE), Arquiteto Errado (AE), Ambos
+   Errados (AMBOS) ou Ninguem Errado (NE).
+
+A principal inovacao deste pipeline e a **separacao das responsabilidades de
+coleta de evidencias e de julgamento** em dois agentes distintos (Policia e
+Juiz), permitindo uma avaliacao mais precisa e imparcial de cada etapa do
+processo de verificacao de consistencia. Adicionalmente, o sistema opera em
+**rodadas iterativas**: cada execucao do pipeline produz evidencias e
+vereditos que se acumulam ao longo do tempo, e uma arvore de rastreamento
+pai-filho conecta evidencias que persistem entre rodadas, permitindo
+acompanhar a evolucao da correcao de inconsistencias.
+
+### 2.5 Caso de Uso: Keyphrase Curation Platform (KPC)
+
+Para viabilizar a avaliacao experimental do pipeline, este estudo utiliza a
+Keyphrase Curation Platform (KPC) como caso de uso. A KPC e uma plataforma
+real de curadoria de keyphrases, composta por:
+
+- **Backend** (`kpc-backend/`): API REST implementada em Python com FastAPI,
+  oferecendo endpoints para extracao, geracao, clustering, anotacao
+  colaborativa e adjudicacao de keyphrases em textos argumentativos sobre oito
+  topicos (aborto, clonagem, pena de morte, controle de armas, legalizacao da
+  maconha, salario minimo, energia nuclear, uniformes escolares).
+- **Frontend** (`kpc-frontend/`): Interface web implementada em React 18 com
+  Vite 5 e Material UI 5, utilizando arquitetura MVVM (Model-View-ViewModel)
+  com Zustand para gerenciamento de estado global e React Router para
+  navegacao SPA.
+
+A escolha da KPC como caso de uso justifica-se por sua complexidade moderada e
+por sua arquitetura multicamadas (frontend + backend), que permite exercitar
+todo o escopo de modelagem do Arquiteto e de implementacao do Developer em
+ambas as frentes.
+
+### 2.6 Delineamento Experimental
+
+O experimento foi conduzido em tres ciclos de sprint, cada um representando
+uma abordagem distinta:
+
+- **Sprint 01 (MDE+SDD com Spec-Kit e 4 personas):** Refatoracao do componente
+  de Login do frontend KPC para arquitetura MVVM, utilizando o pipeline
+  completo com Spec-Kit e as quatro personas. Foram realizadas tres rodadas de
+  analise (R1, R2, R3) ate que todas as evidencias fossem resolvidas.
+- **Sprint 02 (MDE+SDD com Spec-Kit e 4 personas):** Correcao de um bug de
+  serializacao numpy no backend (`PydanticSerializationError` para
+  `numpy.int64`), utilizando o mesmo pipeline completo. Foram realizadas duas
+  rodadas de analise (R1, R2).
+- **Sprint 03 (Copilot sem metodologia + analise retroativa com Spec-Kit):**
+  Correcoes de ordenacao, padronizacao de labels e agrupamento de pares
+  reciprocos implementadas exclusivamente via chat com GitHub Copilot, sem
+  metodologia formal. Posteriormente, aplicou-se analise retroativa com as
+  quatro personas do Spec-Kit sobre os logs experimentais para gerar
+  artefatos de modelagem, evidencias e vereditos, permitindo comparacao com
+  as Sprints 01 e 02.
+
+Este delineamento permite nao apenas avaliar a eficacia do pipeline MDE+SDD
+com Spec-Kit e quatro personas, mas tambem compara-lo com uma abordagem
+alternativa (Copilot sem metodologia), gerando evidencias sobre os beneficios
+e limitacoes de cada estrategia.
 
 ---
 
@@ -105,785 +241,465 @@ A principal inovação deste estudo é a **separação das responsabilidades de 
 
 ### 3.1 Objetivo Geral
 
-Avaliar a eficácia do pipeline de dois agentes especializados (Polícia e Juiz) na detecção e julgamento de inconsistências entre modelo e código, bem como o nível de alinhamento alcançado pelo pipeline completo de agentes (Arquiteto, Developer, Polícia e Juiz) baseado em MDE+SDD.
+Avaliar a eficacia do pipeline de verificacao composto pelas personas Policia
+(coleta de evidencias) e Juiz (julgamento fundamentado) na deteccao e decisao
+sobre inconsistencias entre modelo UML e codigo implementado, no contexto de
+um fluxo de desenvolvimento que integra MDE, SDD, o framework Spec-Kit e
+quatro personas de IA especializadas (Arquiteto, Developer, Policia, Juiz).
 
 ### 3.2 Objetivo GQM (Goal-Question-Metric)
 
-Esta pesquisa busca **analisar** o pipeline de agentes de IA com MDE+SDD com o propósito de **avaliar** a eficácia do sistema de verificação de inconsistências (Polícia + Juiz) e o alinhamento entre modelo e código sob a perspectiva de **pesquisadores e desenvolvedores** no contexto de um **experimento controlado com ciclos de sprint**.
+Esta pesquisa busca **analisar** o pipeline de verificacao (Policia + Juiz)
+integrado ao framework Spec-Kit e as quatro personas com o proposito de
+**avaliar** a capacidade do sistema de detectar e julgar inconsistencias
+entre modelo e codigo sob a perspectiva de **pesquisadores** no contexto de
+um **experimento controlado com ciclos de sprint** aplicado a uma plataforma
+real de curadoria de keyphrases (KPC).
 
 ---
 
-## 4. Questões de Pesquisa
+## 4. Questoes de Pesquisa
 
-### 4.1 QP1: Eficácia do Pipeline de Agentes (Polícia e Juiz)
+### 4.1 QP1: Eficacia do Pipeline de Verificacao (Policia e Juiz)
 
-O pipeline composto pelo Agente Polícia (coleta de evidências) e Agente Juiz (decisão) é eficaz na detecção e julgamento de inconsistências entre modelo e código?
+O pipeline composto pelas personas Policia (coleta de evidencias) e Juiz
+(decisao fundamentada) e capaz de detectar e julgar corretamente inconsistencias
+entre modelo UML e codigo implementado?
 
-**Rationale:** Ao responder a esta pergunta, espera-se avaliar separadamente:
-- A capacidade da Polícia em coletar evidências completas e relevantes (precisão e revocação das evidências)
-- A capacidade do Juiz em analisar corretamente as evidências e proferir decisões adequadas (taxa de acerto)
-- A qualidade da separação das responsabilidades entre os dois agentes
+**Rationale:** Busca-se avaliar a capacidade do pipeline de verificacao em
+produzir evidencias (Policia) e decisoes (Juiz) uteis para identificar
+desalinhamentos entre o que foi modelado e o que foi implementado.
 
-### 4.2 QP2: Alinhamento Modelo-Código
+### 4.2 QP2: Evolucao das Inconsistencias entre Rodadas
 
-Qual é o nível de alinhamento entre modelo e código alcançado pelo pipeline completo de agentes, e como esse alinhamento evolui ao longo das sprints?
+Como as inconsistencias entre modelo e codigo evoluem ao longo de multiplas
+rodadas de execucao do pipeline de verificacao?
 
-**Rationale:** Espera-se que a resposta forneça evidências sobre a capacidade do modelo gerado colaborativamente de servir como "âncora" para o desenvolvimento, bem como sobre a eficácia do sistema de verificação (Polícia+Juiz) em manter a consistência entre modelo e código ao longo do tempo.
+**Rationale:** Busca-se verificar se o sistema de rodadas iterativas
+(cumulativo, com arvore pai-filho) permite acompanhar a correcao progressiva
+de inconsistencias ao longo do tempo, independentemente da abordagem de
+desenvolvimento utilizada (MDE+SDD ou Copilot sem metodologia).
 
 ---
 
-## 5. Método de Pesquisa
+## 5. Metodo de Pesquisa
 
-**Experimento controlado**, pois o objetivo é estabelecer uma relação entre o uso do pipeline de agentes de IA com MDE+SDD (variável independente) e as métricas de eficácia do sistema de verificação e alinhamento modelo-código (variáveis dependentes). O experimento ocorrerá em ciclos de sprint (Scrum), com duração estimada de 1 a 2 semanas cada.
+### 5.1 Tipo de Pesquisa
 
----
+Pesquisa experimental controlada, conduzida por meio de estudo de caso unico
+com a plataforma KPC como objeto de estudo. O experimento visa observar o
+comportamento do pipeline de verificacao (Policia + Juiz) em diferentes
+contextos de desenvolvimento, sem a pretensao de generalizacao estatistica.
+
+### 5.2 Estrutura do Experimento
+
+O experimento foi organizado em tres ciclos de sprint, cada um com uma
+abordagem distinta:
+
+| Ciclo | Abordagem | Escopo | Rodadas de Analise |
+|-------|-----------|--------|-------------------|
+| Sprint 01 | MDE+SDD com Spec-Kit e 4 personas | Refatoracao do componente de Login (frontend) | 3 rodadas (R1, R2, R3) |
+| Sprint 02 | MDE+SDD com Spec-Kit e 4 personas | Correcao de serializacao numpy (backend) | 2 rodadas (R1, R2) |
+| Sprint 03 | Copilot sem metodologia + analise retroativa | Correcao de ordenacao, labels e pareamento | 1 rodada cada tarefa |
+
+### 5.3 Pipeline de Verificacao (Objeto de Estudo)
+
+O objeto central do experimento e o pipeline de verificacao composto por duas
+personas de IA:
+
+1. **Persona Policia:** Responsavel por comparar o modelo UML (PlantUML) com
+   o codigo implementado, coletando evidencias estruturadas de inconsistencia.
+   Cada evidencia inclui tipo, severidade, localizacao exata (arquivo:linha)
+   e deposimentos simulados do Arquiteto e do Developer.
+
+2. **Persona Juiz:** Responsavel por analisar o relatorio de evidencias
+   gerado pela Policia e proferir uma decisao fundamentada para cada
+   evidencia, utilizando quatro categorias: Developer Errado (DE), Arquiteto
+   Errado (AE), Ambos Errados (AMBOS) ou Ninguem Errado (NE).
+
+Ambas as personas sao operadas por um mesmo humano piloto, que aciona os
+comandos do Spec-Kit e interpreta os resultados.
+
+### 5.4 Sistema de Rodadas
+
+O pipeline opera em multiplas rodadas iterativas. A cada rodada:
+- A Policia verifica se as evidencias da rodada anterior foram corrigidas;
+- Evidencias corrigidas sao marcadas como RESOLVIDAS;
+- Evidencias nao corrigidas persistem com novo ID e link `parent:` para a
+  evidencia original;
+- Novas evidencias sao adicionadas;
+- O Juiz julga apenas as evidencias da rodada atual.
+
+### 5.5 Instrumentos e Materiais
+
+| Item | Descricao |
+|------|-----------|
+| Framework Spec-Kit | Comandos nativos: `constitution`, `specify`, `plan`, `tasks`, `implement`, `analyze` |
+| Arquivos de persona | `persona-arquiteto.md`, `persona-developer.md`, `persona-policia.md`, `persona-juiz.md` |
+| Modelagem UML | PlantUML para diagramas de classes, componentes e sequencia |
+| Caso de uso | KPC (backend FastAPI + frontend React/MVVM) |
+| Registro de dados | Artefatos em `evidence/inconsistencies.md` e `verdict/verdict.md` |
+
+### 5.6 Procedimento
+
+Para cada sprint, o procedimento executado foi:
+
+1. **Constituicao:** Definir principios do projeto com `/speckit.constitution`.
+2. **Especificacao:** Gerar requisitos funcionais com `/speckit.specify`.
+3. **Planejamento:** Planejar a sprint e modelar diagramas UML com o Arquiteto
+   via `/speckit.plan`.
+4. **Tarefas:** Gerar tarefas estruturadas com `/speckit.tasks`.
+5. **Implementacao:** Implementar o codigo com o Developer via
+   `/speckit.implement`.
+6. **Analise:** Executar a Policia e o Juiz automaticamente com
+   `/speckit.analyze`, gerando evidencias e vereditos.
+7. **Correcao:** Aplicar as correcoes indicadas pelos vereditos e repetir a
+   analise ate que nao haja mais evidencias ou o criterio de parada seja
+   atingido.
+
+Para a Sprint 03, o procedimento foi:
+1. Implementar as correcoes via chat com GitHub Copilot (sem Spec-Kit).
+2. Aplicar a analise retroativa com as quatro personas do Spec-Kit sobre os
+   logs experimentais.
 
 ## 6. Participantes
 
-### 6.1 Grupo 1 — Desenvolvedores (Alunos Pesquisadores)
+### 6.1 Humano Piloto
+
+O experimento foi conduzido por um unico participante, o aluno-pesquisador
+Daired, que desempenhou todos os papeis operacionais do pipeline:
 
 | Papel | Responsabilidade |
 |-------|------------------|
-| Agente Arquiteto + Aluno X | Modelagem colaborativa do frontend utilizando UML textual (PlantUML) |
-| Agente Developer + Aluno Daired | Codificação colaborativa do frontend a partir do modelo estabelecido |
+| Operador do Spec-Kit | Acionamento e interpretacao dos comandos nativos (`constitution`, `specify`, `plan`, `tasks`, `implement`, `analyze`) |
+| Interlocutor do Arquiteto | Refinamento colaborativo dos diagramas UML (PlantUML) durante o `/speckit.plan` |
+| Interlocutor do Developer | Conducao da implementacao do codigo a partir dos modelos durante o `/speckit.implement` |
+| Operador da Policia | Execucao da varredura de evidencias de inconsistencia entre modelo e codigo |
+| Operador do Juiz | Analise das evidencias e proferimento dos vereditos fundamentados |
 
-**Critérios de inclusão:** Conhecimento avançado em desenvolvimento frontend, experiência prévia com UML, disponibilidade para todas as sprints.
+O mesmo humano piloto operou tanto a Policia quanto o Juiz, garantindo
+coerencia na interpretacao das evidencias e evitando variaveis de confusao
+relacionadas a diferentes niveis de expertise entre operadores. A separacao
+dos papeis e funcional (diferentes responsabilidades e protocolos), nao
+operacional.
 
-### 6.2 Grupo 2 — Avaliadores (Árbitros Humanos)
+### 6.2 Participacao Futura
 
-| Papel | Responsabilidade |
-|-------|------------------|
-| Professores Orientadores | Validar as decisões do Agente Juiz nas audiências, atuando como árbitros humanos |
+O protocolo original preve a participacao de arbitros humanos (professores
+orientadores) para validar as decisoes do Juiz, atuando como uma segunda
+instancia de avaliacao. Esta etapa nao foi executada neste experimento devido
+a restricoes de tempo e escopo, sendo registrada como trabalho futuro.
 
-**Critérios de inclusão:** Experiência comprovada em Engenharia de Software (mínimo 5 anos), conhecimento em MDE, SDD e metodologias ágeis.
-
-### 6.3 Grupo 3 — Humano Piloto (Polícia + Juiz)
-
-| Papel | Responsabilidade |
-|-------|------------------|
-| Humano Piloto | Opera tanto o Agente Polícia quanto o Agente Juiz, seguindo os protocolos definidos para cada papel |
-
-**Critérios de inclusão:** Treinamento específico nos protocolos de atuação da Polícia e do Juiz, conhecimento em Engenharia de Software, imparcialidade no julgamento.
-
-**Justificativa para o mesmo humano piloto:** Manter o mesmo operador para ambos os agentes garante coerência na interpretação das inconsistências e evita variáveis de confusão relacionadas a diferentes níveis de expertise entre operadores. A separação dos papéis é funcional (diferentes agentes com diferentes responsabilidades), não operacional.
-
-**Número de participantes esperado:** 2 desenvolvedores + 2 a 3 avaliadores + 1 humano piloto.
+**Número de participantes esperado:** 1 desenvolvedores + 2 a 3 avaliadores.
 
 ---
 
 ## 7. Os Agentes do Pipeline
 
-### 7.1 Agente Arquiteto
+As quatro personas de IA que compoem o pipeline ja foram descritas em detalhe
+nas secoes anteriores. Esta secao apresenta apenas uma tabela-resumo dos
+papeis, comandos e artefatos para consulta rapida.
 
-| Propriedade | Descrição |
-|-------------|-----------|
-| **Responsabilidade** | Produzir e refinar modelos UML (PlantUML) a partir das especificações |
-| **Interação** | Colaborativa com o Aluno X |
-| **Entrada** | Especificações de requisitos, feedback do Developer |
-| **Saída** | Diagramas PlantUML atualizados |
+| Persona | Comando Spec-Kit | Responsabilidade | Artefato Gerado |
+|---------|------------------|------------------|-----------------|
+| Arquiteto | `/speckit.plan` | Modelagem UML (PlantUML) com rastreabilidade `@rf:` | `model/*.puml` |
+| Developer | `/speckit.implement` | Implementacao fiel ao modelo, zero over-engineering | Codigo com `// @model:` |
+| Policia | `/speckit.analyze` | Coleta de evidencias de inconsistencia + deposimentos ARG-/DEP- | `evidence/inconsistencies.md` |
+| Juiz | `/speckit.analyze` (automatico apos Policia) | Julgamento fundamentado (DE, AE, AMBOS, NE) | `verdict/verdict.md` |
 
-### 7.2 Agente Developer
-
-| Propriedade | Descrição |
-|-------------|-----------|
-| **Responsabilidade** | Gerar código frontend a partir do modelo estabelecido |
-| **Interação** | Colaborativa com o Aluno Daired |
-| **Entrada** | Modelos UML do Arquiteto, especificações |
-| **Saída** | Código fonte implementado |
-
-### 7.3 Agente Polícia de Inconsistências
-
-| Propriedade | Descrição |
-|-------------|-----------|
-| **Responsabilidade** | Coletar evidências sistemáticas sobre possíveis inconsistências entre modelo e código |
-| **Natureza** | Investigativa — não toma decisões, apenas reúne provas |
-| **Entrada** | Modelo UML (PlantUML), código fonte, especificações |
-| **Saída** | Relatório de evidências (lista de possíveis inconsistências com justificativa e artefatos de suporte) |
-| **Operador** | Humano piloto |
-| **Atuação** | A cada commit, executado antes do Juiz |
-
-**Princípios de atuação da Polícia:**
-
-| Princípio | Descrição |
-|-----------|-----------|
-| Imparcialidade | Coleta todas as evidências, independentemente de favorecer o Arquiteto ou o Developer |
-| Exaustividade | Busca identificar todas as possíveis inconsistências, mesmo as de baixa severidade |
-| Rastreabilidade | Cada evidência deve ser vinculada a artefatos específicos (linha do modelo, linha do código, trecho da spec) |
-| Objetividade | Evidências devem ser factuais, não opinativas |
-
-### 7.4 Agente Juiz de Inconsistências
-
-| Propriedade | Descrição |
-|-------------|-----------|
-| **Responsabilidade** | Analisar as evidências coletadas pela Polícia, considerar argumentos do Arquiteto e Developer, e proferir decisão |
-| **Natureza** | Decisória — julga com base nas provas apresentadas |
-| **Entrada** | Relatório de evidências da Polícia, argumentos do Arquiteto e Developer |
-| **Saída** | Decisão fundamentada sobre cada inconsistência |
-| **Operador** | Humano piloto (mesmo da Polícia) |
-| **Atuação** | Após a Polícia concluir a coleta de evidências e após os agentes Arquiteto e Developer apresentarem seus argumentos |
-
-### 7.5 Fluxo de Decisão do Juiz
-
-O Agente Juiz analisa cada inconsistência reportada pela Polícia e profere uma decisão dentre quatro possíveis:
-
-| Decisão | Código | Descrição | Consequência |
-|---------|--------|-----------|--------------|
-| **Developer Errado** | DE | O código implementado está incorreto em relação ao modelo; o modelo está correto | Developer deve corrigir o código |
-| **Arquiteto Errado** | AE | O modelo está incorreto ou incompleto; o código implementado está correto | Arquiteto deve corrigir o modelo |
-| **Ambos Errados** | AE | Tanto o modelo quanto o código apresentam problemas; ambos estão incorretos | Ambos devem corrigir seus artefatos |
-| **Ninguém Errado** | NE | Não há inconsistência real; a diferença entre modelo e código é uma decisão consciente e justificada | Nenhuma ação necessária; registrar decisão como consciente |
-
-**Critérios para cada decisão:**
-
-| Decisão | Condição Necessária |
-|---------|---------------------|
-| Developer Errado | Modelo está correto E código não implementa o que o modelo especifica |
-| Arquiteto Errado | Código está correto E modelo não reflete a implementação E a implementação está de acordo com a especificação |
-| Ambos Errados | Modelo está incorreto E código também está incorreto (ou não implementa o modelo) |
-| Ninguém Errado | Modelo e código são consistentes, OU a diferença é justificada por decisão de projeto documentada |
+**Nota:** A arvore de decisao do Juiz e o checklist de verificacao da Policia
+estao detalhados nos arquivos de persona em `.github/prompts/`.
 
 ---
 
-## 8. Variáveis de Controle
+## 8. Variaveis do Experimento
 
-| Variável | Estratégia de Controle |
-|----------|------------------------|
-| Casos de uso e requisitos | Fixo para todas as sprints; documentado previamente |
-| Linguagem de programação | Definida antes do início do experimento |
-| Ferramenta de modelagem | PlantUML fixa durante todo o experimento |
-| Processo de desenvolvimento | Scrum com sprints de duração fixa |
-| Ambiente de desenvolvimento | Configurado antes do início |
+### 8.1 Variavel Independente
 
----
+A presenca ou ausencia do pipeline MDE+SDD com Spec-Kit e quatro personas
+como abordagem de desenvolvimento:
 
-## 9. Variáveis Independentes
+| Nivel | Descricao | Sprints |
+|-------|-----------|---------|
+| Com pipeline | Uso do Spec-Kit + 4 personas (Arquiteto, Developer, Policia, Juiz) | Sprint 01, Sprint 02 |
+| Sem pipeline | Uso exclusivo do GitHub Copilot via chat, sem metodologia formal | Sprint 03 |
 
-| Variável | Níveis/Tratamentos |
-|----------|---------------------|
-| Pipeline de agentes de IA | **Com pipeline** (tratamento experimental) vs. **Sem pipeline** (controle) |
+### 8.2 Variaveis Dependentes
 
----
+As metricas observadas sao as evidencias e vereditos produzidos pelo pipeline
+de verificacao (Policia + Juiz):
 
-## 10. Variáveis Dependentes
+- Quantidade e tipos de evidencias coletadas por rodada (NOVA, PERSISTE, RESOLVIDA)
+- Distribuicao dos vereditos do Juiz (DE, AE, AMBOS, NE)
+- Numero de rodadas necessarias para resolucao das inconsistencias
 
-| Variável | Métrica Associada |
-|----------|-------------------|
-| Eficácia da coleta de evidências (Polícia) | Precisão, revocação, qualidade das evidências |
-| Eficácia do julgamento (Juiz) | Taxa de acerto, concordância com árbitros, qualidade da decisão |
-| Alinhamento modelo-código | Cobertura do modelo; precisão da implementação; divergência semântica; over-engineering |
+### 8.3 Variaveis de Controle
 
----
-
-## 11. Avaliação e Métricas
-
-### 11.1 Rubrica Padronizada (0-4)
-
-Todas as métricas quantitativas deste protocolo seguem a seguinte rubrica padronizada de avaliação:
-
-| Pontuação | Classificação | Critério Geral |
-|-----------|---------------|----------------|
-| 0 | Muito Baixo (MB) | Desempenho muito abaixo do esperado; não atende aos requisitos mínimos |
-| 1 | Baixo (B) | Desempenho abaixo do esperado; atende parcialmente aos requisitos mínimos |
-| 2 | Regular (R) | Desempenho na média esperada; atende aos requisitos mínimos |
-| 3 | Bom (B) | Desempenho acima do esperado; atende plenamente aos requisitos |
-| 4 | Excelente (E) | Desempenho muito acima do esperado; excede os requisitos |
+| Variavel | Estrategia |
+|----------|------------|
+| Caso de uso | KPC fixo para todas as sprints |
+| Linguagens | Python (backend) e JavaScript/React (frontend) |
+| Ferramenta de modelagem | PlantUML |
+| Ambiente | Mesmo hardware e configuracao de software |
+| Operador | Mesmo humano piloto (Daired) para todas as sprints |
 
 ---
 
-### 11.2 Grupo A — Métricas de Qualidade do Pipeline Polícia+Juiz
+## 9. Avaliacao e Metricas
 
-As métricas deste grupo são calculadas **por sprint**, considerando exclusivamente as **inconsistências detectadas nos artefatos da sprint corrente**.
+### 9.1 Matriz de Classificacao da Policia
 
----
+A Policia coleta evidencias de inconsistencia entre modelo e codigo. Cada
+evidencia pode ser classificada conforme a matriz de confusao abaixo.
 
-#### A1: Matriz de Confusão do Juiz
+| Categoria | Codigo | O que ocorreu |
+|-----------|--------|---------------|
+| Verdadeiro Positivo | VP | A Policia apontou uma inconsistencia, e a inconsistencia realmente existia. |
+| Falso Positivo | FP | A Policia apontou uma inconsistencia, mas a inconsistencia nao existia (falso alarme). |
+| Falso Negativo | FN | A Policia nao apontou inconsistencia, mas a inconsistencia existia (omissao). |
+| Verdadeiro Negativo | VN | A Policia nao apontou inconsistencia, e realmente nao havia inconsistencia. |
 
-| Cenário | Nome | Descrição |
-|---------|------|-----------|
-| **TP** | Verdadeiro Positivo | Inconsistência real detectada pela Polícia e corretamente confirmada pelo Juiz |
-| **TN** | Verdadeiro Negativo | Ausência de inconsistência corretamente identificada pela Polícia e Juiz |
-| **FP** | Falso Positivo | Polícia detectou inconsistência inexistente OU Juiz confirmou incorretamente |
-| **FN** | Falso Negativo | Inconsistência real que não foi detectada pela Polícia (não chegou ao Juiz) |
+### 9.2 Matriz de Decisao do Juiz
 
-**Fonte dos dados:** [Checklist 1](#181-checklist-1--avaliação-de-audiência-polícia--juiz) (itens AUD-06 a AUD-09, POL-01 a POL-04)
+O Juiz profere um veredito para cada evidencia, escolhendo entre quatro
+possibilidades: DE (Developer Errado), AE (Arquiteto Errado), AMBOS (Ambos
+Errados) ou NE (Ninguem Errado). A acuracia do Juiz e medida comparando seu
+veredito com a decisao correta definida por um arbitro humano.
 
----
+| Decisao do Juiz | Decisao Correta (Arbitro) | Resultado |
+|-----------------|---------------------------|-----------|
+| DE | DE | Acerto |
+| DE | AE, AMBOS, NE | Erro |
+| AE | AE | Acerto |
+| AE | DE, AMBOS, NE | Erro |
+| AMBOS | AMBOS | Acerto |
+| AMBOS | DE, AE, NE | Erro |
+| NE | NE | Acerto |
+| NE | DE, AE, AMBOS | Erro |
 
-#### A2: Matriz de Decisão do Juiz
+### 9.3 Metricas Extraiveis dos Artefatos
 
-Para cada inconsistência real (verdadeiro positivo), o Juiz profere uma decisão. A matriz de decisão compara a decisão do Juiz com a decisão correta (definida pelos árbitros humanos):
+As metricas a seguir sao calculadas diretamente dos arquivos gerados pelo
+pipeline (`evidence/inconsistencies.md` e `verdict/verdict.md`), sem necessidade
+de arbitros humanos.
 
-| Decisão do Juiz | Decisão Correta (Árbitro) | Classificação |
-|-----------------|---------------------------|---------------|
-| DE (Developer Errado) | DE | Acerto |
-| DE | AE | Erro (tipo 1) |
-| DE | AE (Ambos Errados) | Erro (tipo 2) |
-| DE | NE | Erro (tipo 3) |
-| AE (Arquiteto Errado) | AE | Acerto |
-| AE | DE | Erro |
-| AE | AE | Erro |
-| AE | NE | Erro |
-| AE (Ambos Errados) | AE | Acerto |
-| AE | DE | Erro |
-| AE | AE | Erro |
-| AE | NE | Erro |
-| NE (Ninguém Errado) | NE | Acerto |
-| NE | DE | Erro |
-| NE | AE | Erro |
-| NE | AE | Erro |
+#### 9.3.1 Metricas de Evidencias (Policia)
 
-**Fonte dos dados:** [Checklist 1](#181-checklist-1--avaliação-de-audiência-polícia--juiz) (itens AUD-10, AUD-11, AUD-12)
+| ID | Metrica | Formula / Descricao | Fonte |
+|----|---------|---------------------|-------|
+| M1 | Volume de evidencias | Quantidade total de evidencias coletadas por sprint/rodada | [NE-01](#ne-01) |
+| M2 | Volume por status | Quantidade de evidencias NOVAS, PERSISTEM, RESOLVIDAS por rodada | [NE-01](#ne-01) |
+| M3 | Distribuicao por tipo | Proporcao de cada tipo de evidencia (METODO_AUSENTE, OVER_ENGINEERING, etc.) | [NE-01](#ne-01) |
+| M4 | Distribuicao por severidade | Proporcao de evidencias ALTA, MEDIA, BAIXA | [NE-01](#ne-01) |
+| M5 | Taxa de resolucao acumulada | Evidencias RESOLVIDAS / Total de evidencias (todas as rodadas) | [NE-01](#ne-01), [NE-02](#ne-02) |
+| M6 | Taxa de persistencia | Evidencias PERSISTEM / Total de evidencias na rodada | [NE-01](#ne-01) |
+| M7 | Arvore de evidencias | Mapeamento pai-filho entre evidencias que persistem entre rodadas | [NE-01](#ne-01) |
 
----
+#### 9.3.2 Metricas de Vereditos (Juiz)
 
-#### A3: Precisão da Polícia (Precision)
+| ID | Metrica | Formula / Descricao | Fonte |
+|----|---------|---------------------|-------|
+| M8 | Volume de vereditos | Quantidade total de vereditos proferidos por sprint/rodada | [NE-02](#ne-02) |
+| M9 | Distribuicao de vereditos | Proporcao de DE, AE, AMBOS, NE por sprint/rodada | [NE-02](#ne-02) |
+| M10 | Vereditos por tipo de evidencia | Relacao entre o tipo de evidencia e o veredito correspondente | [NE-01](#ne-01), [NE-02](#ne-02) |
+| M11 | Vereditos por severidade | Relacao entre a severidade da evidencia e o veredito correspondente | [NE-01](#ne-01), [NE-02](#ne-02) |
 
-`Precisão_Polícia = TP_Polícia / (TP_Polícia + FP_Polícia)`
+#### 9.3.3 Metricas de Processo
 
-Onde:
-- `TP_Polícia`: inconsistências reais que a Polícia detectou e reportou
-- `FP_Polícia`: inconsistências inexistentes que a Polícia reportou
+| ID | Metrica | Formula / Descricao | Fonte |
+|----|---------|---------------------|-------|
+| M12 | Numero de rodadas | Quantidade de rodadas necessarias para resolver todas as evidencias | [NE-01](#ne-01), [NE-02](#ne-02) |
+| M13 | Ciclo vida da evidencia | Quantas rodadas cada evidencia leva para ser resolvida | [NE-01](#ne-01) |
+| M14 | Taxa de reincidencia | Evidencias REABERTAS / Total de evidencias | [NE-01](#ne-01) |
+| M15 | Densidade de evidencias | Evidencias coletadas / Quantidade de elementos modelados | [NE-01](#ne-01), [NE-03](#ne-03) |
 
-**Target:** ≥ 0,85
+### 9.4 Metricas com Arbitros Humanos (Trabalho Futuro)
 
-**Fonte dos dados:** [Checklist 1](#181-checklist-1--avaliação-de-audiência-polícia--juiz) (itens POL-01 a POL-04)
+As metricas a seguir dependem da participacao de arbitros humanos para
+classificar cada evidencia/veredito segundo as matrizes das secoes 9.4.1 e 9.4.2 .
+Foram definidas no protocolo original mas nao foram executadas neste
+experimento, sendo registradas como trabalho futuro.
 
-**Rubrica de Avaliação:**
+#### 9.4.1 Metricas da Policia (Matriz VP/FP/FN/VN)
 
-| Pontuação | Critério (Valor da Métrica) |
-|-----------|-----------------------------|
-| 0 | Precisão < 0,50 |
-| 1 | 0,50 ≤ Precisão < 0,70 |
-| 2 | 0,70 ≤ Precisão < 0,85 |
-| 3 | 0,85 ≤ Precisão < 0,95 |
-| 4 | Precisão ≥ 0,95 |
+| ID | Metrica | Formula | Descricao | Fonte |
+|----|---------|---------|-----------|-------|
+| M16 | Precisao da Policia | VP / (VP + FP) | Proporcao de evidencias corretas entre todas que a Policia reportou | [CHK-POL](#181-checklist-da-policia-matriz-vpfpfnvn) |
+| M17 | Revocacao da Policia | VP / (VP + FN) | Proporcao de inconsistencias reais que a Policia conseguiu detectar | [CHK-POL](#181-checklist-da-policia-matriz-vpfpfnvn) |
+| M18 | Especificidade da Policia | VN / (VN + FP) | Proporcao de ausencias de inconsistencia corretamente identificadas | [CHK-POL](#181-checklist-da-policia-matriz-vpfpfnvn) |
+| M19 | F1-Score da Policia | 2 x (Precisao x Revocacao) / (Precisao + Revocacao) | Media harmonica entre precisao e revocacao | [CHK-POL](#181-checklist-da-policia-matriz-vpfpfnvn) |
+| M20 | Acerto global da Policia | (VP + VN) / (VP + VN + FP + FN) | Proporcao de acertos entre todas as decisoes da Policia | [CHK-POL](#181-checklist-da-policia-matriz-vpfpfnvn) |
+| M21 | Taxa de Falso Positivo | FP / (FP + VN) | Proporcao de alarmes falsos entre todas as ausencias reais | [CHK-POL](#181-checklist-da-policia-matriz-vpfpfnvn) |
+| M22 | Taxa de Falso Negativo | FN / (FN + VP) | Proporcao de omissoes entre todas as inconsistencias reais | [CHK-POL](#181-checklist-da-policia-matriz-vpfpfnvn) |
 
----
+#### 9.4.2 Metricas do Juiz (Matriz DE/AE/AMBOS/NE)
 
-#### A4: Revocação da Polícia (Recall)
+| ID | Metrica | Formula / Descricao | Descricao | Fonte |
+|----|---------|---------------------|-----------|-------|
+| M23 | Acerto global do Juiz | Vereditos corretos / Total de vereditos | Proporcao de vereditos que coincidem com a decisao correta do arbitro | [CHK-JUI](#142-checklist-do-juiz-matriz-deaeambosne) |
+| M24 | Acerto por categoria | Vereditos corretos de cada tipo / Total de vereditos daquele tipo | Acerto especifico para DE, AE, AMBOS e NE | [CHK-JUI](#142-checklist-do-juiz-matriz-deaeambosne) |
+| M25 | Matriz de confusao do Juiz | Tabela 4x4 cruzando veredito vs decisao correta | Permite identificar padroes de erro | [CHK-JUI](#142-checklist-do-juiz-matriz-deaeambosne) |
+| M26 | Kappa de Cohen | Medida de concordancia ajustada ao acaso entre Juiz e arbitro | Nivel de concordancia alem do esperado pelo acaso | [CHK-JUI](#142-checklist-do-juiz-matriz-deaeambosne) |
 
-`Recall_Polícia = TP_Polícia / (TP_Polícia + FN_Polícia)`
+#### 9.4.3 Metricas Qualitativas
 
-Onde:
-- `TP_Polícia`: inconsistências reais que a Polícia detectou e reportou
-- `FN_Polícia`: inconsistências reais que a Polícia NÃO detectou
-
-**Target:** ≥ 0,90
-
-**Fonte dos dados:** [Checklist 1](#181-checklist-1--avaliação-de-audiência-polícia--juiz) (itens POL-05 a POL-07)
-
-**Rubrica de Avaliação:**
-
-| Pontuação | Critério (Valor da Métrica) |
-|-----------|-----------------------------|
-| 0 | Recall < 0,50 |
-| 1 | 0,50 ≤ Recall < 0,70 |
-| 2 | 0,70 ≤ Recall < 0,80 |
-| 3 | 0,80 ≤ Recall < 0,90 |
-| 4 | Recall ≥ 0,90 |
-
----
-
-#### A5: F1-Score da Polícia
-
-`F1_Polícia = 2 × (Precisão × Recall) / (Precisão + Recall)`
-
-**Fonte dos dados:** Calculado a partir das métricas [A3](#a3-precisão-da-polícia-precision) e [A4](#a4-revocação-da-polícia-recall)
-
-**Rubrica de Avaliação:**
-
-| Pontuação | Critério (Valor da Métrica) |
-|-----------|-----------------------------|
-| 0 | F1 < 0,50 |
-| 1 | 0,50 ≤ F1 < 0,70 |
-| 2 | 0,70 ≤ F1 < 0,82 |
-| 3 | 0,82 ≤ F1 < 0,90 |
-| 4 | F1 ≥ 0,90 |
+| ID | Metrica | Escala | Descricao | Fonte |
+|----|---------|--------|-----------|-------|
+| M27 | Qualidade das evidencias | 0-4 | Completude e rastreabilidade das evidencias coletadas pela Policia | [CHK-POL](#181-checklist-da-policia-matriz-vpfpfnvn) |
+| M28 | Qualidade dos deposimentos | 0-4 | Pertinencia e fundamentacao dos deposimentos ARG- e DEP- simulados | [CHK-JUI](#142-checklist-do-juiz-matriz-deaeambosne) |
+| M29 | Qualidade da decisao | 0-4 | Clareza, fundamentacao e uso das evidencias nos vereditos do Juiz | [CHK-JUI](#142-checklist-do-juiz-matriz-deaeambosne) |
 
 ---
 
-#### A6: Taxa de Acerto do Juiz (Accuracy)
+## 10. Hipotese
 
-`Acerto_Juiz = (Decisões corretas) / (Total de decisões proferidas)`
+### 10.1 H1: Capacidade de Deteccao (Policia)
 
-Decisões corretas são aquelas em que o veredicto do Juiz coincide com o veredicto do árbitro humano.
+A Policia e capaz de coletar evidencias de inconsistencia entre modelo UML
+e codigo implementado, produzindo um relatorio estruturado com tipo,
+severidade e localizacao dos desalinhamentos encontrados.
 
-**Fonte dos dados:** [Checklist 1](#181-checklist-1--avaliação-de-audiência-polícia--juiz) (itens AUD-10, AUD-11)
+### 10.2 H2: Capacidade de Decisao (Juiz)
 
-**Rubrica de Avaliação:**
+O Juiz e capaz de proferir vereditos fundamentados para cada evidencia
+coletada, utilizando a arvore de decisao e os deposimentos ARG-/DEP- para
+classificar a responsabilidade entre DE, AE, AMBOS ou NE.
 
-| Pontuação | Critério (Valor da Métrica) |
-|-----------|-----------------------------|
-| 0 | Acerto < 0,50 |
-| 1 | 0,50 ≤ Acerto < 0,70 |
-| 2 | 0,70 ≤ Acerto < 0,80 |
-| 3 | 0,80 ≤ Acerto < 0,90 |
-| 4 | Acerto ≥ 0,90 |
+### 10.3 H3: Iteratividade do Pipeline
 
----
-
-#### A7: Taxa de Concordância com Árbitros
-
-`Concordância = (Decisões alinhadas com árbitros) / (Total de audiências)`
-
-**Fonte dos dados:** [Checklist 1](#181-checklist-1--avaliação-de-audiência-polícia--juiz) (item AUD-11)
-
-**Rubrica de Avaliação:**
-
-| Pontuação | Critério (Valor da Métrica) |
-|-----------|-----------------------------|
-| 0 | Concordância < 0,50 |
-| 1 | 0,50 ≤ Concordância < 0,70 |
-| 2 | 0,70 ≤ Concordância < 0,80 |
-| 3 | 0,80 ≤ Concordância < 0,90 |
-| 4 | Concordância ≥ 0,90 |
+O sistema de rodadas iterativas permite a resolucao progressiva de
+inconsistencias, conforme evidenciado pela transicao de evidencias do
+status PERSISTE para RESOLVIDA entre rodadas consecutivas.
 
 ---
 
-#### A8: Qualidade das Evidências Coletadas (Polícia)
+## 11. Materiais
 
-Avaliação qualitativa da completude, relevância e rastreabilidade das evidências coletadas pela Polícia para cada inconsistência reportada.
-
-**Fonte dos dados:** [Checklist 1](#181-checklist-1--avaliação-de-audiência-polícia--juiz) (itens POL-08 a POL-11)
-
-**Rubrica de Avaliação:**
-
-| Pontuação | Descrição |
-|-----------|-----------|
-| 0 | Sem evidências ou evidências irrelevantes/inutilizáveis |
-| 1 | Evidências incompletas, sem rastreabilidade ou com lacunas graves |
-| 2 | Evidências adequadas, mas com alguma lacuna de rastreabilidade |
-| 3 | Evidências completas, relevantes e com rastreabilidade adequada |
-| 4 | Evidências excelentes, múltiplas fontes, rastreabilidade completa e explícita |
-
----
-
-#### A9: Qualidade da Decisão (Juiz)
-
-Avaliação qualitativa da fundamentação da decisão do Juiz, considerando clareza, uso das evidências e alinhamento com os critérios estabelecidos.
-
-**Fonte dos dados:** [Checklist 1](#181-checklist-1--avaliação-de-audiência-polícia--juiz) (itens JUI-01 a JUI-04)
-
-**Rubrica de Avaliação:**
-
-| Pontuação | Descrição |
-|-----------|-----------|
-| 0 | Sem fundamentação ou decisão injustificável |
-| 1 | Fundamentação vaga, não utiliza evidências adequadamente |
-| 2 | Fundamentação adequada, mas com alguma fragilidade |
-| 3 | Fundamentação clara e bem fundamentada nas evidências |
-| 4 | Fundamentação excelente, com análise criteriosa de todas as evidências |
-
----
-
-#### A10: Tempo Médio de Processamento (Polícia+Juiz)
-
-`Tempo_Processamento = Tempo_Polícia + Tempo_Juiz`
-
-Medido em minutos, desde o disparo do pipeline (após commit) até a decisão final do Juiz.
-
-**Fonte dos dados:** [Checklist 1](#181-checklist-1--avaliação-de-audiência-polícia--juiz) (itens POL-12, JUI-05)
-
-**Rubrica de Avaliação:**
-
-| Pontuação | Critério (Tempo por inconsistência) |
-|-----------|-------------------------------------|
-| 0 | > 30 minutos por inconsistência |
-| 1 | 20-30 minutos por inconsistência |
-| 2 | 15-20 minutos por inconsistência |
-| 3 | 10-15 minutos por inconsistência |
-| 4 | < 10 minutos por inconsistência |
-
----
-
-### 11.3 Grupo B — Métricas de Alinhamento Modelo-Código
-
-As métricas deste grupo são calculadas **por sprint**, considerando **apenas os fragmentos de modelo e código correspondentes às tarefas planejadas e executadas naquela sprint**.
-
----
-
-#### B1: Cobertura do Modelo
-
-`Cobertura = (Elementos implementados / Elementos modelados) × 100`
-
-**Fonte dos dados:** [Checklist 2](#182-checklist-2--avaliação-de-alinhamento-modelo-código) (itens ALI-03 a ALI-09)
-
-**Rubrica de Avaliação:**
-
-| Pontuação | Critério (Valor da Métrica) |
-|-----------|-----------------------------|
-| 0 | Cobertura < 60% |
-| 1 | 60% ≤ Cobertura < 80% |
-| 2 | 80% ≤ Cobertura < 90% |
-| 3 | 90% ≤ Cobertura < 95% |
-| 4 | Cobertura ≥ 95% |
-
----
-
-#### B2: Precisão da Implementação
-
-`Precisão = (Implementações corretas / Implementações totais) × 100`
-
-**Fonte dos dados:** [Checklist 2](#182-checklist-2--avaliação-de-alinhamento-modelo-código) (itens ALI-10 a ALI-12)
-
-**Rubrica de Avaliação:**
-
-| Pontuação | Critério (Valor da Métrica) |
-|-----------|-----------------------------|
-| 0 | Precisão < 60% |
-| 1 | 60% ≤ Precisão < 75% |
-| 2 | 75% ≤ Precisão < 85% |
-| 3 | 85% ≤ Precisão < 90% |
-| 4 | Precisão ≥ 90% |
-
----
-
-#### B3: Divergência Semântica
-
-`Divergência = (Comportamentos divergentes / Total de implementações) × 100`
-
-**Fonte dos dados:** [Checklist 2](#182-checklist-2--avaliação-de-alinhamento-modelo-código) (itens ALI-13 a ALI-15)
-
-**Rubrica de Avaliação:**
-
-| Pontuação | Critério (Valor da Métrica) |
-|-----------|-----------------------------|
-| 0 | Divergência > 15% |
-| 1 | 10% < Divergência ≤ 15% |
-| 2 | 5% < Divergência ≤ 10% |
-| 3 | 1% < Divergência ≤ 5% |
-| 4 | Divergência = 0% |
-
----
-
-#### B4: Over-Engineering
-
-`Over-Engineering = (Código não modelado / Total de código) × 100`
-
-**Fonte dos dados:** [Checklist 2](#182-checklist-2--avaliação-de-alinhamento-modelo-código) (itens ALI-16 a ALI-18)
-
-**Rubrica de Avaliação:**
-
-| Pontuação | Critério (Valor da Métrica) |
-|-----------|-----------------------------|
-| 0 | Over-Engineering > 25% |
-| 1 | 20% < Over-Engineering ≤ 25% |
-| 2 | 10% < Over-Engineering ≤ 20% |
-| 3 | 5% < Over-Engineering ≤ 10% |
-| 4 | Over-Engineering ≤ 5% |
-
----
-
-#### B5: Score Geral de Alinhamento
-
-`Score = (Cobertura × 0,35) + (Precisão × 0,35) + ((100 − Divergência) × 0,20) + ((100 − Over-Engineering) × 0,10)`
-
-**Fonte dos dados:** Calculado a partir das métricas [B1](#b1-cobertura-do-modelo), [B2](#b2-precisão-da-implementação), [B3](#b3-divergência-semântica) e [B4](#b4-over-engineering)
-
-**Rubrica de Avaliação:**
-
-| Pontuação | Critério (Valor do Score) |
-|-----------|---------------------------|
-| 0 | Score < 50 |
-| 1 | 50 ≤ Score < 60 |
-| 2 | 60 ≤ Score < 75 |
-| 3 | 75 ≤ Score < 90 |
-| 4 | Score ≥ 90 |
-
----
-
-#### B6: Rastreabilidade
-
-`Rastreabilidade = (RFs com cadeia completa RF→Modelo→Código) / (Total de RFs) × 100`
-
-**Fonte dos dados:** [Checklist 2](#182-checklist-2--avaliação-de-alinhamento-modelo-código) (itens ALI-20 a ALI-22)
-
-**Rubrica de Avaliação:**
-
-| Pontuação | Critério (Valor da Métrica) |
-|-----------|-----------------------------|
-| 0 | Rastreabilidade < 60% |
-| 1 | 60% ≤ Rastreabilidade < 75% |
-| 2 | 75% ≤ Rastreabilidade < 85% |
-| 3 | 85% ≤ Rastreabilidade < 90% |
-| 4 | Rastreabilidade ≥ 90% |
-
----
-
-### 11.4 Resumo das Métricas
-
-| Grupo | ID | Métrica | Unidade | Escopo | Fonte Principal |
-|-------|-----|---------|---------|--------|-----------------|
-| A | [A1](#a1-matriz-de-confusão-do-juiz) | Matriz de Confusão do Juiz | Qualitativo | Sprint | CH-01 |
-| A | [A2](#a2-matriz-de-decisão-do-juiz) | Matriz de Decisão | Qualitativo | Sprint | CH-01 |
-| A | [A3](#a3-precisão-da-polícia-precision) | Precisão da Polícia | 0-1 | Sprint | CH-01 |
-| A | [A4](#a4-revocação-da-polícia-recall) | Revocação da Polícia | 0-1 | Sprint | CH-01 |
-| A | [A5](#a5-f1-score-da-polícia) | F1-Score da Polícia | 0-1 | Sprint | Calculado |
-| A | [A6](#a6-taxa-de-acerto-do-juiz-accuracy) | Acerto do Juiz | 0-1 | Sprint | CH-01 |
-| A | [A7](#a7-taxa-de-concordância-com-árbitros) | Concordância | 0-1 | Sprint | CH-01 |
-| A | [A8](#a8-qualidade-das-evidências-coletadas-polícia) | Qualidade das Evidências | 0-4 | Sprint | CH-01 |
-| A | [A9](#a9-qualidade-da-decisão-juiz) | Qualidade da Decisão | 0-4 | Sprint | CH-01 |
-| A | [A10](#a10-tempo-médio-de-processamento-políciajuiz) | Tempo de Processamento | minutos | Sprint | CH-01 |
-| B | [B1](#b1-cobertura-do-modelo) | Cobertura do Modelo | % | Sprint | CH-02 + NE-02/NE-03 |
-| B | [B2](#b2-precisão-da-implementação) | Precisão da Implementação | % | Sprint | CH-02 |
-| B | [B3](#b3-divergência-semântica) | Divergência Semântica | % | Sprint | CH-02 |
-| B | [B4](#b4-over-engineering) | Over-Engineering | % | Sprint | CH-02 + NE-03 |
-| B | [B5](#b5-score-geral-de-alinhamento) | Score Geral | 0-100 | Sprint | Calculado |
-| B | [B6](#b6-rastreabilidade) | Rastreabilidade | % | Sprint | CH-02 |
-
----
-
-## 12. Síntese das Métricas por Sprint
-
-| Grupo | Métrica | Pontuação (0-4) | Classificação |
-|-------|---------|-----------------|---------------|
-| A | Precisão da Polícia (A3) | __ | MB/B/R/B/E |
-| A | Revocação da Polícia (A4) | __ | MB/B/R/B/E |
-| A | F1-Score da Polícia (A5) | __ | MB/B/R/B/E |
-| A | Acerto do Juiz (A6) | __ | MB/B/R/B/E |
-| A | Concordância (A7) | __ | MB/B/R/B/E |
-| A | Qualidade das Evidências (A8) | __ | MB/B/R/B/E |
-| A | Qualidade da Decisão (A9) | __ | MB/B/R/B/E |
-| B | Cobertura do Modelo (B1) | __ | MB/B/R/B/E |
-| B | Precisão da Implementação (B2) | __ | MB/B/R/B/E |
-| B | Score Geral de Alinhamento (B5) | __ | MB/B/R/B/E |
-| B | Rastreabilidade (B6) | __ | MB/B/R/B/E |
-
----
-
-## 13. Hipóteses
-
-### H01: Pipeline de Verificação (Polícia + Juiz)
-O pipeline composto pelo Agente Polícia e Agente Juiz não apresenta eficácia superior a 0,80 (nível "Bom") nas métricas de precisão, revocação e acerto.
-
-### HA1: Pipeline de Verificação (Polícia + Juiz)
-O pipeline composto pelo Agente Polícia e Agente Juiz apresenta eficácia superior a 0,80 (nível "Bom") nas métricas de precisão, revocação e acerto.
-
-### H02: Alinhamento Modelo-Código
-O pipeline completo de agentes não produz alinhamento modelo-código com score superior a 75 (nível "Bom" na rubrica 0-4).
-
-### HA2: Alinhamento Modelo-Código
-O pipeline completo de agentes produz alinhamento modelo-código com score superior a 75 (nível "Bom" na rubrica 0-4).
-
----
-
-## 14. Materiais
-
-| Material | Descrição |
+| Material | Descricao |
 |----------|-----------|
-| Repositório Git | Versionamento e rastreabilidade |
-| Sistema de issues | GitHub Issues ou Jira |
-| PlantUML | Diagramas UML textuais |
-| Framework frontend | React com TypeScript |
-| Scripts de automação | Cálculo automático de métricas |
-| Agentes de IA | API com prompts padronizados |
+| Spec-Kit | Framework open-source da GitHub para Spec-Driven Development (SDD), utilizado para orquestrar os comandos nativos do pipeline |
+| GitHub Copilot | Assistente de codigo baseado em LLM, utilizado na Sprint 03 como abordagem sem metodologia |
+| PlantUML | Ferramenta de modelagem UML textual, utilizada pelo Arquiteto para gerar diagramas de classes, componentes e sequencia |
+| KPC (caso de uso) | Plataforma real de curadoria de keyphrases com backend FastAPI e frontend React+MVVM, utilizada como objeto de estudo |
+| Arquivos de persona | Quatro arquivos Markdown (`persona-arquiteto.md`, `persona-developer.md`, `persona-policia.md`, `persona-juiz.md`) que definem o comportamento de cada agente de IA |
+| VS Code | Ambiente de desenvolvimento integrado onde o experimento foi conduzido |
+| Git | Sistema de versionamento para registro do historico de alteracoes e artefatos gerados |
 
 ---
 
-## 15. Estratégias de Construção do Prompt
+## 12. Estrategia de Construcao das Personas
 
-| Agente | Estratégia |
-|--------|-----------|
-| Arquiteto | Few-shot com exemplos de diagramas; prompt em português; iterativo |
-| Developer | Few-shot com exemplos de código; contexto inclui modelo UML |
-| Polícia | Protocolo sistemático de verificação; checklists de evidências; foco em rastreabilidade |
-| Juiz | Análise baseada em critérios; árvore de decisão documentada; fundamentação obrigatória |
+Cada persona de IA foi definida por meio de um arquivo Markdown de instrucoes
+(`.github/prompts/persona-<nome>.md`) que especifica: proposito, responsabilidades,
+regras, formato de entrada/saida e integracao com o Spec-Kit. Nao foram
+utilizadas tecnicas de few-shot ou exemplos no prompt -- o comportamento
+especializado de cada persona e guiado exclusivamente pelas instrucoes
+contidas em seu arquivo.
 
----
+| Persona | Arquivo | Comportamento Definido |
+|---------|---------|------------------------|
+| Arquiteto | `persona-arquiteto.md` | Modelagem UML com PlantUML, rastreabilidade `@rf:`, escopo frontend+backend |
+| Developer | `persona-developer.md` | Implementacao fiel ao modelo, zero over-engineering, tags `@model:` |
+| Policia | `persona-policia.md` | Coleta sistematica de evidencias, checklist de verificacao, deposimentos ARG-/DEP- |
+| Juiz | `persona-juiz.md` | Arvore de decisao (DE, AE, AMBOS, NE), fundamentacao obrigatoria, sistema de rodadas |
 
-## 16. Tarefas Executadas
-
-### Por Sprint
-
-| Tarefa | Responsável |
-|--------|-------------|
-| Planejamento da sprint | Ambos alunos |
-| Modelagem | Agente Arquiteto + Aluno X |
-| Codificação | Agente Developer + Aluno Daired |
-| Commit | Aluno Daired |
-| Coleta de evidências (Polícia) | Agente Polícia (humano piloto) |
-| Análise de argumentos (Arquiteto/Developer) | Agentes Arquiteto/Developer |
-| Julgamento (Juiz) | Agente Juiz (humano piloto) |
-| Resolução de issues | Alunos |
-| Merge | Alunos |
-| Revisão final | Ambos + Professores |
+Os arquivos completos de cada persona estao disponiveis em `.github/prompts/`.
 
 ---
 
-## 17. Fontes de Extração de Dados Não Humanos
+## 13. Fontes de Extracao de Dados Nao Humanos
 
-| ID | Nome | Métricas | Automação | Formato de Saída |
-|----|------|----------|-----------|------------------|
-| NE-01 | Logs da Polícia | A1, A2, A3, A4, A8, A10 | Script | JSON |
-| NE-02 | Logs do Juiz | A1, A2, A6, A7, A9, A10 | Script | JSON |
-| NE-03 | Parser PlantUML | B1, B2, B6 | Script | JSON |
-| NE-04 | Parser AST | B1, B2, B4 | CI + Script | JSON |
-| NE-05 | Sistema de Controle de Versão | A10, contexto | Git API | JSON |
-| NE-06 | Sistema de Issues | Contexto | API | JSON |
+As fontes abaixo sao os artefatos gerados pelo pipeline dos quais as metricas
+M1 a M15 (secao 9.3) sao extraidas diretamente, sem necessidade de arbitros.
 
----
-
-## 18. Checklists para Coleta de Dados Humanos
-
-### 18.1 Checklist 1 — Avaliação de Audiência (Polícia + Juiz)
-
-*Preenchido pelos professores (árbitros humanos) para cada inconsistência.*
-
-**Parte 1 — Identificação**
-
-| ID | Item | Resposta |
-|----|------|----------|
-| AUD-01 | ID da inconsistência | __________ |
-| AUD-02 | Sprint | __________ |
-| AUD-03 | Data/hora da audiência | __________ |
-| AUD-04 | Componente/arquivo | __________ |
-
-**Parte 2 — Atuação da Polícia**
-
-| ID | Item | Resposta |
-|----|------|----------|
-| POL-01 | A Polícia detectou alguma inconsistência neste artefato? | ☐ Sim ☐ Não |
-| POL-02 | Se sim, quantas inconsistências foram reportadas? | __ |
-| POL-03 | A(s) inconsistência(s) reportada(s) realmente existe(m)? | ☐ Todas ☐ Parcialmente ☐ Nenhuma |
-| POL-04 | Houve inconsistência real que a Polícia NÃO detectou? | ☐ Sim ☐ Não |
-| POL-05 | Se sim, quantas? | __ |
-| POL-06 | A Polícia classificou corretamente o tipo da inconsistência? | ☐ Sim ☐ Não ☐ Não se aplica |
-| POL-07 | As evidências coletadas foram suficientes para análise? | ☐ Sim ☐ Parcialmente ☐ Não |
-| POL-08 | As evidências eram rastreáveis (link para artefato específico)? | ☐ Todas ☐ Algumas ☐ Nenhuma |
-| POL-09 | As evidências eram objetivas (fatos, não opiniões)? | ☐ Todas ☐ Algumas ☐ Nenhuma |
-| POL-10 | Qualidade geral das evidências (0-4) | __ |
-| POL-11 | Tempo gasto pela Polícia (minutos) | __ |
-
-**Parte 3 — Atuação do Juiz**
-
-| ID | Item | Resposta |
-|----|------|----------|
-| JUI-01 | Decisão do Juiz | ☐ DE ☐ AE ☐ AE ☐ NE |
-| JUI-02 | Decisão correta (conforme árbitro) | ☐ DE ☐ AE ☐ AE ☐ NE |
-| JUI-03 | O Juiz utilizou as evidências corretamente? | ☐ Sim ☐ Parcialmente ☐ Não |
-| JUI-04 | Fundamentação do Juiz foi clara e coerente? (0-4) | __ |
-| JUI-05 | Tempo gasto pelo Juiz (minutos) | __ |
-| JUI-06 | Argumento do Arquiteto foi relevante? (0-4) | __ |
-| JUI-07 | Argumento do Developer foi relevante? (0-4) | __ |
-| JUI-08 | Comentários adicionais | __________ |
-
-**Parte 4 — Concordância Geral**
-
-| ID | Item | Resposta |
-|----|------|----------|
-| AUD-10 | Decisão do Juiz coincide com a do árbitro? | ☐ Sim ☐ Não |
-| AUD-11 | Se não, qual a decisão correta? | ☐ DE ☐ AE ☐ AE ☐ NE |
-| AUD-12 | Houve consenso entre Arquiteto e Developer? | ☐ Sim ☐ Não ☐ Parcial |
+| ID | Fonte | Conteudo | Metricas Associadas |
+|----|-------|----------|---------------------|
+| NE-01 {#ne-01} | `evidence/inconsistencies.md` | Evidencias coletadas pela Policia por sprint/rodada, com tipo, severidade, status (NOVA/PERSISTE/RESOLVIDA/REABERTA), arvore pai-filho e deposimentos ARG-/DEP- | [M1](#931-metricas-de-evidencias-policia), [M2](#931-metricas-de-evidencias-policia), [M3](#931-metricas-de-evidencias-policia), [M4](#931-metricas-de-evidencias-policia), [M5](#931-metricas-de-evidencias-policia), [M6](#931-metricas-de-evidencias-policia), [M7](#931-metricas-de-evidencias-policia), [M10](#932-metricas-de-vereditos-juiz), [M11](#932-metricas-de-vereditos-juiz), [M12](#933-metricas-de-processo), [M13](#933-metricas-de-processo), [M14](#933-metricas-de-processo), [M15](#933-metricas-de-processo) |
+| NE-02 {#ne-02} | `verdict/verdict.md` | Vereditos proferidos pelo Juiz por sprint/rodada, com decisoes (DE, AE, AMBOS, NE) e fundamentacao | [M5](#931-metricas-de-evidencias-policia), [M8](#932-metricas-de-vereditos-juiz), [M9](#932-metricas-de-vereditos-juiz), [M10](#932-metricas-de-vereditos-juiz), [M11](#932-metricas-de-vereditos-juiz), [M12](#933-metricas-de-processo), [M13](#933-metricas-de-processo) |
+| NE-03 {#ne-03} | `model/*.puml` | Diagramas UML (classes, componentes, sequencia) gerados pelo Arquiteto com tags `@rf:` | [M15](#933-metricas-de-processo) |
 
 ---
 
-### 18.2 Checklist 2 — Avaliação de Alinhamento Modelo-Código
+## 14. Checklists para Coleta de Dados Humanos
 
-| ID | Item | Valor | Fonte |
-|----|------|-------|-------|
-| ALI-01 | Sprint | __________ | - |
-| ALI-02 | Componente/módulo | __________ | - |
-| ALI-03 | Classes modeladas | __ | NE-03 |
-| ALI-04 | Classes implementadas | __ | NE-04 |
-| ALI-05 | Métodos modelados | __ | NE-03 |
-| ALI-06 | Métodos implementados | __ | NE-04 |
-| ALI-07 | Atributos modelados | __ | NE-03 |
-| ALI-08 | Atributos implementados | __ | NE-04 |
-| ALI-09 | Cobertura do modelo (B1) | __% | Calculado |
-| ALI-10 | Implementações corretas | __ | Validação manual |
-| ALI-11 | Total de implementações | __ | NE-04 |
-| ALI-12 | Precisão da implementação (B2) | __% | Calculado |
-| ALI-13 | Comportamentos divergentes | __ | Validação manual |
-| ALI-14 | Divergência semântica (B3) | __% | Calculado |
-| ALI-15 | Lista de divergências | __________ | Manual |
-| ALI-16 | Linhas não modeladas | __ LOC | NE-04 |
-| ALI-17 | Linhas totais | __ LOC | NE-04 |
-| ALI-18 | Over-Engineering (B4) | __% | Calculado |
-| ALI-19 | Score Geral (B5) | __ | Calculado |
-| ALI-20 | Total de RFs no escopo | __ | Documento |
-| ALI-21 | RFs com rastreabilidade completa | __ | NE-03+NE-04 |
-| ALI-22 | Rastreabilidade (B6) | __% | Calculado |
+### 14.1 Checklist da Policia (Matriz VP/FP/FN/VN)
 
----
+**Metricas associadas:** [M16](#941-metricas-da-policia-matriz-vpfpfnvn) a [M22](#941-metricas-da-policia-matriz-vpfpfnvn), [M27](#943-metricas-qualitativas)
 
-### 18.3 Checklist 3 — Registro de Configuração do Experimento
+| Item | Pergunta | Resposta |
+|------|----------|----------|
+| EVD-ID | ID da evidencia analisada | __________ |
+| POL-01 | A inconsistencia apontada realmente existia? | ( ) Sim (VP) ( ) Nao (FP) |
+| POL-02 | Havia alguma inconsistencia real que a Policia nao detectou? | ( ) Sim ( ) Nao |
+| POL-03 | Se sim, descricao da inconsistencia omitida (FN) | __________ |
+| POL-04 | O tipo da evidencia esta correto? | ( ) Sim ( ) Nao |
+| POL-05 | Qualidade da evidencia (0-4) | __ |
 
-| ID | Item | Valor | Data |
-|----|------|-------|------|
-| CFG-01 | Versão do Agente Arquiteto | __________ | ______ |
-| CFG-02 | Versão do Agente Developer | __________ | ______ |
-| CFG-03 | Versão do Agente Polícia | __________ | ______ |
-| CFG-04 | Versão do Agente Juiz | __________ | ______ |
-| CFG-05 | Temperatura dos LLMs | __________ | ______ |
-| CFG-06 | max_tokens | __________ | ______ |
-| CFG-07 | Versão do prompt (Arquiteto) | __________ | ______ |
-| CFG-08 | Versão do prompt (Developer) | __________ | ______ |
-| CFG-09 | Versão do prompt (Polícia) | __________ | ______ |
-| CFG-10 | Versão do prompt (Juiz) | __________ | ______ |
-| CFG-11 | Framework frontend | __________ | ______ |
-| CFG-12 | Ferramenta de modelagem | PlantUML | ______ |
-| CFG-13 | Repositório Git (URL) | __________ | ______ |
-| CFG-14 | Duração da sprint (dias) | __ | ______ |
-| CFG-15 | Total de sprints planejadas | __ | ______ |
+### 14.2 Checklist do Juiz (Matriz DE/AE/AMBOS/NE)
+
+**Metricas associadas:** [M23](#942-metricas-do-juiz-matriz-deaeambosne) a [M26](#942-metricas-do-juiz-matriz-deaeambosne), [M28](#943-metricas-qualitativas), [M29](#943-metricas-qualitativas)
+
+| Item | Pergunta | Resposta |
+|------|----------|----------|
+| VER-ID | ID do veredito analisado | __________ |
+| JUI-01 | Decisao proferida pelo Juiz | ( ) DE ( ) AE ( ) AMBOS ( ) NE |
+| JUI-02 | Decisao correta (conforme arbitro) | ( ) DE ( ) AE ( ) AMBOS ( ) NE |
+| JUI-03 | O Juiz utilizou corretamente as evidencias? | ( ) Sim ( ) Parcialmente ( ) Nao |
+| JUI-04 | Qualidade da fundamentacao (0-4) | __ |
+| JUI-05 | O deposimento do Arquiteto (ARG-) foi pertinente? | ( ) Sim ( ) Parcialmente ( ) Nao |
+| JUI-06 | O deposimento do Developer (DEP-) foi pertinente? | ( ) Sim ( ) Parcialmente ( ) Nao |
+| JUI-07 | Comentarios adicionais | __________ |
 
 ---
 
-### 18.4 Resumo dos Checklists de Dados Humanos
+## 15. Contribuicoes Esperadas
 
-| ID | Nome | Métricas | Responsável | Frequência |
-|----|------|----------|-------------|------------|
-| CH-01 | Avaliação de Audiência (Polícia+Juiz) | A1 a A10 | Professores | A cada inconsistência |
-| CH-02 | Alinhamento Modelo-Código | B1 a B6 | Alunos + Professores | Final de cada sprint |
-| CH-03 | Configuração do Experimento | Contexto | Alunos | Pré-experimento e mudanças |
-
----
-
-## 19. Benefícios e Contribuições Esperadas
-
-| Benefício | Descrição |
-|-----------|-----------|
-| Separação de responsabilidades | Evidências sobre os benefícios de separar coleta de evidências e julgamento em pipelines de verificação |
-| Protocolo replicável | Para avaliação de pipelines de dois estágios (coleta + decisão) |
-| Métricas de eficácia | Conjunto de métricas para avaliar separadamente a qualidade da coleta e do julgamento |
-| Compreensão do alinhamento | Identificação dos fatores que afetam o alinhamento modelo-código |
+| Contribuicao | Descricao |
+|--------------|-----------|
+| Pipeline integrado MDE+SDD com 4 personas | Proposicao e demonstracao pratica de um pipeline que integra o framework Spec-Kit a quatro personas de IA especializadas, criando um fluxo sistematico de especificacao, modelagem, implementacao e verificacao |
+| Separacao Policia/Juiz | Evidencias sobre a viabilidade de separar as responsabilidades de coleta de evidencias e de julgamento em dois agentes distintos no contexto de verificacao de consistencia entre modelo e codigo |
+| Sistema de rodadas iterativas | Mecanismo cumulativo de rastreamento de evidencias entre rodadas (arvore pai-filho) que permite acompanhar a evolucao da correcao de inconsistencias |
+| Conjunto de metricas | Definicao de metricas extraiveis dos artefatos do pipeline (M1 a M15) e metricas com arbitros humanos (M16 a M29) para avaliacao do pipeline de verificacao |
+| Protocolo replicavel | Documentacao detalhada do delineamento experimental, materiais, instrumentos e procedimentos, permitindo reproducao e extensao por outros pesquisadores |
+| Caso de uso real | Aplicacao do pipeline a uma plataforma real de curadoria de keyphrases (KPC), demonstrando sua viabilidade em um contexto de engenharia de software com complexidade moderada |
 
 ---
 
-## 20. Limitações e Ameaças à Validade
+## 16. Limitacoes e Ameacas a Validade
 
-### 20.1 Ameaças à Validade Interna
+### 16.1 Ameacas a Validade Interna
 
-| Ameaça | Mitigação |
-|--------|-----------|
-| Vazamento/contaminação de dados | Especificações originais; documentar versões |
-| Viés do humano piloto (mesmo operador para Polícia e Juiz) | Protocolos rígidos de separação; auditoria das decisões |
-| Efeito Hawthorne | Baseline com desenvolvimento sem pipeline |
+| Ameaca | Impacto |
+|--------|---------|
+| Unico operador | O mesmo humano piloto operou todas as personas (Arquiteto, Developer, Policia, Juiz), o que pode introduzir vies de interpretacao nas evidencias e vereditos |
+| Natureza nao deterministicas dos LLMs | Diferentes execucoes do mesmo prompt podem produzir resultados distintos, afetando a reproducibilidade |
+| Conhecimento preco do codigo | O operador ja conhecia o codigo base da KPC antes do experimento, o que pode ter influenciado as decisoes |
 
-### 20.2 Ameaças à Validade Externa
+### 16.2 Ameacas a Validade Externa
 
-| Ameaça | Mitigação |
-|--------|-----------|
-| Generalização | Reconhecer limitação; discutir transferabilidade |
-| Especificidade dos participantes | Reconhecer limitação; sugerir replicações |
+| Ameaca | Impacto |
+|--------|---------|
+| Caso unico | O experimento foi aplicado a uma unica plataforma (KPC), limitando a generalizacao dos resultados para outros contextos |
+| Unico participante | Resultados dependentes da experiencia e conhecimento de um unico individuo |
+| Escopo limitado | Tres sprints com escopos especificos podem nao representar a diversidade de cenarios de desenvolvimento |
 
-### 20.3 Ameaças à Validade de Constructo
+### 16.3 Ameacas a Validade de Constructo
 
-| Ameaça | Mitigação |
-|--------|-----------|
-| Operacionalização inadequada | Métricas validadas na literatura |
-| Confusão entre papéis (Polícia vs Juiz) | Protocolos claros; treinamento específico |
+| Ameaca | Impacto |
+|--------|---------|
+| Ausencia de arbitros humanos | As metricas M16 a M29 (precisao, revocacao, acerto do Juiz) nao foram calculadas por falta de avaliadores externos |
+| Definicao de inconsistencia | A classificacao de uma divergencia como "inconsistencia" depende da interpretacao do operador, sem validacao externa |
 
-### 20.4 Ameaças à Validade de Conclusão
+### 16.4 Ameacas a Validade de Conclusao
 
-| Ameaça | Mitigação |
-|--------|-----------|
-| Natureza não determinística dos LLMs | Reportar versões, datas, parâmetros |
-| Pequeno tamanho amostral | Reconhecer; tratar como evidências exploratórias |
-| Confiabilidade da avaliação humana | Rubrica detalhada; múltiplos avaliadores |
+| Ameaca | Impacto |
+|--------|---------|
+| Tamanho amostral reduzido | O numero de evidencias e vereditos coletados e insuficiente para analises estatisticas robustas |
+| Ausencia de grupo controle | A comparacao entre abordagens (MDE+SDD vs. Copilot) e baseada em sprints diferentes com escopos distintos, nao em um controle pareado |
 
 ---
 
-## 21. Referências
+## 17. Referencias
 
 [1] SHULL, Forrest; SINGER, Janice; SJØBERG, Dag I. K. (eds.). *Guide to Advanced Empirical Software Engineering*. London: Springer-Verlag, 2008.
 
@@ -898,7 +714,3 @@ O pipeline completo de agentes produz alinhamento modelo-código com score super
 [6] KITCHENHAM, Barbara et al. Preliminary guidelines for empirical research in software engineering. *IEEE TSE*, v. 28, n. 8, p. 721-734, 2002.
 
 ---
-
-**Data de elaboração:** 28/05/2026
-**Versão:** 8.0
-**Status:** Protocolo com separação Polícia/Juiz (mesmo humano piloto)

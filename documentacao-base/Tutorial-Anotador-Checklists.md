@@ -1,74 +1,76 @@
-# Tutorial do Anotador – Checklists 14.1, 14.2 e 14.3 (Compacto)
+# Tutorial do Anotador – Checklists 14.1, 14.2 e 14.3
 
-## Instruções Gerais
+---
 
-- **Anotador:** preencha `Nome Anotador` com seu nome.
-- **Links fixos:** mantenha os links para `Sprints` e `Pipeline` (fornecidos).
-- **Análise:** compare modelo UML (PlantUML) com código fonte. Use os commits indicados.
+## 🔧 Antes de Começar: Crie sua Cópia da Planilha
+
+A planilha Google fornecida está em **modo somente leitura**. Para preencher os checklists, você precisa ter sua própria cópia editável.
+
+**Passo:** Abra o link da planilha → clique em **Arquivo** → **Fazer uma cópia**.  
+Isso criará uma versão no seu Google Drive, onde você poderá preencher todas as colunas livremente. Mantenha o link da cópia para referência futura.
+
+---
+
+## 1. O que é Evidência, Julgamento e Por que essa Ordem?
+
+- **Evidência**: É um apontamento feito pela **Persona Polícia**. Ela compara o Modelo UML (PlantUML) com o Código e lista **fatos** brutos de divergência. Exemplo: *"Método X está no modelo, mas ausente no código"*. A Polícia **não** interpreta culpa, só coleta os fatos.
+
+- **Julgamento**: É a decisão da **Persona Juiz**. De posse das Evidências, o Juiz aplica uma árvore de decisão para definir **quem está errado**: 
+  - **DE** (Developer Errado), **AE** (Arquiteto Errado), **AMBOS** ou **NE** (Ninguém Errado - falso alarme).
+
+- **Por que a Evidência vem primeiro?** 
+  O experimento separa **coleta de fatos** (Polícia) de **interpretação jurídica** (Juiz) para evitar viés. Se o Juiz coletasse os dados, poderia pular evidências ou forçar um veredito. A ordem **Evidência → Julgamento** garante que o Julgamento seja baseado em um relatório completo e neutro, sendo essa a principal inovação do pipeline estudado.
 
 ---
 
 ## Checklist 14.1 – Polícia: Evidências Apontadas (VP/FP)
+**Objetivo**: Validar se a evidência coletada é real (VP) ou alarme falso (FP).
 
-**Objetivo:** Classificar cada evidência reportada pela Polícia como **VP** (verdadeiro positivo) ou **FP** (falso positivo).
-
-**Preenchimento por evidência (EVD-ID):**
-
-| Coluna | O que fazer |
-|--------|-------------|
-| **POL-AP-01** | A inconsistência **realmente existia**? Sim → VP; Não → FP. |
-| **POL-AP-02** | O **tipo** atribuído (ex.: `METODO_AUSENTE`) está correto? Sim/Não. |
-| **POL-AP-03** | A **localização** (arquivo:linha) é precisa? Sim/Não. |
-| **Links** | Cole os links para `inconsistencies.md`, modelo `.puml` e arquivo de código. |
-
-**Critérios rápidos:** VP se modelo e código divergem exatamente como descrito. FP se a divergência não existe.
+| Coluna | Como Preencher (Rápido) |
+| :--- | :--- |
+| **EVD-ID** | Código da evidência (ex: EVD-001-R1-001). |
+| **POL-AP-01** | A divergência **existe**? <br> **Sim** = VP (Verdadeiro Positivo) / **Não** = FP (Falso Positivo). |
+| **POL-AP-02** | O **tipo** da divergência (ex: `METODO_AUSENTE`) está certo? Sim/Não. |
+| **POL-AP-03** | O **arquivo:linha** apontado está certo? Sim/Não. |
+| **Links** | Cole o link do `inconsistencies.md`, do Modelo `.puml` e do Código fonte. |
 
 ---
 
 ## Checklist 14.2 – Polícia: Evidências Não Apontadas (FN/VN)
+**Objetivo**: Caçar omissões. O que a Polícia **não** viu?
 
-**Objetivo:** Verificar se a Polícia deixou de detectar inconsistências (FN) ou se o ponto está consistente (VN).
-
-**Preenchimento por ponto analisado (EVD-ID ou descrição):**
-
-| Coluna | O que fazer |
-|--------|-------------|
-| **POL-NA-01** | Havia inconsistência **não detectada**? Sim → FN; Não → VN. |
-| **POL-NA-02** | Se FN, descreva **detalhadamente** a omissão. |
-| **POL-NA-03** | Se VN, descreva **brevemente** o que foi verificado e considerado consistente. |
-| **POL-NA-04/05** | Localização (arquivo:linha) do modelo e do código verificados. |
-| **Link** | Link para o diretório/arquivo de evidência. |
-
-**Critérios rápidos:** FN se há divergência real não reportada. VN se modelo e código batem.
+| Coluna | Como Preencher (Rápido) |
+| :--- | :--- |
+| **EVD-ID** | ID da evidência (ou descreva o ponto verificado). |
+| **POL-NA-01** | Havia inconsistência **não detectada**? <br> **Sim** = FN (Falso Negativo) / **Não** = VN (Verdadeiro Negativo). |
+| **POL-NA-02** | Se **FN**: Descreva **o que foi omitido** (ex: campo faltante). |
+| **POL-NA-03** | Se **VN**: Descreva **o que foi verificado e está OK** (ex: método confere). |
+| **POL-NA-04/05** | Localize (arquivo:linha) o trecho do Modelo e do Código que você inspecionou. |
 
 ---
 
 ## Checklist 14.3 – Juiz: Vereditos (DE/AE/AMBOS/NE)
+**Objetivo**: Verificar se o Julgamento do Juiz está correto e fundamentado.
 
-**Objetivo:** Avaliar se a decisão do Juiz está correta e se ele usou bem as evidências.
+| Coluna | Como Preencher (Rápido) |
+| :--- | :--- |
+| **VER-ID** | ID do Veredito (ex: VER-001-R1-001). |
+| **JUI-01** | O que o Juiz disse? (DE / AE / AMBOS / NE). |
+| **JUI-02** | O que é **correto** na sua análise? (DE / AE / AMBOS / NE). |
+| **JUI-03** | Juiz usou as evidências bem? (Sim / Parcial / Não). |
+| **JUI-04/05** | Ele considerou os depoimentos do Arquiteto (ARG-) e Developer (DEP-)? (Sim / Parcial / Não). |
+| **JUI-06** | Seguiu a árvore de decisão do protocolo? (Sim / Não). |
+| **Link** | Link para o `verdict.md`. |
 
-**Preenchimento por veredito (VER-ID):**
-
-| Coluna | O que fazer |
-|--------|-------------|
-| **JUI-01** | Decisão proferida pelo Juiz: DE, AE, AMBOS ou NE. |
-| **JUI-02** | Decisão **correta** (segundo sua análise): DE, AE, AMBOS ou NE. |
-| **JUI-03** | O Juiz usou as evidências corretamente? Sim / Parcialmente / Não. |
-| **JUI-04** | Considerou o depoimento do Arquiteto (ARG-)? Sim / Parcialmente / Não. |
-| **JUI-05** | Considerou o depoimento do Developer (DEP-)? Sim / Parcialmente / Não. |
-| **JUI-06** | Seguiu a árvore de decisão definida? Sim / Não. |
-| **Link** | Link para `verdict.md`. |
-
-**Critérios rápidos para JUI-02:**  
-- **DE** = código errado, modelo certo.  
-- **AE** = modelo errado, código fiel ao modelo.  
-- **AMBOS** = ambos errados.  
-- **NE** = não há inconsistência (falso positivo).
+**Regra de Ouro para JUI-02**:
+- **DE**: Código errado, Modelo certo.
+- **AE**: Modelo errado, Código fiel ao modelo.
+- **AMBOS**: Ambos estão errados.
+- **NE**: Não há erro real (era FP da Polícia).
 
 ---
 
-## Dicas Finais
-
-- Sempre consulte os links dos modelos e códigos antes de responder.
-- Seja objetivo nas descrições (POL-NA-02/03) – cite trechos se necessário.
-- Mantenha a consistência entre os três checklists: uma evidência classificada como VP no 14.1 deve ter um veredito correspondente no 14.3.
+## Fluxo de Preenchimento (Ordem Lógica)
+1. Abra a Evidência (14.1) para ver o que a Polícia achou.
+2. Vá ao código/modelo para ver se ela errou ou omitiu algo (14.2).
+3. Por fim, julgue se a decisão do Juiz (14.3) foi justa com base nos fatos que você mesmo validou.

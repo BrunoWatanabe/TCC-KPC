@@ -642,6 +642,8 @@ M1 a M15 (secao 9.3) sao extraidas diretamente, sem necessidade de arbitros.
 | POL-NA-01 | Havia alguma inconsistencia real entre modelo e codigo neste ponto que a Policia **nao** detectou? | ( ) Sim (FN) ( ) Nao (VN) |
 | POL-NA-02 | Se sim (FN), descreva a inconsistencia omitida: | __________ |
 | POL-NA-03 | Se nao (VN), descreva brevemente o que foi verificado e considerado consistente: | __________ |
+| POL-NA-04 | (arquivo:linha) Modelo | __________ |
+| POL-NA-05 | (arquivo:linha) Código | __________ |
 
 ### 14.3 Checklist do Juiz (DE/AE/AMBOS/NE)
 

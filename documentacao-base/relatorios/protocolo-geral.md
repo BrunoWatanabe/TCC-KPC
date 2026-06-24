@@ -540,9 +540,9 @@ mas nao foram executadas neste experimento, sendo registradas como trabalho futu
 | M24 | Acerto por categoria | Vereditos corretos de cada tipo / Total de vereditos daquele tipo | Acerto especifico para DE, AE, AMBOS e NE | [CHK-JUI](#143-checklist-do-juiz-deaeambosne) |
 | M25 | Matriz de confusao do Juiz | Tabela 4x4 cruzando veredito vs decisao correta | Permite identificar padroes de erro | [CHK-JUI](#143-checklist-do-juiz-deaeambosne) |
 | M26 | Kappa de Cohen | Medida de concordancia ajustada ao acaso entre Juiz e arbitro | Nivel de concordancia alem do esperado pelo acaso | [CHK-JUI](#143-checklist-do-juiz-deaeambosne) |
-| M27 | Taxa de Concordancia por Severidade | Proporcao de acertos do Juiz agrupada por severidade da evidencia (ALTA, MEDIA, BAIXA) | Avalia se o Juiz tem melhor desempenho em evidencias mais graves | [CHK-JUI](#143-checklist-do-juiz-deaeambosne) |
-| M28 | Distribuicao de Vereditos por Tipo de Evidencia | Proporcao de cada veredito (DE, AE, AMBOS, NE) para cada tipo de evidencia | Identifica padroes de decisao do Juiz associados a cada tipo de inconsistencia | [CHK-JUI](#143-checklist-do-juiz-deaeambosne) |
-| M29 | Proporcao de Vereditos "AMBOS" | Evidencias com veredito AMBOS / Total de evidencias | Indica a frequencia com que o Juiz atribui responsabilidade compartilhada | [CHK-JUI](#143-checklist-do-juiz-deaeambosne) |
+| M27 | Taxa de Utilizacao de Evidencias | Total de vereditos utilizando a evidencia / Total de vereditos | Proporcao de casos em que o Juiz utilizou corretamente as evidencias disponiveis em sua fundamentacao. | [CHK-JUI](#143-checklist-do-juiz-deaeambosne) |
+| M28 | Taxa de Consideracao do Arquiteto | Total de vereditos considerando o argumento do Arquiteto / Total de vereditos | Proporcao de casos em que o Juiz considerou explicitamente o depoimento do Arquiteto (ARG-) para proferir o veredito. | [CHK-JUI](#143-checklist-do-juiz-deaeambosne) |
+| M29 | Taxa de Consideracao do Developer | Total de vereditos considerando o argumento do Developer / Total de vereditos | Proporcao de casos em que o Juiz considerou explicitamente o depoimento do Developer (DEP-) para proferir o veredito. | [CHK-JUI](#143-checklist-do-juiz-deaeambosne) |
 
 ---
 
@@ -654,12 +654,10 @@ M1 a M15 (secao 9.3) sao extraidas diretamente, sem necessidade de arbitros.
 | Item | Pergunta | Resposta |
 |------|----------|----------|
 | VER-ID | ID do veredito analisado | __________ |
-| JUI-01 | Decisao proferida pelo Juiz | ( ) DE ( ) AE ( ) AMBOS ( ) NE |
-| JUI-02 | Decisao correta (conforme arbitro) | ( ) DE ( ) AE ( ) AMBOS ( ) NE |
-| JUI-03 | O Juiz utilizou corretamente as evidencias disponiveis? | ( ) Sim ( ) Parcialmente ( ) Nao |
-| JUI-04 | O depoimento do Arquiteto (ARG-) foi considerado na decisao? | ( ) Sim ( ) Parcialmente ( ) Nao |
-| JUI-05 | O depoimento do Developer (DEP-) foi considerado na decisao? | ( ) Sim ( ) Parcialmente ( ) Nao |
-| JUI-06 | A decisao esta de acordo com a arvore de decisao definida? | ( ) Sim ( ) Nao |
+| JUI-01 | Decisao do Juiz foi correta? | ( ) Sim ( ) Nao |
+| JUI-02 | O Juiz utilizou corretamente as evidencias disponiveis na fundamentacao? | ( ) Sim ( ) Nao |
+| JUI-03 | O depoimento do Arquiteto (ARG-) foi considerado na decisao? | ( ) Sim ( ) Nao |
+| JUI-04 | O depoimento do Developer (DEP-) foi considerado na decisao? | ( ) Sim ( ) Nao |
 
 ---
 

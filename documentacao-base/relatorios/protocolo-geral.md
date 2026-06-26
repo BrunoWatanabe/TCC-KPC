@@ -34,8 +34,9 @@
    - 5.5 [Instrumentos e Materiais](#55-instrumentos-e-materiais)
    - 5.6 [Procedimento](#56-procedimento)
 6. [Participantes](#6-participantes)
-   - 6.1 [Humano Piloto](#61-humano-piloto)
-   - 6.2 [Participacao Futura](#62-participacao-futura)
+   - 6.1 [Humano Piloto (Daired)](#61-humano-piloto-daired)
+   - 6.2 [Anotadores (2 a 4 participantes)](#62-anotadores-2-a-4-participantes)
+   - 6.3 [Adjudicador (Prof. Orientador Akira)](#63-adjudicador-prof-orientador-akira)
 7. [Os Agentes do Pipeline](#7-os-agentes-do-pipeline)
 8. [Variaveis do Experimento](#8-variaveis-do-experimento)
    - 8.1 [Variavel Independente](#81-variavel-independente)
@@ -48,7 +49,7 @@
      - 9.3.1 [Metricas de Evidencias (Policia)](#931-metricas-de-evidencias-policia)
      - 9.3.2 [Metricas de Vereditos (Juiz)](#932-metricas-de-vereditos-juiz)
      - 9.3.3 [Metricas de Processo](#933-metricas-de-processo)
-   - 9.4 [Metricas com Arbitros Humanos (Trabalho Futuro)](#94-metricas-com-arbitros-humanos-trabalho-futuro)
+   - 9.4 [Metricas com Anotadores Humanos](#94-metricas-com-anotadores-humanos)
      - 9.4.1 [Metricas da Policia (Matriz VP/FP/FN/VN)](#941-metricas-da-policia-matriz-vpfpfnvn)
      - 9.4.2 [Metricas do Juiz (Matriz DE/AE/AMBOS/NE)](#942-metricas-do-juiz-matriz-deaeambosne)
 10. [Hipotese](#10-hipotese)
@@ -78,7 +79,7 @@
 |-------|-----------|
 | **TITULO** | Integracao entre Engenharia Orientada a Modelos e Desenvolvimento Orientado a Especificacoes com Suporte de Agentes de IA: Um Estudo Experimental sobre o Pipeline Spec-Kit com Quatro Personas para Verificacao de Consistencia em uma Plataforma de Curadoria de Keyphrases |
 | **TEMA** | Estudo empirico experimental sobre a integracao entre Engenharia Orientada a Modelos (MDE) e Desenvolvimento Orientado a Especificacoes (SDD), mediada pelo framework Spec-Kit e por quatro agentes de IA especializados (Arquiteto, Developer, Policia, Juiz), aplicada a uma plataforma real de curadoria de keyphrases (KPC). O estudo investiga a eficacia do pipeline como um todo na producao de codigo frontend e backend, com enfase na avaliacao do sistema de verificacao de inconsistencias entre modelo UML e codigo implementado, bem como o nivel de alinhamento alcancado entre ambos ao longo de multiplos ciclos de desenvolvimento. |
-| **DESCRICAO** | O presente estudo tem por objetivo investigar a eficacia de um pipeline de desenvolvimento que integra o framework Spec-Kit (Spec-Driven Development) a quatro personas de IA especializadas -- Arquiteto (modelagem UML), Developer (implementacao fiel ao modelo), Policia (coleta de evidencias de inconsistencias) e Juiz (julgamento fundamentado) -- para a producao de codigo em uma plataforma real de curadoria de keyphrases (KPC). O experimento foi conduzido em tres ciclos de sprint, cada um representando uma abordagem distinta: (i) duas sprints utilizando o pipeline completo MDE+SDD com Spec-Kit e as quatro personas; (ii) uma sprint utilizando exclusivamente o GitHub Copilot sem metodologia formal, seguida de analise retroativa com as quatro personas. O estudo delimita-se a avaliacao da qualidade do pipeline de verificacao (Policia + Juiz) por meio de metricas como precisao, revocacao, taxa de acerto do juiz e concordancia com arbitros humanos, bem como o alinhamento modelo-codigo mensurado por cobertura do modelo, precisao da implementacao, divergencia semantica, over-engineering e rastreabilidade. |
+| **DESCRICAO** | O presente estudo tem por objetivo investigar a eficacia de um pipeline de desenvolvimento que integra o framework Spec-Kit (Spec-Driven Development) a quatro personas de IA especializadas -- Arquiteto (modelagem UML), Developer (implementacao fiel ao modelo), Policia (coleta de evidencias de inconsistencias) e Juiz (julgamento fundamentado) -- para a producao de codigo em uma plataforma real de curadoria de keyphrases (KPC). O experimento foi conduzido em tres ciclos de sprint, cada um representando uma abordagem distinta: (i) duas sprints utilizando o pipeline completo MDE+SDD com Spec-Kit e as quatro personas; (ii) uma sprint utilizando exclusivamente o GitHub Copilot sem metodologia formal, seguida de analise retroativa com as quatro personas. O estudo delimita-se a avaliacao da qualidade do pipeline de verificacao (Policia + Juiz) por meio de metricas como precisao, revocacao, taxa de acerto do juiz e concordancia com anotadores humanos, bem como o alinhamento modelo-codigo mensurado por cobertura do modelo, precisao da implementacao, divergencia semantica, over-engineering e rastreabilidade. |
 | **ABORDAGEM** | MDE (Model-Driven Engineering) combinada com SDD (Spec-Driven Development), utilizando o framework Spec-Kit como ferramenta pratica de orquestracao do pipeline, integrando quatro personas de IA (Arquiteto, Developer, Policia, Juiz) como camada adicional de comportamento sobre os comandos nativos do Spec-Kit. |
 | **CASO DE USO** | KPC (Keyphrase Curation Platform) -- uma plataforma de curadoria de keyphrases com backend FastAPI e frontend React + MVVM, que oferece extracao, geracao, clustering, anotacao colaborativa e adjudicacao de keyphrases em textos argumentativos sobre oito topicos (aborto, clonagem, pena de morte, controle de armas, legalizacao da maconha, salario minimo, energia nuclear, uniformes escolares). |
 | **FERRAMENTA PRINCIPAL** | Spec-Kit (framework open-source da GitHub para Spec-Driven Development), integrado a quatro arquivos de instrucao de agentes de IA (`persona-arquiteto.md`, `persona-developer.md`, `persona-policia.md`, `persona-juiz.md`) que definem o comportamento especializado de cada persona no pipeline. |
@@ -364,10 +365,10 @@ Para a Sprint 03, o procedimento foi:
 
 ## 6. Participantes
 
-### 6.1 Humano Piloto
+### 6.1 Humano Piloto (Daired)
 
-O experimento foi conduzido por um unico participante, o aluno-pesquisador
-Daired, que desempenhou todos os papeis operacionais do pipeline:
+O aluno-pesquisador Daired desempenhou todos os papeis operacionais do
+pipeline, atuando como unico executor das tarefas de desenvolvimento:
 
 | Papel | Responsabilidade |
 |-------|------------------|
@@ -383,14 +384,39 @@ relacionadas a diferentes niveis de expertise entre operadores. A separacao
 dos papeis e funcional (diferentes responsabilidades e protocolos), nao
 operacional.
 
-### 6.2 Participacao Futura
+### 6.2 Anotadores (2 a 4 participantes)
 
-O protocolo original preve a participacao de arbitros humanos (professores
-orientadores) para validar as decisoes do Juiz, atuando como uma segunda
-instancia de avaliacao. Esta etapa nao foi executada neste experimento devido
-a restricoes de tempo e escopo, sendo registrada como trabalho futuro.
+Os anotadores sao responsaveis por preencher os checklists de coleta de dados
+humanos descritos na secao 14, atuando como avaliadores das evidencias
+coletadas pela Policia e das decisoes proferidas pelo Juiz:
 
-**Número de participantes esperado:** 1 desenvolvedores + 2 a 3 avaliadores.
+| Papel | Responsabilidade |
+|-------|------------------|
+| Anotador (Checklist 14.1) | Classificar cada evidencia apontada pela Policia como VP ou FP |
+| Anotador (Checklist 14.2) | Identificar evidencias nao apontadas pela Policia e classifica-las como FN ou VN |
+| Anotador (Checklist 14.3) | Validar a correcao dos vereditos proferidos pelo Juiz |
+
+Cada anotador preenche os checklists de forma independente, sem comunicacao
+entre si durante o processo de anotacao, para garantir a independencia das
+avaliacoes e permitir o calculo de concordancia entre anotadores nas metricas
+M16 a M29.
+
+### 6.3 Adjudicador (Prof. Orientador Akira)
+
+O professor orientador Marcelo Akira Inuzuka atua como adjudicador,
+responsavel por:
+
+- Resolver divergencias entre as anotacoes dos anotadores quando nao houver
+  consenso (ex: um classificou como VP e outro como FP);
+- Definir a "verdade de campo" (ground truth) final para cada evidencia e
+  veredito, que sera utilizada como referencia para o calculo das metricas
+  M16 a M29;
+- Supervisionar a conducao do experimento e validar a adequacao metodologica
+  dos procedimentos.
+
+A participacao do adjudicador e essencial para estabelecer uma referencia
+confiavel contra a qual o desempenho do pipeline de verificacao (Policia +
+Juiz) possa ser medido.
 
 ---
 
@@ -464,9 +490,9 @@ evidencia pode ser classificada conforme a matriz de confusao abaixo.
 O Juiz profere um veredito para cada evidencia, escolhendo entre quatro
 possibilidades: DE (Developer Errado), AE (Arquiteto Errado), AMBOS (Ambos
 Errados) ou NE (Ninguem Errado). A acuracia do Juiz e medida comparando seu
-veredito com a decisao correta definida por um arbitro humano.
+veredito com a decisao correta definida por um anotador humano.
 
-| Decisao do Juiz | Decisao Correta (Arbitro) | Resultado |
+| Decisao do Juiz | Decisao Correta (Anotador) | Resultado |
 |-----------------|---------------------------|-----------|
 | DE | DE | Acerto |
 | DE | AE, AMBOS, NE | Erro |
@@ -481,7 +507,7 @@ veredito com a decisao correta definida por um arbitro humano.
 
 As metricas a seguir sao calculadas diretamente dos arquivos gerados pelo
 pipeline (`evidence/inconsistencies.md` e `verdict/verdict.md`), sem necessidade
-de arbitros humanos.
+de anotadores humanos.
 
 #### 9.3.1 Metricas de Evidencias (Policia)
 
@@ -513,12 +539,11 @@ de arbitros humanos.
 | M14 | Taxa de reincidencia | Evidencias REABERTAS / Total de evidencias | [NE-01](#ne-01) |
 | M15 | Densidade de evidencias | Evidencias coletadas / Quantidade de elementos modelados | [NE-01](#ne-01), [NE-03](#ne-03) |
 
-### 9.4 Metricas com Arbitros Humanos (Trabalho Futuro)
+### 9.4 Metricas com Anotadores Humanos
 
-As metricas a seguir dependem da participacao de arbitros humanos para
+As metricas a seguir dependem da participacao de anotadores humanos para
 classificar cada evidencia/veredito segundo as matrizes das secoes 9.1 e 9.2,
-utilizando os checklists da secao 14. Foram definidas no protocolo original
-mas nao foram executadas neste experimento, sendo registradas como trabalho futuro.
+utilizando os checklists da secao 14.
 
 #### 9.4.1 Metricas da Policia (Matriz VP/FP/FN/VN)
 
@@ -536,10 +561,10 @@ mas nao foram executadas neste experimento, sendo registradas como trabalho futu
 
 | ID | Metrica | Formula / Descricao | Descricao | Fonte |
 |----|---------|---------------------|-----------|-------|
-| M23 | Acerto global do Juiz | Vereditos corretos / Total de vereditos | Proporcao de vereditos que coincidem com a decisao correta do arbitro | [CHK-JUI](#143-checklist-do-juiz-deaeambosne) |
+| M23 | Acerto global do Juiz | Vereditos corretos / Total de vereditos | Proporcao de vereditos que coincidem com a decisao correta do anotador | [CHK-JUI](#143-checklist-do-juiz-deaeambosne) |
 | M24 | Acerto por categoria | Vereditos corretos de cada tipo / Total de vereditos daquele tipo | Acerto especifico para DE, AE, AMBOS e NE | [CHK-JUI](#143-checklist-do-juiz-deaeambosne) |
 | M25 | Matriz de confusao do Juiz | Tabela 4x4 cruzando veredito vs decisao correta | Permite identificar padroes de erro | [CHK-JUI](#143-checklist-do-juiz-deaeambosne) |
-| M26 | Kappa de Cohen | Medida de concordancia ajustada ao acaso entre Juiz e arbitro | Nivel de concordancia alem do esperado pelo acaso | [CHK-JUI](#143-checklist-do-juiz-deaeambosne) |
+| M26 | Kappa de Cohen | Medida de concordancia ajustada ao acaso entre Juiz e anotador | Nivel de concordancia alem do esperado pelo acaso | [CHK-JUI](#143-checklist-do-juiz-deaeambosne) |
 | M27 | Taxa de Utilizacao de Evidencias | Total de vereditos utilizando a evidencia / Total de vereditos | Proporcao de casos em que o Juiz utilizou corretamente as evidencias disponiveis em sua fundamentacao. | [CHK-JUI](#143-checklist-do-juiz-deaeambosne) |
 | M28 | Taxa de Consideracao do Arquiteto | Total de vereditos considerando o argumento do Arquiteto / Total de vereditos | Proporcao de casos em que o Juiz considerou explicitamente o depoimento do Arquiteto (ARG-) para proferir o veredito. | [CHK-JUI](#143-checklist-do-juiz-deaeambosne) |
 | M29 | Taxa de Consideracao do Developer | Total de vereditos considerando o argumento do Developer / Total de vereditos | Proporcao de casos em que o Juiz considerou explicitamente o depoimento do Developer (DEP-) para proferir o veredito. | [CHK-JUI](#143-checklist-do-juiz-deaeambosne) |
@@ -605,7 +630,7 @@ Os arquivos completos de cada persona estao disponiveis em `.github/prompts/`.
 ## 13. Fontes de Extracao de Dados Nao Humanos
 
 As fontes abaixo sao os artefatos gerados pelo pipeline dos quais as metricas
-M1 a M15 (secao 9.3) sao extraidas diretamente, sem necessidade de arbitros.
+M1 a M15 (secao 9.3) sao extraidas diretamente, sem necessidade de anotadores.
 
 | ID | Fonte | Conteudo | Metricas Associadas |
 |----|-------|----------|---------------------|
@@ -668,7 +693,7 @@ M1 a M15 (secao 9.3) sao extraidas diretamente, sem necessidade de arbitros.
 | Pipeline integrado MDE+SDD com 4 personas | Proposicao e demonstracao pratica de um pipeline que integra o framework Spec-Kit a quatro personas de IA especializadas, criando um fluxo sistematico de especificacao, modelagem, implementacao e verificacao |
 | Separacao Policia/Juiz | Evidencias sobre a viabilidade de separar as responsabilidades de coleta de evidencias e de julgamento em dois agentes distintos no contexto de verificacao de consistencia entre modelo e codigo |
 | Sistema de rodadas iterativas | Mecanismo cumulativo de rastreamento de evidencias entre rodadas (arvore pai-filho) que permite acompanhar a evolucao da correcao de inconsistencias |
-| Conjunto de metricas | Definicao de metricas extraiveis dos artefatos do pipeline (M1 a M15) e metricas com arbitros humanos (M16 a M29) para avaliacao do pipeline de verificacao |
+| Conjunto de metricas | Definicao de metricas extraiveis dos artefatos do pipeline (M1 a M15) e metricas com anotadores humanos (M16 a M29) para avaliacao do pipeline de verificacao |
 | Protocolo replicavel | Documentacao detalhada do delineamento experimental, materiais, instrumentos e procedimentos, permitindo reproducao e extensao por outros pesquisadores |
 | Caso de uso real | Aplicacao do pipeline a uma plataforma real de curadoria de keyphrases (KPC), demonstrando sua viabilidade em um contexto de engenharia de software com complexidade moderada |
 
@@ -696,8 +721,9 @@ M1 a M15 (secao 9.3) sao extraidas diretamente, sem necessidade de arbitros.
 
 | Ameaca | Impacto |
 |--------|---------|
-| Ausencia de arbitros humanos | As metricas M16 a M29 (precisao, revocacao, acerto do Juiz) nao foram calculadas por falta de avaliadores externos |
-| Definicao de inconsistencia | A classificacao de uma divergencia como "inconsistencia" depende da interpretacao do operador, sem validacao externa |
+| Concordancia entre anotadores | Diferentes anotadores podem classificar a mesma evidencia de forma distinta (ex: um classifica como VP e outro como FP), sendo necessario o adjudicador para resolver divergencias |
+| Definicao de inconsistencia | A fronteira entre "inconsistencia" e "decisao consciente de projeto" pode ser subjetiva, variando entre anotadores e afetando a consistencia das anotacoes |
+| Vies dos anotadores | O conhecimento previo dos anotadores sobre o dominio da KPC ou sobre o pipeline Spec-Kit pode influenciar suas classificacoes |
 
 ### 16.4 Ameacas a Validade de Conclusao
 

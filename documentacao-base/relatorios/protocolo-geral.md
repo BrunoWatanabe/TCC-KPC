@@ -547,6 +547,12 @@ utilizando os checklists da secao 14.
 
 #### 9.4.1 Metricas da Policia (Matriz VP/FP/FN/VN)
 
+Durante o delineamento experimental, planejou-se a aplicação de métricas completas da matriz de confusão para avaliar a Persona Polícia. Contudo, ao iniciar a coleta, identificou-se uma limitação prática intransponível: o cálculo da Revocação (Recall), Especificidade, Acerto Global e Taxas de Erro (M17 a M22) exige a identificação exaustiva de **Falsos Negativos (FN)** e **Verdadeiros Negativos (VN)** — ou seja, demanda uma auditoria manual completa de todos os commits e arquivos para verificar o que a Polícia *deixou de apontar*.
+
+Diante do volume de dados gerado nas três sprints (centenas de arquivos e dezenas de commits), essa auditoria exaustiva mostrou-se humanamente inviável. Tal constatação, por si só, reforça a motivação central da pesquisa: a inspeção manual de consistência entre modelo e código em sistemas de médio porte é impraticável, justificando o uso de agentes de IA para essa tarefa.
+
+Dessa forma, **as métricas M17 a M22 foram suprimidas** deste estudo por inviabilidade operacional. A métrica **M16 (Precisão da Polícia)** foi mantida, pois seu cálculo independe da auditoria de omissões:
+
 | ID | Metrica | Formula | Descricao | Fonte |
 |----|---------|---------|-----------|-------|
 | M16 | Precisao da Policia | VP / (VP + FP) | Proporcao de evidencias corretas entre todas que a Policia reportou | [CHK-POL-AP](#141-checklist-da-policia---evidencias-apontadas-vpfp) |
@@ -701,13 +707,14 @@ M1 a M15 (secao 9.3) sao extraidas diretamente, sem necessidade de anotadores.
 
 ## 16. Limitacoes e Ameacas a Validade
 
-### 16.1 Ameacas a Validade Interna
+### 16.1 Ameaças à Validade Interna
 
-| Ameaca | Impacto |
+| Ameaça | Impacto |
 |--------|---------|
-| Unico operador | O mesmo humano piloto operou todas as personas (Arquiteto, Developer, Policia, Juiz), o que pode introduzir vies de interpretacao nas evidencias e vereditos |
-| Natureza nao deterministicas dos LLMs | Diferentes execucoes do mesmo prompt podem produzir resultados distintos, afetando a reproducibilidade |
-| Conhecimento preco do codigo | O operador ja conhecia o codigo base da KPC antes do experimento, o que pode ter influenciado as decisoes |
+| Único operador | O mesmo humano piloto operou todas as personas (Arquiteto, Developer, Polícia, Juiz), o que pode introduzir viés de interpretação nas evidências e vereditos. |
+| Natureza não determinística dos LLMs | Diferentes execuções do mesmo prompt podem produzir resultados distintos, afetando a reprodutibilidade. |
+| Conhecimento prévio do código | O operador já conhecia o código base da KPC antes do experimento, o que pode ter influenciado as decisões. |
+| Inviabilidade da auditoria manual para FN/VN | O cálculo de Revocação e demais métricas que dependem de FN/VN exigiria inspeção exaustiva de todos os commits e arquivos para identificar omissões da Polícia. Tal tarefa mostrou-se humanamente impraticável, o que levou à supressão dessas métricas. Esta limitação, no entanto, reforça a motivação do estudo: a automação da verificação de consistência é essencial quando a auditoria manual é inviável. |
 
 ### 16.2 Ameacas a Validade Externa
 

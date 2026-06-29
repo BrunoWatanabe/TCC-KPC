@@ -1,0 +1,65 @@
+Metric_ID,Subcategory,Sprint_01,Sprint_02,Sprint_03,Global
+M16,Precisão (VP/(VP+FP)),"0,83","1,00","0,73","0,78"
+M17,Revocação (VP/(VP+FN)),n/a,n/a,n/a,n/a
+M18,Especificidade (VN/(VN+FP)),n/a,n/a,n/a,n/a
+M19,F1-Score (média harmônica),n/a,n/a,n/a,n/a
+M20,Acerto Global ((VP+VN)/Total),n/a,n/a,n/a,n/a
+M21,Taxa de Falso Positivo (FP/(FP+VN)),n/a,n/a,n/a,n/a
+M22,Taxa de Falso Negativo (FN/(FN+VP)),n/a,n/a,n/a,n/a
+M23,Acerto Global do Juiz (Corretos/Total),"0,83","1,00","1,00","0,96"
+M24,Acerto por categoria - DE (DE_corretos / Total_DE_predito),"0,83","0,00","0,00","0,83"
+M24,Acerto por categoria - AE (AE_corretos / Total_AE_predito),"0,00","1,00","0,00","1,00"
+M24,Acerto por categoria - AMBOS (AMBOS_corretos / Total_AMBOS_predito),"0,00","1,00","0,00","1,00"
+M24,Acerto por categoria - NE (NE_corretos / Total_NE_predito),"0,00","0,00","1,00","1,00"
+M25,Veredito_DE x Correto_DE (VP),"0,00","0,00","0,00","0,00"
+M25,Veredito_DE x Correto_AE (FP),"0,00","0,00","0,00","0,00"
+M25,Veredito_DE x Correto_AMBOS (FP),"0,00","0,00","0,00","0,00"
+M25,Veredito_DE x Correto_NE (FP),"1,00","0,00","0,00","1,00"
+M25,Veredito_AE x Correto_DE (FN),"0,00","0,00","0,00","0,00"
+M25,Veredito_AE x Correto_AE (VP),"0,00","0,00","0,00","0,00"
+M25,Veredito_AE x Correto_AMBOS (FP),"0,00","0,00","0,00","0,00"
+M25,Veredito_AE x Correto_NE (FP),"0,00","0,00","0,00","0,00"
+M25,Veredito_AMBOS x Correto_DE (FN),"0,00","0,00","0,00","0,00"
+M25,Veredito_AMBOS x Correto_AE (FN),"0,00","0,00","0,00","0,00"
+M25,Veredito_AMBOS x Correto_AMBOS (VP),"0,00","0,00","0,00","0,00"
+M25,Veredito_AMBOS x Correto_NE (FP),"0,00","0,00","0,00","0,00"
+M25,Veredito_NE x Correto_DE (FN),"0,00","0,00","0,00","0,00"
+M25,Veredito_NE x Correto_AE (FN),"0,00","0,00","0,00","0,00"
+M25,Veredito_NE x Correto_AMBOS (FN),"0,00","0,00","0,00","0,00"
+M25,Veredito_NE x Correto_NE (VP),"0,00","0,00","0,00","0,00"
+M26,Kappa de Cohen (concordância ajustada ao acaso),"0,00",indefinido,indefinido,"0,92"
+M27,Taxa de Utilização de Evidências (usou evidência corretamente / total),"0,83","1,00","0,73","0,78"
+M28,Taxa de Consideração do Arquiteto (considerou ARG- / total),"0,83","1,00","1,00","0,96"
+M29,Taxa de Consideração do Developer (considerou DEP- / total),"0,83","1,00","1,00","0,96"
+,,,,,
+Policia,,,,,
+,VP,FN,,,
+Sprint 1,5,1,,,
+Sprint 2,2,0,,,
+Sprint 3,4,5,,,
+Total,0,0,,,
+,,,,,
+Juiz,,,,,
+Total,Correta,Incorreta,,,
+Decisão Juiz,22,1,,,
+Utilização Evidencia,18,5,,,
+Utilização Depoimento Arquiteto,22,1,,,
+Utilização Depoimento Developer,22,1,,,
+,,,,,
+Sprint 1,Correta,Incorreta,,,
+Decisão Juiz,5,1,,,
+Utilização Evidencia,5,1,,,
+Utilização Depoimento Arquiteto,5,1,,,
+Utilização Depoimento Developer,5,1,,,
+,,,,,
+Sprint 2,Correta,Incorreta,,,
+Decisão Juiz,2,0,,,
+Utilização Evidencia,2,0,,,
+Utilização Depoimento Arquiteto,2,0,,,
+Utilização Depoimento Developer,2,0,,,
+,,,,,
+Sprint 3,Correta,Incorreta,,,
+Decisão Juiz,15,0,,,
+Utilização Evidencia,11,4,,,
+Utilização Depoimento Arquiteto,15,0,,,
+Utilização Depoimento Developer,15,0,,,

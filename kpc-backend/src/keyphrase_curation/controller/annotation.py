@@ -1,7 +1,7 @@
 from keyphrase_curation.model.annotation import (
     ClusterAnnotation, KeyphraseCurationFile,
     ClusterSelectionAnnotation, KeyphraseSelectionAnnotation, 
-    KeyphraseAliasAnnotation)
+    KeyphraseAliasAnnotation, AdjudicatorAnnotation)
 from keyphrase_curation.controller.user_attribution import \
     UserAttributionController
 from keyphrase_curation import config
@@ -29,6 +29,9 @@ class AnnotationController:
             keyphrase_curation_file=self.keyphrase_curation_file,
             cluster_ids_length=config['cluster_ids_length'])
         self.keyphrase_alias_annotation = KeyphraseAliasAnnotation(
+            keyphrase_curation_file=self.keyphrase_curation_file,
+            cluster_ids_length=config['cluster_ids_length'])
+        self.adjudicator_annotation = AdjudicatorAnnotation(
             keyphrase_curation_file=self.keyphrase_curation_file,
             cluster_ids_length=config['cluster_ids_length'])
 
@@ -125,6 +128,13 @@ class AnnotationController:
 
     def set_alias(self, cluster_id, alias):
         self.keyphrase_alias_annotation.set_alias(cluster_id, alias)
+
+    def get_adjudicator_clusters(self):
+        return self.adjudicator_annotation.get_adjudicator_clusters()
+
+    def adjudicate(self, cluster_id, keyphrase_id, action):
+        self.adjudicator_annotation.adjudicate(
+            cluster_id, keyphrase_id, action)
 
     def save(self, task):
         if task == AnnotationTask.KEYPHRASE_CLUSTERING:

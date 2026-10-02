@@ -18,7 +18,7 @@ import {
   Paper
 } from '@mui/material';
 import { MainLayout } from '../layouts/index.js';
-import { Button } from '../components/index.js';
+import { Button, AdjudicatorClusters } from '../components/index.js';
 import { ClusterSorting, ClusterSortingLabels } from '../../shared/enums/ClusterSorting.js';
 
 /**
@@ -77,6 +77,7 @@ const KeyphraseClustersView = ({
   
   // Handlers principais - PADRÃO REACTPY: recebem strings "id,value"
   onClusterOrderChange,          // (value: string) => void - Muda ordenação (5 tipos)
+  onAdjudicatorAction,           // ({clusterId, keyphrase, newAction}) => void - Ação de adjudicação
   onClusterSelectionChange,      // (value: string) => void - "clusterId,selection" (0/1)
   onKeyphrase1SelectionChange,   // (value: string) => void - "clusterId,keyphraseId"
   onKeyphrase2SelectionChange,   // (value: string) => void - "clusterId,keyphraseId"
@@ -274,6 +275,22 @@ const KeyphraseClustersView = ({
    * Renderiza lista de clusters ordenados
    */
   const renderClusters = () => {
+    // MODO ADJUDICATOR: renderizar chips de adjudicação
+    // (fiel ao adjudicator_clusters.py) com os dados dos anotadores.
+    // Verificar ANTES do hasClusters: no modo adjudicator os dados vêm
+    // de adjudicatorData, não do estado clusters (que fica vazio para
+    // a ordenação clues_from_other_annotators).
+    if (isAdjudicatorMode && adjudicatorData &&
+        adjudicatorData.union &&
+        Object.keys(adjudicatorData.union).length > 0) {
+      return (
+        <AdjudicatorClusters
+          clustersAnnotationData={adjudicatorData}
+          onAdjudicatorAction={onAdjudicatorAction}
+        />
+      );
+    }
+
     if (!hasClusters) {
       return (
         <Alert severity="info">

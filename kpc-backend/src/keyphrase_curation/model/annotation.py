@@ -456,3 +456,64 @@ class KeyphraseAliasAnnotation:
         self.keyphrase_aliases[cluster_id] = alias
         self.add_annotation_not_saved(cluster_id, alias)
         return True
+
+
+class AdjudicatorAnnotation():
+    '''
+    Model annotation of adjudicator decisions.
+
+    A decision is persisted as a KEYPHRASE_CLUSTERING move in the
+    adjudicator's own annotation file:
+    - consent:  keyphrase moves INTO the adjudicator's cluster
+    - reject:   keyphrase moves OUT of the adjudicator's cluster
+                (to the "thrash" cluster, i.e. cluster_ids_length)
+    '''
+
+    def __init__(self,
+                 keyphrase_curation_file: KeyphraseCurationFile = None,
+                 cluster_ids_length=33):
+
+        self.cluster_ids_length = cluster_ids_length
+        self.annotations_not_saved = {}
+        self.keyphrase_curation_file = keyphrase_curation_file
+
+        self.load_annotations_from_file()
+
+    def load_annotations_from_file(self):
+        annotations = self.keyphrase_curation_file.get_annotations_from_json(
+            annotation_task=AnnotationTask.KEYPHRASE_CLUSTERING)
+        return annotations
+
+    def get_adjudicator_clusters(self):
+        '''Returns {cluster_id: [keyphrase_id, ...]} from the file'''
+        data = self.keyphrase_curation_file.get_data_from_json(
+            check_consistency=False)
+        clusters = {}
+        for cluster_id in data['clusters']:
+            clusters[str(cluster_id)] = \
+                list(data['clusters'][cluster_id]['keyphrases'])
+        return clusters
+
+    def save(self):
+        return self.keyphrase_curation_file.save_annotations_to_json(
+            self.annotations_not_saved,
+            annotation_task=AnnotationTask.KEYPHRASE_CLUSTERING)
+
+    def adjudicate(self, cluster_id, keyphrase_id, action):
+        '''Registers an adjudicator decision (consent or reject)
+
+        Args:
+            cluster_id (int): cluster id
+            keyphrase_id (int): keyphrase id
+            action (str): 'consent' or 'reject'
+        '''
+        if action not in ('consent', 'reject'):
+            raise ValueError(f'Unknown action: {action}')
+        # annotations_not_saved: {keyphrase_id: target_cluster_id}
+        if action == 'consent':
+            self.annotations_not_saved[str(keyphrase_id)] = int(cluster_id)
+        else:
+            # thrash cluster: id = cluster_ids_length (last one)
+            self.annotations_not_saved[str(keyphrase_id)] = \
+                int(self.cluster_ids_length)
+        return True

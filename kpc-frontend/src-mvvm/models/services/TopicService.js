@@ -303,11 +303,14 @@ export class TopicService {
   async getAdjudicatorData(username, topicName) {
     try {
       
-      const response = await fetch(`${this.baseURL}/topic/adjudicator_data/${encodeURIComponent(username)}/${encodeURIComponent(topicName)}`, {
+      const response = await fetch(`${this.apiBaseUrl}/topic/adjudicator_data/${encodeURIComponent(username)}/${encodeURIComponent(topicName)}`, {
         method: 'GET',
-        credentials: 'include', // Para enviar cookies
+        // NOTA: sem credentials:'include' — o backend usa CORS allow_origins=*,
+        // que é rejeitado pelo browser quando credentials estão incluídas.
+        // A autenticação é feita via header Bearer.
         headers: {
           'Accept': 'application/json',
+          ...(this.getCurrentToken() ? { 'Authorization': `Bearer ${this.getCurrentToken()}` } : {})
         }
       });
 
@@ -331,11 +334,11 @@ export class TopicService {
   async getAnnotatorActions(username, topicName) {
     try {
       
-      const response = await fetch(`${this.baseURL}/topic/annotator_actions/${encodeURIComponent(username)}/${encodeURIComponent(topicName)}`, {
+      const response = await fetch(`${this.apiBaseUrl}/topic/annotator_actions/${encodeURIComponent(username)}/${encodeURIComponent(topicName)}`, {
         method: 'GET',
-        credentials: 'include',
         headers: {
           'Accept': 'application/json',
+          ...(this.getCurrentToken() ? { 'Authorization': `Bearer ${this.getCurrentToken()}` } : {})
         }
       });
 
@@ -354,16 +357,17 @@ export class TopicService {
 
   /**
    * Define ação do adjudicador para uma keyphrase
-   * API: PUT /topic/adjudicator_action/{username}/{topic}/{cluster_id}/{keyphrase_id}/{action}
+   * API: PUT /topic/adjudicate_and_save/{username}/{topic}/{cluster_id}/{keyphrase_id}/{action}
+   * action: 'consent' | 'reject'
    */
   async setAdjudicatorAction(username, topicName, clusterId, keyphraseId, action) {
     try {
-      
-      const response = await fetch(`${this.baseURL}/topic/adjudicator_action/${encodeURIComponent(username)}/${encodeURIComponent(topicName)}/${clusterId}/${keyphraseId}/${action}`, {
+
+      const response = await fetch(`${this.apiBaseUrl}/topic/adjudicate_and_save/${encodeURIComponent(username)}/${encodeURIComponent(topicName)}/${clusterId}/${keyphraseId}/${action}`, {
         method: 'PUT',
-        credentials: 'include',
         headers: {
           'Accept': 'application/json',
+          ...(this.getCurrentToken() ? { 'Authorization': `Bearer ${this.getCurrentToken()}` } : {})
         }
       });
 

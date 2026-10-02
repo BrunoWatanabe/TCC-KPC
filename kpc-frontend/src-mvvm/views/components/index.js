@@ -34,6 +34,11 @@ export { default as ClusterCard } from './ClusterCard.jsx';
 // Componente para adjudicação de clusters (modo "clues_from_other_annotators")
 export { default as AdjudicatorClusterChips } from './AdjudicatorClusterChips.jsx';
 
+// Componentes de adjudicação migrados de keyphrase_curation/frontend
+// (fiéis ao adjudicator_chip.py / adjudicator_clusters.py do ReactPy)
+export { default as AdjudicatorChip } from './AdjudicatorChip.jsx';
+export { AdjudicatorClusterChips as AdjudicatorClusterChipsLegacy, default as AdjudicatorClusters } from './AdjudicatorClusters.jsx';
+
 // ============================================================================
 // METADATA DO MÓDULO
 // ============================================================================
@@ -53,9 +58,11 @@ export const COMPONENTS_INFO = {
   domainComponents: [
     'KeyphraseItem',
     'ClusterCard',
-    'AdjudicatorClusterChips'
+    'AdjudicatorClusterChips',
+    'AdjudicatorChip',
+    'AdjudicatorClusters'
   ],
-  totalComponents: 7,
+  totalComponents: 9,
   lastUpdated: new Date().toISOString()
 };
 

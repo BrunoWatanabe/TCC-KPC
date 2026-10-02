@@ -5,7 +5,8 @@ from keyphrase_curation.controller.user_attribution \
 from keyphrase_curation.controller.annotation \
     import AnnotationController
 from keyphrase_curation.model.annotation import \
-    AnnotationTask
+    AnnotationTask, KeyphraseCurationFile
+from keyphrase_curation import config
 from typing import Dict, List, Tuple, Optional
 from keyphrase_curation.model.keyphrase import KeyphraseSorting
 from keyphrase_curation.model.cluster import ClusterSorting
@@ -243,6 +244,17 @@ async def list_clusters(
         else:
             sorting = ClusterSorting.by_value(cluster_order)
 
+        # RF: "Dicas de Outros Anotadores" somente para perfil adjudicator
+        if sorting == ClusterSorting.CLUES_FROM_OTHER_ANNOTATORS:
+            annotation_profile = \
+                UserAttributionController().get_annotation_profile(
+                    username, topic)
+            if annotation_profile != "adjudicator":
+                raise HTTPException(
+                    status_code=403,
+                    detail="clues_from_other_annotators sorting is only "
+                           "allowed for adjudicator profile")
+
         ac = AnnotationController(topic, username)
         clusters, clusters_meta_info = ac.get_clusters(sorting)
         cluster_selection = ac.get_cluster_selection()
@@ -363,6 +375,102 @@ async def get_annotation_profile(
         raise HTTPException(status_code=500, detail=str(e))
 
     return {"annotation_profile": annotation_profile}
+
+
+def _get_adjudicator_clusters_data(username: str, topic: str) -> dict:
+    """Monta os dados de adjudicação no formato esperado pelo frontend:
+    {
+      adjudicator: {clusterId: [desc, [kp...]]},
+      annotator1:  {clusterId: [desc, [kp...]]},
+      annotator2:  {clusterId: [desc, [kp...]]},
+      union:       {clusterId: [desc, [kp...]]},
+    }
+
+    Os clusters do adjudicator são lidos do arquivo de anotação do próprio
+    adjudicator; os dos anotadores, dos arquivos declarados como 'sources'
+    na atribuição do adjudicator (annotations/<user1>/<topic>.kpc e
+    annotations/<user2>/<topic>.kpc).
+    """
+    uac = UserAttributionController()
+    annotation_files = uac.get_annotation_files(username, topic)
+
+    # Fontes dos anotadores (adjudicator usa 'sources' em vez de 'source')
+    sources = annotation_files.get('sources', [])
+    if len(sources) < 2:
+        raise ValueError(
+            "Adjudicator attribution must have at least 2 sources")
+
+    def load_clusters(filepath: str) -> dict:
+        """Carrega clusters {cluster_id: [desc, [kp...]]} de um arquivo .kpc"""
+        kpc = KeyphraseCurationFile(filepath)
+        data = kpc.get_data_from_json(check_consistency=False)
+        clusters = {}
+        for cluster_id, cluster in data['clusters'].items():
+            keyphrases = [
+                f"{data['keyphrases'][str(kp_id)]['keyphrase']}({kp_id})"
+                for kp_id in cluster['keyphrases']
+            ]
+            clusters[str(cluster_id)] = [f"Cluster {cluster_id}", keyphrases]
+        return clusters
+
+    annotator1_clusters = load_clusters(
+        config['dataset_path'] + '/' + sources[0])
+    annotator2_clusters = load_clusters(
+        config['dataset_path'] + '/' + sources[1])
+    adjudicator_clusters = load_clusters(
+        uac.get_annotation_filepaths(username, topic)['target'])
+
+    # União das keyphrases dos dois anotadores por cluster
+    union_clusters = {}
+    for cluster_id in annotator1_clusters:
+        kp1 = set(annotator1_clusters.get(cluster_id, [None, []])[1])
+        kp2 = set(annotator2_clusters.get(cluster_id, [None, []])[1])
+        union_clusters[cluster_id] = [
+            f"Cluster {cluster_id}",
+            sorted(kp1.union(kp2))
+        ]
+
+    return {
+        "adjudicator": adjudicator_clusters,
+        "annotator1": annotator1_clusters,
+        "annotator2": annotator2_clusters,
+        "union": union_clusters
+    }
+
+
+@router.get("/adjudicator_data/{username}/{topic}")
+async def get_adjudicator_data(
+        username: str,
+        topic: str,
+        logged_user: str = Depends(get_current_user)
+    ) -> dict:
+
+    if username != logged_user and logged_user != "admin":
+        raise HTTPException(status_code=403, detail="Not enough permissions")
+    try:
+        uac = UserAttributionController()
+        topics_user = uac.get_topics(username)
+        if topic not in topics_user:
+            raise HTTPException(status_code=404, detail="Topic not found")
+
+        # Somente perfil adjudicator pode acessar os dados de adjudicação
+        annotation_profile = uac.get_annotation_profile(username, topic)
+        if annotation_profile != "adjudicator":
+            raise HTTPException(
+                status_code=403,
+                detail="adjudicator_data is only allowed for "
+                       "adjudicator profile")
+
+        clusters_annotation_data = \
+            _get_adjudicator_clusters_data(username, topic)
+    except HTTPException as http_exc:
+        raise http_exc
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+    # @model: specs/002-pairwise-similarity-fix/model/classes.puml
+    # RF: RF-003-C1 — Converter tipos numpy em TODO o dicionário de retorno
+    return NumpyConverter.to_native(clusters_annotation_data)
 
 
 @router.get("/get_annotation_task_options/{username}")
@@ -636,3 +744,68 @@ async def set_alias_and_save_annotation(
         raise HTTPException(status_code=500, detail=str(e))
 
     return {"message": "Cluster alias updated and saved successfully", "saved": boSave}
+
+
+def _check_adjudicator_permission(username: str, topic: str):
+    """Valida permissões e perfil adjudicator para os endpoints de adjudicação"""
+    uac = UserAttributionController()
+    topics_user = uac.get_topics(username)
+    if topic not in topics_user:
+        raise HTTPException(status_code=404, detail="Topic not found")
+    annotation_profile = uac.get_annotation_profile(username, topic)
+    if annotation_profile != "adjudicator":
+        raise HTTPException(
+            status_code=403,
+            detail="adjudication is only allowed for adjudicator profile")
+
+
+@router.put("/adjudicate/{username}/{topic}/{cluster_id}/{keyphrase_id}/{action}")
+async def adjudicate(
+        username: str,
+        topic: str,
+        cluster_id: str,
+        keyphrase_id: str,
+        action: str,
+        logged_user: str = Depends(get_current_user)
+    ) -> dict:
+
+    if username != logged_user and logged_user != "admin":
+        raise HTTPException(status_code=403, detail="Not enough permissions")
+
+    try:
+        _check_adjudicator_permission(username, topic)
+        ac = AnnotationController(topic, username)
+        ac.adjudicate(int(cluster_id), int(keyphrase_id), action)
+    except HTTPException as http_exc:
+        raise http_exc
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+    return {"message": "Adjudication updated successfully"}
+
+
+@router.put("/adjudicate_and_save/{username}/{topic}/{cluster_id}/{keyphrase_id}/{action}")
+async def adjudicate_and_save(
+        username: str,
+        topic: str,
+        cluster_id: str,
+        keyphrase_id: str,
+        action: str,
+        logged_user: str = Depends(get_current_user)
+    ) -> dict:
+
+    if username != logged_user and logged_user != "admin":
+        raise HTTPException(status_code=403, detail="Not enough permissions")
+
+    try:
+        _check_adjudicator_permission(username, topic)
+        ac = AnnotationController(topic, username)
+        ac.adjudicate(int(cluster_id), int(keyphrase_id), action)
+        boSave = ac.save(task=AnnotationTask.KEYPHRASE_CLUSTERING)
+    except HTTPException as http_exc:
+        raise http_exc
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+    return {"message": "Adjudication updated and saved successfully",
+            "saved": boSave}

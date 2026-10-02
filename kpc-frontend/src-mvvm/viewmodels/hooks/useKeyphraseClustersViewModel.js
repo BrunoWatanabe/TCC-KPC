@@ -35,6 +35,9 @@ export const useKeyphraseClustersViewModel = () => {
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
   
+  // Perfil de anotação do usuário no tópico (annotator | adjudicator)
+  const [annotationProfile, setAnnotationProfile] = useState(null);
+  
   // Estados específicos para modo adjudicador (clues_from_other_annotators)
   const [adjudicatorData, setAdjudicatorData] = useState(null);
 
@@ -76,6 +79,16 @@ export const useKeyphraseClustersViewModel = () => {
 
     try {
       
+      // Carregar perfil de anotação (define se "Dicas de Outros Anotadores" está disponível)
+      try {
+        const profile = await topicService.getAnnotationProfile(username, topicName);
+        console.log('🔍 [perfil] annotation_profile:', profile);
+        setAnnotationProfile(profile);
+      } catch (profileError) {
+        console.warn('⚠️ Não foi possível obter o perfil de anotação:', profileError);
+        setAnnotationProfile(null);
+      }
+
       // NOVO: Inicializar ClusterSortingModel (carrega as 5 ordenações automaticamente)
       try {
         await clusterSortingModel.initialize(username, topicName);
@@ -229,13 +242,48 @@ export const useKeyphraseClustersViewModel = () => {
     // Se mudou para modo adjudicador, carregar dados adicionais
     if (newSorting === ClusterSorting.CLUES_FROM_OTHER_ANNOTATORS) {
       try {
+        console.log('🔍 [adjudicator] carregando dados:', { username, topicName });
         const adjData = await topicService.getAdjudicatorData(username, topicName);
+        console.log('🔍 [adjudicator] dados recebidos:', {
+          keys: Object.keys(adjData || {}),
+          unionClusters: Object.keys(adjData?.union || {}).length
+        });
         setAdjudicatorData(adjData);
       } catch (error) {
         console.error('❌ Erro ao carregar dados do adjudicador:', error);
       }
     }
   }, [currentSorting, username, topicName]);
+
+  /**
+   * Handler para ação de adjudicação (consent/reject) em uma keyphrase
+   * Persiste no backend via PUT /topic/adjudicate_and_save/...
+   * e recarrega os dados de adjudicação
+   */
+  const handleAdjudicatorAction = useCallback(async ({ clusterId, keyphrase, newAction }) => {
+    // keyphrase vem no formato "Descricao(id)" — extrair o id
+    const match = String(keyphrase).match(/\((\d+)\)$/);
+    if (!match) {
+      console.error('❌ Não foi possível extrair o id da keyphrase:', keyphrase);
+      return;
+    }
+    const keyphraseId = match[1];
+
+    try {
+      setSaving(true);
+      await topicService.setAdjudicatorAction(
+        username, topicName, clusterId, keyphraseId, newAction);
+
+      // Recarregar dados de adjudicação para refletir a mudança
+      const adjData = await topicService.getAdjudicatorData(username, topicName);
+      setAdjudicatorData(adjData);
+    } catch (error) {
+      console.error('❌ Erro ao salvar adjudicação:', error);
+      setError('Erro ao salvar adjudicação: ' + (error.message || error));
+    } finally {
+      setSaving(false);
+    }
+  }, [username, topicName]);
 
   // ============================================================================
   // HANDLERS PARA AÇÕES DO USUÁRIO
@@ -247,13 +295,21 @@ export const useKeyphraseClustersViewModel = () => {
    */
   const handleClusterOrderChange = useCallback(async (newOrder) => {
     
+    // "Dicas de Outros Anotadores" somente para perfil adjudicator
+    if (newOrder === ClusterSorting.CLUES_FROM_OTHER_ANNOTATORS &&
+        annotationProfile !== 'adjudicator') {
+      console.warn('⚠️ [guard] bloqueando CLUES — annotationProfile:', annotationProfile);
+      setError('A ordenação "Dicas de Outros Anotadores" está disponível apenas para o perfil adjudicator');
+      return;
+    }
+
     // Se for uma ordenação válida do ClusterSorting, usar changeSorting
     if (Object.values(ClusterSorting).includes(newOrder)) {
       await changeSorting(newOrder);
     } else {
       console.warn('⚠️ Ordenação inválida:', newOrder);
     }
-  }, [changeSorting]);
+  }, [changeSorting, annotationProfile]);
 
   /**
    * Handler para seleção/deseleção de cluster (CS: 0/1)
@@ -523,7 +579,12 @@ export const useKeyphraseClustersViewModel = () => {
     // Estado de ordenação
     currentSorting,
     sortingStats,
-    availableSortings: Object.values(ClusterSorting),
+    // "Dicas de Outros Anotadores" somente para perfil adjudicator
+    availableSortings: Object.values(ClusterSorting).filter(
+      (sorting) => sorting !== ClusterSorting.CLUES_FROM_OTHER_ANNOTATORS
+        || annotationProfile === 'adjudicator'
+    ),
+    annotationProfile,
     
     // Estado de loading e erro
     loading,
@@ -556,6 +617,9 @@ export const useKeyphraseClustersViewModel = () => {
     
     // Handler para ordenação
     onSortingChange: changeSorting,
+
+    // Handler para ação de adjudicação (consent/reject)
+    onAdjudicatorAction: handleAdjudicatorAction,
     
     // Utilitários
     getKeyphraseChipColor,

@@ -24,6 +24,9 @@ export { KeyphraseService, keyphraseService } from './KeyphraseService.js';
 // Serviço de anotações
 export { AnnotationService, annotationService } from './AnnotationService.js';
 
+// Serviço de adjudicação
+export { AdjudicatorService, adjudicatorService } from './AdjudicatorService.js';
+
 // ============================================================================
 // METADATA DO MÓDULO
 // ============================================================================

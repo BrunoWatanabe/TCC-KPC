@@ -35,9 +35,8 @@ export { default as ClusterCard } from './ClusterCard.jsx';
 export { default as AdjudicatorClusterChips } from './AdjudicatorClusterChips.jsx';
 
 // Componentes de adjudicação migrados de keyphrase_curation/frontend
-// (fiéis ao adjudicator_chip.py / adjudicator_clusters.py do ReactPy)
 export { default as AdjudicatorChip } from './AdjudicatorChip.jsx';
-export { AdjudicatorClusterChips as AdjudicatorClusterChipsLegacy, default as AdjudicatorClusters } from './AdjudicatorClusters.jsx';
+export { default as AdjudicatorClusters } from './AdjudicatorClusters.jsx';
 
 // ============================================================================
 // METADATA DO MÓDULO
